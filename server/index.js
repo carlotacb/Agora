@@ -1,10 +1,22 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
 
-app.get('/', function (req, res) {
-    res.send('Hello World!')
-})
+const config = require('./config')
 
-app.listen(3000, function () {
-    console.log('Agora app listening on port 3000!')
-})
+const BootstrapRouter = require('./routes')
+
+BootstrapRouter(app)
+BootstrapServer(app)
+StartServer(app)
+
+
+function BootstrapServer(app) {
+    app.use(bodyParser.json())
+}
+
+function StartServer(app) {
+    app.listen(config.port, function () {
+        console.log(`Agora app listening on port ${config.port}!`)
+    })
+}
