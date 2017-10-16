@@ -17,18 +17,32 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:text="@string/registration"
-        android:textSize="40dp"
+        android:text="@string/registrationSocialMedia"
+        android:textSize="30dp"
         android:padding="20dp"
         android:textColor="@color/blue"
         />
 
-    <TextView
+
+    <RadioButton
+        android:id="@+id/rbtnRed1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/registrationCredentials"
-        android:textSize="20dp"
-        android:textColor="@color/blue"
+        android:text="@string/rbtn_registro_red1"
+        />
+
+    <RadioButton
+        android:id="@+id/rbtnRed2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rbtn_registro_red2"
+        />
+
+    <RadioButton
+        android:id="@+id/rbtnRed3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rbtn_registro_red3"
         />
 
     <EditText
@@ -36,12 +50,13 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:id="@+id/username"
-        android:hint="@string/prompt_username"
+        android:hint="@string/prompt_email"
         android:textColorHint="@color/white"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="10dp"
+        />
 
     <EditText
         android:id="@+id/password"
@@ -52,26 +67,25 @@
         android:layout_marginRight="10dp"
         android:hint="********"
         android:inputType="textPassword"
-        android:textColorHint="@color/white" />
+        android:textColorHint="@color/white"
+        />
 
     <Button
-        android:id="@+id/btnRegistration"
+        android:id="@+id/btnRegWithSM"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:onClick="onClick"
-        android:text="@string/action_Registration" />
+        android:onClick="Registrar"
+        android:text="@string/action_Registration"
+        />
 
     <Button
-        android:id="@+id/btnAlLogin"
+        android:id="@+id/btnRegWithoutSM"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:onClick="onClick"
-        android:text="@string/action_backToLogin" />
+        android:text="@string/registrationNoSocialMedia" />
+
 
 </LinearLayout>

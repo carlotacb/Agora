@@ -12,4 +12,17 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+    <string name="registration">Registrar en Àgora</string>
+    <string name="registrationCredentials">Por favor, entra las credenciales que has conseguido del ayuntamiento:</string>
+    <string name="action_Registration">Registrar</string>
+    <string name="prompt_username">Username</string>
+    <string name="action_backToLogin">Al Login</string>
+    <string name="registrationSocialMedia">Quieres registrar con perfil de redes sociales?</string>
+    <string name="rbtn_registro_red1">Facebook</string>
+    <string name="rbtn_registro_red2">Twitter</string>
+    <string name="rbtn_registro_red3">LinkedIn</string>
+    <string name="registrationNoSocialMedia">Registrar sin perfil de redes sociales</string>
+    <string name="prompt_oldPassword">Contraseña antigua</string>
+    <string name="prompt_newPassword">Contraseña nueva</string>
+    <string name="prompt_repeatNewPassword">Repite contraseña nueva</string>
 </resources>
