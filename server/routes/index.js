@@ -8,14 +8,12 @@ module.exports = app => {
     app.post('/api/login', async function (req, res) {
         try {
             const {username, password} = req.body
-            const user = userModule.login({username, password})
+            const user = await userModule.login({username, password})
             res.send({
                 username: user.username
             })
         } catch (error) {
             res.sendStatus(403)
         }
-
-
     })
 }
