@@ -13,6 +13,7 @@ module.exports = app => {
                 username: user.username
             })
         } catch (error) {
+            console.error('error on login', error)
             res.sendStatus(403)
         }
     })
