@@ -4,7 +4,7 @@ const dbConstants = constants.db
 
 async function getCollection() {
     const db = await MongoClient.connect(mongoDbUri)
-    return db.collection(dbConstants)
+    return db.collection(dbConstants.signupCodes)
 }
 
 async function createSignupCode(code) {
@@ -21,22 +21,23 @@ async function useSignupCode({code, userId}) {
     }
 
     const update = {
-        usedBy: userId,
+        $set: {usedBy: userId,}
     }
 
     const options = {
         upsert: false
     }
 
-    return getCollection().updateOne(query, update, options)
+    const collection = await getCollection()
+    return collection.updateOne(query, update, options)
 }
 
 async function getSignupCode(code) {
     const query = {
         code: code
     }
-
-    return getCollection().findOne(query)
+    const collection = await getCollection()
+    return collection.findOne(query)
 }
 
 module.exports = {

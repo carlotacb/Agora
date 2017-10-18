@@ -21,14 +21,12 @@ module.exports = app => {
 
     app.post('/api/signup', async function (req, res) {
         const {signupCode, username, password, confirmPassword} = req.body
-        if (!signupCode || !user || !password || !confirmPassword) return res.sendStatus(403)
+        if (!signupCode || !username || !password || !confirmPassword) return res.sendStatus(403)
         if (password !== confirmPassword) return res.sendStatus(403)
-
-        const code = await signupCode.getSignupCode(signupCode)
-        if (!code) return res.sendStatus(403)
-
+        const code = await signupCodes.getSignupCode(signupCode)
+        if (!code || code.usedBy) return res.sendStatus(403)
         const user = await userModule.createUser({username, password})
-        await signupCode.useSignupCode({user})
+        await signupCodes.useSignupCode({code: signupCode, userId: username})
 
     })
 }

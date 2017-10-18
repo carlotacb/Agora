@@ -2,7 +2,10 @@ const crypto = require('crypto')
 const config = require('../../config')
 const db = require('./user.db.js')
 
-function createUser({username, password}) {
+async function createUser({username, password}) {
+    const encryptedPassword = encryptPassword(password)
+    const user = await db.create({username: username, password: encryptedPassword})
+    return user
 
 }
 

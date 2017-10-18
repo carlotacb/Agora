@@ -28,4 +28,5 @@ async function create({username, password}) {
 
 module.exports = {
     get: get,
+    create: create,
 }
