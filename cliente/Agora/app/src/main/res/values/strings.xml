@@ -25,4 +25,5 @@
     <string name="prompt_oldPassword">Contraseña antigua</string>
     <string name="prompt_newPassword">Contraseña nueva</string>
     <string name="prompt_repeatNewPassword">Repite contraseña nueva</string>
+    <string name="promt_choseUsername">Eligir usuario</string>
 </resources>
