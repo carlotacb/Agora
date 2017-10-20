@@ -1,5 +1,6 @@
 package edu.upc.pes.agora;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.json.JSONObject;
@@ -26,7 +27,7 @@ public class HttpHelper {
      * @return true if server verifies data successfully, false otherwise
      * @throws IOException
      */
-    public static boolean verifyData(String i, String u, String p1, String p2)  {
+    public boolean verifyData(String i, String u, String p1, String p2)  {
 
 
 

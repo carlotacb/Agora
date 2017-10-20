@@ -50,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
                 pw2 = password2.getText().toString();
 
                 if(pw1.equals(pw2)){
-                    if (HttpHelper.verifyData(id, user, pw1, pw2)){
+                    if ((new HttpHelper()).verifyData(id, user, pw1, pw2)){
                         //access app
                         break;
                     }else{

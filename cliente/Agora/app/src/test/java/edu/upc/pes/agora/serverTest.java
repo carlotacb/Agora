@@ -22,14 +22,14 @@ public class serverTest {
     // amb aixo creo un usuari, sha de canviar el "u"
     public void test1() throws IOException {
         String id = "4773431860";
-        boolean b = HttpHelper.verifyData(id,userName,pass,pass);
+        boolean b = (new HttpHelper()).verifyData(id,userName,pass,pass);
         assertTrue(b);
     }
 
     @Test
     public void registerTest_invalidId(){
         String id = "incorrecte";
-        boolean b = HttpHelper.verifyData(id,userName,pass,pass);
+        boolean b = (new HttpHelper()).verifyData(id,userName,pass,pass);
         assertFalse(b);
     }
 
