@@ -1,4 +1,5 @@
 const userModule = require('../modules/user')
+const signupCodes = require('../modules/signup-codes')
 
 module.exports = app => {
     app.get('/', function (req, res) {
@@ -13,7 +14,19 @@ module.exports = app => {
                 username: user.username
             })
         } catch (error) {
+            console.error('error on login', error)
             res.sendStatus(403)
         }
+    })
+
+    app.post('/api/signup', async function (req, res) {
+        const {signupCode, username, password, confirmPassword} = req.body
+        if (!signupCode || !username || !password || !confirmPassword) return res.sendStatus(403)
+        if (password !== confirmPassword) return res.sendStatus(403)
+        const code = await signupCodes.getSignupCode(signupCode)
+        if (!code || code.usedBy) return res.sendStatus(403)
+        const user = await userModule.createUser({username, password})
+        await signupCodes.useSignupCode({code: signupCode, userId: username})
+
     })
 }

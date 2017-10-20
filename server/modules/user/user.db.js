@@ -16,6 +16,17 @@ async function get({username}) {
     return collection.findOne(query)
 }
 
+async function create({username, password}) {
+    const object = {
+        username: username,
+        password: password
+    }
+
+    const collection = await getCollection()
+    return collection.insertOne(object)
+}
+
 module.exports = {
     get: get,
+    create: create,
 }

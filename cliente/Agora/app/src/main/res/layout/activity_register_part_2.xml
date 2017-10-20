@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:id="@+id/username"
-        android:hint="@string/prompt_email"
+        android:hint="@string/promt_choseUsername"
         android:textColorHint="@color/white"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"

@@ -2,17 +2,19 @@ const crypto = require('crypto')
 const config = require('../../config')
 const db = require('./user.db.js')
 
-function createUser({username, password}) {
+async function createUser({username, password}) {
+    const encryptedPassword = encryptPassword(password)
+    const user = await db.create({username: username, password: encryptedPassword})
+    return user
 
 }
 
 async function login({username, password}) {
-    const user = await db.get({username}).catch(console.erro)
+    const user = await db.get({username})
     if (!user) {
         throw new Error(`Username "${username}" not found`)
     }
     const encryptedLoginPassword = encryptPassword(password)
-    console.log('encrypted xina password', typeof encryptedLoginPassword);
     if (encryptedLoginPassword !== user.password) {
         throw new Error(`Incorrect password for username "${username}"`)
     }
