@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.password);
 
 
-        login.setOnClickListener(new OnClickListener() {
+       /* login.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = etUsername.getText() + "";
@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 
             }
-        });
+        });*/
 
         register.setOnClickListener(new OnClickListener() {
             @Override
@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public class Networking extends AsyncTask {
+    /*public class Networking extends AsyncTask {
 
         public static final int NETWORK_STATE_REGISTER=1;
         @Override
@@ -124,6 +124,6 @@ public class LoginActivity extends AppCompatActivity {
                 break;
         }
 
-    }
+    }*/
 }
 
