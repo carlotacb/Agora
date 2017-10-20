@@ -50,7 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
                 pw2 = password2.getText().toString();
 
                 if(pw1.equals(pw2)){
-                    if (verifyData(id, user, pw1, pw2)){
+                    if (HttpHelper.verifyData(id, user, pw1, pw2)){
                         //access app
                         break;
                     }else{
@@ -64,65 +64,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * Verifies if entered data is correct.
-     * @param i entered ID
-     * @param u entered username
-     * @param p1 entered password 1
-     * @param p2 entered password 2
-     * @return true if server verifies data successfully, false otherwise
-     * @throws IOException
-     */
-    public boolean verifyData(String i, String u, String p1, String p2) throws IOException {
-
-        URL server =  new URL("http://sandshrew.fib.upc.es:3000/api/signup");
-        HttpURLConnection client = null;
-
-        try{
-            client = (HttpURLConnection) server.openConnection();
-            client.setReadTimeout(15000);
-            client.setConnectTimeout(15000);
-            client.setRequestMethod("POST");
-            client.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-            client.setRequestProperty("Accept","application/json");
-            client.setDoInput(true);
-            client.setDoOutput(true);
-
-            JSONObject data = new JSONObject();
-            data.put("signupCode", i);
-            data.put("username", u);
-            data.put("password", p1);
-            data.put("confirmPassword", p2);
-
-            Log.i("JSON", data.toString());
-
-            DataOutputStream os = new DataOutputStream(client.getOutputStream());
-            os.writeBytes(data.toString());
-            os.flush();
-            os.close();
-
-            Log.i("STATUS", String.valueOf(client.getResponseCode()));
-            Log.i("MSG" , client.getResponseMessage());
-
-            String line = "";
-            StringBuilder responseOutput = new StringBuilder();
-            BufferedReader br = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            while((line = br.readLine()) != null ) {
-                responseOutput.append(line);
-            }
-            String result = responseOutput.toString();
-            br.close();
-
-            client.disconnect();
-
-            return (result.toString().equals("200"));
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-        return false;
-    }
 
 
 }
