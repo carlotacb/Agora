@@ -34,7 +34,8 @@ async function useSignupCode({code, userId}) {
 
 async function getSignupCode(code) {
     const query = {
-        code: code
+        code: code,
+        usedBy: null
     }
     const collection = await getCollection()
     return collection.findOne(query)
