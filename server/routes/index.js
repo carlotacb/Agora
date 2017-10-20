@@ -20,13 +20,20 @@ module.exports = app => {
     })
 
     app.post('/api/signup', async function (req, res) {
-        const {signupCode, username, password, confirmPassword} = req.body
-        if (!signupCode || !username || !password || !confirmPassword) return res.sendStatus(403)
-        if (password !== confirmPassword) return res.sendStatus(403)
-        const code = await signupCodes.getSignupCode(signupCode)
-        if (!code || code.usedBy) return res.sendStatus(403)
-        const user = await userModule.createUser({username, password})
-        await signupCodes.useSignupCode({code: signupCode, userId: username})
+        try {
+            const {signupCode, username, password, confirmPassword} = req.body
+            if (!signupCode || !username || !password || !confirmPassword) throw new Error(`There is an invalid field`)
+            if (password !== confirmPassword) throw new Error(`Passwords are different`)
+            const code = await signupCodes.getSignupCode(signupCode)
+            if (!code) throw new Error(`Code used or not valid`)
+            const user = await userModule.createUser({username, password})
+            if (!user) throw new Error(`Could not create the user`)
+            await signupCodes.useSignupCode({code: signupCode, userId: username})
+            res.sendStatus(200)
+        } catch (error) {
+            console.error('error on signup', error)
+            res.sendStatus(403)
+        }
 
     })
 }
