@@ -51,11 +51,11 @@ public class RegisterActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(this.getApplicationContext(),"Passwords must be the same.", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            default:
+                break;
+
         }
         startActivity(new Intent (this, RegisterActivity.class));
     }
-
-
-
-
 }

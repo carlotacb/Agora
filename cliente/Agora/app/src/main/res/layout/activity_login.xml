@@ -8,7 +8,7 @@
               android:paddingLeft="@dimen/activity_horizontal_margin"
               android:paddingRight="@dimen/activity_horizontal_margin"
               android:paddingTop="@dimen/activity_vertical_margin"
-              android:background="@color/gris"
+              android:background="@color/white"
               tools:context="edu.upc.pes.agora.LoginActivity">
 
 
@@ -21,6 +21,11 @@
         android:textSize="40dp"
         android:padding="20dp"
         android:textColor="@color/blue"
+    />
+
+    <ImageView android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+
     />
 
     <EditText

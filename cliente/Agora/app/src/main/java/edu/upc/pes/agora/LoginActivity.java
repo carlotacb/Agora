@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private Button login, register;
     private EditText etUsername, etPassword;
+    private String username, password;
     private String URI = "https://dragos.ngrok.io";
 
     @Override
@@ -61,69 +62,40 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = (EditText) findViewById(R.id.username);
         etPassword = (EditText) findViewById(R.id.password);
 
-
-       /* login.setOnClickListener(new OnClickListener() {
+        login.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = etUsername.getText() + "";
-                String password = etPassword.getText() + "";
 
-                Context con = getApplicationContext();
-                int duration = Toast.LENGTH_SHORT;
-                // TODO: PONER EL MULTIIDIOMA
-                CharSequence textusercas = "Porfavor introduce un usuario válido";
-                CharSequence textpascas = "Contraseña incorrecta";
+                username = etUsername.getText().toString();
+                password = etPassword.getText().toString();
 
-                if (username.length() == 0) {
-                    Toast toast = Toast.makeText(con, textusercas, duration);
-                    toast.show();
+                Boolean res = (new HttpHelper()).verifyLogin(username,password);
+
+                if (res) {
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
 
-                if(password.length() == 0) {
-                    Toast toast = Toast.makeText(con, textpascas, duration);
-                    toast.show();
+                else {
+                    Toast.makeText(getApplicationContext(),"Usuari o password incorrectos", Toast.LENGTH_LONG).show();
                 }
-                
+
+                /*if ((new HttpHelper()).verifyLogin(username,password)){
+                   startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                }else{
+                    Toast.makeText(getApplicationContext(),"Usuari o password incorrectes", Toast.LENGTH_SHORT).show();
+                }*/
             }
-        });*/
+        });
+
 
         register.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
-
     }
-
-    /*public class Networking extends AsyncTask {
-
-        public static final int NETWORK_STATE_REGISTER=1;
-        @Override
-        protected Object doInBackground(Object[] params) {
-
-            getJson(URI, NETWORK_STATE_REGISTER);
-            return null;
-        }
-    }
-
-    private void getJson(String url, int state) {
-
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpPost request = new HttpPost(url);
-        List<NameValuePair> postParameters = new ArrayList<NameValuePais>();
-
-        switch(state) {
-            case Networking.NETWORK_STATE_REGISTER:
-
-                postParameters.get(new BasicNameValuePair("username", etUsername));
-
-
-                break;
-            default:
-                break;
-        }
-
-    }*/
 }
 
+
+// -------------------------

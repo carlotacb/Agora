@@ -3,7 +3,7 @@
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
-    <string name="bienvenida">Bienvenidos a Àgora</string>
+    <string name="bienvenida">BIENVENIDO/A a ÀGORA</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -14,11 +14,11 @@
     <string name="error_field_required">This field is required</string>
 
     <!-- Strings related to registration -->
-    <string name="registration">Registrar en Àgora</string>
+    <string name="registration">Registro</string>
     <string name="action_Registration">Registrar</string>
     <string name="prompt_NewPassword">Contraseña</string>
-    <string name="prompt_repeatPassword">Repite contraseña</string>
-    <string name="prompt_choseUsername">Eligir usuario</string>
+    <string name="prompt_repeatPassword">Repetir Contraseña</string>
+    <string name="prompt_choseUsername">Username</string>
     <string name="prompt_identification">Identificador</string>
 
 </resources>
