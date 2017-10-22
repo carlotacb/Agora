@@ -24,25 +24,24 @@
         />
 
     <EditText
-        android:id="@+id/identificador"
+        android:id="@+id/identifier"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:text="@string/prompt_identificador"
-        android:textColorHint="@color/white"
-        android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginTop="20dp"
+        android:inputType="textPersonName"
+        android:text="@string/prompt_identification"
+        android:textColorHint="@color/white" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:id="@+id/username"
-        android:hint="@string/promt_choseUsername"
+        android:hint="@string/prompt_choseUsername"
         android:textColorHint="@color/white"
-        android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
@@ -55,7 +54,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:hint="@string/prompt_Password"
+        android:hint="@string/prompt_NewPassword"
         android:inputType="textPassword"
         android:textColorHint="@color/white"
         />
