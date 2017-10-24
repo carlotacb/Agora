@@ -26,11 +26,11 @@ import javax.net.ssl.HttpsURLConnection;
  * Created by gerar on 24/10/2017.
  */
 
-public class GetAsyncTask extends AsyncTask<JSONObject, Void, Boolean> {
+public class PostLoginAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     private URL url;
     private Context context;
 
-    public GetAsyncTask(String url2, Context coming_context) {
+    public PostLoginAsyncTask(String url2, Context coming_context) {
         try {
             url = new URL(url2);
             context = coming_context;
@@ -39,7 +39,7 @@ public class GetAsyncTask extends AsyncTask<JSONObject, Void, Boolean> {
         }
     }
 
-    protected Boolean doInBackground(final JSONObject... params) {
+    protected JSONObject doInBackground(final JSONObject... params) {
         try {
             HttpURLConnection client = (HttpURLConnection) url.openConnection();
             client.setReadTimeout(15000);
@@ -57,29 +57,39 @@ public class GetAsyncTask extends AsyncTask<JSONObject, Void, Boolean> {
 
             client.getOutputStream().close();
             client.connect();
+            JSONObject response = new JSONObject();
 
-            if (client.getResponseCode()==200) {
-                String response = iStreamToString(client.getInputStream());
-                client.disconnect();
-
-                return true;
+            try {
+                if (client.getResponseCode()==200) {
+                }
+                else  {
+                    Log.i("asdTAG","response code: "+client.getResponseCode());
+                    String error = client.getResponseMessage();
+                    response.put("success",false);
+                    if(client.getResponseCode()!=403)
+                        response.put("errorMessage",error);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            else  {
-                Log.i("asdTAG","response code: "+client.getResponseCode());
-                client.disconnect();
-
-                return  false;
-               // aux = new JSONObject(iStreamToString(client.getErrorStream()));
-            }
 
 
+            client.disconnect();
+            return response;
 
 
         } catch (IOException e) {
             e.printStackTrace();
             Log.e("asdTAG", e.getMessage());
 
-            return false;
+            JSONObject response = new JSONObject();
+            try {
+                response.put("success",false);
+                response.put("errorMessage","Android Internal error");
+            } catch (JSONException e1) {
+                e1.printStackTrace();
+            }
+            return response;
         }
     }
 
