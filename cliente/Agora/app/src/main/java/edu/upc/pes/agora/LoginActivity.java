@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -42,6 +43,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
@@ -53,7 +55,8 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
     private TextView register;
     private EditText etUsername, etPassword;
     private String username, password;
-    private String URI = "https://dragos.ngrok.io";
+    private Locale locale;
+    private Configuration config = new Configuration();
 
     private String[] data = {"Castellano", "Català", "English"};
 
@@ -77,13 +80,15 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
         //spin.setOnItemSelectedListener(this);
 
         ArrayList<ItemData> list = new ArrayList<>();
-        list.add(new ItemData("Castellano", R.drawable.espicon));
-        list.add(new ItemData("Català", R.drawable.caticon));
-        list.add(new ItemData("English", R.drawable.engicon));
+        list.add(new ItemData("Castellano", R.drawable.esp));
+        list.add(new ItemData("Català", R.drawable.cat));
+        list.add(new ItemData("English", R.drawable.eng));
 
 
         SpinnerAdapter adapter = new SpinnerAdapter(this, R.layout.spinner_layout, R.id.txt, list);
         spin.setAdapter(adapter);
+
+        spin.setOnItemSelectedListener(this);
 
         etUsername = (EditText)findViewById(R.id.username);
         etPassword = (EditText)findViewById(R.id.password);
@@ -118,8 +123,33 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        Log.i("POSITION", String.valueOf(position));
+
+        //obtiene los idiomas del array de string.xml
+        String[] types = getResources().getStringArray(R.array.languages);
+
         TextView myText = (TextView) view;
-        Toast.makeText(this, "You Selected "+myText.getText(), Toast.LENGTH_SHORT).show();
+        String text = myText.toString();
+
+        switch(text){
+            case "Castellano":
+                locale = new Locale("es");
+                config.locale = locale;
+                break;
+            case "English":
+                locale = new Locale("en");
+                config.locale = locale;
+                break;
+            case "Català":
+                locale = new Locale("ca");
+                config.locale = locale;
+                break;
+        }
+
+
+        //TextView myText = (TextView) view;
+        //Toast.makeText(this, "You Selected "+myText.getText(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -129,11 +159,35 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 }
 
 
-/* SPINNER:
+/*
 
-   - STEP 1: al arxiu XML crear el array de Strings
-   - STEP 2: Posar el Spinner al XML corresponent
-   - STEP 3: Crear Adaptador
-*
-*
+
+
+        //obtiene los idiomas del array de string.xml
+        String[] types = getResources().getStringArray(R.array.languages);
+        b.setItems(types, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+                switch(which){
+                    case 0:
+                        locale = new Locale("en");
+                        config.locale =locale;
+                        break;
+                    case 1:
+                        locale = new Locale("es");
+                        config.locale =locale;
+                        break;
+                    case 2:
+                        locale = new Locale("ca");
+                        config.locale =locale;
+                        break;
+                }
+                getResources().updateConfiguration(config, null);
+                Intent refresh = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(refresh);
+                finish();
+
 * */

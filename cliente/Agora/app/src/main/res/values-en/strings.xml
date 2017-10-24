@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Agora</string>
+    <string name="Login">Sign In</string>
+    <string name="SignIn">Register</string>
+    <string name="action_Registration">Sign Up</string>
+    <string name="bienvenida">WELCOME TO ÀGORA</string>
+    <string name="hint_password">Password</string>
+    <string name="pre_registre">Not registered yet?</string>
+    <string name="prompt_NewPassword">Password</string>
+    <string name="prompt_identification">Register Code</string>
+    <string name="prompt_repeatPassword">Repeat Password</string>
+    <string name="registration">User Register</string>
+</resources>
