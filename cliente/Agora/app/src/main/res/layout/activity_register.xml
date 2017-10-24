@@ -99,7 +99,7 @@
         android:fontFamily="serif"
         android:textStyle="bold"
         android:textSize="17dp"
-        android:onClick="Login"/>
+        android:onClick="onClick"/>
 
 
 </LinearLayout>
