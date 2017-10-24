@@ -1,8 +1,12 @@
 package edu.upc.pes.agora;
 
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
+import com.android.volley.*;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
@@ -24,18 +28,19 @@ public class HttpHelper {
 
     /**
      * Verifies if entered data is correct.
-     * @param i entered ID
-     * @param u entered username
+     *
+     * @param i  entered ID
+     * @param u  entered username
      * @param p1 entered password 1
      * @param p2 entered password 2
      * @return true if server verifies data successfully, false otherwise
      * @throws IOException
      */
-    public boolean verifyData(String i, String u, String p1, String p2)  {
+    public boolean verifyData(String i, String u, String p1, String p2) {
 
-        try{
+        try {
 
-            URL server =  new URL("http://sandshrew.fib.upc.es:3000/api/signup");
+            URL server = new URL("http://sandshrew.fib.upc.es:3000/api/signup");
             HttpURLConnection client = null;
 
             client = (HttpURLConnection) server.openConnection();
@@ -43,7 +48,7 @@ public class HttpHelper {
             client.setConnectTimeout(15000);
             client.setRequestMethod("POST");
             client.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-            client.setRequestProperty("Accept","application/json");
+            client.setRequestProperty("Accept", "application/json");
             client.setDoInput(true);
             client.setDoOutput(true);
 
@@ -62,7 +67,7 @@ public class HttpHelper {
 
             int responseCode = client.getResponseCode();
             Log.i("STATUS", String.valueOf(responseCode));
-            Log.i("MSG" , client.getResponseMessage());
+            Log.i("MSG", client.getResponseMessage());
        /*     String line = "";
             StringBuilder responseOutput = new StringBuilder();
             BufferedReader br = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -76,64 +81,14 @@ public class HttpHelper {
 
             return (responseCode == 200);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return false;
     }
 
-    /**
-     * Verifies if entered data is correct.
-     * @param username entered username
-     * @param password entered password
-     * @return true if server verifies data is correct, false otherwise
-     * @throws IOException
-     */
-    public boolean verifyLogin(String username, String password) {
-
-        try{
-
-            URL server =  new URL("http://sandshrew.fib.upc.es:3000/api/signup");
-
-            // Parameters as JSON
-            JSONObject values=new JSONObject();
-            values.put("username",username);
-            values.put("password",password);
-
-            HttpURLConnection client = null;
-
-            client = (HttpURLConnection) server.openConnection();
-            client.setReadTimeout(15000);
-            client.setConnectTimeout(15000);
-            client.setRequestMethod("POST");
-            client.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
-            client.setRequestProperty("Accept","application/json");
-            client.setDoInput(true);
-            client.setDoOutput(true);
-
-            Log.i("JSON", values.toString());
-
-            DataOutputStream os = new DataOutputStream(client.getOutputStream());
-            os.writeBytes(values.toString());
-            os.flush();
-            os.close();
-
-            int responseCode = client.getResponseCode();
-            Log.i("STATUS", String.valueOf(responseCode));
-            Log.i("MSG" , client.getResponseMessage());
-
-            return (responseCode == 200);
-
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-
-        return false;
-    }
 }
-
-
 /*
 *  // Building Parameters
                 List params = new ArrayList();

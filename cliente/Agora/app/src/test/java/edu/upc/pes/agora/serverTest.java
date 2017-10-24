@@ -12,10 +12,7 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class serverTest {
-    @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
-    }
+
     String userName = "u";
     String pass = "pass";
 
@@ -35,14 +32,14 @@ public class serverTest {
 
     @Test
     public void loginTest_correcte() {
-      //  boolean b = HttpHelper.login(userName,pass);//
-       // assertTrue(b);
+        boolean b = (new HttpHelper()).verifyLogin(userName,pass);
+        assertTrue(b);
     }
 
     @Test
     public void loginTest_incorrecte() {
         String passIncorrect = "passIncorrect";
-      //  boolean b = HttpHelper.login(userName,passIncorrect);
-       // assertFalse(b);
+        boolean b = (new HttpHelper()).verifyLogin(userName,passIncorrect);
+        assertFalse(b);
     }
 }

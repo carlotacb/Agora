@@ -39,7 +39,10 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Handler;
@@ -95,15 +98,32 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
 
-                Boolean res = (new HttpHelper()).verifyLogin(username,password);
 
-                if (res) {
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                JSONObject values=new JSONObject();
+                try {
+                    values.put("username",username);
+                    values.put("password",password);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+                new GetAsyncTask("http://sandshrew.fib.upc.es:3000/api/login",LoginActivity.this){
+                    @Override
+                    protected void onPostExecute(Boolean res) {
 
-                else {
-                    Toast.makeText(getApplicationContext(),"Usuari o password incorrectos", Toast.LENGTH_LONG).show();
-                }
+                        Log.i("asdBool", res.toString());
+
+                        if (res) {
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        }
+
+                        else {
+                            Log.i("asd", "gfgffgfgf");
+                            Toast.makeText(getApplicationContext(),"Usuari o password incorrectos", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+                }.execute(values);
+
             }
         });
 
