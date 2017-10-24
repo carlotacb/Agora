@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
         Log.i("POSITION", String.valueOf(position));
 
         //obtiene los idiomas del array de string.xml
-        String[] types = getResources().getStringArray(R.array.languages);
+     /*   String[] types = getResources().getStringArray(R.array.languages);
 
         TextView myText = (TextView) view;
         String text = myText.toString();
@@ -146,7 +146,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                 config.locale = locale;
                 break;
         }
-
+*/
 
         //TextView myText = (TextView) view;
         //Toast.makeText(this, "You Selected "+myText.getText(), Toast.LENGTH_SHORT).show();
