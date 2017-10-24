@@ -24,10 +24,10 @@ public class mockitoExampleTest {
     @Mock
     Context mMockContext;
 
-
+ /*
     @Test
     public void mockitoOk() {
-        HttpHelper mockWarehouse = mock(HttpHelper.class);
+       HttpHelper mockWarehouse = mock(HttpHelper.class);
 
          when(mockWarehouse.verifyData("","","",""))
                 .thenReturn(true);
@@ -62,4 +62,5 @@ public class mockitoExampleTest {
         assertTrue(result);
 
     }
+    */
 }
