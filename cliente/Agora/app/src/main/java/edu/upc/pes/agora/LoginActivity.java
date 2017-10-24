@@ -20,14 +20,17 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,12 +46,16 @@ import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private Button login, register;
+    private Button login;
+    private Spinner spin;
+    private TextView register;
     private EditText etUsername, etPassword;
     private String username, password;
     private String URI = "https://dragos.ngrok.io";
+
+    private String[] data = {"Castellano", "Català", "English"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +63,30 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        login = (Button) findViewById(R.id.btnLogin);
-        register = (Button) findViewById(R.id.btnRegister);
+        login = (Button)findViewById(R.id.btnLogin);
+        register = (TextView)findViewById(R.id.btnRegister);
 
-        etUsername = (EditText) findViewById(R.id.username);
-        etPassword = (EditText) findViewById(R.id.password);
+        spin = (Spinner)findViewById(R.id.spinner);
+
+        // Primer valor indica el context, el segundo valor tipo de "estilo" que nos proporciona Android y el tercero los datos que queremos mostar
+        //ArrayAdapter<String> adaptador = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
+        //spin.setAdapter(adaptador);
+
+        //ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.idiomes, android.R.layout.simple_spinner_dropdown_item);
+        //spin.setAdapter(adapter);
+        //spin.setOnItemSelectedListener(this);
+
+        ArrayList<ItemData> list = new ArrayList<>();
+        list.add(new ItemData("Castellano", R.drawable.espicon));
+        list.add(new ItemData("Català", R.drawable.caticon));
+        list.add(new ItemData("English", R.drawable.engicon));
+
+
+        SpinnerAdapter adapter = new SpinnerAdapter(this, R.layout.spinner_layout, R.id.txt, list);
+        spin.setAdapter(adapter);
+
+        etUsername = (EditText)findViewById(R.id.username);
+        etPassword = (EditText)findViewById(R.id.password);
 
         login.setOnClickListener(new OnClickListener() {
             @Override
@@ -78,12 +104,6 @@ public class LoginActivity extends AppCompatActivity {
                 else {
                     Toast.makeText(getApplicationContext(),"Usuari o password incorrectos", Toast.LENGTH_LONG).show();
                 }
-
-                /*if ((new HttpHelper()).verifyLogin(username,password)){
-                   startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                }else{
-                    Toast.makeText(getApplicationContext(),"Usuari o password incorrectes", Toast.LENGTH_SHORT).show();
-                }*/
             }
         });
 
@@ -95,7 +115,25 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        TextView myText = (TextView) view;
+        Toast.makeText(this, "You Selected "+myText.getText(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
 
 
-// -------------------------
+/* SPINNER:
+
+   - STEP 1: al arxiu XML crear el array de Strings
+   - STEP 2: Posar el Spinner al XML corresponent
+   - STEP 3: Crear Adaptador
+*
+*
+* */

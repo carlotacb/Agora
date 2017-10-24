@@ -18,56 +18,91 @@
         android:gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:text="@string/bienvenida"
-        android:textSize="40dp"
-        android:padding="20dp"
+        android:textSize="35dp"
+        android:padding="10dp"
         android:textColor="@color/blue"
-    />
+        android:fontFamily="serif"/>
 
     <ImageView android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-
-    />
+               android:layout_height="150dp"
+               android:layout_marginBottom="12dp"
+               android:layout_marginTop="10dp"
+               android:src="@drawable/logo"/>
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:id="@+id/username"
-        android:hint="Username"
-        android:textColorHint="@color/white"
-        android:layout_marginTop="20dp"
+        android:hint="@string/hint_username"
+        android:textColorHint="#e89b9696"
+        android:padding="10dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"/>
+        android:fontFamily="serif"
+        android:background="@drawable/edittext_bg"
+        android:textCursorDrawable="@null"
+        android:textColor="#000"
+        android:textStyle="italic"/>
 
     <EditText
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:id="@+id/password"
-        android:hint="********"
-        android:textColorHint="@color/white"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"/>
+        android:hint="@string/hint_password"
+        android:textColorHint="#e89b9696"
+        android:fontFamily="serif"
+        android:textColor="#000"
+        android:textCursorDrawable="@null"
+        android:padding="10dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/edittext_bg"
+        android:textStyle="italic"/>
 
     <Button
         android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="Entrar"
+        android:text="@string/Login"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
+        android:background="@drawable/botonlogin"
+        android:textColor="#000"
+        android:fontFamily="serif"
+        android:textStyle="bold"
+        android:textSize="17dp"
         android:onClick="Login"/>
 
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrarse"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:onClick="Regitro"/>
+        android:gravity="center_horizontal"
+        android:text="@string/pre_registre"
+        android:textSize="15dp"
+        android:padding="5dp"
+        android:textColor="#000"
+        android:fontFamily="serif"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnRegister"
+        android:gravity="center_horizontal"
+        android:text="@string/SignIn"
+        android:textSize="15dp"
+        android:textColor="#3838e2"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:fontFamily="serif"/>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"/>
+
+
 </LinearLayout>
