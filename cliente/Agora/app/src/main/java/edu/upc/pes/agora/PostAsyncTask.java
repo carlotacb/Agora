@@ -26,11 +26,11 @@ import javax.net.ssl.HttpsURLConnection;
  * Created by gerar on 24/10/2017.
  */
 
-public class PostLoginAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
+public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     private URL url;
     private Context context;
 
-    public PostLoginAsyncTask(String url2, Context coming_context) {
+    public PostAsyncTask(String url2, Context coming_context) {
         try {
             url = new URL(url2);
             context = coming_context;
@@ -61,6 +61,7 @@ public class PostLoginAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> 
 
             try {
                 if (client.getResponseCode()==200) {
+                    response.put("success",true);
                 }
                 else  {
                     Log.i("asdTAG","response code: "+client.getResponseCode());
@@ -93,20 +94,4 @@ public class PostLoginAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> 
         }
     }
 
-    public static String iStreamToString(InputStream is1) {
-        BufferedReader rd = new BufferedReader(new InputStreamReader(is1), 4096);
-        String line;
-        StringBuilder sb = new StringBuilder();
-        try {
-            while ((line = rd.readLine()) != null) {
-                sb.append(line);
-            }
-            rd.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        String contentOfMyInputStream = sb.toString();
-        return contentOfMyInputStream;
-    }
 }

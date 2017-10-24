@@ -3,11 +3,13 @@ package edu.upc.pes.agora;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.IOException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -42,12 +44,38 @@ public class RegisterActivity extends AppCompatActivity {
                 pw2 = password2.getText().toString();
 
                 if(pw1.equals(pw2)){
-                    if ((new HttpHelper()).verifyData(id, user, pw1, pw2)){
-                        //access app
-                        break;
-                    }else{
-                        Toast.makeText(this.getApplicationContext(),"ID not valid or username already taken.", Toast.LENGTH_SHORT).show();
-                    }
+
+                    JSONObject data = new JSONObject();
+                    data.put("signupCode", id);
+                    data.put("username", user);
+                    data.put("password", pw1);
+                    data.put("confirmPassword", pw2);
+                    new PostAsyncTask("http://sandshrew.fib.upc.es:3000/api/signup",RegisterActivity.this){
+                        @Override
+                        protected void onPostExecute(JSONObject resObject) {
+                            Boolean res = false;
+                            String error = "ID not valid or username already taken.";
+
+                            try {
+                                if(resObject.has("success")) res = resObject.getBoolean("success");
+                                if(!res && resObject.has("errorMessage") ) error = resObject.getString("errorMessage");
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Log.i("asdBool", res.toString());
+
+                            if (res){
+                                //access app
+                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+
+                            }else{
+                                Toast.makeText(RegisterActivity.this,error, Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                    }.execute(data);
+
                 }else{
                     Toast.makeText(this.getApplicationContext(),"Passwords must be the same.", Toast.LENGTH_SHORT).show();
                 }

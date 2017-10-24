@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                new PostLoginAsyncTask("http://sandshrew.fib.upc.es:3000/api/login",LoginActivity.this){
+                new PostAsyncTask("http://sandshrew.fib.upc.es:3000/api/login",LoginActivity.this){
                     @Override
                     protected void onPostExecute(JSONObject resObject) {
                         Boolean res = false;
