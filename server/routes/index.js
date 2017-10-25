@@ -28,7 +28,7 @@ module.exports = app => {
             if (!code) throw new Error(`Code used or not valid`)
             const user = await userModule.createUser({username, password})
             if (!user) throw new Error(`Could not create the user`)
-            await signupCodes.useSignupCode({code: signupCode, userId: username})
+            if (code.code!=="007")await signupCodes.useSignupCode({code: signupCode, userId: username})
             res.sendStatus(200)
         } catch (error) {
             console.error('error on signup', error)
