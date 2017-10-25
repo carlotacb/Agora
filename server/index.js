@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+const morgan = require('morgan')
 
 const config = require('./config')
 
@@ -13,6 +14,7 @@ StartServer(app)
 
 function BootstrapServer(app) {
     app.use(bodyParser.json())
+    app.use(morgan('combined'))
 }
 
 function StartServer(app) {
