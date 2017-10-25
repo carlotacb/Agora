@@ -4,7 +4,7 @@
     <string name="Login" translatable="false">Entrar</string>
     <string name="SignIn">Regístrate</string>
     <string name="action_Registration">Registrarse</string>
-    <string name="bienvenida">BIENVENIDO/A a ÀGORA</string>
+    <string name="bienvenida">BIENVENIDO a ÀGORA</string>
     <string name="hint_password">Contraseña</string>
     <string name="pre_registre">¿No estas registrado?</string>
     <string name="prompt_NewPassword">Contraseña</string>

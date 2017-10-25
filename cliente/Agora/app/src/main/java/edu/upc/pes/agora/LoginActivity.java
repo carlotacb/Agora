@@ -2,9 +2,11 @@ package edu.upc.pes.agora;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,8 +31,8 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
     private TextView register;
     private EditText etUsername, etPassword;
     private String username, password;
-    private Locale locale;
     private Configuration config = new Configuration();
+    private Locale locale;
 
     private String[] data = {"Castellano", "Català", "English"};
 
@@ -54,6 +56,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
         //spin.setOnItemSelectedListener(this);
 
         ArrayList<ItemData> list = new ArrayList<>();
+        list.add(new ItemData("Select Language:",R.drawable.terra));
         list.add(new ItemData("Castellano", R.drawable.esp));
         list.add(new ItemData("Català", R.drawable.cat));
         list.add(new ItemData("English", R.drawable.eng));
@@ -122,32 +125,46 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        Log.i("POSITION", String.valueOf(position));
+        Intent refresh = new Intent(LoginActivity.this, LoginActivity.class);
 
-        //obtiene los idiomas del array de string.xml
-     /*   String[] types = getResources().getStringArray(R.array.languages);
-
-        TextView myText = (TextView) view;
-        String text = myText.toString();
-
-        switch(text){
-            case "Castellano":
+        switch(position) {
+            case 0:
+                break;
+            case 1:
                 locale = new Locale("es");
                 config.locale = locale;
+                getResources().updateConfiguration(config, null);
+                startActivity(refresh);
+                //Toast.makeText(this, "You Selected Castellano", Toast.LENGTH_SHORT).show();
                 break;
-            case "English":
-                locale = new Locale("en");
-                config.locale = locale;
-                break;
-            case "Català":
+            case 2:
                 locale = new Locale("ca");
                 config.locale = locale;
+                getResources().updateConfiguration(config, null);
+                startActivity(refresh);
+                //Toast.makeText(this, "You Selected Català", Toast.LENGTH_SHORT).show();
+                break;
+            case 3:
+                locale = new Locale("en");
+                config.locale = locale;
+                getResources().updateConfiguration(config, null);
+                startActivity(refresh);
+                //Toast.makeText(this, "You Selected English", Toast.LENGTH_SHORT).show();
                 break;
         }
-*/
 
-        //TextView myText = (TextView) view;
-        //Toast.makeText(this, "You Selected "+myText.getText(), Toast.LENGTH_SHORT).show();
+        //Resources res = this.getResources();
+        // Change locale settings in the app.
+        //DisplayMetrics dm = res.getDisplayMetrics();
+        //res.updateConfiguration(config, dm);
+
+        getResources().updateConfiguration(config,null);
+
+        //getResources().updateConfiguration(config, null);
+        //Intent refresh = new Intent(LoginActivity.this, LoginActivity.class);
+        //startActivity(refresh);
+        //finish();
+
     }
 
     @Override
