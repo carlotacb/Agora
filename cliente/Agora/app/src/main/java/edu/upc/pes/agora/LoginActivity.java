@@ -3,6 +3,7 @@ package edu.upc.pes.agora;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -47,19 +48,18 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
         spin = (Spinner)findViewById(R.id.spinner);
 
-        // Primer valor indica el context, el segundo valor tipo de "estilo" que nos proporciona Android y el tercero los datos que queremos mostar
-        //ArrayAdapter<String> adaptador = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, data);
-        //spin.setAdapter(adaptador);
+        final Resources res = this.getResources();
 
-        //ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.idiomes, android.R.layout.simple_spinner_dropdown_item);
-        //spin.setAdapter(adapter);
-        //spin.setOnItemSelectedListener(this);
+        String sel = res.getString(R.string.tria_idioma);
+        String cast = res.getString(R.string.Castella);
+        String cata = res.getString(R.string.Catalan);
+        String engl = res.getString(R.string.Ingles);
 
         ArrayList<ItemData> list = new ArrayList<>();
-        list.add(new ItemData("Select Language:",R.drawable.terra));
-        list.add(new ItemData("Castellano", R.drawable.esp));
-        list.add(new ItemData("Català", R.drawable.cat));
-        list.add(new ItemData("English", R.drawable.eng));
+        list.add(new ItemData(sel, R.drawable.terra));
+        list.add(new ItemData(cast, R.drawable.esp));
+        list.add(new ItemData(cata, R.drawable.cat));
+        list.add(new ItemData(engl, R.drawable.eng));
 
 
         SpinnerAdapter adapter = new SpinnerAdapter(this, R.layout.spinner_layout, R.id.txt, list);
@@ -77,39 +77,44 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
 
-
-                JSONObject values=new JSONObject();
-                try {
-                    values.put("username",username);
-                    values.put("password",password);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (username.length() == 0 || password.length() == 0) {
+                    String error2 = res.getString(R.string.error2);
+                    Toast.makeText(getApplicationContext(), error2, Toast.LENGTH_LONG).show();
                 }
-                new PostAsyncTask("http://sandshrew.fib.upc.es:3000/api/login",LoginActivity.this){
-                    @Override
-                    protected void onPostExecute(JSONObject resObject) {
-                        Boolean res = false;
-                        String error = "Usuario o password incorrectos";
 
-                        try {
-                            if(resObject.has("success")) res = resObject.getBoolean("success");
-                            if(!res && resObject.has("errorMessage") ) error = resObject.getString("errorMessage");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Log.i("asdBool", res.toString());
-
-                        if (res) {
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        }
-                        else {
-                            Log.i("asd", "gfgffgfgf");
-                            Toast.makeText(getApplicationContext(),error, Toast.LENGTH_LONG).show();
-                        }
-
+                else {
+                    JSONObject values=new JSONObject();
+                    try {
+                        values.put("username",username);
+                        values.put("password",password);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                }.execute(values);
+                    new PostAsyncTask("http://sandshrew.fib.upc.es:3000/api/login",LoginActivity.this){
+                        @Override
+                        protected void onPostExecute(JSONObject resObject) {
+                            Boolean result = false;
+                            String error = "";
 
+                            try {
+                                if(resObject.has("success")) result = resObject.getBoolean("success");
+                                if(!result && resObject.has("errorMessage") ) error = res.getString(R.string.error);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Log.i("asdBool", result.toString());
+
+                            if (result) {
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            }
+                            else {
+                                Log.i("asd", "gfgffgfgf");
+                                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                            }
+
+                        }
+                    }.execute(values);
+                }
             }
         });
 
@@ -126,6 +131,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         Intent refresh = new Intent(LoginActivity.this, LoginActivity.class);
+        refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         switch(position) {
             case 0:
@@ -135,35 +141,23 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                 config.locale = locale;
                 getResources().updateConfiguration(config, null);
                 startActivity(refresh);
-                //Toast.makeText(this, "You Selected Castellano", Toast.LENGTH_SHORT).show();
                 break;
             case 2:
                 locale = new Locale("ca");
                 config.locale = locale;
                 getResources().updateConfiguration(config, null);
                 startActivity(refresh);
-                //Toast.makeText(this, "You Selected Català", Toast.LENGTH_SHORT).show();
                 break;
             case 3:
                 locale = new Locale("en");
                 config.locale = locale;
                 getResources().updateConfiguration(config, null);
                 startActivity(refresh);
-                //Toast.makeText(this, "You Selected English", Toast.LENGTH_SHORT).show();
                 break;
         }
 
-        //Resources res = this.getResources();
-        // Change locale settings in the app.
-        //DisplayMetrics dm = res.getDisplayMetrics();
-        //res.updateConfiguration(config, dm);
 
         getResources().updateConfiguration(config,null);
-
-        //getResources().updateConfiguration(config, null);
-        //Intent refresh = new Intent(LoginActivity.this, LoginActivity.class);
-        //startActivity(refresh);
-        //finish();
 
     }
 
@@ -171,38 +165,11 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    @Override
+    public void onBackPressed() {
+        System.exit(0);
+        //Intent refresh = new Intent(LoginActivity.this, LoginActivity.class);
+        //startActivity(refresh);
+    }
 }
-
-
-/*
-
-
-
-        //obtiene los idiomas del array de string.xml
-        String[] types = getResources().getStringArray(R.array.languages);
-        b.setItems(types, new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                dialog.dismiss();
-                switch(which){
-                    case 0:
-                        locale = new Locale("en");
-                        config.locale =locale;
-                        break;
-                    case 1:
-                        locale = new Locale("es");
-                        config.locale =locale;
-                        break;
-                    case 2:
-                        locale = new Locale("ca");
-                        config.locale =locale;
-                        break;
-                }
-                getResources().updateConfiguration(config, null);
-                Intent refresh = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(refresh);
-                finish();
-
-* */

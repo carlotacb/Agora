@@ -11,4 +11,16 @@
     <string name="prompt_identification">Codigo de Registro</string>
     <string name="prompt_repeatPassword">Repetir Contraseña</string>
     <string name="registration">Registro del Usuario</string>
+    <string name="tria_idioma">Seleccionar Idioma</string>
+    <string name="Castella">Castellano</string>
+    <string name="Catalan">Catalán</string>
+    <string name="Ingles">Inglés</string>
+    <string name="error">Usuario o password incorrectos</string>
+    <string name="error2">Rellena todos los campos</string>
+    <string name="errorreg">Código no válido o username existente</string>
+    <string name="samepass">Passwords doesn\'t match</string>
+    <string name="errorid">Código de registro necesario</string>
+    <string name="errorpw">Campos \"password\" necesarios</string>
+    <string name="erroruser">Campo \"username\" necesario</string>
+    <string name="Registrat">Usuario %1$s registrado correctamente</string>
 </resources>

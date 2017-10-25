@@ -1,29 +1,31 @@
 package edu.upc.pes.agora;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RegisterActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.Locale;
 
-    EditText identifier;
-    EditText username;
-    EditText password1;
-    EditText password2;
-    String user;
-    String id;
-    String pw1;
-    String pw2;
-    PostAsyncTask _postAsyncTask;
-    Boolean _registered = false;
-    String _registeredMessage = "";
+public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    private EditText identifier, username, password1, password2;
+    private String user, id, pw1, pw2;
+    private Spinner spin;
+    private Configuration config = new Configuration();
+    private Locale locale;
+    private Boolean _registerdone = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,61 +36,116 @@ public class RegisterActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.username);
         password1 = (EditText) findViewById(R.id.password1);
         password2 = (EditText) findViewById(R.id.password2);
+        spin = (Spinner)findViewById(R.id.spinner);
+
+        final Resources res = this.getResources();
+
+        String sel = res.getString(R.string.tria_idioma);
+        String cast = res.getString(R.string.Castella);
+        String cata = res.getString(R.string.Catalan);
+        String engl = res.getString(R.string.Ingles);
+
+        ArrayList<ItemData> list = new ArrayList<>();
+        list.add(new ItemData(sel, R.drawable.terra));
+        list.add(new ItemData(cast, R.drawable.esp));
+        list.add(new ItemData(cata, R.drawable.cat));
+        list.add(new ItemData(engl, R.drawable.eng));
+
+        SpinnerAdapter adapter = new SpinnerAdapter(this, R.layout.spinner_layout, R.id.txt, list);
+        spin.setAdapter(adapter);
+
+        spin.setOnItemSelectedListener(this);
 
     }
 
     public void register(){
+
         id = identifier.getText().toString();
         user = username.getText().toString();
         pw1 = password1.getText().toString();
         pw2 = password2.getText().toString();
 
-        if(pw1.equals(pw2)){
+        final Resources res = this.getResources();
 
-            JSONObject data = new JSONObject();
-            try {
-                data.put("signupCode", id);
-                data.put("username", user);
-                data.put("password", pw1);
-                data.put("confirmPassword", pw2);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            _postAsyncTask = new PostAsyncTask("http://sandshrew.fib.upc.es:3000/api/signup",RegisterActivity.this){
-                @Override
-                protected void onPostExecute(JSONObject resObject) {
-                    Boolean res = false;
-                    String error = "ID not valid or username already taken.";
+        if (id.length() == 0) {
+            String errorid = res.getString(R.string.errorid);
+            Toast.makeText(RegisterActivity.this, errorid, Toast.LENGTH_SHORT).show();
+            password1.setText("");
+            password2.setText("");
+        }
 
-                    try {
-                        if(resObject.has("success")) res = resObject.getBoolean("success");
-                        if(!res && resObject.has("errorMessage") ) error = resObject.getString("errorMessage");
+        else if (user.length() == 0) {
+            String erroruser = res.getString(R.string.erroruser);
+            Toast.makeText(RegisterActivity.this, erroruser, Toast.LENGTH_SHORT).show();
+            password1.setText("");
+            password2.setText("");
+        }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    Log.i("asdBool", res.toString());
-                    _registered = res;
-                    if (res){
-                        //access app
-                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+        else if (pw1.length() == 0 || pw2.length() == 0) {
+            String errorpass = res.getString(R.string.errorpw);
+            Toast.makeText(RegisterActivity.this, errorpass, Toast.LENGTH_SHORT).show();
+            password1.setText("");
+            password2.setText("");
+        }
 
-                    }else{
-                        _registeredMessage = error;
-                        Toast.makeText(RegisterActivity.this,error, Toast.LENGTH_SHORT).show();
-                    }
+        else {
+            if(pw1.equals(pw2)){
 
+                JSONObject data = new JSONObject();
+                try {
+                    data.put("signupCode", id);
+                    data.put("username", user);
+                    data.put("password", pw1);
+                    data.put("confirmPassword", pw2);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            };
-            _postAsyncTask.execute(data);
+                new PostAsyncTask("http://sandshrew.fib.upc.es:3000/api/signup",RegisterActivity.this){
+                    @Override
+                    protected void onPostExecute(JSONObject resObject) {
+                        Boolean result = false;
+                        String error = res.getString(R.string.errorreg);
 
-        }else{
-            Toast.makeText(this.getApplicationContext(),"Passwords must be the same.", Toast.LENGTH_SHORT).show();
+                        try {
+                            if(resObject.has("success")) {
+                                result = resObject.getBoolean("success");
+
+                            }
+                            if(!result && resObject.has("errorMessage") ) error = res.getString(R.string.errorreg);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Log.i("asdBool", result.toString());
+
+                        String registreok = String.format(res.getString(R.string.Registrat), user);
+
+                        if (result){
+                            //access app
+                            Toast.makeText(RegisterActivity.this, registreok, Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+
+                        } else {
+                            Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
+                            identifier.setText("");
+                            username.setText("");
+                            password1.setText("");
+                            password2.setText("");
+                        }
+
+                    }
+                }.execute(data);
+
+            } else {
+                String passerror = res.getString(R.string.samepass);
+                Toast.makeText(this.getApplicationContext(), passerror, Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
     public void onClick(View v) {
-        Intent button = new Intent();
+
         switch (v.getId()){
             case R.id.btnRegistration:
                 register();
@@ -97,6 +154,50 @@ public class RegisterActivity extends AppCompatActivity {
                 break;
 
         }
-        startActivity(new Intent (this, RegisterActivity.class));
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Intent refresh = new Intent(RegisterActivity.this, RegisterActivity.class);
+        refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        switch(position) {
+            case 0:
+                break;
+            case 1:
+                locale = new Locale("es");
+                config.locale = locale;
+                getResources().updateConfiguration(config, null);
+                startActivity(refresh);
+                finish();
+                break;
+            case 2:
+                locale = new Locale("ca");
+                config.locale = locale;
+                getResources().updateConfiguration(config, null);
+                startActivity(refresh);
+
+                break;
+            case 3:
+                locale = new Locale("en");
+                config.locale = locale;
+                getResources().updateConfiguration(config, null);
+                startActivity(refresh);
+                break;
+        }
+
+
+        getResources().updateConfiguration(config,null);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent refresh = new Intent(this, LoginActivity.class);
+        startActivity(refresh);
     }
 }

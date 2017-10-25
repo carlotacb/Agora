@@ -101,5 +101,12 @@
         android:textSize="17dp"
         android:onClick="onClick"/>
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_marginTop="10dp" android:layout_weight="1"/>
+
 
 </LinearLayout>

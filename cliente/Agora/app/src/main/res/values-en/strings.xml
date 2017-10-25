@@ -8,7 +8,19 @@
     <string name="hint_password">Password</string>
     <string name="pre_registre">Not registered yet?</string>
     <string name="prompt_NewPassword">Password</string>
-    <string name="prompt_identification">Register Code</string>
+    <string name="prompt_identification">Required registration</string>
     <string name="prompt_repeatPassword">Repeat Password</string>
     <string name="registration">User Register</string>
+    <string name="tria_idioma">Select Language</string>
+    <string name="Castella">Spanish</string>
+    <string name="Catalan">Catalan</string>
+    <string name="Ingles">English</string>
+    <string name="error">Incorrect password or username</string>
+    <string name="error2">Fill all the fields</string>
+    <string name="errorreg">Code not valid or username already taken</string>
+    <string name="samepass">Passwords no coinciden</string>
+    <string name="errorid">Required registration code</string>
+    <string name="errorpw">Password fields needed</string>
+    <string name="erroruser">Username field needed</string>
+    <string name="Registrat">User %1$s registered correctly</string>
 </resources>

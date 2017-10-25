@@ -6,10 +6,22 @@
     <string name="action_Registration">Registrar-se</string>
     <string name="bienvenida">BENVINGUT A ÀGORA</string>
     <string name="hint_password">Contrasenya</string>
-    <string name="hint_username"></string>
+    <string name="hint_username">Username</string>
     <string name="pre_registre">Encara no estas registrat?</string>
     <string name="prompt_NewPassword">Contrasenya</string>
     <string name="prompt_identification">Codi de Registre</string>
     <string name="prompt_repeatPassword">Repeteix Contrasenya</string>
     <string name="registration">Registre de l\'Usuari</string>
+    <string name="tria_idioma">Sel·leccionar Idioma</string>
+    <string name="Castella">Castellà</string>
+    <string name="Catalan">Català</string>
+    <string name="Ingles">Angles</string>
+    <string name="error">Usuari o password incorrectes</string>
+    <string name="error2">"Plena tots els camps "</string>
+    <string name="errorreg">Codi no vàlid o username ja existent</string>
+    <string name="samepass">Passwords no coincideixen</string>
+    <string name="errorid">Codi de registre necesari</string>
+    <string name="errorpw">Camps \"password\" necesaris</string>
+    <string name="erroruser">Camp \"username\" necesari</string>
+    <string name="Registrat">Usuari %1$s registrat correctament</string>
 </resources>
