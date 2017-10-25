@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                         @Override
                         protected void onPostExecute(JSONObject resObject) {
                             Boolean result = false;
-                            String error = "";
+                            String error = res.getString(R.string.error);
 
                             try {
                                 if(resObject.has("success")) result = resObject.getBoolean("success");
@@ -110,6 +110,8 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                             else {
                                 Log.i("asd", "gfgffgfgf");
                                 Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                                etUsername.setText("");
+                                etPassword.setText("");
                             }
 
                         }

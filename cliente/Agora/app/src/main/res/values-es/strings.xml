@@ -23,4 +23,5 @@
     <string name="errorpw">Campos \"password\" necesarios</string>
     <string name="erroruser">Campo \"username\" necesario</string>
     <string name="Registrat">Usuario %1$s registrado correctamente</string>
+    <string name="Loged">FELICIDADES, ESTAS DENTRO :)</string>
 </resources>
