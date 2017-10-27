@@ -52,9 +52,9 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
         ArrayList<ItemData> list = new ArrayList<>();
         list.add(new ItemData(sel, R.drawable.terra));
-        list.add(new ItemData(cast, R.drawable.esp));
-        list.add(new ItemData(cata, R.drawable.cat));
-        list.add(new ItemData(engl, R.drawable.eng));
+        list.add(new ItemData(cast, R.drawable.spa));
+        list.add(new ItemData(cata, R.drawable.rep));
+        list.add(new ItemData(engl, R.drawable.ing));
 
         SpinnerAdapter adapter = new SpinnerAdapter(this, R.layout.spinner_layout, R.id.txt, list);
         spin.setAdapter(adapter);
@@ -202,7 +202,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onBackPressed() {
-        // TODO: volver atras al login pero del login salir de la app.
         Intent log = new Intent(this, LoginActivity.class);
         log.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(log);

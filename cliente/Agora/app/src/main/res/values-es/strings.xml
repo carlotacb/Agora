@@ -11,7 +11,7 @@
     <string name="prompt_identification">Codigo de Registro</string>
     <string name="prompt_repeatPassword">Repetir Contraseña</string>
     <string name="registration">Registro del Usuario</string>
-    <string name="tria_idioma">Seleccionar Idioma</string>
+    <string name="tria_idioma">Cambiar idioma...</string>
     <string name="Castella">Castellano</string>
     <string name="Catalan">Catalán</string>
     <string name="Ingles">Inglés</string>
