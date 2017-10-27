@@ -1,4 +1,4 @@
-package edu.upc.pes.agora;
+package edu.upc.pes.agora.Logic;
 
 import android.content.Context;
 import android.os.AsyncTask;

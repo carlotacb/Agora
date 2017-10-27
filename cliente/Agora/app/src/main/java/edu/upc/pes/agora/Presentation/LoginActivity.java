@@ -1,13 +1,11 @@
-package edu.upc.pes.agora;
+package edu.upc.pes.agora.Presentation;
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +21,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import edu.upc.pes.agora.Logic.ItemData;
+import edu.upc.pes.agora.Logic.PostAsyncTask;
+import edu.upc.pes.agora.R;
+import edu.upc.pes.agora.Logic.SpinnerAdapter;
 
 
 public class LoginActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
