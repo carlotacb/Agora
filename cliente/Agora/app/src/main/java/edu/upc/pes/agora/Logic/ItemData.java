@@ -1,4 +1,4 @@
-package edu.upc.pes.agora;
+package edu.upc.pes.agora.Logic;
 
 /**
  * Created by carlo on 24/10/2017.

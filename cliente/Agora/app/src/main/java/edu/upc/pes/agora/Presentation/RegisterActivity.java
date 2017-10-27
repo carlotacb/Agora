@@ -1,4 +1,4 @@
-package edu.upc.pes.agora;
+package edu.upc.pes.agora.Presentation;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -17,6 +17,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import edu.upc.pes.agora.Logic.ItemData;
+import edu.upc.pes.agora.Logic.PostAsyncTask;
+import edu.upc.pes.agora.R;
+import edu.upc.pes.agora.Logic.SpinnerAdapter;
 
 public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
