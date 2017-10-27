@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.provider.Settings;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -143,18 +144,21 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                 config.locale = locale;
                 getResources().updateConfiguration(config, null);
                 startActivity(refresh);
+                finish();
                 break;
             case 2:
                 locale = new Locale("ca");
                 config.locale = locale;
                 getResources().updateConfiguration(config, null);
                 startActivity(refresh);
+                finish();
                 break;
             case 3:
                 locale = new Locale("en");
                 config.locale = locale;
                 getResources().updateConfiguration(config, null);
                 startActivity(refresh);
+                finish();
                 break;
         }
 
@@ -170,8 +174,16 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
     @Override
     public void onBackPressed() {
-        System.exit(0);
+        finish();
         //Intent refresh = new Intent(LoginActivity.this, LoginActivity.class);
         //startActivity(refresh);
+    }
+
+    /**
+     * This is a method that will be overridden in order to test response.
+     */
+    @VisibleForTesting
+    public void handleLoginResponse(LoginResponse loginResponse) {
+        // handle login response here
     }
 }

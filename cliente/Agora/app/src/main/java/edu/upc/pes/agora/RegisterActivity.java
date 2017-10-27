@@ -197,7 +197,10 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onBackPressed() {
-        Intent refresh = new Intent(this, LoginActivity.class);
-        startActivity(refresh);
+        // TODO: volver atras al login pero del login salir de la app.
+        Intent log = new Intent(this, LoginActivity.class);
+        log.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(log);
+        finish();
     }
 }
