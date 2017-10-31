@@ -1,5 +1,7 @@
 const userModule = require('../modules/user')
 const signupCodes = require('../modules/signup-codes')
+const sessionModule = require('../modules/session')
+const proposalsModule = require('../modules/session')
 
 module.exports = app => {
     app.get('/', function (req, res) {
@@ -10,8 +12,10 @@ module.exports = app => {
         try {
             const {username, password} = req.body
             const user = await userModule.login({username, password})
+            const token = await sessionModule.generateToken({username})
             res.send({
-                username: user.username
+                username: user.username,
+                token: token
             })
         } catch (error) {
             console.error('error on login', error)
@@ -29,11 +33,29 @@ module.exports = app => {
             const user = await userModule.createUser({username, password})
             if (!user) throw new Error(`Could not create the user`)
             if (code.code!=="007")await signupCodes.useSignupCode({code: signupCode, userId: username})
-            res.sendStatus(200)
+            const token = await sessionModule.generateToken({username})
+            res.send({
+                username: user.username,
+                token: token
+            })
         } catch (error) {
             console.error('error on signup', error)
             res.sendStatus(403)
         }
 
     })
+
+    app.post('api/proposal', async function (req, res) {
+        try {
+            const username = 'userDemo'
+            const {title, body} = req.body
+            const proposal = await proposalsModule.createProposal({username, title, body})
+            res.send(proposal)
+        } catch (error) {
+            console.error('error on new post', error)
+            res.sendStatus(403)
+        }
+    })
+
+
 }

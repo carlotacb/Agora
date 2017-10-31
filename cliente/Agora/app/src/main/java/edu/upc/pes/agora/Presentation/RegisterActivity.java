@@ -1,4 +1,4 @@
-package edu.upc.pes.agora;
+package edu.upc.pes.agora.Presentation;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -17,6 +17,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import edu.upc.pes.agora.Logic.ItemData;
+import edu.upc.pes.agora.Logic.PostAsyncTask;
+import edu.upc.pes.agora.R;
+import edu.upc.pes.agora.Logic.SpinnerAdapter;
 
 public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -47,9 +52,9 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
         ArrayList<ItemData> list = new ArrayList<>();
         list.add(new ItemData(sel, R.drawable.terra));
-        list.add(new ItemData(cast, R.drawable.esp));
-        list.add(new ItemData(cata, R.drawable.cat));
-        list.add(new ItemData(engl, R.drawable.eng));
+        list.add(new ItemData(cast, R.drawable.spa));
+        list.add(new ItemData(cata, R.drawable.rep));
+        list.add(new ItemData(engl, R.drawable.ing));
 
         SpinnerAdapter adapter = new SpinnerAdapter(this, R.layout.spinner_layout, R.id.txt, list);
         spin.setAdapter(adapter);
@@ -197,7 +202,9 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onBackPressed() {
-        Intent refresh = new Intent(this, LoginActivity.class);
-        startActivity(refresh);
+        Intent log = new Intent(this, LoginActivity.class);
+        log.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(log);
+        finish();
     }
 }

@@ -15,32 +15,32 @@ import java.util.concurrent.ExecutionException;
  */
 public class serverTest extends ActivityUnitTestCase<RegisterActivity> {
 
-    String userName = "u";
-    String pass = "pass";
-    private Intent _startIntent;
+    //String userName = "u";
+    //String pass = "pass";
+   // private Intent _startIntent;
    // private CountDownLatch lock = new CountDownLatch(1);
 
-    //public serverTest(Class<RegisterActivity> activityClass) { super(activityClass); }
+    public serverTest(Class<RegisterActivity> activityClass) { super(activityClass); }
 
-    public serverTest() { super(RegisterActivity.class); }
+   // public serverTest() { super(RegisterActivity.class); }
 
-    protected void setUp() throws Exception {
-        super.setUp();
-        _startIntent = new Intent(Intent.ACTION_MAIN);
-    }
+   // protected void setUp() throws Exception {
+   //     super.setUp();
+    //    _startIntent = new Intent(Intent.ACTION_MAIN);
+    //}
 
     // amb aixo creo un usuari, sha de canviar el "u"
-    public void ltest() throws IOException {
-        String id = "4773431860";
+   // public void ltest() throws IOException {
+       // String id = "4773431860";
     //    boolean b = (new HttpHelper()).verifyData(id,userName,pass,pass);
      //   assertTrue(b);
-    }
+    //}
 
-    public  void test1 (){
-        assertTrue(false);
-    }
+   // public  void test1 (){
+     //   assertTrue(false);
+    //}
 
-    public void testRegister_invalidId() throws InterruptedException, ExecutionException {
+    /*public void testRegister_invalidId() throws InterruptedException, ExecutionException {
         startActivity(_startIntent,null,null);
 
         getActivity().identifier.setText("1232");
@@ -56,7 +56,7 @@ public class serverTest extends ActivityUnitTestCase<RegisterActivity> {
 
         assertFalse(b);
         assertTrue(b);
-    }
+    }*/
 /*
     @Test
     public void loginTest_correcte() {

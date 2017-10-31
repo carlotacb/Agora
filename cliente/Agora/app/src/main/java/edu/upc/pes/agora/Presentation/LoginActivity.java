@@ -1,13 +1,11 @@
-package edu.upc.pes.agora;
+package edu.upc.pes.agora.Presentation;
 
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,6 +21,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
+
+import edu.upc.pes.agora.Logic.ItemData;
+import edu.upc.pes.agora.Logic.PostAsyncTask;
+import edu.upc.pes.agora.R;
+import edu.upc.pes.agora.Logic.SpinnerAdapter;
 
 
 public class LoginActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -43,10 +46,10 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        login = (Button)findViewById(R.id.btnLogin);
-        register = (TextView)findViewById(R.id.btnRegister);
+        login = (Button) findViewById(R.id.btnLogin);
+        register = (TextView) findViewById(R.id.btnRegister);
 
-        spin = (Spinner)findViewById(R.id.spinner);
+        spin = (Spinner) findViewById(R.id.spinner);
 
         final Resources res = this.getResources();
 
@@ -57,9 +60,9 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
         ArrayList<ItemData> list = new ArrayList<>();
         list.add(new ItemData(sel, R.drawable.terra));
-        list.add(new ItemData(cast, R.drawable.esp));
-        list.add(new ItemData(cata, R.drawable.cat));
-        list.add(new ItemData(engl, R.drawable.eng));
+        list.add(new ItemData(cast, R.drawable.spa));
+        list.add(new ItemData(cata, R.drawable.rep));
+        list.add(new ItemData(engl, R.drawable.ing));
 
 
         SpinnerAdapter adapter = new SpinnerAdapter(this, R.layout.spinner_layout, R.id.txt, list);
@@ -67,8 +70,8 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
         spin.setOnItemSelectedListener(this);
 
-        etUsername = (EditText)findViewById(R.id.username);
-        etPassword = (EditText)findViewById(R.id.password);
+        etUsername = (EditText) findViewById(R.id.username);
+        etPassword = (EditText) findViewById(R.id.password);
 
         login.setOnClickListener(new OnClickListener() {
             @Override
@@ -80,25 +83,25 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                 if (username.length() == 0 || password.length() == 0) {
                     String error2 = res.getString(R.string.error2);
                     Toast.makeText(getApplicationContext(), error2, Toast.LENGTH_LONG).show();
-                }
-
-                else {
-                    JSONObject values=new JSONObject();
+                } else {
+                    JSONObject values = new JSONObject();
                     try {
-                        values.put("username",username);
-                        values.put("password",password);
+                        values.put("username", username);
+                        values.put("password", password);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    new PostAsyncTask("http://sandshrew.fib.upc.es:3000/api/login",LoginActivity.this){
+                    new PostAsyncTask("http://sandshrew.fib.upc.es:3000/api/login", LoginActivity.this) {
                         @Override
                         protected void onPostExecute(JSONObject resObject) {
                             Boolean result = false;
-                            String error = "";
+                            String error = res.getString(R.string.error);
 
                             try {
-                                if(resObject.has("success")) result = resObject.getBoolean("success");
-                                if(!result && resObject.has("errorMessage") ) error = res.getString(R.string.error);
+                                if (resObject.has("success"))
+                                    result = resObject.getBoolean("success");
+                                if (!result && resObject.has("errorMessage"))
+                                    error = res.getString(R.string.error);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -106,10 +109,11 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
                             if (result) {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                            }
-                            else {
+                            } else {
                                 Log.i("asd", "gfgffgfgf");
                                 Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                                etUsername.setText("");
+                                etPassword.setText("");
                             }
 
                         }
@@ -133,7 +137,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
         Intent refresh = new Intent(LoginActivity.this, LoginActivity.class);
         refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        switch(position) {
+        switch (position) {
             case 0:
                 break;
             case 1:
@@ -141,23 +145,26 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                 config.locale = locale;
                 getResources().updateConfiguration(config, null);
                 startActivity(refresh);
+                finish();
                 break;
             case 2:
                 locale = new Locale("ca");
                 config.locale = locale;
                 getResources().updateConfiguration(config, null);
                 startActivity(refresh);
+                finish();
                 break;
             case 3:
                 locale = new Locale("en");
                 config.locale = locale;
                 getResources().updateConfiguration(config, null);
                 startActivity(refresh);
+                finish();
                 break;
         }
 
 
-        getResources().updateConfiguration(config,null);
+        getResources().updateConfiguration(config, null);
 
     }
 
@@ -168,8 +175,6 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
     @Override
     public void onBackPressed() {
-        System.exit(0);
-        //Intent refresh = new Intent(LoginActivity.this, LoginActivity.class);
-        //startActivity(refresh);
+        finish();
     }
 }

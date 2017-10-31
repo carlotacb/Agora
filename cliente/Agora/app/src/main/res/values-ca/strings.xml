@@ -12,7 +12,7 @@
     <string name="prompt_identification">Codi de Registre</string>
     <string name="prompt_repeatPassword">Repeteix Contrasenya</string>
     <string name="registration">Registre de l\'Usuari</string>
-    <string name="tria_idioma">Sel·leccionar Idioma</string>
+    <string name="tria_idioma">Canviar idioma...</string>
     <string name="Castella">Castellà</string>
     <string name="Catalan">Català</string>
     <string name="Ingles">Angles</string>
@@ -24,4 +24,5 @@
     <string name="errorpw">Camps \"password\" necesaris</string>
     <string name="erroruser">Camp \"username\" necesari</string>
     <string name="Registrat">Usuari %1$s registrat correctament</string>
+    <string name="Loged">FELICITATS, ETS DINS :)</string>
 </resources>

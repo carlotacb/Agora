@@ -33,6 +33,8 @@
 
     <string name="Registrat">Usuario %1$s registrado correctamente</string>
 
+    <string name="Loged">FELICIDADES, ESTAS DENTRO :)</string>
+
     <string name="str_en" translatable="false">English</string>
     <string name="str_es" translatable="false">Spanish</string>
     <string name="str_ca" translatable="false">Catalan</string>
