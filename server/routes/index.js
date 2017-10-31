@@ -49,7 +49,7 @@ module.exports = app => {
         try {
             const username = 'userDemo'
             const {title, body} = req.body
-            const proposal = await userModule.createProposal({username, title, body})
+            const proposal = await proposalsModule.createProposal({username, title, body})
             res.send(proposal)
         } catch (error) {
             console.error('error on new post', error)
