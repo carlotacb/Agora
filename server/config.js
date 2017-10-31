@@ -11,7 +11,8 @@ module.exports = {
         db: {
             signupCodes: 'signup_codes',
             users: 'users',
-            tokens: 'tokens'
+            tokens: 'tokens',
+            proposals: 'proposals',
         }
 
     }

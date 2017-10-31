@@ -1,6 +1,7 @@
 const userModule = require('../modules/user')
 const signupCodes = require('../modules/signup-codes')
 const sessionModule = require('../modules/session')
+const proposalsModule = require('../modules/session')
 
 module.exports = app => {
     app.get('/', function (req, res) {
@@ -43,4 +44,18 @@ module.exports = app => {
         }
 
     })
+
+    app.post('api/proposal', async function (req, res) {
+        try {
+            const username = 'userDemo'
+            const {title, body} = req.body
+            const proposal = await userModule.createProposal({username, title, body})
+            res.send(proposal)
+        } catch (error) {
+            console.error('error on new post', error)
+            res.sendStatus(403)
+        }
+    })
+
+
 }
