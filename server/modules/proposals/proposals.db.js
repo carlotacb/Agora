@@ -7,3 +7,17 @@ async function getCollection() {
     return db.collection(dbConstants.proposals)
 }
 
+
+async function create({username, title, body}) {
+    const object = {
+        owner: username,
+        title: title,
+        body: body
+    }
+    const collection = await getCollection()
+    return collection.insertOne(object)
+}
+
+module.exports = {
+    create: create,
+}
