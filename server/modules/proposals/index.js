@@ -1,15 +1,16 @@
-const db = require('./session.db')
+const db = require('./proposals.db')
+const dbUsers = require('../user/user.db')
 const jwt = require('jsonwebtoken')
 const config = require('../../config.js')
 
 
-async function createProposal({username, title, body}) {
-    const existingUser = await db.get({username})
+async function createProposal({username, title, content}) {
+    const existingUser = await dbUsers.get({username})
     if (!existingUser) throw new Error(`User does not exists`)
-    const proposal = await db.create(username, title, body)
+    const proposal = await db.create({username, title, content})
     return proposal
 }
 
 module.exports = {
-    createProposal: db.createProposal
+    createProposal: createProposal
 }

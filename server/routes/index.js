@@ -1,7 +1,7 @@
 const userModule = require('../modules/user')
 const signupCodes = require('../modules/signup-codes')
 const sessionModule = require('../modules/session')
-const proposalsModule = require('../modules/session')
+const proposalsModule = require('../modules/proposals')
 
 module.exports = app => {
     app.get('/', function (req, res) {
@@ -45,11 +45,12 @@ module.exports = app => {
 
     })
 
-    app.post('api/proposal', async function (req, res) {
+    app.post('/api/proposal', async function (req, res) {
         try {
             const username = 'userDemo'
-            const {title, body} = req.body
-            const proposal = await proposalsModule.createProposal({username, title, body})
+            const {title, content} = req.body
+            console.log(title + "\n" + content)
+            const proposal = await proposalsModule.createProposal({username, title, content})
             res.send(proposal)
         } catch (error) {
             console.error('error on new post', error)

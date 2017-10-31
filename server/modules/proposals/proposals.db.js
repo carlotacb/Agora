@@ -8,11 +8,11 @@ async function getCollection() {
 }
 
 
-async function create({username, title, body}) {
+async function create({username, title, content}) {
     const object = {
         owner: username,
         title: title,
-        body: body
+        content: content
     }
     const collection = await getCollection()
     return collection.insertOne(object)
