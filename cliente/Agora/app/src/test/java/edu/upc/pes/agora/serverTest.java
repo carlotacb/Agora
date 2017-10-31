@@ -8,6 +8,8 @@ import org.junit.Test;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
+import edu.upc.pes.agora.Presentation.RegisterActivity;
+
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
