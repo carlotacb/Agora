@@ -30,6 +30,10 @@
     <string name="errorid">Code needed</string>
     <string name="erroruser">User needed</string>
     <string name="errorpw">Passw needed</string>
+    <string name="errorTitulo">Campo titulo necesario</string>
+    <string name="errorDescripcion">Campo Descripcion necesario</string>
+    <string name="errorCreacion">Cracion incorrecta</string>
+
 
     <string name="Registrat">Usuario %1$s registrado correctamente</string>
 
@@ -38,7 +42,7 @@
     <string name="str_en" translatable="false">English</string>
     <string name="str_es" translatable="false">Spanish</string>
     <string name="str_ca" translatable="false">Catalan</string>
-    <string-array name="languages" >
+    <string-array name="languages">
         <item>@string/str_en</item>
         <item>@string/str_es</item>
         <item>@string/str_ca</item>

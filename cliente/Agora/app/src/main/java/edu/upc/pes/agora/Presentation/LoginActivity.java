@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                             Log.i("asdBool", result.toString());
 
                             if (result) {
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                startActivity(new Intent(LoginActivity.this, propuestaActivity.class));
                             } else {
                                 Log.i("asd", "gfgffgfgf");
                                 Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
