@@ -1,6 +1,7 @@
 package edu.upc.pes.agora.Presentation;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
@@ -40,6 +41,9 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private String[] data = {"Castellano", "Català", "English"};
 
+    SharedPreferences prefs;
+    SharedPreferences.Editor edit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -50,6 +54,10 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
         register = (TextView) findViewById(R.id.btnRegister);
 
         spin = (Spinner) findViewById(R.id.spinner);
+
+        //Get SharedPreferences containing token
+        prefs = this.getSharedPreferences("SavedToken",MODE_PRIVATE);
+        edit = prefs.edit();
 
         final Resources res = this.getResources();
 
@@ -94,12 +102,24 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                     new PostAsyncTask("http://sandshrew.fib.upc.es:3000/api/login", LoginActivity.this) {
                         @Override
                         protected void onPostExecute(JSONObject resObject) {
+
                             Boolean result = false;
                             String error = res.getString(R.string.error);
 
                             try {
-                                if (resObject.has("success"))
+                                if (resObject.has("success")) {
                                     result = resObject.getBoolean("success");
+
+                                    //Saves token in SharedPreferences if it is not yet saved there
+                                    if (resObject.has("token")) {
+                                        String t = resObject.getString("token");
+                                        if(prefs.getString("token", "") != t) {
+                                            edit.putString("token", t);
+                                            edit.commit();
+                                        }
+                                        Log.i("SavedToken", prefs.getString("token","none saved"));
+                                    }
+                                }
                                 if (!result && resObject.has("errorMessage"))
                                     error = res.getString(R.string.error);
                             } catch (JSONException e) {
