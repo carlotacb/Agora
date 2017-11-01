@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@mipmap/ic_home"
+            android:title="@string/home"/>
+
+        <item
+            android:id="@+id/nav_addproposta"
+            android:icon="@mipmap/ic_add"
+            android:title="@string/novaproposta"/>
+
+
+    </group>
+
+    <item android:title="@string/miperfil">
+        <menu>
+            <item
+                android:id="@+id/nav_perfilprinc"
+                android:icon="@mipmap/ic_person"
+                android:title="@string/perfil"/>
+            <item
+                android:id="@+id/nav_editperf"
+                android:icon="@mipmap/ic_edit"
+                android:title="@string/editarp"/>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@mipmap/ic_exit"
+        android:title="@string/surt"/>
+
+</menu>

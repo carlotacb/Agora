@@ -1,23 +1,23 @@
 package edu.upc.pes.agora.Presentation;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Locale;
-
+import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
+import edu.upc.pes.agora.Logic.NavMenuListener;
 import edu.upc.pes.agora.Logic.PostAsyncTask;
 import edu.upc.pes.agora.R;
 
@@ -39,6 +39,21 @@ public class propuestaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_propuesta);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        navigationView.getMenu().getItem(NavMenuListener.addproposalbutton).setChecked(true);
+        navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.nuevapropuesta);
+        toolbar.setLogo(R.mipmap.ic_add);
+        setSupportActionBar(toolbar);
+
+        DrawerToggleAdvanced toggle = new DrawerToggleAdvanced(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
 
         Reset = (Button) findViewById(R.id.resetButton);
         Create = (Button) findViewById(R.id.createButton);

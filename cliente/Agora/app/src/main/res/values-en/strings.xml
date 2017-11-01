@@ -24,4 +24,15 @@
     <string name="erroruser">Username field needed</string>
     <string name="Registrat">User %1$s registered correctly</string>
     <string name="Loged">CONGRATULATIONS, YOU ARE IN :)</string>
+    <string name="login">Sign In</string>
+    <string name="editarp">Edit Profile</string>
+    <string name="errorCreacion">Incorrect creation</string>
+    <string name="errorDescripcion">Campo \"decripción\" necessario</string>
+    <string name="errorTitulo">Campo \"título\" necesario</string>
+    <string name="miperfil">About me</string>
+    <string name="novaproposta">New proposal</string>
+    <string name="perfil">My profile</string>
+    <string name="surt">Sign Out</string>
+    <string name="title_activity_main2">Main Page</string>
+    <string name="idioma">Change language</string>
 </resources>

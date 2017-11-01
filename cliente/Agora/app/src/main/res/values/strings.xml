@@ -1,14 +1,16 @@
 <resources>
-    <string name="app_name" translatable="false">Agora</string>
+    <string name="app_name">Agora</string>
     <string name="title_activity_login" translatable="false">Sign in</string>
 
     <!-- Strings related to login -->
     <string name="bienvenida">BIENVENIDO/A a ÀGORA</string>
     <string name="hint_username" translatable="false">Username</string>
     <string name="hint_password">Contraseña</string>
-    <string name="Login">Entrar</string>
+    <string name="login">Entrar</string>
     <string name="pre_registre">¿No estas registrado?</string>
     <string name="SignIn">Regístrate</string>
+    <string name="error">Usuario o password incorrectos</string>
+    <string name="error2">Usuario y password necesarios</string>
 
     <!-- Strings related to registration -->
     <string name="registration">Registro del Usuario</string>
@@ -17,27 +19,55 @@
     <string name="prompt_repeatPassword">Repetir Contraseña</string>
     <string name="prompt_choseUsername" translatable="false">Username</string>
     <string name="prompt_identification">Codigo de Registro</string>
-
-    <string name="tria_idioma">Seleccionar Idioma</string>
-    <string name="Castella">Castellano</string>
-    <string name="Catalan">Catalan</string>
-    <string name="Ingles">Inglés</string>
-
-    <string name="error">Usuario o password incorrectos</string>
-    <string name="error2">Usuario y password necesarios</string>
     <string name="errorreg">ID not valid or username already taken</string>
     <string name="samepass">Passwords must be the same</string>
     <string name="errorid">Code needed</string>
     <string name="erroruser">User needed</string>
     <string name="errorpw">Passw needed</string>
+    <string name="Registrat">Usuario %1$s registrado correctamente</string>
+
+    <!-- Multiidioma -->
+    <string name="tria_idioma">Seleccionar Idioma</string>
+    <string name="Castella">Castellano</string>
+    <string name="Catalan">Catalan</string>
+    <string name="Ingles">Inglés</string>
+
+    <!-- Strings Creacion Propuesta -->
     <string name="errorTitulo">Campo titulo necesario</string>
     <string name="errorDescripcion">Campo Descripcion necesario</string>
     <string name="errorCreacion">Cracion incorrecta</string>
+    <string name="titulo">Titulo</string>
+    <string name="descrpicion">Descripcion</string>
+    <string name="reset">Reset</string>
+    <string name="create">Create</string>
+    <string name="nuevapropuesta">Nueva Propuesta</string>
 
 
-    <string name="Registrat">Usuario %1$s registrado correctamente</string>
+    <!-- Strings Nav Drawer TODO: quitar Name: y Username: -->
+    <string name="nom" translatable="false">Name: %1$s</string>
+    <string name="username" translatable="false">Username: %1$s</string>
+    <string name="home">Home</string>
+    <string name="novaproposta">Nova Proposta</string>
+    <string name="miperfil">About me</string>
+    <string name="perfil">My Profile</string>
+    <string name="editarp">Edit Profile</string>
+    <string name="surt">Sortir</string>
 
+    <!-- Menus -->
+    <string name="idioma">Canviar Idioma</string>
+    <string name="search">Search</string>
+
+    <!-- Página principal -->
+    <string name="title_activity_main">Main Page</string>
+
+
+
+
+    <!-- Strings to test -->
     <string name="Loged">FELICIDADES, ESTAS DENTRO :)</string>
+
+
+
 
     <string name="str_en" translatable="false">English</string>
     <string name="str_es" translatable="false">Spanish</string>
@@ -47,5 +77,10 @@
         <item>@string/str_es</item>
         <item>@string/str_ca</item>
     </string-array>
+
+
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+
 
 </resources>
