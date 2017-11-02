@@ -58,5 +58,15 @@ module.exports = app => {
         }
     })
 
+    app.get('/api/proposal', async function (req, res) {
+        try {
+            const proposals = await proposalsModule.getAllProposals()
+            res.send(proposals)
+        } catch (error) {
+            console.error('error on get proposals', error)
+            res.sendStatus(403)
+        }
+    })
+
 
 }
