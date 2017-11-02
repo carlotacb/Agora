@@ -32,4 +32,5 @@ function encryptPassword(password) {
 module.exports = {
     createUser: createUser,
     login: login,
+    get: db.get,
 }

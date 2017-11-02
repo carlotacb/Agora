@@ -3,6 +3,8 @@ const signupCodes = require('../modules/signup-codes')
 const sessionModule = require('../modules/session')
 const proposalsModule = require('../modules/proposals')
 
+const {isAuthenticated} = require('./middleware')
+
 module.exports = app => {
     app.get('/', function (req, res) {
         return res.send({status: 'up'})
@@ -32,7 +34,7 @@ module.exports = app => {
             if (!code) throw new Error(`Code used or not valid`)
             const user = await userModule.createUser({username, password})
             if (!user) throw new Error(`Could not create the user`)
-            if (code.code!=="007")await signupCodes.useSignupCode({code: signupCode, userId: username})
+            if (code.code !== "007") await signupCodes.useSignupCode({code: signupCode, userId: username})
             const token = await sessionModule.generateToken({username})
             res.send({
                 username: user.username,
@@ -43,6 +45,20 @@ module.exports = app => {
             res.sendStatus(403)
         }
 
+    })
+
+    app.get('/api/profile', isAuthenticated, async function (req, res) {
+        try {
+            const user = await userModule.get({username: req.username})
+
+            res.json({
+                username: user.username,
+                createdDateTime: user.createdDateTime
+            })
+        } catch (error) {
+            console.error('error on getting profile', error)
+            res.sendStatus(403)
+        }
     })
 
     app.post('/api/proposal', async function (req, res) {
