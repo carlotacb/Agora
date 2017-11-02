@@ -18,7 +18,7 @@ module.exports = app => {
             const session = await sessionModule.generateSession({username})
             res.send({
                 username: user.username,
-                authorizationToken: session.token
+                token: session.token
             })
         } catch (error) {
             console.error('error on login', error)
@@ -49,7 +49,7 @@ module.exports = app => {
             const session = await sessionModule.generateSession({username})
             res.send({
                 username: user.username,
-                authorizationToken: session.token
+                token: session.token
             })
         } catch (error) {
             console.error('error on signup', error)
