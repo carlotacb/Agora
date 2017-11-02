@@ -19,11 +19,13 @@ async function get({username}) {
 async function create({username, password}) {
     const object = {
         username: username,
-        password: password
+        password: password,
+        createdDateTime: new Date()
     }
 
     const collection = await getCollection()
-    return collection.insertOne(object)
+    const insertResult = await collection.insertOne(object)
+    return insertResult.ops[0]
 }
 
 module.exports = {

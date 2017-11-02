@@ -2,6 +2,7 @@ const userModule = require('../modules/user')
 const signupCodes = require('../modules/signup-codes')
 const sessionModule = require('../modules/session')
 const proposalsModule = require('../modules/proposals')
+const config = require('../config')
 
 const {isAuthenticated} = require('./middleware')
 
@@ -14,10 +15,10 @@ module.exports = app => {
         try {
             const {username, password} = req.body
             const user = await userModule.login({username, password})
-            const token = await sessionModule.generateToken({username})
+            const session = await sessionModule.generateSession({username})
             res.send({
                 username: user.username,
-                token: token
+                authorizationToken: session.token
             })
         } catch (error) {
             console.error('error on login', error)
@@ -29,16 +30,26 @@ module.exports = app => {
         try {
             const {signupCode, username, password, confirmPassword} = req.body
             if (!signupCode || !username || !password || !confirmPassword) throw new Error(`There is an invalid field`)
+
             if (password !== confirmPassword) throw new Error(`Passwords are different`)
-            const code = await signupCodes.getSignupCode(signupCode)
-            if (!code) throw new Error(`Code used or not valid`)
+
+            const isWhitelistedCode = config.constants.whitelistedSignupCodes.includes(signupCode)
+
+            if (!isWhitelistedCode) {
+                const code = await signupCodes.getSignupCode(signupCode)
+                if (!code) throw new Error(`Code used or not valid`)
+            }
+
             const user = await userModule.createUser({username, password})
-            if (!user) throw new Error(`Could not create the user`)
-            if (code.code !== "007") await signupCodes.useSignupCode({code: signupCode, userId: username})
-            const token = await sessionModule.generateToken({username})
+
+            if (!isWhitelistedCode) {
+                await signupCodes.useSignupCode({code: signupCode, userId: username})
+            }
+
+            const session = await sessionModule.generateSession({username})
             res.send({
                 username: user.username,
-                token: token
+                authorizationToken: session.token
             })
         } catch (error) {
             console.error('error on signup', error)
