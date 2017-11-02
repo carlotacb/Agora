@@ -11,6 +11,13 @@ async function createProposal({username, title, content}) {
     return proposal
 }
 
+async function getAllProposals() {
+    const proposals = await db.getAll();
+    if (!proposals) throw new Error(`No Proposals`)
+    return proposals
+}
+
 module.exports = {
-    createProposal: createProposal
+    createProposal: createProposal,
+    getAllProposals: getAllProposals,
 }

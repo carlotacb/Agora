@@ -18,6 +18,12 @@ async function create({username, title, content}) {
     return collection.insertOne(object)
 }
 
+async function getAll() {
+    const collection = await getCollection()
+    return  collection.find( { }, {_id: 0 } ).toArray()
+}
+
 module.exports = {
     create: create,
+    getAll: getAll,
 }
