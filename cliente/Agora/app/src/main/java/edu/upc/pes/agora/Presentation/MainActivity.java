@@ -1,8 +1,10 @@
 package edu.upc.pes.agora.Presentation;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,15 +12,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Locale;
 
 import edu.upc.pes.agora.Logic.NavMenuListener;
+import edu.upc.pes.agora.Logic.PostAsyncTask;
 import edu.upc.pes.agora.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
     private Configuration config = new Configuration();
     private Locale locale;
 
+    final Resources res = this.getResources();
+
+    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +57,43 @@ public class MainActivity extends AppCompatActivity {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        /*new PostAsyncTask("http://sandshrew.fib.upc.es:3000/api/proposal", MainActivity.this) {
+            @Override
+            protected void onPostExecute(JSONObject resObject) {
+                Boolean result = false;
+                String error = res.getString(R.string.errorCreacion);
+
+                try {
+                    if (resObject.has("success"))
+                        result = resObject.getBoolean("success");
+                    if (!result && resObject.has("errorMessage"))
+                        error = res.getString(R.string.errorCreacion);
+
+                    Toast.makeText(getApplicationContext(), "Result : " + result , Toast.LENGTH_LONG).show();
 
 
-        //navigationView.setNavigationItemSelectedListener(this);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.i("asdBool", result.toString());
+
+                if (result) {
+                    Toast.makeText(getApplicationContext(), "Titulo : " + Titulo + " Descripcion : " + Descripcion, Toast.LENGTH_LONG).show();
+
+                    startActivity(new Intent(propuestaActivity.this, MainActivity.class));
+                } else {
+                    Toast.makeText(getApplicationContext(), "FUCKED", Toast.LENGTH_LONG).show();
+
+                    Log.i("asd", "gfgffgfgf");
+                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                    Titulo.setText("");
+                    Descripcion.setText("");
+                }
+
+            }
+        }.execute(values);*/
+
+
     }
 
     @Override

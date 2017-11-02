@@ -35,4 +35,13 @@
     <string name="surt">Sign Out</string>
     <string name="title_activity_main2">Main Page</string>
     <string name="idioma">Change language</string>
+    <string name="create">Create</string>
+    <string name="descrpicion">Description</string>
+    <string name="home">Home</string>
+    <string name="nuevapropuesta">New Proposal</string>
+    <string name="title_activity_main">Main Page</string>
+    <string name="titulo">Title</string>
+    <string name="reset" translatable="false">Reset</string>
+    <string name="search">Search</string>
+    <string name="lesmevespropostes">My Proposals</string>
 </resources>

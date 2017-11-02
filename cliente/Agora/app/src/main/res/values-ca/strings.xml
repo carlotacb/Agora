@@ -36,4 +36,13 @@
     <string name="perfil">El meu perfil</string>
     <string name="surt">Sortir</string>
     <string name="title_activity_main2">Pàgina Principal</string>
+    <string name="create">Crear</string>
+    <string name="descrpicion">Descripció</string>
+    <string name="home">Pàgina Principal</string>
+    <string name="nuevapropuesta">Nova Proposta</string>
+    <string name="reset">Reset</string>
+    <string name="title_activity_main">Pàgina Principal</string>
+    <string name="titulo">Títol</string>
+    <string name="search">Buscar</string>
+    <string name="lesmevespropostes">Les Meves Propostes</string>
 </resources>

@@ -48,6 +48,7 @@
     <string name="username" translatable="false">Username: %1$s</string>
     <string name="home">Home</string>
     <string name="novaproposta">Nova Proposta</string>
+    <string name="lesmevespropostes">Les Meves Propostes</string>
     <string name="miperfil">About me</string>
     <string name="perfil">My Profile</string>
     <string name="editarp">Edit Profile</string>

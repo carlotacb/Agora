@@ -1,6 +1,8 @@
 package edu.upc.pes.agora.Presentation;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -8,6 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +21,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Locale;
+
 import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.NavMenuListener;
 import edu.upc.pes.agora.Logic.PostAsyncTask;
@@ -23,7 +30,8 @@ import edu.upc.pes.agora.R;
 
 public class propuestaActivity extends AppCompatActivity {
 
-
+    private Configuration config = new Configuration();
+    private Locale locale;
 
     private Button Reset;
     private Button Create;
@@ -40,15 +48,15 @@ public class propuestaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_propuesta);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navMenu);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
 
         navigationView.getMenu().getItem(NavMenuListener.addproposalbutton).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.nuevapropuesta);
-        toolbar.setLogo(R.mipmap.ic_add);
+        toolbar.setLogo(R.mipmap.ic_addw);
         setSupportActionBar(toolbar);
 
         DrawerToggleAdvanced toggle = new DrawerToggleAdvanced(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -74,6 +82,7 @@ public class propuestaActivity extends AppCompatActivity {
         });
 
         Create.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View view) {
 
@@ -135,6 +144,59 @@ public class propuestaActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        // TODO: fer el search funcional (Sprint 3...)
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        //TODO: posar-ho al MenuListener
+
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        Intent refresh = new Intent(this, propuestaActivity.class);
+        refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.men_castella) {
+            locale = new Locale("es");
+            config.locale = locale;
+            getResources().updateConfiguration(config, null);
+            startActivity(refresh);
+            finish();
+        }
+
+        else if (id == R.id.men_catala){
+            locale = new Locale("ca");
+            config.locale = locale;
+            getResources().updateConfiguration(config, null);
+            startActivity(refresh);
+            finish();
+
+        }
+
+        else if (id == R.id.men_angles){
+            locale = new Locale("en");
+            config.locale = locale;
+            getResources().updateConfiguration(config, null);
+            startActivity(refresh);
+            finish();
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 

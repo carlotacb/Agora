@@ -35,4 +35,13 @@
     <string name="surt">Salir</string>
     <string name="title_activity_main2">Página Principal</string>
     <string name="idioma">Cambiar idioma</string>
+    <string name="create">Crear</string>
+    <string name="descrpicion">Descripción</string>
+    <string name="home">Página Principal</string>
+    <string name="nuevapropuesta">Nueva Propuesta</string>
+    <string name="title_activity_main">Página Principal</string>
+    <string name="titulo">Título</string>
+    <string name="reset" translatable="false">Reset</string>
+    <string name="search">Buscar</string>
+    <string name="lesmevespropostes">Mis Propuestas</string>
 </resources>
