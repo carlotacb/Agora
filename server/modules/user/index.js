@@ -4,11 +4,17 @@ const db = require('./user.db.js')
 
 async function createUser({username, password}) {
     const existingUser = await db.get({username})
-    if (existingUser) throw new Error(`Username already used`)
+    if (existingUser) {
+        throw new Error(`Username already used`)
+    }
+
     const encryptedPassword = encryptPassword(password)
     const user = await db.create({username: username, password: encryptedPassword})
-    return user
 
+    if (!user) {
+        throw new Error(`Could not create the user`)
+    }
+    return user
 }
 
 async function login({username, password}) {
@@ -32,4 +38,5 @@ function encryptPassword(password) {
 module.exports = {
     createUser: createUser,
     login: login,
+    get: db.get,
 }

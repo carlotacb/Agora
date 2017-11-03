@@ -14,7 +14,9 @@ StartServer(app)
 
 function BootstrapServer(app) {
     app.use(bodyParser.json())
-    app.use(morgan('combined'))
+    if (config.enableMorgan) {
+        app.use(morgan('combined'))
+    }
 }
 
 function StartServer(app) {

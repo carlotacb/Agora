@@ -7,16 +7,28 @@ async function getCollection() {
     return db.collection(dbConstants.tokens)
 }
 
-async function createToken({username, token}) {
+async function create({username, token}) {
     const object = {
         username: username,
+        token: token,
+        createdDateTime: new Date()
+    }
+
+    const collection = await getCollection()
+    const insertResult = await collection.insertOne(object)
+    return insertResult.ops[0]
+}
+
+async function get(token) {
+    const query = {
         token: token
     }
 
     const collection = await getCollection()
-    return collection.insertOne(object)
+    return collection.findOne(query)
 }
 
 module.exports = {
-    createToken: createToken
+    create: create,
+    get: get,
 }

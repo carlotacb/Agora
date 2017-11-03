@@ -3,12 +3,12 @@ const jwt = require('jsonwebtoken')
 const config = require('../../config.js')
 
 
-async function generateToken({username}) {
+async function generateSession({username}) {
     const token = jwt.sign({ username: username, createdDate: Date.now()}, config.jwtSecretKey)
-    await db.createToken({username,token})
-    return token
+    return await db.create({username, token})
 }
 
 module.exports = {
-    generateToken: generateToken
+    generateSession: generateSession,
+    get: db.get,
 }
