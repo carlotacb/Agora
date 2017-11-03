@@ -20,10 +20,16 @@ async function create({username, title, content}) {
 
 async function getAll() {
     const collection = await getCollection()
-    return  collection.find( { }, {_id: 0 } ).toArray()
+    return collection.find({}, {_id: 0}).toArray()
+}
+
+async function deleteProposal({id}) {
+    const collection = await getCollection()
+    return collection.deleteOne({id:id})
 }
 
 module.exports = {
     create: create,
     getAll: getAll,
+    delete: deleteProposal
 }

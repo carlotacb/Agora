@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -38,10 +39,6 @@ public class propuestaActivity extends AppCompatActivity {
 
     private TextView Titulo;
     private TextView Descripcion;
-
-/*    private Configuration config = new Configuration();
-    private Locale locale;
-  */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,8 +148,6 @@ public class propuestaActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
 
-        // TODO: fer el search funcional (Sprint 3...)
-
         return true;
     }
 
@@ -197,6 +192,17 @@ public class propuestaActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            // TODO: el boto Back ha d'obrir el navigation drawer.
+            drawer.openDrawer(GravityCompat.START);
+        }
     }
 
 

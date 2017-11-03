@@ -1,5 +1,6 @@
 package edu.upc.pes.agora.Presentation;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -82,6 +83,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
         etPassword = (EditText) findViewById(R.id.password);
 
         login.setOnClickListener(new OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View v) {
 

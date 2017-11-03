@@ -45,4 +45,8 @@
     <string name="titulo">Títol</string>
     <string name="search">Buscar</string>
     <string name="lesmevespropostes">Les Meves Propostes</string>
+    <string name="title_activity_my_propuestas">Les Meves Propostes</string>
+    <string name="title_activity_profile">El Meu Perfil</string>
+    <string name="title_activity_edit_profile">Editor de Perfil</string>
+    <string name="nomusuario">Nom Complert:</string>
 </resources>

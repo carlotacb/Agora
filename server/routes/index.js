@@ -95,5 +95,15 @@ module.exports = app => {
         }
     })
 
+    app.delete('/api/proposal/:id', async function (req, res) {
+        try {
+            const id = req.params.id
+            await proposalsModule.deleteProposal(id)
+            res.sendStatus(200)
+        } catch (error) {
+            console.error('error on delete post', error)
+            res.sendStatus(403)
+        }
+    })
 
 }
