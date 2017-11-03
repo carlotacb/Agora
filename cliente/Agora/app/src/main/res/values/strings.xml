@@ -45,7 +45,7 @@
 
     <!-- Strings Nav Drawer TODO: quitar Name: y Username: -->
     <string name="nom" translatable="false">Name: %1$s</string>
-    <string name="username" translatable="false">Username: %1$s</string>
+    <string name="username" translatable="false">"Username: "</string>
     <string name="home">Home</string>
     <string name="novaproposta">Nova Proposta</string>
     <string name="lesmevespropostes">Les Meves Propostes</string>
@@ -84,6 +84,7 @@
     <string name="title_activity_my_propuestas">MyPropuestasActivity</string>
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_edit_profile">EditProfileActivity</string>
+    <string name="title_activity_edit_proposal">EditProposalActivity</string>
 
 
 </resources>

@@ -28,7 +28,13 @@ async function get(token) {
     return collection.findOne(query)
 }
 
+async function deleteSession(username, token) {
+    const collection = await getCollection()
+    return collection.delete({username, token})
+}
+
 module.exports = {
     create: create,
     get: get,
+    delete: deleteSession
 }

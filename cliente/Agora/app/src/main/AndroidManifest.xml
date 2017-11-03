@@ -46,6 +46,11 @@
             android:label="@string/title_activity_edit_profile"
             android:theme="@style/AppTheme">
         </activity>
+        <activity
+            android:name=".Presentation.EditProposalActivity"
+            android:label="@string/title_activity_edit_proposal"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>
