@@ -72,7 +72,8 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
                 sb.append(inputLine);
             }
             JSONObject jo = new JSONObject(sb.toString());
-            String token = jo.getString("token");
+            String token = "";
+             if (jo.has("token"))  token = jo.getString("token");
 
             //return success=true and token if connection is successful
             try {

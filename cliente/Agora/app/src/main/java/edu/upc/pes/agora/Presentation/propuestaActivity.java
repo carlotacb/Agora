@@ -40,6 +40,9 @@ public class propuestaActivity extends AppCompatActivity {
     private TextView Titulo;
     private TextView Descripcion;
 
+    String strTitulo;
+    String strDescripcion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,13 +97,16 @@ public class propuestaActivity extends AppCompatActivity {
                 else {
                     JSONObject values = new JSONObject();
                     try {
-                        values.put("title", Titulo);
-                        values.put("content", Descripcion);
+                        strTitulo = Titulo.getText().toString();
+                        strDescripcion = Descripcion.getText().toString();
+                        values.put("title", strTitulo);
+                        values.put("content", strDescripcion);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                    new PostAsyncTask("http://sandshrew.fib.upc.es:3000/api/proposal", propuestaActivity.this) {
+                    // nou server : agora-pes.herokuapp.com/api/proposal
+                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal", propuestaActivity.this) {
                         @Override
                         protected void onPostExecute(JSONObject resObject) {
                             Boolean result = false;
@@ -121,7 +127,7 @@ public class propuestaActivity extends AppCompatActivity {
                             Log.i("asdBool", result.toString());
 
                             if (result) {
-                                Toast.makeText(getApplicationContext(), "Titulo : " + Titulo + " Descripcion : " + Descripcion, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
 
                                 startActivity(new Intent(propuestaActivity.this, MainActivity.class));
                             } else {
