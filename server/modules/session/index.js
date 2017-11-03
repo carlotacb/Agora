@@ -11,4 +11,5 @@ async function generateSession({username}) {
 module.exports = {
     generateSession: generateSession,
     get: db.get,
+    deleteSession: db.delete
 }

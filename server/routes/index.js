@@ -106,4 +106,16 @@ module.exports = app => {
         }
     })
 
+    app.delete('/api/logout', isAuthenticated, async function (req, res) {
+        try {
+            const username = req.username
+            const token = req.token
+            await sessionModule.deleteSession(username, token)
+            res.sendStatus(200)
+        } catch (error) {
+            console.error('error on logout', error)
+            res.sendStatus(403)
+        }
+    })
+
 }
