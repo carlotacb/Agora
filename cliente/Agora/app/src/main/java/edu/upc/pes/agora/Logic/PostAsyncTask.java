@@ -36,7 +36,7 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             url = new URL(url2);
             context = coming_context;
         } catch (MalformedURLException e) {
-            Log.v("TagMatchGetAsyncTask", "", e);
+            Log.v("asd123", "entra1", e);
         }
     }
 
