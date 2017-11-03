@@ -24,8 +24,6 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
     public static final int profile = 3;
     public static final int editprofile = 4;
 
-
-
     public NavMenuListener(Context context, DrawerLayout navDrawer) {
         this.context = context;
         this.navDrawer = navDrawer;

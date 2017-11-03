@@ -1,5 +1,6 @@
 package edu.upc.pes.agora.Presentation;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.Locale;
 
@@ -44,6 +46,17 @@ public class MyPropuestasActivity extends AppCompatActivity {
         DrawerToggleAdvanced toggle = new DrawerToggleAdvanced(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        Button b = (Button) findViewById(R.id.edit);
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(getApplicationContext(), EditProposalActivity.class);
+                startActivity(myIntent);
+            }
+        });
 
 
     }
