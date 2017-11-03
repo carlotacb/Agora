@@ -44,4 +44,8 @@
     <string name="reset" translatable="false">Reset</string>
     <string name="search">Buscar</string>
     <string name="lesmevespropostes">Mis Propuestas</string>
+    <string name="title_activity_my_propuestas">Mis Propuestas</string>
+    <string name="title_activity_profile">Mi Perfil</string>
+    <string name="title_activity_edit_profile">Editor de Perfil</string>
+    <string name="nomusuario">Nombre Completo:</string>
 </resources>

@@ -1,85 +1,56 @@
 package edu.upc.pes.agora.Presentation;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Locale;
 
+import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.NavMenuListener;
-import edu.upc.pes.agora.Logic.PostAsyncTask;
 import edu.upc.pes.agora.R;
 
-public class MainActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     private Configuration config = new Configuration();
     private Locale locale;
 
-    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.title_activity_main);
-        toolbar.setLogo(R.mipmap.ic_homew);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_profile);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.navMenu);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
 
-        navigationView.getMenu().getItem(NavMenuListener.homneButton).setChecked(true);
+        navigationView.getMenu().getItem(NavMenuListener.profile).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.title_activity_profile);
+        toolbar.setLogo(R.mipmap.ic_personw);
+        setSupportActionBar(toolbar);
 
+        DrawerToggleAdvanced toggle = new DrawerToggleAdvanced(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        // TODO: añadir asyncTask con el GET correspondiente para sacar las propuestas de la DB
-
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            // TODO: el BACK ha d'obrir el drawer
-            drawer.openDrawer(GravityCompat.START);
-        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_search_menu, menu);
-
-        // TODO: fer el search funcional (Sprint 3...)
 
         return true;
     }
@@ -94,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        Intent refresh = new Intent(this, MainActivity.class);
+        Intent refresh = new Intent(this, ProfileActivity.class);
         refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         //noinspection SimplifiableIfStatement
@@ -127,5 +98,15 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            // TODO: el boto Back ha d'obrir el navigation drawer.
+            drawer.openDrawer(GravityCompat.START);
+        }
+    }
 
 }

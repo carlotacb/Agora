@@ -31,6 +31,21 @@
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme">
         </activity>
+        <activity
+            android:name=".Presentation.MyPropuestasActivity"
+            android:label="@string/title_activity_my_propuestas"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name=".Presentation.ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name=".Presentation.EditProfileActivity"
+            android:label="@string/title_activity_edit_profile"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

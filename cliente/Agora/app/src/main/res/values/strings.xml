@@ -62,12 +62,11 @@
     <string name="title_activity_main">Main Page</string>
 
 
-
-
     <!-- Strings to test -->
     <string name="Loged">FELICIDADES, ESTAS DENTRO :)</string>
 
-
+    <!-- Strings for Principal Profile -->
+    <string name="nomusuario">Nom Usuario:</string>
 
 
     <string name="str_en" translatable="false">English</string>
@@ -82,6 +81,9 @@
 
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="title_activity_my_propuestas">MyPropuestasActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_edit_profile">EditProfileActivity</string>
 
 
 </resources>

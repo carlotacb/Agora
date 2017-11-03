@@ -8,6 +8,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 
 import edu.upc.pes.agora.Presentation.MainActivity;
+import edu.upc.pes.agora.Presentation.MyPropuestasActivity;
+import edu.upc.pes.agora.Presentation.ProfileActivity;
 import edu.upc.pes.agora.Presentation.propuestaActivity;
 import edu.upc.pes.agora.R;
 
@@ -18,6 +20,11 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
 
     public static final int homneButton = 0;
     public static final int addproposalbutton = 1;
+    public static final int myproposals = 2;
+    public static final int profile = 3;
+    public static final int editprofile = 4;
+
+
 
     public NavMenuListener(Context context, DrawerLayout navDrawer) {
         this.context = context;
@@ -55,8 +62,19 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
             navDrawer.closeDrawers();
 
             //  Va a Propostes
+        } else if (id == R.id.nav_myporposals) {
+            if (!context.getClass().equals(MyPropuestasActivity.class)) {
+                Intent myIntent = new Intent(context, MyPropuestasActivity.class);
+                context.startActivity(myIntent);
+            }
+            navDrawer.closeDrawers();
         } else if (id == R.id.nav_perfilprinc) {
             // Va a la Pagina principal del perfil
+            if (!context.getClass().equals(ProfileActivity.class)) {
+                Intent myIntent = new Intent(context, ProfileActivity.class);
+                context.startActivity(myIntent);
+            }
+            navDrawer.closeDrawers();
         } else if (id == R.id.nav_editperf) {
             // Va a editar perfil
         } else if (id == R.id.nav_logout) {
