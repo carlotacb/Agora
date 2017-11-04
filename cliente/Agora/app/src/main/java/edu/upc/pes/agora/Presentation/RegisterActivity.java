@@ -105,7 +105,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                new PostAsyncTask("http://sandshrew.fib.upc.es:3000/api/signup",RegisterActivity.this){
+                new PostAsyncTask("https://agora-pes.herokuapp.com/api/signup",RegisterActivity.this){
                     @Override
                     protected void onPostExecute(JSONObject resObject) {
                         Boolean result = false;
