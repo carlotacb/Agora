@@ -1,5 +1,6 @@
 package edu.upc.pes.agora.Logic;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ public class ProposalsAdapter extends ArrayAdapter<Proposals> {
         super(context, 0, propo);
     }
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -30,12 +32,13 @@ public class ProposalsAdapter extends ArrayAdapter<Proposals> {
         }
 
         // Lookup view for data population
-        TextView tvName = (TextView) convertView.findViewById(R.id.titleTextViewItem);
-        TextView authorName = (TextView)convertView.findViewById(R.id.descriptionTextViewItem);
+        TextView title = (TextView) convertView.findViewById(R.id.titleTextViewItem);
+        TextView description = (TextView)convertView.findViewById(R.id.descriptionTextViewItem);
 
         // Populate the data into the template view using the data object
-        tvName.setText(proposals.getTitle());
-        authorName.setText(proposals.getDescription());
+        assert proposals != null;
+        title.setText(proposals.getTitle() + " (" + proposals.getOwner() + ")");
+        description.setText(proposals.getDescription());
 
         // Return the completed view to render on screen
         return convertView;

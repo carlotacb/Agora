@@ -1,9 +1,5 @@
 package edu.upc.pes.agora.Logic;
 
-/**
- * Created by carlo on 05/11/2017.
- */
-
 public class Proposals {
 
     // Basic proposals data manipulation class
@@ -12,7 +8,14 @@ public class Proposals {
     //private long id;
     private String title;
     private String description;
-    private int token_creator;
+    private String owner;
+    //private int token_creator;
+
+    public Proposals (String tit, String des, String ow) {
+        title = tit;
+        description = des;
+        owner = ow;
+    }
 
     /*public long getId() {
         return id;
@@ -38,14 +41,22 @@ public class Proposals {
         this.description = director;
     }
 
-    public int getToken_creator() {
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    /*public int getToken_creator() {
         return token_creator;
     }
 
     public void setToken_creator(int token_creator) {
         this.token_creator = token_creator;
     }
-
+*/
     // Will be used by the ArrayAdapter in the ListView
     @Override
     public String toString() {

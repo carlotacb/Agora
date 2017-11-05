@@ -30,59 +30,59 @@ public class GetAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             url = new URL(url2);
             context = coming_context;
         } catch (MalformedURLException e) {
-            Log.v("TagMatchGetAsyncTask", "", e);
+            Log.i("asdGetAsyncTask", "", e);
         }
     }
 
     protected JSONObject doInBackground(final JSONObject... params) {
 
+        Log.i("asdGetAsyncTask", "123");
+
         try {
-            /*final String user = params[0].getString("username");
-            final String password = params[0].getString("password");
-
-            String userPass = user + ":" + password;
-
-            String basicAuth;
-            if (url.getHost().contains("heroku")) {
-                basicAuth = "Basic " + new String(Base64.encode(userPass.getBytes(), Base64.NO_WRAP));*/
-
             HttpsURLConnection client = (HttpsURLConnection) url.openConnection();
             client.setRequestMethod("GET");
-            client.setInstanceFollowRedirects(true);
+            //client.setInstanceFollowRedirects(true);
             client.connect();
 
             JSONObject aux;
             String response = Helpers.iStreamToString(client.getInputStream());
 
             if (client.getResponseCode() >= 400){
+                Log.i("asdGetAsyncTask", "entra al 400");
                 aux = new JSONObject(Helpers.iStreamToString(client.getErrorStream()));
 
             }
 
             else if (client.getResponseCode() == 302) {
                 aux = new JSONObject();
-                Log.i("asdDEBUG",client.getURL().toString());
+                Log.i("asdGetAsyncTask", "entra al 302");
                 aux.put("302",client.getURL().toString());
             }
 
             else if (response.equals("[]")) {
                 aux = new JSONObject();
                 aux.put("arrayResponse",new JSONArray());
+                Log.i("asdGetAsyncTask", "entra al []");
             }
 
             else {
                 if(response.startsWith("[")){
                     aux = new JSONObject();
                     aux.put("arrayResponse", new JSONArray(response));
+                    Log.i("asdGetAsyncTask", "entra al else");
                 }
                 else {
                     aux = new JSONObject(response);
+                    Log.i("asdGetAsyncTask", "entra al else2");
                 }
             }
 
             client.disconnect();
 
+            Log.i("asdGetAsyncTask", "desconectat");
+            Log.i("asdGetAsyncTask", aux.toString());
             return aux;
+
 
         } catch (IOException | JSONException e) {
             Log.e("error", e.getMessage());

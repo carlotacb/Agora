@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Configuration config = new Configuration();
     private Locale locale;
-    private ArrayList<Proposals> propostes;
     private JSONObject Jason = new JSONObject();
     private ListView llista_propostes;
 
@@ -61,35 +60,71 @@ public class MainActivity extends AppCompatActivity {
 
         llista_propostes = (ListView) findViewById(R.id.list);
 
+        Log.i("asd123", "abans del getasync");
+
         // TODO: añadir asyncTask con el GET correspondiente para sacar las propuestas de la DB
 
-        new GetAsyncTask("https://agora-pes.herokuapp.com/api/proposals", this) {
+        new GetAsyncTask("https://agora-pes.herokuapp.com/api/proposal", this) {
+
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
+                Log.i("asd123", "abans del try");
                 try {
-                    if(jsonObject.has("error")) {
+                    Log.i("asd123", "entra al try");
+                    if (jsonObject.has("error")) {
                         String error = jsonObject.get("error").toString();
+                        Log.i("asd123", "Error");
 
                         Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
                         toast.show();
                     }
 
-                    else if (jsonObject.has("username")){
-                        JSONArray interestsArray = jsonObject.getJSONArray("interests");
-                        propostes = new ArrayList<Proposals>();
-                        if (interestsArray != null) {
-                            for (int i=0;i<interestsArray.length();i++){
-                                propostes.add((Proposals) interestsArray.get(i));
+                    else if (jsonObject != null){
+                        Log.i("asd123", "entra al elseif1");
+                        JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
+                        //JSONArray ArrayPropOwner = jsonObject.getJSONArray("owner");
+                        //JSONArray ArrayPropDescription = jsonObject.getJSONArray("description");
+                        Log.i("asd123", "entra al elseif");
+                        ArrayList<Proposals> propostes = new ArrayList<>();
+
+
+                        if (ArrayProp != null) {
+                            for (int i=0; i < ArrayProp.length(); i++){
+
+                                Log.i("asd123", (ArrayProp.get(i).toString()));
+
+                                JSONObject jas = ArrayProp.getJSONObject(i);
+                                Log.i("asd123", "1");
+                                String title = jas.getString("title");
+                                Log.i("asd123", title);
+                                String owner = jas.getString("owner");
+                                Log.i("asd123", owner);
+                                String description = jas.getString("content");
+                                Log.i("asd123", description);
+
+                                Proposals aux = new Proposals(title, description, owner);
+                                Log.i("asd123", "creada proposta");
+
+                                /*aux.setDescription(description);
+                                Log.i("asd123", "posa description");
+                                aux.setOwner(owner);
+                                Log.i("asd123", "posa owner");
+                                aux.setTitle(title);
+                                Log.i("asd123", "posa title");*/
+
+                                propostes.add(aux);
+
                             }
                         }
+
                         llista_propostes.setAdapter(new ProposalsAdapter(getApplicationContext(), propostes));
+                        Log.i("asd123", "nothing");
                     }
-                } catch (JSONException ignored) {
-                    Log.i("DEBUG","error al get user");
+                } catch (JSONException e) {
+                    Log.i("asd123", "entra al catch");
+                    e.printStackTrace();
                 }
             }
-
-
         }.execute(Jason);
 
     }
