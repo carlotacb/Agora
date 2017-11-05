@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Presentation.RegisterActivity"/>
-        <activity android:name=".Presentation.propuestaActivity"/>
+        <activity android:name=".Presentation.PropuestaActivity"/>
         <activity
             android:name=".Presentation.MainActivity"
             android:label="@string/title_activity_main2"

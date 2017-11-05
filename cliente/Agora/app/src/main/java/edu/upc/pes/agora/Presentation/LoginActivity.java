@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
 import edu.upc.pes.agora.Logic.ItemData;
 import edu.upc.pes.agora.Logic.PostAsyncTask;
@@ -115,9 +116,9 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                                     //Saves token in SharedPreferences if it is not yet saved there
                                     if (resObject.has("token")) {
                                         String t = resObject.getString("token");
-                                        if(prefs.getString("token", "") != t) {
+                                        if(!Objects.equals(prefs.getString("token", ""), t)) {
                                             edit.putString("token", t);
-                                            edit.commit();
+                                            edit.apply();
                                         }
                                         Log.i("SavedToken", prefs.getString("token","none saved"));
                                     }

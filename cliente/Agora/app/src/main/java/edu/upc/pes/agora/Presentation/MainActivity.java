@@ -1,10 +1,8 @@
 package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,23 +14,29 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
+import edu.upc.pes.agora.Logic.GetAsyncTask;
 import edu.upc.pes.agora.Logic.NavMenuListener;
-import edu.upc.pes.agora.Logic.PostAsyncTask;
+import edu.upc.pes.agora.Logic.Proposals;
+import edu.upc.pes.agora.Logic.ProposalsAdapter;
 import edu.upc.pes.agora.R;
 
 public class MainActivity extends AppCompatActivity {
 
     private Configuration config = new Configuration();
     private Locale locale;
+    private ArrayList<Proposals> propostes;
+    private JSONObject Jason = new JSONObject();
+    private ListView llista_propostes;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -55,9 +59,38 @@ public class MainActivity extends AppCompatActivity {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        llista_propostes = (ListView) findViewById(R.id.list);
+
         // TODO: añadir asyncTask con el GET correspondiente para sacar las propuestas de la DB
 
+        new GetAsyncTask("https://agora-pes.herokuapp.com/api/proposals", this) {
+            @Override
+            protected void onPostExecute(JSONObject jsonObject) {
+                try {
+                    if(jsonObject.has("error")) {
+                        String error = jsonObject.get("error").toString();
 
+                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                    else if (jsonObject.has("username")){
+                        JSONArray interestsArray = jsonObject.getJSONArray("interests");
+                        propostes = new ArrayList<Proposals>();
+                        if (interestsArray != null) {
+                            for (int i=0;i<interestsArray.length();i++){
+                                propostes.add((Proposals) interestsArray.get(i));
+                            }
+                        }
+                        llista_propostes.setAdapter(new ProposalsAdapter(getApplicationContext(), propostes));
+                    }
+                } catch (JSONException ignored) {
+                    Log.i("DEBUG","error al get user");
+                }
+            }
+
+
+        }.execute(Jason);
 
     }
 
