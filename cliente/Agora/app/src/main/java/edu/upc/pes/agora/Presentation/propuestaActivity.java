@@ -28,7 +28,7 @@ import edu.upc.pes.agora.Logic.NavMenuListener;
 import edu.upc.pes.agora.Logic.PostAsyncTask;
 import edu.upc.pes.agora.R;
 
-public class PropuestaActivity extends AppCompatActivity {
+public class propuestaActivity extends AppCompatActivity {
 
     private Configuration config = new Configuration();
     private Locale locale;
@@ -105,7 +105,7 @@ public class PropuestaActivity extends AppCompatActivity {
                     }
 
                     // nou server : agora-pes.herokuapp.com/api/proposal
-                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal", PropuestaActivity.this) {
+                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal", propuestaActivity.this) {
                         @Override
                         protected void onPostExecute(JSONObject resObject) {
                             Boolean result = false;
@@ -128,7 +128,7 @@ public class PropuestaActivity extends AppCompatActivity {
                             if (result) {
                                 Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
 
-                                startActivity(new Intent(PropuestaActivity.this, MainActivity.class));
+                                startActivity(new Intent(propuestaActivity.this, MainActivity.class));
                             } else {
                                 Toast.makeText(getApplicationContext(), "FUCKED", Toast.LENGTH_LONG).show();
 
@@ -166,7 +166,7 @@ public class PropuestaActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        Intent refresh = new Intent(this, PropuestaActivity.class);
+        Intent refresh = new Intent(this, propuestaActivity.class);
         refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         //noinspection SimplifiableIfStatement

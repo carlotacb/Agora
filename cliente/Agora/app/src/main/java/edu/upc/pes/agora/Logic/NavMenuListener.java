@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import edu.upc.pes.agora.Presentation.MainActivity;
 import edu.upc.pes.agora.Presentation.MyPropuestasActivity;
 import edu.upc.pes.agora.Presentation.ProfileActivity;
-import edu.upc.pes.agora.Presentation.PropuestaActivity;
+import edu.upc.pes.agora.Presentation.propuestaActivity;
 import edu.upc.pes.agora.R;
 
 public class NavMenuListener implements NavigationView.OnNavigationItemSelectedListener {
@@ -52,8 +52,8 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
             navDrawer.closeDrawers();
 
         } else if (id == R.id.nav_addproposta) {
-            if (!context.getClass().equals(PropuestaActivity.class)) {
-                Intent myIntent = new Intent(context, PropuestaActivity.class);
+            if (!context.getClass().equals(propuestaActivity.class)) {
+                Intent myIntent = new Intent(context, propuestaActivity.class);
                 context.startActivity(myIntent);
             }
             navDrawer.closeDrawers();
