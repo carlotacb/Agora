@@ -92,6 +92,7 @@ public class propuestaActivity extends AppCompatActivity {
                 else if (Descripcion.getText()==""){
                     String error = res.getString(R.string.errorDescripcion);
                     Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+
                 }
                 else {
                     JSONObject values = new JSONObject();
@@ -112,28 +113,34 @@ public class propuestaActivity extends AppCompatActivity {
                             String error = res.getString(R.string.errorCreacion);
 
                             try {
-                                if (resObject.has("success"))
-                                    result = resObject.getBoolean("success");
-                                if (!result && resObject.has("errorMessage"))
-                                    error = res.getString(R.string.errorCreacion);
 
-                                Toast.makeText(getApplicationContext(), "Result : " + result , Toast.LENGTH_LONG).show();
+                                if (resObject.has("success")) {
+                                    result = resObject.getBoolean("success");
+                                }
+
+                                if (!result && resObject.has("errorMessage")) {
+                                    error = res.getString(R.string.errorCreacion);
+                                    Log.i("asdCreacion", error);
+                                    Toast.makeText(getApplicationContext(), error , Toast.LENGTH_LONG).show();
+                                }
+                                //Toast.makeText(getApplicationContext(), "Result : " + result , Toast.LENGTH_LONG).show();
 
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            Log.i("asdBool", result.toString());
+                            //Log.i("asdBool", result.toString());
+
+                            String creacionok = String.format(res.getString(R.string.done), strTitulo);
 
                             if (result) {
-                                Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
-
+                                //Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(propuestaActivity.this, MainActivity.class));
-                            } else {
-                                Toast.makeText(getApplicationContext(), "FUCKED", Toast.LENGTH_LONG).show();
+                            }
 
-                                Log.i("asd", "gfgffgfgf");
-                                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                            else {
+                                Log.i("asdCreacion", "reset");
                                 Titulo.setText("");
                                 Descripcion.setText("");
                             }

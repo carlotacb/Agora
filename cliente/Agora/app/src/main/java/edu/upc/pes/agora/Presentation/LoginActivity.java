@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
         String engl = res.getString(R.string.Ingles);
 
         ArrayList<ItemData> list = new ArrayList<>();
-        list.add(new ItemData(sel, R.drawable.terra));
+        list.add(new ItemData(sel, R.drawable.planeta));
         list.add(new ItemData(cast, R.drawable.spa));
         list.add(new ItemData(cata, R.drawable.rep));
         list.add(new ItemData(engl, R.drawable.ing));

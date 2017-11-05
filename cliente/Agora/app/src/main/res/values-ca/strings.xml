@@ -49,4 +49,6 @@
     <string name="title_activity_profile">El Meu Perfil</string>
     <string name="title_activity_edit_profile">Editor de Perfil</string>
     <string name="nomusuario">Nom Complert:</string>
+    <string name="done">Proposta: \"%1$s\" creada correctament</string>
+    <string name="title_activity_edit_proposal">Editar Proposta</string>
 </resources>
