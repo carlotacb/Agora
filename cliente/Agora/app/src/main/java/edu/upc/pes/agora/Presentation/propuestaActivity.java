@@ -76,6 +76,8 @@ public class propuestaActivity extends AppCompatActivity {
 
                 Titulo.setText("");
                 Descripcion.setText("");
+                strDescripcion="";
+                strTitulo="";
 
             }
         });
@@ -85,11 +87,16 @@ public class propuestaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (Titulo.getText()=="" ){
+
+             //   Toast.makeText(getApplicationContext(),"titulo" + Titulo.getText().toString(), Toast.LENGTH_LONG).show();
+             //   Toast.makeText(getApplicationContext(), "descripcion" +Descripcion.getText().toString(), Toast.LENGTH_LONG).show();
+
+
+                if (Titulo.getText().toString().equals("") ){
                     String error = res.getString(R.string.errorTitulo);
                     Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                 }
-                else if (Descripcion.getText()==""){
+                else if (Descripcion.getText().toString().equals("")){
                     String error = res.getString(R.string.errorDescripcion);
                     Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
 

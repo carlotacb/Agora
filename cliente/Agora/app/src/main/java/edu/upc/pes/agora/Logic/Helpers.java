@@ -36,4 +36,10 @@ public class Helpers {
         return sb.toString();
     }
 
+    public static void logout(Context context) {
+        SharedPreferences.Editor editor = context.getSharedPreferences(Constants.SH_PREF_NAME, Context.MODE_PRIVATE).edit();
+        editor.remove("token");
+        editor.apply();
+    }
+
 }
