@@ -26,6 +26,8 @@ import java.util.Locale;
 import edu.upc.pes.agora.Logic.PostAsyncTask;
 import edu.upc.pes.agora.R;
 
+import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
+
 public class EditProposalActivity extends AppCompatActivity {
 
     private Configuration config = new Configuration();
@@ -53,7 +55,7 @@ public class EditProposalActivity extends AppCompatActivity {
         saveButton = (Button) findViewById(R.id.saveButton);
         cancelButton = (Button) findViewById(R.id.cancelButton);
 
-        prefs = this.getSharedPreferences("SavedToken", MODE_PRIVATE);
+        prefs = this.getSharedPreferences(SH_PREF_NAME, MODE_PRIVATE);
         edit = prefs.edit();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

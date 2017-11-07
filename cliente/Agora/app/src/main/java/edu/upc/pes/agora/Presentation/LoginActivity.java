@@ -31,6 +31,8 @@ import edu.upc.pes.agora.Logic.PostAsyncTask;
 import edu.upc.pes.agora.R;
 import edu.upc.pes.agora.Logic.SpinnerAdapter;
 
+import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
+
 
 public class LoginActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -60,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
         spin = (Spinner) findViewById(R.id.spinner);
 
         //Get SharedPreferences containing token
-        prefs = this.getSharedPreferences("SavedToken",MODE_PRIVATE);
+        prefs = this.getSharedPreferences(SH_PREF_NAME,MODE_PRIVATE);
         edit = prefs.edit();
 
         final Resources res = this.getResources();
