@@ -72,7 +72,7 @@ module.exports = app => {
         }
     })
 
-    app.post('/api/proposal', async function (req, res) {
+    app.post('/api/proposal', isAuthenticated, async function (req, res) {
         try {
             const username = req.username
             const {title, content} = req.body
