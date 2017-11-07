@@ -43,6 +43,12 @@
     <string name="nuevapropuesta">Nueva Propuesta</string>
     <string name="done">Propuesta "%1$s" creada correctamnete</string>
 
+    <!-- Strings Edit Proposal -->
+    <string name="editTitle">Title</string>
+    <string name="editDescription">Description</string>
+    <string name="saveButton">Save</string>
+    <string name="cancelButton">cancel</string>
+    <string name="savedChanges">Saved changes to proposal</string>
 
     <!-- Strings Nav Drawer TODO: quitar Name: y Username: -->
     <string name="nom" translatable="false">Name: %1$s</string>
