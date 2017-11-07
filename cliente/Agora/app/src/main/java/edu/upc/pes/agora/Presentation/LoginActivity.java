@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
     private Button login;
     private Spinner spin;
     private TextView register;
+    private ProgressBar prog;
     private EditText etUsername, etPassword;
     private String username, password;
     private Configuration config = new Configuration();
@@ -82,6 +84,10 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
         etUsername = (EditText) findViewById(R.id.username);
         etPassword = (EditText) findViewById(R.id.password);
+
+        prog = (ProgressBar) findViewById(R.id.loginprogressbar);
+
+
 
         login.setOnClickListener(new OnClickListener() {
             @SuppressLint("StaticFieldLeak")
@@ -142,8 +148,10 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                         }
                     }.execute(values);
                 }
+                login.setVisibility(View.GONE);
+                prog.setVisibility(View.VISIBLE);
             }
-        });
+         });
 
 
         register.setOnClickListener(new OnClickListener() {
