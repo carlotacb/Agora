@@ -74,7 +74,7 @@ module.exports = app => {
 
     app.post('/api/proposal', async function (req, res) {
         try {
-            const username = 'userDemo'
+            const username = req.username
             const {title, content} = req.body
             console.log(title + "\n" + content)
             const proposal = await proposalsModule.createProposal({username, title, content})

@@ -12,7 +12,8 @@ async function create({username, title, content}) {
     const object = {
         owner: username,
         title: title,
-        content: content
+        content: content,
+        createdDateTime: new Date()
     }
     const collection = await getCollection()
     return collection.insertOne(object)
