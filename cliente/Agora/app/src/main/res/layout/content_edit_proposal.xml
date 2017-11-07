@@ -17,7 +17,58 @@
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
 
+        <EditText
+            android:id="@+id/editTitle"
+            android:hint="@string/editTitle"
+            android:inputType="text"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:textColorHint="#e89b9696"
+            android:padding="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="serif"
+            android:background="@drawable/edittext_bg"
+            android:textCursorDrawable="@null"
+            android:textColor="#000"
+            android:textStyle="italic"/>
 
+        <EditText
+            android:id="@+id/editDescription"
+            android:hint="@string/editDescription"
+            android:inputType="textMultiLine"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:textColorHint="#e89b9696"
+            android:padding="10dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="serif"
+            android:background="@drawable/edittext_bg"
+            android:textCursorDrawable="@null"
+            android:textColor="#000"
+            android:textStyle="italic"/>
+
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/botonlogin"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:textSize="17dp"
+            android:text="@string/saveButton" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="280dp"
+            android:layout_height="40dp"
+            android:background="@drawable/botonlogin"
+            android:fontFamily="serif"
+            android:textStyle="bold"
+            android:textSize="17dp"
+            android:text="@string/cancelButton" />
 
     </LinearLayout>
 </ScrollView>
