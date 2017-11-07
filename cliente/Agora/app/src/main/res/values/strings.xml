@@ -41,6 +41,7 @@
     <string name="reset">Reset</string>
     <string name="create">Create</string>
     <string name="nuevapropuesta">Nueva Propuesta</string>
+    <string name="done">Propuesta "%1$s" creada correctamnete</string>
 
 
     <!-- Strings Nav Drawer TODO: quitar Name: y Username: -->

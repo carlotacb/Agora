@@ -23,10 +23,6 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-/**
- * Created by gerar on 24/10/2017.
- */
-
 public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     private URL url;
     private Context context;
@@ -36,7 +32,7 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             url = new URL(url2);
             context = coming_context;
         } catch (MalformedURLException e) {
-            Log.v("TagMatchGetAsyncTask", "", e);
+            Log.v("asd123", "entra1", e);
         }
     }
 
@@ -72,7 +68,8 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
                 sb.append(inputLine);
             }
             JSONObject jo = new JSONObject(sb.toString());
-            String token = jo.getString("token");
+            String token = "";
+             if (jo.has("token"))  token = jo.getString("token");
 
             //return success=true and token if connection is successful
             try {

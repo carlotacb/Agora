@@ -14,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
 import edu.upc.pes.agora.Logic.ItemData;
 import edu.upc.pes.agora.Logic.PostAsyncTask;
@@ -35,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
     private Button login;
     private Spinner spin;
     private TextView register;
+    private ProgressBar prog;
     private EditText etUsername, etPassword;
     private String username, password;
     private Configuration config = new Configuration();
@@ -68,7 +71,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
         String engl = res.getString(R.string.Ingles);
 
         ArrayList<ItemData> list = new ArrayList<>();
-        list.add(new ItemData(sel, R.drawable.terra));
+        list.add(new ItemData(sel, R.drawable.planeta));
         list.add(new ItemData(cast, R.drawable.spa));
         list.add(new ItemData(cata, R.drawable.rep));
         list.add(new ItemData(engl, R.drawable.ing));
@@ -81,6 +84,10 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
         etUsername = (EditText) findViewById(R.id.username);
         etPassword = (EditText) findViewById(R.id.password);
+
+        prog = (ProgressBar) findViewById(R.id.loginprogressbar);
+
+
 
         login.setOnClickListener(new OnClickListener() {
             @SuppressLint("StaticFieldLeak")
@@ -101,7 +108,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    new PostAsyncTask("http://sandshrew.fib.upc.es:3000/api/login", LoginActivity.this) {
+                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/login", LoginActivity.this) {
                         @Override
                         protected void onPostExecute(JSONObject resObject) {
 
@@ -115,9 +122,9 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                                     //Saves token in SharedPreferences if it is not yet saved there
                                     if (resObject.has("token")) {
                                         String t = resObject.getString("token");
-                                        if(prefs.getString("token", "") != t) {
+                                        if(!Objects.equals(prefs.getString("token", ""), t)) {
                                             edit.putString("token", t);
-                                            edit.commit();
+                                            edit.apply();
                                         }
                                         Log.i("SavedToken", prefs.getString("token","none saved"));
                                     }
@@ -141,8 +148,10 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                         }
                     }.execute(values);
                 }
+                login.setVisibility(View.GONE);
+                prog.setVisibility(View.VISIBLE);
             }
-        });
+         });
 
 
         register.setOnClickListener(new OnClickListener() {

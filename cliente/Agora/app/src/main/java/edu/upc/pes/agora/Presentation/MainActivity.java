@@ -1,10 +1,8 @@
 package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,23 +14,28 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
+import edu.upc.pes.agora.Logic.GetAsyncTask;
 import edu.upc.pes.agora.Logic.NavMenuListener;
-import edu.upc.pes.agora.Logic.PostAsyncTask;
+import edu.upc.pes.agora.Logic.Proposals;
+import edu.upc.pes.agora.Logic.ProposalsAdapter;
 import edu.upc.pes.agora.R;
 
 public class MainActivity extends AppCompatActivity {
 
     private Configuration config = new Configuration();
     private Locale locale;
+    private JSONObject Jason = new JSONObject();
+    private ListView llista_propostes;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -55,9 +58,48 @@ public class MainActivity extends AppCompatActivity {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        // TODO: añadir asyncTask con el GET correspondiente para sacar las propuestas de la DB
+        llista_propostes = (ListView) findViewById(R.id.list);
 
 
+        new GetAsyncTask("https://agora-pes.herokuapp.com/api/proposal", this) {
+
+            @Override
+            protected void onPostExecute(JSONObject jsonObject) {
+                try {
+                    if (jsonObject.has("error")) {
+                        String error = jsonObject.get("error").toString();
+                        Log.i("asd123", "Error");
+
+                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                    else if (jsonObject != null){
+                        JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
+                        ArrayList<Proposals> propostes = new ArrayList<>();
+
+                        if (ArrayProp != null) {
+                            for (int i=0; i < ArrayProp.length(); i++){
+
+                                Log.i("asd123", (ArrayProp.get(i).toString()));
+
+                                JSONObject jas = ArrayProp.getJSONObject(i);
+                                String title = jas.getString("title");
+                                String owner = jas.getString("owner");
+                                String description = jas.getString("content");
+
+                                Proposals aux = new Proposals(title, description, owner);
+
+                                propostes.add(aux);
+                            }
+                        }
+                        llista_propostes.setAdapter(new ProposalsAdapter(getApplicationContext(), propostes));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute(Jason);
 
     }
 
@@ -87,8 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        //TODO: posar-ho al MenuListener
 
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -127,6 +167,9 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+    //TODO: refresh
 
 
 }

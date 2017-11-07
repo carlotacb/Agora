@@ -1,5 +1,6 @@
 package edu.upc.pes.agora.Presentation;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -51,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         String engl = res.getString(R.string.Ingles);
 
         ArrayList<ItemData> list = new ArrayList<>();
-        list.add(new ItemData(sel, R.drawable.terra));
+        list.add(new ItemData(sel, R.drawable.planeta));
         list.add(new ItemData(cast, R.drawable.spa));
         list.add(new ItemData(cata, R.drawable.rep));
         list.add(new ItemData(engl, R.drawable.ing));
@@ -63,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
     }
 
+    @SuppressLint("StaticFieldLeak")
     public void register(){
 
         id = identifier.getText().toString();
@@ -105,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                new PostAsyncTask("http://sandshrew.fib.upc.es:3000/api/signup",RegisterActivity.this){
+                new PostAsyncTask("https://agora-pes.herokuapp.com/api/signup",RegisterActivity.this){
                     @Override
                     protected void onPostExecute(JSONObject resObject) {
                         Boolean result = false;

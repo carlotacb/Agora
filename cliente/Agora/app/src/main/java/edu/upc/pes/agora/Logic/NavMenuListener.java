@@ -3,10 +3,11 @@ package edu.upc.pes.agora.Logic;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 
+import edu.upc.pes.agora.Presentation.EditProfileActivity;
+import edu.upc.pes.agora.Presentation.LoginActivity;
 import edu.upc.pes.agora.Presentation.MainActivity;
 import edu.upc.pes.agora.Presentation.MyPropuestasActivity;
 import edu.upc.pes.agora.Presentation.ProfileActivity;
@@ -59,7 +60,7 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
             }
             navDrawer.closeDrawers();
 
-            //  Va a Propostes
+            //  Va a Proposals
         } else if (id == R.id.nav_myporposals) {
             if (!context.getClass().equals(MyPropuestasActivity.class)) {
                 Intent myIntent = new Intent(context, MyPropuestasActivity.class);
@@ -74,51 +75,23 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
             }
             navDrawer.closeDrawers();
         } else if (id == R.id.nav_editperf) {
-            // Va a editar perfil
+            // Va a editar perfil --> TODO: poner el boton dentro del perfil
+            if (!context.getClass().equals(EditProfileActivity.class)) {
+                Intent myIntent = new Intent(context, EditProfileActivity.class);
+                context.startActivity(myIntent);
+            }
         } else if (id == R.id.nav_logout) {
             // Logout --> TODO: Desasignacion de token
+
+            Helpers.logout(context);
+
+            if (!context.getClass().equals(LoginActivity.class)) {
+                Intent myIntent = new Intent(context, LoginActivity.class);
+                context.startActivity(myIntent);
+            }
         }
 
         activityChanged = true;
         return true;
     }
 }
-
-
-        /*switch (menuItem.getItemId()) {
-            case R.id.home_button: {
-
-                break;
-            }
-            case R.id.switchActivity: {
-                if (!context.getClass().equals(RecyclerViewActivity.class)) {
-                    Intent myIntent = new Intent(context, RecyclerViewActivity.class);
-                    context.startActivity(myIntent);
-                }
-                navDrawer.closeDrawers();
-                break;
-            }
-            case R.id.addFilmButton: {
-                if (!context.getClass().equals(InsertFilmActivity.class)) {
-                    Intent myIntent = new Intent(context, InsertFilmActivity.class);
-                    context.startActivity(myIntent);
-                }
-                navDrawer.closeDrawers();
-                break;
-            }
-            case R.id.help_button: {
-                if (!context.getClass().equals(HelpActivity.class)) {
-                    Intent myIntent = new Intent(context, HelpActivity.class);
-                    context.startActivity(myIntent);
-                }
-                navDrawer.closeDrawers();
-                break;
-            }
-            case R.id.about_button: {
-                if (!context.getClass().equals(AboutActivity.class)) {
-                    Intent myIntent = new Intent(context, AboutActivity.class);
-                    context.startActivity(myIntent);
-                }
-                navDrawer.closeDrawers();
-                break;
-            }*/

@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +38,9 @@ public class propuestaActivity extends AppCompatActivity {
 
     private TextView Titulo;
     private TextView Descripcion;
+
+    String strTitulo;
+    String strDescripcion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,8 @@ public class propuestaActivity extends AppCompatActivity {
 
                 Titulo.setText("");
                 Descripcion.setText("");
+                strDescripcion="";
+                strTitulo="";
 
             }
         });
@@ -83,52 +87,67 @@ public class propuestaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (Titulo.getText()=="" ){
+
+             //   Toast.makeText(getApplicationContext(),"titulo" + Titulo.getText().toString(), Toast.LENGTH_LONG).show();
+             //   Toast.makeText(getApplicationContext(), "descripcion" +Descripcion.getText().toString(), Toast.LENGTH_LONG).show();
+
+
+                if (Titulo.getText().toString().equals("") ){
                     String error = res.getString(R.string.errorTitulo);
                     Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                 }
-                else if (Descripcion.getText()==""){
+                else if (Descripcion.getText().toString().equals("")){
                     String error = res.getString(R.string.errorDescripcion);
                     Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+
                 }
                 else {
                     JSONObject values = new JSONObject();
                     try {
-                        values.put("title", Titulo);
-                        values.put("content", Descripcion);
+                        strTitulo = Titulo.getText().toString();
+                        strDescripcion = Descripcion.getText().toString();
+                        values.put("title", strTitulo);
+                        values.put("content", strDescripcion);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
-                    new PostAsyncTask("http://sandshrew.fib.upc.es:3000/api/proposal", propuestaActivity.this) {
+                    // nou server : agora-pes.herokuapp.com/api/proposal
+                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal", propuestaActivity.this) {
                         @Override
                         protected void onPostExecute(JSONObject resObject) {
                             Boolean result = false;
                             String error = res.getString(R.string.errorCreacion);
 
                             try {
-                                if (resObject.has("success"))
-                                    result = resObject.getBoolean("success");
-                                if (!result && resObject.has("errorMessage"))
-                                    error = res.getString(R.string.errorCreacion);
 
-                                Toast.makeText(getApplicationContext(), "Result : " + result , Toast.LENGTH_LONG).show();
+                                if (resObject.has("success")) {
+                                    result = resObject.getBoolean("success");
+                                }
+
+                                if (!result && resObject.has("errorMessage")) {
+                                    error = res.getString(R.string.errorCreacion);
+                                    Log.i("asdCreacion", error);
+                                    Toast.makeText(getApplicationContext(), error , Toast.LENGTH_LONG).show();
+                                }
+                                //Toast.makeText(getApplicationContext(), "Result : " + result , Toast.LENGTH_LONG).show();
 
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            Log.i("asdBool", result.toString());
+                            //Log.i("asdBool", result.toString());
+
+                            String creacionok = String.format(res.getString(R.string.done), strTitulo);
 
                             if (result) {
-                                Toast.makeText(getApplicationContext(), "Titulo : " + Titulo + " Descripcion : " + Descripcion, Toast.LENGTH_LONG).show();
-
+                                //Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(propuestaActivity.this, MainActivity.class));
-                            } else {
-                                Toast.makeText(getApplicationContext(), "FUCKED", Toast.LENGTH_LONG).show();
+                            }
 
-                                Log.i("asd", "gfgffgfgf");
-                                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                            else {
+                                Log.i("asdCreacion", "reset");
                                 Titulo.setText("");
                                 Descripcion.setText("");
                             }
