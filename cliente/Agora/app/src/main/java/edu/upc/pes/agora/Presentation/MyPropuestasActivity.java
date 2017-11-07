@@ -47,6 +47,8 @@ public class MyPropuestasActivity extends AppCompatActivity {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        //TODO: List of own proposals
+
         Button b = (Button) findViewById(R.id.edit);
 
         b.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +56,7 @@ public class MyPropuestasActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getApplicationContext(), EditProposalActivity.class);
+                //TODO: Put values of chosen proposal in the intent
                 startActivity(myIntent);
             }
         });
