@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private JSONObject Jason = new JSONObject();
     private ListView llista_propostes;
 
+    public static Context mainContext;
+
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.title_activity_main);
         toolbar.setLogo(R.mipmap.ic_homew);
         setSupportActionBar(toolbar);
+
+        mainContext = getApplicationContext();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         llista_propostes = (ListView) findViewById(R.id.list);
+
 
 
         new GetAsyncTask("https://agora-pes.herokuapp.com/api/proposal", this) {
@@ -169,6 +174,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public static Context getContextOfApplication(){
+        return mainContext;
+    }
 
 
     //TODO: refresh

@@ -48,6 +48,7 @@
     <string name="editDescription">Description</string>
     <string name="saveButton">Save</string>
     <string name="cancelButton">Cancel</string>
+    <string name="savedChanges">Saved changes to proposal</string>
 
 
     <!-- Strings Nav Drawer TODO: quitar Name: y Username: -->

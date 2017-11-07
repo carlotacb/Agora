@@ -31,6 +31,8 @@ import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
 public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     private URL url;
     private Context context;
+
+
     SharedPreferences prefs;
 
     public PostAsyncTask(String url2, Context coming_context) {
@@ -43,11 +45,12 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     }
 
     protected JSONObject doInBackground(final JSONObject... params) {
-        prefs = context.getSharedPreferences(SH_PREF_NAME, Context.MODE_PRIVATE);
+        prefs = MainActivity.getContextOfApplication().getSharedPreferences(SH_PREF_NAME, Context.MODE_PRIVATE);
         String tokenToSend = "";
         if (prefs.contains("token")){
-            tokenToSend = prefs.getString("token", "");
+            tokenToSend = prefs.getString("token","");
         }
+
         try {
 
             //Open connection to server
@@ -57,7 +60,7 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             client.setRequestMethod("POST");
             client.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
             client.setRequestProperty("Accept","application/json");
-            client.setRequestProperty("Authorization", tokenToSend);
+            client.setRequestProperty("Authorization",tokenToSend);
             client.setDoInput(true);
             client.setDoOutput(true);
 
