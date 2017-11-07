@@ -1,6 +1,7 @@
 package edu.upc.pes.agora.Logic;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
@@ -23,9 +24,14 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import edu.upc.pes.agora.Presentation.MainActivity;
+
+import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
+
 public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     private URL url;
     private Context context;
+    SharedPreferences prefs;
 
     public PostAsyncTask(String url2, Context coming_context) {
         try {
@@ -37,6 +43,11 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     }
 
     protected JSONObject doInBackground(final JSONObject... params) {
+        prefs = context.getSharedPreferences(SH_PREF_NAME, Context.MODE_PRIVATE);
+        String tokenToSend = "";
+        if (prefs.contains("token")){
+            tokenToSend = prefs.getString("token", "");
+        }
         try {
 
             //Open connection to server
@@ -46,6 +57,7 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             client.setRequestMethod("POST");
             client.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
             client.setRequestProperty("Accept","application/json");
+            client.setRequestProperty("Authorization", tokenToSend);
             client.setDoInput(true);
             client.setDoOutput(true);
 
@@ -75,7 +87,7 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             try {
                 if (client.getResponseCode()==200) {
                     response.put("success",true);
-                    response.put("token",token);
+                    response.put("token", token);
                 }
                 else  {
                     Log.i("asdTAG","response code: "+client.getResponseCode());
