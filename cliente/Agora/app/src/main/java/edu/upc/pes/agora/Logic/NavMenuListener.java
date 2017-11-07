@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 
 import edu.upc.pes.agora.Presentation.EditProfileActivity;
+import edu.upc.pes.agora.Presentation.LoginActivity;
 import edu.upc.pes.agora.Presentation.MainActivity;
 import edu.upc.pes.agora.Presentation.MyPropuestasActivity;
 import edu.upc.pes.agora.Presentation.ProfileActivity;
@@ -74,13 +75,20 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
             }
             navDrawer.closeDrawers();
         } else if (id == R.id.nav_editperf) {
-            // Va a editar perfil
+            // Va a editar perfil --> TODO: poner el boton dentro del perfil
             if (!context.getClass().equals(EditProfileActivity.class)) {
-                Intent myIntent = new Intent(context, ProfileActivity.class);
+                Intent myIntent = new Intent(context, EditProfileActivity.class);
                 context.startActivity(myIntent);
             }
         } else if (id == R.id.nav_logout) {
             // Logout --> TODO: Desasignacion de token
+
+            Helpers.logout(context);
+
+            if (!context.getClass().equals(LoginActivity.class)) {
+                Intent myIntent = new Intent(context, LoginActivity.class);
+                context.startActivity(myIntent);
+            }
         }
 
         activityChanged = true;

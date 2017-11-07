@@ -26,8 +26,8 @@ public class EditProposalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_proposal);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.title_activity_my_propuestas);
-        toolbar.setLogo(R.mipmap.ic_accountw);
+        toolbar.setTitle(R.string.title_activity_edit_proposal);
+        toolbar.setLogo(R.mipmap.ic_editw);
         setSupportActionBar(toolbar);
 
     }
@@ -42,8 +42,6 @@ public class EditProposalActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        //TODO: posar-ho al MenuListener
 
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
