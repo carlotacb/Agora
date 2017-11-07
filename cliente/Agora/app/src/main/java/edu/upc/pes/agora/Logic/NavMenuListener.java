@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 
+import edu.upc.pes.agora.Presentation.EditProfileActivity;
 import edu.upc.pes.agora.Presentation.MainActivity;
 import edu.upc.pes.agora.Presentation.MyPropuestasActivity;
 import edu.upc.pes.agora.Presentation.ProfileActivity;
@@ -74,6 +75,10 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
             navDrawer.closeDrawers();
         } else if (id == R.id.nav_editperf) {
             // Va a editar perfil
+            if (!context.getClass().equals(EditProfileActivity.class)) {
+                Intent myIntent = new Intent(context, ProfileActivity.class);
+                context.startActivity(myIntent);
+            }
         } else if (id == R.id.nav_logout) {
             // Logout --> TODO: Desasignacion de token
         }
