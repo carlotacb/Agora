@@ -87,10 +87,23 @@ module.exports = app => {
 
     app.get('/api/proposal', async function (req, res) {
         try {
-            const proposals = await proposalsModule.getAllProposals()
+            const username = req.query.username
+            if (username) const proposals = await proposalsModule.getProposalsByUsername(username)
+            else const proposals = await proposalsModule.getAllProposals()
             res.send(proposals)
         } catch (error) {
             console.error('error on get proposals', error)
+            res.sendStatus(403)
+        }
+    })
+
+    app.get('/api/proposal/', async function (req, res) {
+        try {
+            const username = req.params.username
+            const proposals = await proposalsModule.getProposalsByUser(username)
+            res.send(proposals)
+        } catch (error) {
+            console.error('error on delete post', error)
             res.sendStatus(403)
         }
     })

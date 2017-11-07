@@ -24,6 +24,11 @@ async function getAll() {
     return collection.find({}, {_id: 0}).toArray()
 }
 
+async function getByUsername({username}) {
+    const collection = await getCollection()
+    return collection.find({owner: username}, {_id: 0}).toArray()
+}
+
 async function deleteProposal({id}) {
     const collection = await getCollection()
     return collection.deleteOne({id:id})
@@ -32,5 +37,6 @@ async function deleteProposal({id}) {
 module.exports = {
     create: create,
     getAll: getAll,
+    getByUsername: getByUsername,
     delete: deleteProposal
 }

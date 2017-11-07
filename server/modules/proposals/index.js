@@ -17,6 +17,12 @@ async function getAllProposals() {
     return proposals
 }
 
+async function getProposalsByUsername({username}) {
+    const proposals = await db.getByUsername(username);
+    if (!proposals) throw new Error(`No Proposals`)
+    return proposals
+}
+
 async function deleteProposal({id}) {
     return await db.delete({id})
 }
@@ -24,5 +30,6 @@ async function deleteProposal({id}) {
 module.exports = {
     createProposal: createProposal,
     getAllProposals: getAllProposals,
-    deleteProposal: deleteProposal
+    deleteProposal: deleteProposal,
+    getProposalsByUsername: getProposalsByUsername,
 }
