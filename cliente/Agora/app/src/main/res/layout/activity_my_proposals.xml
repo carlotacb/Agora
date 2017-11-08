@@ -27,7 +27,7 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/content_propuesta" />
+        <include layout="@layout/content_my_proposals" />
     </LinearLayout>
 
     <include layout="@layout/navigation_view"/>
