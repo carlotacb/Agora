@@ -72,7 +72,7 @@ module.exports = app => {
         }
     })
 
-    app.post('/api/proposal', async function (req, res) {
+    app.post('/api/proposal', isAuthenticated, async function (req, res) {
         try {
             const username = req.username
             const {title, content} = req.body
@@ -85,22 +85,21 @@ module.exports = app => {
         }
     })
 
+    // app.get('/api/proposal', async function (req, res) {
+    //     try {
+    //         const username = req.query.username
+    //         if (username) const proposals = await proposalsModule.getProposalsByUsername(username)
+    //         else const proposals = await proposalsModule.getAllProposals()
+    //         res.send(proposals)
+    //     } catch (error) {
+    //         console.error('error on get proposals', error)
+    //         res.sendStatus(403)
+    //     }
+    // })
+    //
     app.get('/api/proposal', async function (req, res) {
         try {
-            const username = req.query.username
-            if (username) const proposals = await proposalsModule.getProposalsByUsername(username)
-            else const proposals = await proposalsModule.getAllProposals()
-            res.send(proposals)
-        } catch (error) {
-            console.error('error on get proposals', error)
-            res.sendStatus(403)
-        }
-    })
-
-    app.get('/api/proposal/', async function (req, res) {
-        try {
-            const username = req.params.username
-            const proposals = await proposalsModule.getProposalsByUser(username)
+            const proposals = await proposalsModule.getAllProposals()
             res.send(proposals)
         } catch (error) {
             console.error('error on delete post', error)
