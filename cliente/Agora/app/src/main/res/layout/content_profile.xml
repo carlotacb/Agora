@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
+            xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp"
@@ -17,10 +17,37 @@
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:src="@mipmap/ic_person"/>
+        <LinearLayout android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@mipmap/ic_person"/>
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:fontFamily="serif"
+                android:textSize="19sp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="2dp"
+                android:text="@string/username"/>
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:id="@+id/editarperfil"
+                android:layout_height="50dp"
+                android:src="@mipmap/ic_edit"
+                android:background="@drawable/botonedit"
+                android:layout_gravity="bottom"/>
+
+        </LinearLayout>
+
+
 
         <TextView
             android:layout_width="match_parent"
@@ -29,7 +56,7 @@
             android:textStyle="bold"
             android:fontFamily="serif"
             android:textSize="19dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="2dp"
             android:text="@string/nomusuario"/>
 
@@ -43,26 +70,6 @@
             android:fontFamily="serif"
             android:text="random"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:fontFamily="serif"
-            android:textSize="19dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/username"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/usernameprofile"
-            android:textSize="14dp"
-            android:textColor="#3419aa"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="serif"
-            android:text="random"/>
 
         <TextView
             android:layout_width="match_parent"

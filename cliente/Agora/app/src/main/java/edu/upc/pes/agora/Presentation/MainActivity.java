@@ -3,6 +3,7 @@ package edu.upc.pes.agora.Presentation;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -25,11 +26,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import edu.upc.pes.agora.Logic.Constants;
 import edu.upc.pes.agora.Logic.GetAsyncTask;
 import edu.upc.pes.agora.Logic.NavMenuListener;
 import edu.upc.pes.agora.Logic.Proposals;
 import edu.upc.pes.agora.Logic.ProposalsAdapter;
 import edu.upc.pes.agora.R;
+
+import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -106,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }.execute(Jason);
+
+        SharedPreferences prefs = this.getSharedPreferences(SH_PREF_NAME,MODE_PRIVATE);
 
     }
 

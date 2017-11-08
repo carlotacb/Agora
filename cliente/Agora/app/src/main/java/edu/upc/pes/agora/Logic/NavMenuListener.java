@@ -23,7 +23,6 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
     public static final int addproposalbutton = 1;
     public static final int myproposals = 2;
     public static final int profile = 3;
-    public static final int editprofile = 4;
 
     public NavMenuListener(Context context, DrawerLayout navDrawer) {
         this.context = context;
@@ -74,13 +73,7 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
                 context.startActivity(myIntent);
             }
             navDrawer.closeDrawers();
-        } else if (id == R.id.nav_editperf) {
-            // Va a editar perfil --> TODO: poner el boton dentro del perfil
-            if (!context.getClass().equals(EditProfileActivity.class)) {
-                Intent myIntent = new Intent(context, EditProfileActivity.class);
-                context.startActivity(myIntent);
-            }
-        } else if (id == R.id.nav_logout) {
+        }  else if (id == R.id.nav_logout) {
             // Logout --> TODO: Desasignacion de token
 
             Helpers.logout(context);

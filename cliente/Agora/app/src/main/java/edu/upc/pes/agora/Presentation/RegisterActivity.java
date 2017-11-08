@@ -21,6 +21,7 @@ import java.util.Locale;
 
 import edu.upc.pes.agora.Logic.ItemData;
 import edu.upc.pes.agora.Logic.PostAsyncTask;
+import edu.upc.pes.agora.Logic.PostSINAsyncTask;
 import edu.upc.pes.agora.R;
 import edu.upc.pes.agora.Logic.SpinnerAdapter;
 
@@ -107,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                new PostAsyncTask("https://agora-pes.herokuapp.com/api/signup",RegisterActivity.this){
+                new PostSINAsyncTask("https://agora-pes.herokuapp.com/api/signup",RegisterActivity.this){
                     @Override
                     protected void onPostExecute(JSONObject resObject) {
                         Boolean result = false;
