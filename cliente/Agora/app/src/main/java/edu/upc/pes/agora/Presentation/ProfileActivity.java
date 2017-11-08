@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -34,6 +36,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Configuration config = new Configuration();
     private Locale locale;
     private JSONObject Jason = new JSONObject();
+    private ImageButton editar;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -56,8 +59,10 @@ public class ProfileActivity extends AppCompatActivity {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        editar = (ImageButton) findViewById(R.id.editarperfil);
 
-        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
+
+     /*   new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
@@ -81,7 +86,7 @@ public class ProfileActivity extends AppCompatActivity {
                                 /*JSONObject jas = ArrayUser.getJSONObject(i);
                                 String title = jas.getString("title");
                                 String owner = jas.getString("owner");
-                                String description = jas.getString("content");*/
+                                String description = jas.getString("content");
 
                                 //Proposals aux = new Proposals(title, description, owner);
 
@@ -94,7 +99,14 @@ public class ProfileActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }.execute(Jason);
+        }.execute(Jason);*/
+
+        editar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));
+            }
+        });
 
     }
 
