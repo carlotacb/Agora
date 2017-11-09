@@ -25,14 +25,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".Presentation.RegisterActivity"/>
-        <activity android:name=".Presentation.propuestaActivity"/>
+        <activity android:name=".Presentation.ProposalsActivity"/>
         <activity
             android:name=".Presentation.MainActivity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme">
         </activity>
         <activity
-            android:name=".Presentation.MyPropuestasActivity"
+            android:name=".Presentation.MyProposalsActivity"
             android:label="@string/title_activity_my_propuestas"
             android:theme="@style/AppTheme">
         </activity>

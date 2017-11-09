@@ -106,17 +106,6 @@ module.exports = app => {
         }
     })
 
-    app.get('/api/proposal/', async function (req, res) {
-        try {
-            const username = req.params.username
-            const proposals = await proposalsModule.getProposalsByUser(username)
-            res.send(proposals)
-        } catch (error) {
-            console.error('error on delete post', error)
-            res.sendStatus(403)
-        }
-    })
-
     app.delete('/api/proposal/:id', isAuthenticated, async function (req, res) {
         try {
             const id = req.params.id

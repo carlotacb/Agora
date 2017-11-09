@@ -4,9 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +20,7 @@ import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.NavMenuListener;
 import edu.upc.pes.agora.R;
 
-public class MyPropuestasActivity extends AppCompatActivity {
+public class MyProposalsActivity extends AppCompatActivity {
 
     private Configuration config = new Configuration();
     private Locale locale;
@@ -30,7 +28,7 @@ public class MyPropuestasActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_propuestas);
+        setContentView(R.layout.activity_my_proposals);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navMenu);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -82,7 +80,7 @@ public class MyPropuestasActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        Intent refresh = new Intent(this, MyPropuestasActivity.class);
+        Intent refresh = new Intent(this, MyProposalsActivity.class);
         refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         //noinspection SimplifiableIfStatement

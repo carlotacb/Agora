@@ -18,24 +18,16 @@
             android:icon="@mipmap/ic_account"
             android:title="@string/lesmevespropostes"/>
 
+        <item
+            android:id="@+id/nav_perfilprinc"
+            android:icon="@mipmap/ic_person"
+            android:title="@string/perfil"/>
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@mipmap/ic_exit"
+            android:title="@string/surt"/>
+
     </group>
-
-    <item android:title="@string/miperfil">
-        <menu>
-            <item
-                android:id="@+id/nav_perfilprinc"
-                android:icon="@mipmap/ic_person"
-                android:title="@string/perfil"/>
-            <item
-                android:id="@+id/nav_editperf"
-                android:icon="@mipmap/ic_edit"
-                android:title="@string/editarp"/>
-        </menu>
-    </item>
-
-    <item
-        android:id="@+id/nav_logout"
-        android:icon="@mipmap/ic_exit"
-        android:title="@string/surt"/>
 
 </menu>

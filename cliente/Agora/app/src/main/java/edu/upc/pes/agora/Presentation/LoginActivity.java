@@ -27,7 +27,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import edu.upc.pes.agora.Logic.ItemData;
-import edu.upc.pes.agora.Logic.PostAsyncTask;
+import edu.upc.pes.agora.Logic.PostSesionAsyncTask;
 import edu.upc.pes.agora.R;
 import edu.upc.pes.agora.Logic.SpinnerAdapter;
 
@@ -99,18 +99,23 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
 
+                login.setVisibility(View.GONE);
+                prog.setVisibility(View.VISIBLE);
+
                 if (username.length() == 0 || password.length() == 0) {
                     String error2 = res.getString(R.string.error2);
                     Toast.makeText(getApplicationContext(), error2, Toast.LENGTH_LONG).show();
                 } else {
                     JSONObject values = new JSONObject();
+
                     try {
                         values.put("username", username);
                         values.put("password", password);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/login", LoginActivity.this) {
+
+                    new PostSesionAsyncTask("https://agora-pes.herokuapp.com/api/login", LoginActivity.this) {
                         @Override
                         protected void onPostExecute(JSONObject resObject) {
 
@@ -124,10 +129,12 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                                     //Saves token in SharedPreferences if it is not yet saved there
                                     if (resObject.has("token")) {
                                         String t = resObject.getString("token");
+
                                         if(!Objects.equals(prefs.getString("token", ""), t)) {
                                             edit.putString("token", t);
                                             edit.apply();
                                         }
+
                                         Log.i("SavedToken", prefs.getString("token","none saved"));
                                     }
                                 }
@@ -145,16 +152,15 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                                 Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                                 etUsername.setText("");
                                 etPassword.setText("");
+                                login.setVisibility(View.VISIBLE);
+                                prog.setVisibility(View.GONE);
                             }
 
                         }
                     }.execute(values);
                 }
-                login.setVisibility(View.GONE);
-                prog.setVisibility(View.VISIBLE);
             }
          });
-
 
         register.setOnClickListener(new OnClickListener() {
             @Override

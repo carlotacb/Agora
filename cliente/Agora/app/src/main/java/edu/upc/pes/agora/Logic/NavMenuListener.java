@@ -6,12 +6,11 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 
-import edu.upc.pes.agora.Presentation.EditProfileActivity;
 import edu.upc.pes.agora.Presentation.LoginActivity;
 import edu.upc.pes.agora.Presentation.MainActivity;
-import edu.upc.pes.agora.Presentation.MyPropuestasActivity;
+import edu.upc.pes.agora.Presentation.MyProposalsActivity;
 import edu.upc.pes.agora.Presentation.ProfileActivity;
-import edu.upc.pes.agora.Presentation.propuestaActivity;
+import edu.upc.pes.agora.Presentation.ProposalsActivity;
 import edu.upc.pes.agora.R;
 
 public class NavMenuListener implements NavigationView.OnNavigationItemSelectedListener {
@@ -23,7 +22,6 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
     public static final int addproposalbutton = 1;
     public static final int myproposals = 2;
     public static final int profile = 3;
-    public static final int editprofile = 4;
 
     public NavMenuListener(Context context, DrawerLayout navDrawer) {
         this.context = context;
@@ -54,16 +52,16 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
             navDrawer.closeDrawers();
 
         } else if (id == R.id.nav_addproposta) {
-            if (!context.getClass().equals(propuestaActivity.class)) {
-                Intent myIntent = new Intent(context, propuestaActivity.class);
+            if (!context.getClass().equals(ProposalsActivity.class)) {
+                Intent myIntent = new Intent(context, ProposalsActivity.class);
                 context.startActivity(myIntent);
             }
             navDrawer.closeDrawers();
 
             //  Va a Proposals
         } else if (id == R.id.nav_myporposals) {
-            if (!context.getClass().equals(MyPropuestasActivity.class)) {
-                Intent myIntent = new Intent(context, MyPropuestasActivity.class);
+            if (!context.getClass().equals(MyProposalsActivity.class)) {
+                Intent myIntent = new Intent(context, MyProposalsActivity.class);
                 context.startActivity(myIntent);
             }
             navDrawer.closeDrawers();
@@ -74,13 +72,7 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
                 context.startActivity(myIntent);
             }
             navDrawer.closeDrawers();
-        } else if (id == R.id.nav_editperf) {
-            // Va a editar perfil --> TODO: poner el boton dentro del perfil
-            if (!context.getClass().equals(EditProfileActivity.class)) {
-                Intent myIntent = new Intent(context, EditProfileActivity.class);
-                context.startActivity(myIntent);
-            }
-        } else if (id == R.id.nav_logout) {
+        }  else if (id == R.id.nav_logout) {
             // Logout --> TODO: Desasignacion de token
 
             Helpers.logout(context);
