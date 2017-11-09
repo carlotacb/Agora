@@ -18,7 +18,7 @@ async function getAllProposals() {
 }
 
 async function getProposalsByUsername({username}) {
-    const proposals = await db.getByUsername(username);
+    const proposals = await db.getByUsername({username});
     if (!proposals) throw new Error(`No Proposals`)
     return proposals
 }
