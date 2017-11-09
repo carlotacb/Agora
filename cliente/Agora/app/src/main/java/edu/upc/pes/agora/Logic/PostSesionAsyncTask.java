@@ -17,11 +17,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class PostSINAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
+public class PostSesionAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     private URL url;
     private Context context;
 
-    public PostSINAsyncTask(String url2, Context coming_context) {
+    public PostSesionAsyncTask(String url2, Context coming_context) {
         try {
             url = new URL(url2);
             context = coming_context;

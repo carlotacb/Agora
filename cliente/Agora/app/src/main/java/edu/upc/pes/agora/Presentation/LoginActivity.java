@@ -26,10 +26,8 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 
-import edu.upc.pes.agora.Logic.Constants;
 import edu.upc.pes.agora.Logic.ItemData;
-import edu.upc.pes.agora.Logic.PostAsyncTask;
-import edu.upc.pes.agora.Logic.PostSINAsyncTask;
+import edu.upc.pes.agora.Logic.PostSesionAsyncTask;
 import edu.upc.pes.agora.R;
 import edu.upc.pes.agora.Logic.SpinnerAdapter;
 
@@ -117,7 +115,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                         e.printStackTrace();
                     }
 
-                    new PostSINAsyncTask("https://agora-pes.herokuapp.com/api/login", LoginActivity.this) {
+                    new PostSesionAsyncTask("https://agora-pes.herokuapp.com/api/login", LoginActivity.this) {
                         @Override
                         protected void onPostExecute(JSONObject resObject) {
 

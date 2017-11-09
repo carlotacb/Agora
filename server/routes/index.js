@@ -67,7 +67,7 @@ module.exports = app => {
             res.sendStatus(403)
         }
     })
-
+    
     app.post('/api/profile', isAuthenticated, async function (req, res) {
         try {
             const {cpCode, realname, neighborhood, bdate, sex} = req.body
@@ -75,30 +75,6 @@ module.exports = app => {
             res.json(user)
         } catch (error) {
             console.error('error on updating profile', error)
-            res.sendStatus(403)
-        }
-    })
-
-    app.post('/api/proposal', async function (req, res) {
-        try {
-            const username = req.username
-            const {title, content} = req.body
-            console.log(title + "\n" + content)
-            const proposal = await proposalsModule.createProposal({username, title, content})
-            res.send(proposal)
-        } catch (error) {
-            console.error('error on new post', error)
-            res.sendStatus(403)
-        }
-    })
-
-    app.get('/api/proposal/', async function (req, res) {
-        try {
-            const username = req.params.username
-            const proposals = await proposalsModule.getProposalsByUser(username)
-            res.send(proposals)
-        } catch (error) {
-            console.error('error on delete post', error)
             res.sendStatus(403)
         }
     })

@@ -6,12 +6,11 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 
-import edu.upc.pes.agora.Presentation.EditProfileActivity;
 import edu.upc.pes.agora.Presentation.LoginActivity;
 import edu.upc.pes.agora.Presentation.MainActivity;
-import edu.upc.pes.agora.Presentation.MyPropuestasActivity;
+import edu.upc.pes.agora.Presentation.MyProposalsActivity;
 import edu.upc.pes.agora.Presentation.ProfileActivity;
-import edu.upc.pes.agora.Presentation.propuestaActivity;
+import edu.upc.pes.agora.Presentation.ProposalsActivity;
 import edu.upc.pes.agora.R;
 
 public class NavMenuListener implements NavigationView.OnNavigationItemSelectedListener {
@@ -53,16 +52,16 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
             navDrawer.closeDrawers();
 
         } else if (id == R.id.nav_addproposta) {
-            if (!context.getClass().equals(propuestaActivity.class)) {
-                Intent myIntent = new Intent(context, propuestaActivity.class);
+            if (!context.getClass().equals(ProposalsActivity.class)) {
+                Intent myIntent = new Intent(context, ProposalsActivity.class);
                 context.startActivity(myIntent);
             }
             navDrawer.closeDrawers();
 
             //  Va a Proposals
         } else if (id == R.id.nav_myporposals) {
-            if (!context.getClass().equals(MyPropuestasActivity.class)) {
-                Intent myIntent = new Intent(context, MyPropuestasActivity.class);
+            if (!context.getClass().equals(MyProposalsActivity.class)) {
+                Intent myIntent = new Intent(context, MyProposalsActivity.class);
                 context.startActivity(myIntent);
             }
             navDrawer.closeDrawers();
