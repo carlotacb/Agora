@@ -2,6 +2,7 @@ package edu.upc.pes.agora.Logic;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -15,10 +16,16 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import edu.upc.pes.agora.Presentation.MainActivity;
+
+import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
+
 public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     private URL url;
     @SuppressLint("StaticFieldLeak")
     private Context context;
+
+    SharedPreferences prefs;
 
     public GetTokenAsyncTask(String url2, Context coming_context) {
         try {
@@ -31,12 +38,15 @@ public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
 
     protected JSONObject doInBackground(final JSONObject... params) {
 
+        prefs = MainActivity.getContextOfApplication().getSharedPreferences(SH_PREF_NAME, Context.MODE_PRIVATE);
+        String tokenToSend = prefs.getString("token","");
+
         Log.i("asdGetAsyncTask", "123");
 
         try {
             HttpsURLConnection client = (HttpsURLConnection) url.openConnection();
             client.setRequestMethod("GET");
-            client.setRequestProperty("Authorization", Constants.SH_PREF_NAME);
+            client.setRequestProperty("Authorization", tokenToSend);
             client.connect();
 
             JSONObject aux;
