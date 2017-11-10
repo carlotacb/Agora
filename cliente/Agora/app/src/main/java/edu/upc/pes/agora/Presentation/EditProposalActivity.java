@@ -56,6 +56,15 @@ public class EditProposalActivity extends AppCompatActivity {
         prefs = this.getSharedPreferences(SH_PREF_NAME, MODE_PRIVATE);
         edit = prefs.edit();
 
+        Intent i = getIntent();
+
+        if(i.hasExtra("Title")) {
+            editTitle.setText(i.getStringExtra("Title"));
+        }
+        if(i.hasExtra("Description")) {
+            editDescription.setText(i.getStringExtra("Description"));
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_edit_proposal);
         toolbar.setLogo(R.mipmap.ic_editw);
@@ -96,7 +105,11 @@ public class EditProposalActivity extends AppCompatActivity {
                         values.put("title", newTitle);
                         values.put("content", newDescription);
                         values.put("Authorization", token);
-                        //TODO: put ID of proposal in the intent
+                        if(getIntent().hasExtra("ID")) {
+                            values.put("ID", getIntent().getExtras().getLong("ID"));
+                        }else{
+                            values.put("ID", 0);
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

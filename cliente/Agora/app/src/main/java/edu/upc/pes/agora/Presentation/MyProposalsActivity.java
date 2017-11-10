@@ -74,8 +74,8 @@ public class MyProposalsActivity extends AppCompatActivity {
 
         listProposals = new ArrayList<>();
 
-        Proposals p = new Proposals("hola", "provant 1", "YO");
-        Proposals p2 = new Proposals("hola2","provant 2","YO");
+        Proposals p = new Proposals(123,"hola", "provant 1", "YO");
+        Proposals p2 = new Proposals(456,"hola2","provant 2","YO");
 
         listProposals.add(p);
         listProposals.add(p2);

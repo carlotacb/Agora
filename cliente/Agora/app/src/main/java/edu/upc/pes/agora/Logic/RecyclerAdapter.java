@@ -73,7 +73,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             public void onClick(View v) {
                 //Toast.makeText(context, "Editar", Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(context, EditProposalActivity.class);
-                //TODO: Put values of chosen proposal in the intent
+                myIntent.putExtra("Title", proposal.getTitle());
+                myIntent.putExtra("Description", proposal.getDescription());
+                myIntent.putExtra("ID", proposal.getId());
                 context.startActivity(myIntent);
             }
         });
