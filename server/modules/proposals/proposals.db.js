@@ -1,27 +1,20 @@
-const MongoClient = require('mongodb').MongoClient
-const {constants, mongoDbUri} = require('../../config')
-const dbConstants = constants.db
-
-async function getCollection() {
-    const db = await MongoClient.connect(mongoDbUri)
-    return db.collection(dbConstants.proposals)
-}
-
+const {getCollection, collectionNames, generateNextId} = require('../db')
+const collection = () => getCollection(collectionNames.proposals)
+const getNextId = () => generateNextId(collectionNames.proposals)
 
 async function create({username, title, content}) {
     const object = {
+        id: await getNextId(),
         owner: username,
         title: title,
         content: content,
         createdDateTime: new Date()
     }
-    const collection = await getCollection()
-    return collection.insertOne(object)
+    return collection().insertOne(object)
 }
 
 async function getAll() {
-    const collection = await getCollection()
-    return collection.find({}, {_id: 0}).toArray()
+    return collection().find().toArray()
 }
 
 async function getByUsername({username}) {
