@@ -1,18 +1,5 @@
-const MongoClient = require('mongodb').MongoClient
-const {constants, mongoDbUri} = require('../../config')
-const dbConstants = constants.db
-
-async function getCollection() {
-    const db = await MongoClient.connect(mongoDbUri)
-    return db.collection(dbConstants.signupCodes)
-}
-
-async function createSignupCode(code) {
-    const object = {
-        code: code,
-        usedBy: null,
-    }
-}
+const {getCollection, collectionNames} = require('../db')
+const collection = () => getCollection(collectionNames.signupCodes)
 
 async function useSignupCode({code, userId}) {
     const query = {
@@ -28,8 +15,7 @@ async function useSignupCode({code, userId}) {
         upsert: false
     }
 
-    const collection = await getCollection()
-    return collection.updateOne(query, update, options)
+    return collection().updateOne(query, update, options)
 }
 
 async function getSignupCode(code) {
@@ -37,12 +23,10 @@ async function getSignupCode(code) {
         code: code,
         usedBy: null
     }
-    const collection = await getCollection()
-    return collection.findOne(query)
+    return collection().findOne(query)
 }
 
 module.exports = {
-    createSignupCode: createSignupCode,
     useSignupCode: useSignupCode,
     getSignupCode: getSignupCode,
 }

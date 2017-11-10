@@ -70,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
 
         llista_propostes = (ListView) findViewById(R.id.list);
 
+
+
+
+
+
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal", this) {
 
             @Override

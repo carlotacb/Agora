@@ -68,8 +68,6 @@ public class MyProposalsActivity extends AppCompatActivity {
         myrecycler.setHasFixedSize(true); // cada item del RecyclerView te un Size en concret.
         myrecycler.setLayoutManager(new LinearLayoutManager(this));
 
-        listProposals = new ArrayList<>();
-
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal/user", this) {
 
             @Override
@@ -104,7 +102,7 @@ public class MyProposalsActivity extends AppCompatActivity {
                             }
                         }
 
-                        adapter = new RecyclerAdapter(listProposals, getApplicationContext());
+                        adapter = new RecyclerAdapter(propostes, getApplicationContext());
                         myrecycler.setAdapter(adapter);
                     }
                 } catch (JSONException e) {
@@ -112,22 +110,6 @@ public class MyProposalsActivity extends AppCompatActivity {
                 }
             }
         }.execute(Jason);
-
-
-
-        /*Button b = (Button) findViewById(R.id.edit);
-
-        b.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("StaticFieldLeak")
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(getApplicationContext(), EditProposalActivity.class);
-                //TODO: Put values of chosen proposal in the intent
-                startActivity(myIntent);
-            }
-        });*/
-
-
     }
 
     @Override

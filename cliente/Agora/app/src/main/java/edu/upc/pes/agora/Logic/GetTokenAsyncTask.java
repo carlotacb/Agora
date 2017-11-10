@@ -32,7 +32,7 @@ public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             url = new URL(url2);
             context = coming_context;
         } catch (MalformedURLException e) {
-            Log.i("asdGetAsyncTask", "", e);
+            Log.i("asdGetTokenAsyncTask", "", e);
         }
     }
 
@@ -41,7 +41,7 @@ public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
         prefs = MainActivity.getContextOfApplication().getSharedPreferences(SH_PREF_NAME, Context.MODE_PRIVATE);
         String tokenToSend = prefs.getString("token","");
 
-        Log.i("asdGetAsyncTask", "123");
+        Log.i("asdGetTokenAsyncTask", "123");
 
         try {
             HttpsURLConnection client = (HttpsURLConnection) url.openConnection();
@@ -53,39 +53,39 @@ public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             String response = Helpers.iStreamToString(client.getInputStream());
 
             if (client.getResponseCode() >= 400){
-                Log.i("asdGetAsyncTask", "entra al 400");
+                Log.i("asdGetTokenAsyncTask", "entra al 400");
                 aux = new JSONObject(Helpers.iStreamToString(client.getErrorStream()));
 
             }
 
             else if (client.getResponseCode() == 302) {
                 aux = new JSONObject();
-                Log.i("asdGetAsyncTask", "entra al 302");
+                Log.i("asdGetTokenAsyncTask", "entra al 302");
                 aux.put("302",client.getURL().toString());
             }
 
             else if (response.equals("[]")) {
                 aux = new JSONObject();
                 aux.put("arrayResponse",new JSONArray());
-                Log.i("asdGetAsyncTask", "entra al []");
+                Log.i("asdGetTokenAsyncTask", "entra al []");
             }
 
             else {
                 if(response.startsWith("[")){
                     aux = new JSONObject();
                     aux.put("arrayResponse", new JSONArray(response));
-                    Log.i("asdGetAsyncTask", "entra al else");
+                    Log.i("asdGetTokenAsyncTask", "entra al else");
                 }
                 else {
                     aux = new JSONObject(response);
-                    Log.i("asdGetAsyncTask", "entra al else2");
+                    Log.i("asdGetTokenAsyncTask", "entra al else2");
                 }
             }
 
             client.disconnect();
 
-            Log.i("asdGetAsyncTask", "desconectat");
-            Log.i("asdGetAsyncTask", aux.toString());
+            Log.i("asdGetTokenAsyncTask", "desconectat");
+            Log.i("asdGetTokenAsyncTask", aux.toString());
             return aux;
 
 

@@ -9,6 +9,7 @@ public class Proposals {
     private String title;
     private String description;
     private String owner;
+    //private String categoria;
     //private int token_creator;
 
     public Proposals(Integer ide, String tit, String des, String ow) {

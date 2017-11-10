@@ -6,13 +6,6 @@ module.exports = {
     enableMorgan: process.env.ENABLE_LOG_MORGAN || false,
 
     constants: {
-        db: {
-            signupCodes: 'signup_codes',
-            users: 'users',
-            tokens: 'tokens',
-            proposals: 'proposals',
-        },
-
         whitelistedSignupCodes: [
             '007'
         ]

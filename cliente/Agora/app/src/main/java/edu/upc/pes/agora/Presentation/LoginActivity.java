@@ -99,13 +99,16 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
 
-                login.setVisibility(View.GONE);
-                prog.setVisibility(View.VISIBLE);
+
 
                 if (username.length() == 0 || password.length() == 0) {
                     String error2 = res.getString(R.string.error2);
                     Toast.makeText(getApplicationContext(), error2, Toast.LENGTH_LONG).show();
                 } else {
+
+                    login.setVisibility(View.GONE);
+                    prog.setVisibility(View.VISIBLE);
+
                     JSONObject values = new JSONObject();
 
                     try {
