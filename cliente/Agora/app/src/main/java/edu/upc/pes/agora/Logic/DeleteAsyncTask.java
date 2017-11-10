@@ -67,6 +67,8 @@ public class DeleteAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             Log.i("asdDeleteAsyncTask",Integer.toString(client.getResponseCode()));
 
             if (client.getResponseCode() >= 400){
+                Log.i("asdDelete","error 400");
+                Log.i("asdDelete", Helpers.iStreamToString(client.getErrorStream()));
                 aux = new JSONObject(Helpers.iStreamToString(client.getErrorStream()));
             }
 
