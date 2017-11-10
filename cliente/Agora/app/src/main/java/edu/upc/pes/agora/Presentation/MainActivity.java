@@ -28,6 +28,7 @@ import java.util.Locale;
 
 import edu.upc.pes.agora.Logic.Constants;
 import edu.upc.pes.agora.Logic.GetAsyncTask;
+import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.NavMenuListener;
 import edu.upc.pes.agora.Logic.Proposals;
 import edu.upc.pes.agora.Logic.ProposalsAdapter;
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        new GetAsyncTask("https://agora-pes.herokuapp.com/api/proposal", this) {
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal", this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
