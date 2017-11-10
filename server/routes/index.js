@@ -68,7 +68,6 @@ module.exports = app => {
         }
     })
 
-    
     app.post('/api/profile', isAuthenticated, async function (req, res) {
         try {
             const {cpCode, realname, description, neighborhood, bdate, sex} = req.body
@@ -86,7 +85,7 @@ module.exports = app => {
             console.error('error on updating profile', error)
             res.sendStatus(403)
         }
-    }
+    })
 
     app.post('/api/proposal', isAuthenticated, async function (req, res) {
         try {
