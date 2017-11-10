@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ import edu.upc.pes.agora.Logic.NavMenuListener;
 import edu.upc.pes.agora.Logic.PostAsyncTask;
 import edu.upc.pes.agora.R;
 
-public class propuestaActivity extends AppCompatActivity {
+public class ProposalsActivity extends AppCompatActivity {
 
     private Configuration config = new Configuration();
     private Locale locale;
@@ -39,13 +40,15 @@ public class propuestaActivity extends AppCompatActivity {
     private TextView Titulo;
     private TextView Descripcion;
 
+    private ProgressBar prog;
+
     String strTitulo;
     String strDescripcion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_propuesta);
+        setContentView(R.layout.activity_proposal);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navMenu);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -67,6 +70,8 @@ public class propuestaActivity extends AppCompatActivity {
 
         Titulo = (TextView) findViewById(R.id.titulo);
         Descripcion = (TextView) findViewById(R.id.descripcion);
+
+        prog = (ProgressBar) findViewById(R.id.crproposalprogressbar);
 
         final Resources res = this.getResources();
 
@@ -102,6 +107,10 @@ public class propuestaActivity extends AppCompatActivity {
 
                 }
                 else {
+
+                    Create.setVisibility(View.GONE);
+                    prog.setVisibility(View.VISIBLE);
+
                     JSONObject values = new JSONObject();
                     try {
                         strTitulo = Titulo.getText().toString();
@@ -113,7 +122,7 @@ public class propuestaActivity extends AppCompatActivity {
                     }
 
                     // nou server : agora-pes.herokuapp.com/api/proposal
-                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal", propuestaActivity.this) {
+                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal", ProposalsActivity.this) {
                         @Override
                         protected void onPostExecute(JSONObject resObject) {
                             Boolean result = false;
@@ -143,13 +152,15 @@ public class propuestaActivity extends AppCompatActivity {
                             if (result) {
                                 //Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
                                 Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(propuestaActivity.this, MainActivity.class));
+                                startActivity(new Intent(ProposalsActivity.this, MainActivity.class));
                             }
 
                             else {
                                 Log.i("asdCreacion", "reset");
                                 Titulo.setText("");
                                 Descripcion.setText("");
+                                Create.setVisibility(View.VISIBLE);
+                                prog.setVisibility(View.GONE);
                             }
 
                         }
@@ -180,7 +191,7 @@ public class propuestaActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        Intent refresh = new Intent(this, propuestaActivity.class);
+        Intent refresh = new Intent(this, ProposalsActivity.class);
         refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         //noinspection SimplifiableIfStatement

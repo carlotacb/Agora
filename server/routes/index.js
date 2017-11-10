@@ -60,37 +60,21 @@ module.exports = app => {
 
     app.get('/api/profile', isAuthenticated, async function (req, res) {
         try {
-            const user = await userModule.get({username: req.username})
-
-            res.json({
-                username: user.username,
-                createdDateTime: user.createdDateTime
-            })
+            const user = await userModule.getProfile({username: req.username})
+            res.json(user)
         } catch (error) {
             console.error('error on getting profile', error)
             res.sendStatus(403)
         }
     })
-
-    app.post('/api/proposal', async function (req, res) {
+    
+    app.post('/api/profile', isAuthenticated, async function (req, res) {
         try {
-            const username = 'userDemo'
-            const {title, content} = req.body
-            console.log(title + "\n" + content)
-            const proposal = await proposalsModule.createProposal({username, title, content})
-            res.send(proposal)
+            const {cpCode, realname, neighborhood, bdate, sex} = req.body
+            const user = await userModule.updateProfile({username: req.username, cpCode, realname, neighborhood, bdate, sex})
+            res.json(user)
         } catch (error) {
-            console.error('error on new post', error)
-            res.sendStatus(403)
-        }
-    })
-
-    app.get('/api/proposal', async function (req, res) {
-        try {
-            const proposals = await proposalsModule.getAllProposals()
-            res.send(proposals)
-        } catch (error) {
-            console.error('error on get proposals', error)
+            console.error('error on updating profile', error)
             res.sendStatus(403)
         }
     })

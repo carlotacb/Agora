@@ -48,20 +48,11 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navMenu);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
-
-        navigationView.getMenu().getItem(NavMenuListener.editprofile).setChecked(true);
-        navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_edit_profile);
         toolbar.setLogo(R.mipmap.ic_editw);
         setSupportActionBar(toolbar);
 
-        DrawerToggleAdvanced toggle = new DrawerToggleAdvanced(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
 
         Nombre = (EditText) findViewById(R.id.nameprofile);
         CP = (EditText) findViewById(R.id.codipostal);

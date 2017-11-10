@@ -1,34 +1,149 @@
 package edu.upc.pes.agora.Presentation;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Locale;
 
+import edu.upc.pes.agora.Logic.PostAsyncTask;
 import edu.upc.pes.agora.R;
+
+import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
 
 public class EditProposalActivity extends AppCompatActivity {
 
     private Configuration config = new Configuration();
     private Locale locale;
 
+    EditText editTitle;
+    EditText editDescription;
+    Button saveButton;
+    Button cancelButton;
+
+    String newTitle;
+    String newDescription;
+    String token;
+
+    SharedPreferences prefs;
+    SharedPreferences.Editor edit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_proposal);
 
+        editTitle = (EditText) findViewById(R.id.editTitle);
+        editDescription = (EditText) findViewById(R.id.editDescription);
+        saveButton = (Button) findViewById(R.id.saveButton);
+        cancelButton = (Button) findViewById(R.id.cancelButton);
+
+        prefs = this.getSharedPreferences(SH_PREF_NAME, MODE_PRIVATE);
+        edit = prefs.edit();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_edit_proposal);
         toolbar.setLogo(R.mipmap.ic_editw);
         setSupportActionBar(toolbar);
+
+        final Resources res = this.getResources();
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MyProposalsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+
+            @SuppressLint("StaticFieldLeak")
+            @Override
+            public void onClick(View view) {
+                if (editTitle.getText().toString().equals("") ){
+                    String error = res.getString(R.string.errorTitulo);
+                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                }
+                else if (editDescription.getText().toString().equals("")){
+                    String error = res.getString(R.string.errorDescripcion);
+                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+
+                }
+                else {
+                    JSONObject values = new JSONObject();
+                    try {
+                        newTitle = editTitle.getText().toString();
+                        newDescription = editDescription.getText().toString();
+                        if (prefs.contains("token")){
+                            token = prefs.getString("token","");
+                        }
+                        values.put("title", newTitle);
+                        values.put("content", newDescription);
+                        values.put("Authorization", token);
+                        //TODO: put ID of proposal in the intent
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    // nou server : agora-pes.herokuapp.com/api/proposal
+                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal", EditProposalActivity.this) {
+                        @SuppressLint("StaticFieldLeak")
+                        @Override
+                        protected void onPostExecute(JSONObject resObject) {
+                            Boolean result = false;
+                            String error = res.getString(R.string.errorCreacion);
+
+                            try {
+
+                                if (resObject.has("success")) {
+                                    result = resObject.getBoolean("success");
+                                }
+
+                                if (!result && resObject.has("errorMessage")) {
+                                    error = res.getString(R.string.errorCreacion);
+                                    Log.i("asdCreacion", error);
+                                    Toast.makeText(getApplicationContext(), error , Toast.LENGTH_LONG).show();
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            String savedChanges = res.getString(R.string.savedChanges)+ " \"" + newTitle + "\"";
+
+                            if (result) {
+                                Toast.makeText(getApplicationContext(), savedChanges, Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(EditProposalActivity.this, MainActivity.class));
+                            }
+
+                            else {
+                                Log.i("asdCreacion", "reset");
+                                editTitle.setText("");
+                                editDescription.setText("");
+                            }
+                        }
+                    }.execute(values);
+
+                }
+            }
+        });
 
     }
 

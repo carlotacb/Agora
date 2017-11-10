@@ -1,7 +1,9 @@
 package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -24,11 +26,14 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import edu.upc.pes.agora.Logic.Constants;
 import edu.upc.pes.agora.Logic.GetAsyncTask;
 import edu.upc.pes.agora.Logic.NavMenuListener;
 import edu.upc.pes.agora.Logic.Proposals;
 import edu.upc.pes.agora.Logic.ProposalsAdapter;
 import edu.upc.pes.agora.R;
+
+import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private Locale locale;
     private JSONObject Jason = new JSONObject();
     private ListView llista_propostes;
+
+    public static Context mainContext;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -46,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle(R.string.title_activity_main);
         toolbar.setLogo(R.mipmap.ic_homew);
         setSupportActionBar(toolbar);
+
+        mainContext = getApplicationContext();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -59,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         llista_propostes = (ListView) findViewById(R.id.list);
+
 
 
         new GetAsyncTask("https://agora-pes.herokuapp.com/api/proposal", this) {
@@ -100,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }.execute(Jason);
+
+        SharedPreferences prefs = this.getSharedPreferences(SH_PREF_NAME,MODE_PRIVATE);
 
     }
 
@@ -166,6 +178,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public static Context getContextOfApplication(){
+        return mainContext;
     }
 
 
