@@ -70,8 +70,8 @@ module.exports = app => {
     
     app.post('/api/profile', isAuthenticated, async function (req, res) {
         try {
-            const {cpCode, realname, neighborhood, bdate, sex} = req.body
-            const user = await userModule.updateProfile({username: req.username, cpCode, realname, neighborhood, bdate, sex})
+            const {cpCode, realname, description, neighborhood, bdate, sex} = req.body
+            const user = await userModule.updateProfile({username: req.username, description, cpCode, realname, neighborhood, bdate, sex})
             res.json(user)
         } catch (error) {
             console.error('error on updating profile', error)

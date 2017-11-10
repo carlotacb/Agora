@@ -21,10 +21,10 @@ async function getProfile({username}) {
     return collection.findOne({username}, {_id: 0, password: 0})
 }
 
-async function updateProfile({username, cpCode, realname, neighborhood, bdate, sex}) {
+async function updateProfile({username, description, cpCode, realname, neighborhood, bdate, sex}) {
     const collection = await getCollection()
     return collection.updateOne({username: username}, {$set: {cpCode: cpCode, realname: realname,
-        neighborhood: neighborhood, bdate: bdate, sex: sex}})
+        neighborhood: neighborhood, bdate: bdate, sex: sex, description: description}})
 }
 
 async function create({username, password}) {
