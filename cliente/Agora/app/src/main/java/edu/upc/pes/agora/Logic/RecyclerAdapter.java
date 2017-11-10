@@ -68,6 +68,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             }
         });
 
+        holder.borrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "BORRAR", Toast.LENGTH_SHORT).show();
+                // pop up preguntant si esborrar
+                // cridar delete async task
+                // refresh de la llista
+
+
+
+            }
+        });
+
          holder.edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

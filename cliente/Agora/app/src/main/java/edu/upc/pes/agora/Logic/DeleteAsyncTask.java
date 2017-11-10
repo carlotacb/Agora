@@ -40,16 +40,17 @@ public class DeleteAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     public DeleteAsyncTask(String url2, Context coming_context) {
         try {
             url = new URL(url2);
-            context = coming_context;
+
         } catch (MalformedURLException e) {
             Log.v("DeleteAsyncTask", "", e);
         }
+        context = coming_context;
     }
 
     protected JSONObject doInBackground(final JSONObject... params) {
         try {
-
-            prefs = MainActivity.getContextOfApplication().getSharedPreferences(SH_PREF_NAME, Context.MODE_PRIVATE);
+            prefs = context.getSharedPreferences(SH_PREF_NAME, Context.MODE_PRIVATE);
+         //   prefs = MainActivity.getContextOfApplication().getSharedPreferences(SH_PREF_NAME, Context.MODE_PRIVATE);
             String tokenToSend = "";
             if (prefs.contains("token")){
                 tokenToSend = prefs.getString("token","");
