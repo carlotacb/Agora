@@ -127,7 +127,7 @@ module.exports = app => {
     app.get('/api/proposal', isAuthenticated, async function (req, res) {
         try {
             const username = req.username
-            const proposals = await proposalsModule.getProposalsByUsername({username})
+            const proposals = await proposalsModule.getAllProposals()
             res.send(proposals)
         } catch (error) {
             console.error('error on get proposals', error)
