@@ -19,13 +19,11 @@ async function getAll() {
 }
 
 async function getByUsername({username}) {
-    const collection = await getCollection()
-    return collection.find({owner: username}, {_id: 0}).toArray()
+    return collection().find({owner: username}, {_id: 0}).toArray()
 }
 
 async function getProposalById({id}) {
-    const collection = await getCollection()
-    return collection.findOne({id: parseInt(id)}, {_id: 0})
+    return collection().findOne({id: parseInt(id)}, {_id: 0})
 }
 
 async function update({id, content, title}) {
@@ -52,14 +50,12 @@ async function update({id, content, title}) {
         update.$set.title = title
     }
 
-    const collection = await getCollection()
-    return collection.findOneAndUpdate(query, update, options)
+    return collection().findOneAndUpdate(query, update, options)
         .then(response => response.value)
 }
 
 async function deleteProposal({id}) {
-    const collection = await getCollection()
-    return collection.deleteOne({id:id})
+    return collection().deleteOne({id: parseInt(id)})
 }
 
 module.exports = {
