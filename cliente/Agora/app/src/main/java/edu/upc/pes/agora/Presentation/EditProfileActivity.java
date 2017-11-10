@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.media.session.MediaSession;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,23 +12,32 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.internal.widget.AdapterViewCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Locale;
 
 import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.NavMenuListener;
 
+import edu.upc.pes.agora.Logic.PostAsyncTask;
 import edu.upc.pes.agora.R;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity implements  AdapterView.OnItemSelectedListener {
 
     private Configuration config = new Configuration();
     private Locale locale;
@@ -37,10 +47,15 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText Barrio;
     private EditText Fecha;
     private EditText Descripcion;
+    private Spinner spin;
 
     private TextView Change;
 
     private Button Aceptar;
+
+
+    String[] diferentesSexos; //{getString(R.string.M), getString(R.string.F), getString(R.string.I)};
+    String[] diferentesSexosGenerico = {"M", "F", "I"};
 
 
     @Override
@@ -53,6 +68,7 @@ public class EditProfileActivity extends AppCompatActivity {
         toolbar.setLogo(R.mipmap.ic_editw);
         setSupportActionBar(toolbar);
 
+        diferentesSexos = new String[]{getString(R.string.M), getString(R.string.F), getString(R.string.I)};
 
         Nombre = (EditText) findViewById(R.id.nameprofile);
         CP = (EditText) findViewById(R.id.codipostal);
@@ -63,6 +79,27 @@ public class EditProfileActivity extends AppCompatActivity {
         Change = (TextView) findViewById(R.id.changePassword);
 
         Aceptar = (Button) findViewById(R.id.aceptar);
+
+        final Resources res = this.getResources();
+
+
+        //Getting the instance of Spinner and applying OnItemSelectedListener on it
+        spin = (Spinner) findViewById(R.id.sexo);
+       // spin.setOnItemSelectedListener(this);
+
+//Creating the ArrayAdapter instance having the bank name list
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,diferentesSexos);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//Setting the ArrayAdapter data on the Spinner
+        spin.setAdapter(aa);
+
+
+
+        // Spinner element
+     //   Spinner spinner = (Spinner) findViewById(R.id.sexo);
+
+        // Spinner click listener
+     //   spinner.setOnItemSelectedListener(this);
 
 
         Change.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +162,77 @@ public class EditProfileActivity extends AppCompatActivity {
                 // implementar cambios de los atributos del usuario en el servidor
                 Toast.makeText(getApplicationContext(),"aqui cambiaremos los valores al server", Toast.LENGTH_LONG).show();
 
+                JSONObject values = new JSONObject();
+                try {
+                  //  strTitulo = Titulo.getText().toString();
+                  //  strDescripcion = Descripcion.getText().toString();
+
+
+                    String nombre = Nombre.getText().toString() ;
+                    String CPcode = CP.getText().toString() ;
+                    String barrio = Barrio.getText().toString() ;
+                    String fecha = Fecha.getText().toString() ;
+                    String sexo = diferentesSexosGenerico[spin.getSelectedItemPosition()];
+                    String descripcion = Descripcion.getText().toString() ;
+
+                    values.put("bdate",fecha);
+                    values.put("cpCode",CPcode);
+                    values.put("sex",sexo);
+                    values.put("neighborhood",barrio);
+                    values.put("realname",nombre);
+                    values.put("description",descripcion);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                // nou server : agora-pes.herokuapp.com/api/proposal
+                new PostAsyncTask("https://agora-pes.herokuapp.com/api/profile", EditProfileActivity.this) {
+                    @Override
+                    protected void onPostExecute(JSONObject resObject) {
+                        Boolean result = false;
+
+
+                        try {
+
+                            if (resObject.has("success")) {
+                                result = resObject.getBoolean("success");
+                            }
+
+                            if (!result && resObject.has("errorMessage")) {
+                                String error = res.getString(R.string.errorCreacion);
+                                Log.i("asdCreacion", error);
+                                Toast.makeText(getApplicationContext(), error , Toast.LENGTH_LONG).show();
+                            }
+                            //Toast.makeText(getApplicationContext(), "Result : " + result , Toast.LENGTH_LONG).show();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //Log.i("asdBool", result.toString());
+
+                      //  String creacionok = String.format(res.getString(R.string.done), strTitulo);
+
+                        if (result) {
+                            //Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
+                       //     Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(EditProfileActivity.this, MainActivity.class));
+                        }
+
+                        else {
+                            Log.i("asdCreacion", "reset");
+                           // Titulo.setText("");
+                            Descripcion.setText("");
+                         //   Create.setVisibility(View.VISIBLE);
+                         //   prog.setVisibility(View.GONE);
+                        }
+
+                    }
+                }.execute(values);
+
+
+
+
+
             }
         });
 
@@ -181,5 +289,16 @@ public class EditProfileActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

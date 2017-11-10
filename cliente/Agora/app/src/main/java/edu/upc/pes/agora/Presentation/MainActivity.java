@@ -28,6 +28,7 @@ import java.util.Locale;
 
 import edu.upc.pes.agora.Logic.Constants;
 import edu.upc.pes.agora.Logic.GetAsyncTask;
+import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.NavMenuListener;
 import edu.upc.pes.agora.Logic.Proposals;
 import edu.upc.pes.agora.Logic.ProposalsAdapter;
@@ -69,9 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         llista_propostes = (ListView) findViewById(R.id.list);
 
-
-
-        new GetAsyncTask("https://agora-pes.herokuapp.com/api/proposal", this) {
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal", this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
@@ -97,8 +96,9 @@ public class MainActivity extends AppCompatActivity {
                                 String title = jas.getString("title");
                                 String owner = jas.getString("owner");
                                 String description = jas.getString("content");
+                                Integer id = jas.getInt("id");
 
-                                Proposals aux = new Proposals(title, description, owner);
+                                Proposals aux = new Proposals(id, title, description, owner);
 
                                 propostes.add(aux);
                             }

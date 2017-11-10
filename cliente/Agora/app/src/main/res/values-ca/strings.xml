@@ -51,4 +51,7 @@
     <string name="nomusuario">Nom Complert:</string>
     <string name="done">Proposta: \"%1$s\" creada correctament</string>
     <string name="title_activity_edit_proposal">Editar Proposta</string>
+    <string name="M">Home</string>
+    <string name="F">Dona</string>
+    <string name="I">Indefinit</string>
 </resources>

@@ -82,6 +82,7 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
 
 
             client.disconnect();
+            Log.i("asdGetAsyncTask", response.toString());
             return response;
 
 
