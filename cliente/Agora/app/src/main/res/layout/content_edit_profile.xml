@@ -42,7 +42,7 @@
             android:textColor="#3419aa"
             android:layout_marginBottom="10dp"
             android:fontFamily="serif"
-            android:text="random"/>
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -63,7 +63,7 @@
             android:textColor="#3419aa"
             android:layout_marginBottom="10dp"
             android:fontFamily="serif"
-            android:text="nombre completo"/>
+            />
 
 
 
@@ -86,7 +86,7 @@
             android:textColor="#3419aa"
             android:layout_marginBottom="10dp"
             android:fontFamily="serif"
-            android:text="codigo postal"/>
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -107,7 +107,7 @@
             android:textColor="#3419aa"
             android:layout_marginBottom="10dp"
             android:fontFamily="serif"
-            android:text="barrio"/>
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -126,9 +126,10 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
             android:fontFamily="serif"
-            android:text="fecha"
             android:textColor="#3419aa"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            android:hint="dd-MM-yyyy"
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -149,7 +150,7 @@
             android:textColor="#3419aa"
             android:layout_marginBottom="10dp"
             android:fontFamily="serif"
-            android:text="descripcion"/>
+           />
 
 
         <TextView
