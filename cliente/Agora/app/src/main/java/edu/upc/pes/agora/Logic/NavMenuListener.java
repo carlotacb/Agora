@@ -75,6 +75,11 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
         }  else if (id == R.id.nav_logout) {
             // Logout --> TODO: Desasignacion de token
 
+            new DeleteAsyncTask("https://agora-pes.herokuapp.com/api/proposal/user", context) {
+
+            }.execute();
+
+
             Helpers.logout(context);
 
             if (!context.getClass().equals(LoginActivity.class)) {
