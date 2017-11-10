@@ -29,12 +29,16 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.NavMenuListener;
 
 import edu.upc.pes.agora.Logic.PostAsyncTask;
+import edu.upc.pes.agora.Logic.Profile;
 import edu.upc.pes.agora.R;
 
 public class EditProfileActivity extends AppCompatActivity implements  AdapterView.OnItemSelectedListener {
@@ -57,6 +61,7 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
     String[] diferentesSexos; //{getString(R.string.M), getString(R.string.F), getString(R.string.I)};
     String[] diferentesSexosGenerico = {"M", "F", "I"};
 
+    Profile p ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +80,25 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
         Barrio = (EditText) findViewById(R.id.barrio);
         Fecha = (EditText) findViewById(R.id.fecha);
         Descripcion = (EditText) findViewById(R.id.descript);
+
+        p = new Profile();
+      /*  p.setName("pepe");
+        p.setCP(123);
+        p.setNeighborhood("sants");
+        p.setBorn(new Date());
+        */
+        Nombre.setText(p.getName());
+        if (p.getCP() != null)  CP.setText(String.valueOf(p.getCP()));
+
+        Barrio.setText(p.getNeighborhood());
+
+        Date b = p.getBorn();
+        if(b!= null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String s = dateFormat.format(b);
+            Fecha.setText(s);
+        }
+
 
         Change = (TextView) findViewById(R.id.changePassword);
 
