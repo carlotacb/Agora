@@ -41,7 +41,7 @@ const generateNextId = collectionName => {
 
     const options = {
         upsert: true,
-        returnNewDocument: true
+        returnOriginal: true
     }
 
     return collection
