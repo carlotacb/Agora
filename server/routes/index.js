@@ -68,7 +68,7 @@ module.exports = app => {
             })
         } catch (error) {
             console.error('error on getting profile', error)
-            res.sendStatus(403)
+            res.sendStatus(500)
         }
     })
 
@@ -81,40 +81,63 @@ module.exports = app => {
             res.send(proposal)
         } catch (error) {
             console.error('error on new post', error)
-            res.sendStatus(403)
+            res.sendStatus(500)
         }
     })
 
-    // app.get('/api/proposal', async function (req, res) {
-    //     try {
-    //         const username = req.query.username
-    //         if (username) const proposals = await proposalsModule.getProposalsByUsername(username)
-    //         else const proposals = await proposalsModule.getAllProposals()
-    //         res.send(proposals)
-    //     } catch (error) {
-    //         console.error('error on get proposals', error)
-    //         res.sendStatus(403)
-    //     }
-    // })
-    //
-    app.get('/api/proposal', async function (req, res) {
+    app.put('/api/proposal/:id', isAuthenticated, async function (req, res) {
+        try {
+            if (!req.params.id) {
+                res.sendStatus(400)
+            }
+
+            const proposalId = req.params.id
+            const proposal = await proposalsModule.getProposalById({id: proposalId})
+
+            if (!proposal) {
+                return res.sendStatus(404)
+            } else if (proposal.owner !== req.username) {
+                return res.sendStatus(403)
+            }
+
+            const {content, title} = req.body
+            const newProposal = await proposalsModule.update({id: proposalId, content, title})
+            res.send(newProposal)
+        } catch (error) {
+            console.error('error editing proposal', error)
+            res.sendStatus(500)
+        }
+    })
+
+    app.get('/api/proposal', isAuthenticated, async function (req, res) {
         try {
             const proposals = await proposalsModule.getAllProposals()
             res.send(proposals)
         } catch (error) {
-            console.error('error on delete post', error)
-            res.sendStatus(403)
+            console.error('error on get proposals', error)
+            res.sendStatus(500)
         }
     })
 
-    app.delete('/api/proposal/:id', async function (req, res) {
+    app.get('/api/proposal/user', isAuthenticated, async function (req, res) {
+        try {
+            const username = req.username
+            const proposals = await proposalsModule.getProposalsByUsername({username})
+            res.send(proposals)
+        } catch (error) {
+            console.error('error on get proposals', error)
+            res.sendStatus(500)
+        }
+    })
+
+    app.delete('/api/proposal/:id', isAuthenticated, async function (req, res) {
         try {
             const id = req.params.id
             await proposalsModule.deleteProposal(id)
             res.sendStatus(200)
         } catch (error) {
             console.error('error on delete post', error)
-            res.sendStatus(403)
+            res.sendStatus(500)
         }
     })
 
@@ -126,7 +149,7 @@ module.exports = app => {
             res.sendStatus(200)
         } catch (error) {
             console.error('error on logout', error)
-            res.sendStatus(403)
+            res.sendStatus(500)
         }
     })
 
