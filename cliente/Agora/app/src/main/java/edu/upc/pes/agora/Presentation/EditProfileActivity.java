@@ -59,7 +59,7 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
 
 
     String[] diferentesSexos; //{getString(R.string.M), getString(R.string.F), getString(R.string.I)};
-    String[] diferentesSexosGenerico = {"M", "F", "I"};
+    String[] diferentesSexosGenerico = {"I", "F", "M"};
 
     Profile p ;
 
@@ -73,7 +73,7 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
         toolbar.setLogo(R.mipmap.ic_editw);
         setSupportActionBar(toolbar);
 
-        diferentesSexos = new String[]{getString(R.string.M), getString(R.string.F), getString(R.string.I)};
+        diferentesSexos = new String[]{getString(R.string.I), getString(R.string.F), getString(R.string.M)};
 
         Nombre = (EditText) findViewById(R.id.nameprofile);
         CP = (EditText) findViewById(R.id.codipostal);
@@ -87,18 +87,50 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
         p.setNeighborhood("sants");
         p.setBorn(new Date());
         */
-        Nombre.setText(p.getName());
-        if (p.getCP() != null)  CP.setText(String.valueOf(p.getCP()));
+        Intent i = getIntent();
 
-        Barrio.setText(p.getNeighborhood());
+        if(i.hasExtra("cp")) {
+       //     editTitle.setText(i.getStringExtra("Title"));
+            CP.setText(i.getIntExtra("cp",0));
+        }
+        if(i.hasExtra("barrio")) {
+        //    editDescription.setText(i.getStringExtra("Description"));
+            Barrio.setText(i.getStringExtra("barrio"));
+        }
+        if(i.hasExtra("nombre")){
+            Nombre.setText(i.getStringExtra("nombre"));
+        }
+        if(i.hasExtra("fecha")){
+            Long f = i.getLongExtra("fecha",0);
+            if (f != 0) {
+                Date b = new Date(f);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                String s = dateFormat.format(b);
+                Fecha.setText(s);
+            }
+        }
 
-        Date b = p.getBorn();
+
+        //Getting the instance of Spinner and applying OnItemSelectedListener on it
+        // spin.setOnItemSelectedListener(this);
+        spin = (Spinner) findViewById(R.id.sexo);
+
+        if(i.hasExtra("sex")){
+            spin.setSelection(i.getIntExtra("sex",0));
+        }
+
+        //  Nombre.setText(p.getName());
+     //   if (p.getCP() != null)  CP.setText(String.valueOf(p.getCP()));
+
+      //  Barrio.setText(p.getNeighborhood());
+
+    /*    Date b = p.getBorn();
         if(b!= null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
             String s = dateFormat.format(b);
             Fecha.setText(s);
         }
-
+*/
 
         Change = (TextView) findViewById(R.id.changePassword);
 
@@ -107,9 +139,6 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
         final Resources res = this.getResources();
 
 
-        //Getting the instance of Spinner and applying OnItemSelectedListener on it
-        spin = (Spinner) findViewById(R.id.sexo);
-       // spin.setOnItemSelectedListener(this);
 
 //Creating the ArrayAdapter instance having the bank name list
         ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,diferentesSexos);
