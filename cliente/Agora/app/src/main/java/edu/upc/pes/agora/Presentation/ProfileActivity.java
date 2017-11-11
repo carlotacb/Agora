@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -37,6 +38,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Locale locale;
     private JSONObject Jason = new JSONObject();
     private ImageButton editar;
+    private TextView username;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -61,8 +63,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         editar = (ImageButton) findViewById(R.id.editarperfil);
 
+        username = (TextView) findViewById(R.id.user);
 
-       /* new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
+
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
@@ -75,41 +79,34 @@ public class ProfileActivity extends AppCompatActivity {
                         toast.show();
                     }
 
-                    else if (jsonObject != null){
+                    else if (jsonObject != null) {
 
-                        JSONObject User = jsonObject.getJSONObject("")
+                        JSONObject User = jsonObject;
 
-                        JSONArray ArrayUser = jsonObject.getJSONArray("arrayResponse");
+                        if (User != null) {
 
-                        if (ArrayUser != null) {
+                            Log.i("asdProfile", (User.toString()));
 
-                            for (int i=0; i < ArrayUser.length(); i++){
+                            String usernameJ = jsonObject.getString("username");
+                            username.setText(usernameJ);
 
+                            if(jsonObject.has("")) {
+                                
+                            }
+                            //String owner = jas.getString("owner");
+                            //String description = jas.getString("content");
 
+                            //Proposals aux = new Proposals(title, description, owner);
 
-                                Log.i("asdProfile", (ArrayUser.get(i).toString()));
-
-                                JSONObject jas = ArrayUser.getJSONObject(i);
-
-                                if (jas.has("username")) {
-
-                                }
-                                String title = jas.getString("title");
-                                String owner = jas.getString("owner");
-                                String description = jas.getString("content");*/
-
-                                //Proposals aux = new Proposals(title, description, owner);
-
-                                //propostes.add(aux);
-                     /*       }
+                            //propostes.add(aux);
                         }
-                        //llista_propostes.setAdapter(new ProposalsAdapter(getApplicationContext(), propostes));
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-        }.execute(Jason);*/
+        }.execute(Jason);
 
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
