@@ -1,6 +1,9 @@
 package edu.upc.pes.agora.Logic;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONObject;
 
 import edu.upc.pes.agora.Presentation.EditProposalActivity;
 import edu.upc.pes.agora.R;
@@ -70,8 +75,38 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         holder.borrar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 Toast.makeText(context, "BORRAR", Toast.LENGTH_SHORT).show();
+
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder((Activity) view.getRootView().getContext() );
+                dialogo1.setTitle("Importante");
+                dialogo1.setMessage("¿ Esta seguro de eliminar esta propuesta ?");
+                dialogo1.setCancelable(false);
+                dialogo1.setIcon(R.drawable.logo);
+                dialogo1.setCancelable(false);
+                dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id) {
+                        Toast.makeText(context, "ACEPTADO", Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(context, "ID" + proposal.getId(), Toast.LENGTH_SHORT).show();
+
+                        new DeleteAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + proposal.getId(), view.getRootView().getContext()){
+                            @Override
+                            protected void onPostExecute(JSONObject jsonObject) {
+                                Toast.makeText(context, "dentro del onpostExecute", Toast.LENGTH_SHORT).show();
+
+                                super.onPostExecute(jsonObject);
+                            }
+                        }.execute();
+
+                    }
+                });
+                dialogo1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogo1, int id) {
+                        Toast.makeText(context, "CANCELADO", Toast.LENGTH_SHORT).show();
+                    }
+                }).show();
+
                 // pop up preguntant si esborrar
                 // cridar delete async task
                 // refresh de la llista

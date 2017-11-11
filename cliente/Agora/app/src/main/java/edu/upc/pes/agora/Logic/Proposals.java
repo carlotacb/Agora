@@ -5,7 +5,7 @@ public class Proposals {
     // Basic proposals data manipulation class
     // Contains basic information of the proposals
 
-    //private long id;
+    private long id;
     private String title;
     private String description;
     private String owner;
@@ -18,13 +18,13 @@ public class Proposals {
         owner = ow;
     }
 
-    /*public long getId() {
+    public long getId() {
         return id;
-    }*/
+    }
 
-    /*public void setId(long id) {
+    public void setId(long id) {
         this.id = id;
-    }*/
+    }
 
     public String getTitle() {
         return title;
