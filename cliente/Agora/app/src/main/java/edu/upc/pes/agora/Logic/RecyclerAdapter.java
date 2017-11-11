@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.upc.pes.agora.Presentation.EditProposalActivity;
@@ -46,7 +47,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerHolder holder, final int position) {
         final Proposals proposal = listProposals.get(position);
 
         final Boolean[] Desplegat = {false};
@@ -95,7 +96,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
                             @Override
                             protected void onPostExecute(JSONObject jsonObject) {
                                 Toast.makeText(context, "dentro del onpostExecute", Toast.LENGTH_SHORT).show();
+                                if (!jsonObject.has("error")) {
+                                    listProposals.remove(proposal);
+                                    RecyclerAdapter.this.notifyDataSetChanged();
+                                }
+                                else {
+                                    try {
+                                        Toast.makeText(context, jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
 
+                                }
                                 super.onPostExecute(jsonObject);
                             }
                         }.execute();
