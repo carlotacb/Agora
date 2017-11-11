@@ -1,10 +1,16 @@
 package edu.upc.pes.agora.Logic;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import edu.upc.pes.agora.Presentation.LoginActivity;
 import edu.upc.pes.agora.Presentation.MainActivity;
@@ -36,6 +42,7 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
         return false;
     }
 
+    @SuppressLint("StaticFieldLeak")
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -75,12 +82,26 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
         }  else if (id == R.id.nav_logout) {
             // Logout --> TODO: Desasignacion de token
 
-            Helpers.logout(context);
+            JSONObject jObject = new JSONObject();
 
-            if (!context.getClass().equals(LoginActivity.class)) {
-                Intent myIntent = new Intent(context, LoginActivity.class);
-                context.startActivity(myIntent);
-            }
+            new DeleteAsyncTask("https://agora-pes.herokuapp.com/api/logout", context) {
+                @Override
+                protected void onPostExecute(JSONObject jsonObject) {
+                    try {
+                        if(jsonObject.has("error")) {
+                            String error = jsonObject.get("error").toString();
+                            Log.i("asd123", "Error");
+                        }
+                        else {
+                            Helpers.logout(context);
+                            Intent myIntent = new Intent(context, LoginActivity.class);
+                            context.startActivity(myIntent);
+                        }
+                    } catch (JSONException ignored) {
+                        Log.i("DEBUG","error al get user");
+                    }
+                }
+            }.execute(jObject);
         }
 
         activityChanged = true;
