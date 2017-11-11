@@ -62,36 +62,46 @@ public class ProfileActivity extends AppCompatActivity {
         editar = (ImageButton) findViewById(R.id.editarperfil);
 
 
-     /*   new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
+       /* new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
                 try {
                     if (jsonObject.has("error")) {
                         String error = jsonObject.get("error").toString();
-                        Log.i("asd123", "Error");
+                        Log.i("asdProfile", "Error");
 
                         Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
                         toast.show();
                     }
 
                     else if (jsonObject != null){
+
+                        JSONObject User = jsonObject.getJSONObject("")
+
                         JSONArray ArrayUser = jsonObject.getJSONArray("arrayResponse");
 
                         if (ArrayUser != null) {
+
                             for (int i=0; i < ArrayUser.length(); i++){
 
-                                Log.i("asd123", (ArrayUser.get(i).toString()));
 
-                                /*JSONObject jas = ArrayUser.getJSONObject(i);
+
+                                Log.i("asdProfile", (ArrayUser.get(i).toString()));
+
+                                JSONObject jas = ArrayUser.getJSONObject(i);
+
+                                if (jas.has("username")) {
+
+                                }
                                 String title = jas.getString("title");
                                 String owner = jas.getString("owner");
-                                String description = jas.getString("content");
+                                String description = jas.getString("content");*/
 
                                 //Proposals aux = new Proposals(title, description, owner);
 
                                 //propostes.add(aux);
-                            }
+                     /*       }
                         }
                         //llista_propostes.setAdapter(new ProposalsAdapter(getApplicationContext(), propostes));
                     }
