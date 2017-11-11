@@ -14,8 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -27,11 +25,9 @@ import java.util.List;
 import java.util.Locale;
 
 import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
-import edu.upc.pes.agora.Logic.GetAsyncTask;
 import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.NavMenuListener;
 import edu.upc.pes.agora.Logic.Proposals;
-import edu.upc.pes.agora.Logic.ProposalsAdapter;
 import edu.upc.pes.agora.Logic.RecyclerAdapter;
 import edu.upc.pes.agora.R;
 
@@ -72,18 +68,21 @@ public class MyProposalsActivity extends AppCompatActivity {
         myrecycler.setHasFixedSize(true); // cada item del RecyclerView te un Size en concret.
         myrecycler.setLayoutManager(new LinearLayoutManager(this));
 
+
         listProposals = new ArrayList<>();
 
-        Proposals p = new Proposals(123,"hola", "provant 1", "YO");
+       /* Proposals p = new Proposals(123,"hola", "provant 1", "YO");
         Proposals p2 = new Proposals(456,"hola2","provant 2","YO");
 
         listProposals.add(p);
         listProposals.add(p2);
 
         adapter = new RecyclerAdapter(listProposals, getApplicationContext());
-        myrecycler.setAdapter(adapter);
+        myrecycler.setAdapter(adapter);*/
 
-        /*new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal/user", this) {
+
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal/user", this) {
+
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
@@ -109,37 +108,22 @@ public class MyProposalsActivity extends AppCompatActivity {
                                 String title = jas.getString("title");
                                 String owner = jas.getString("owner");
                                 String description = jas.getString("content");
+                                int id = jas.getInt("id");
 
-                                Proposals aux = new Proposals(title, description, owner);
+                                Proposals aux = new Proposals(id, title, description, owner);
 
                                 propostes.add(aux);
                             }
                         }
 
-                        adapter = new RecyclerAdapter(listProposals, getApplicationContext());
+                        adapter = new RecyclerAdapter(propostes, getApplicationContext());
                         myrecycler.setAdapter(adapter);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-        }.execute(Jason);*/
-
-
-
-        /*Button b = (Button) findViewById(R.id.edit);
-
-        b.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("StaticFieldLeak")
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(getApplicationContext(), EditProposalActivity.class);
-                //TODO: Put values of chosen proposal in the intent
-                startActivity(myIntent);
-            }
-        });*/
-
-
+        }.execute(Jason);
     }
 
     @Override

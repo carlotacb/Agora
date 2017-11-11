@@ -5,27 +5,19 @@ public class Proposals {
     // Basic proposals data manipulation class
     // Contains basic information of the proposals
 
-    private long id;
+    private int id;
     private String title;
     private String description;
     private String owner;
     //private String categoria;
     //private int token_creator;
 
-    public Proposals (long id, String tit, String des, String ow) {
+    public Proposals (int id, String tit, String des, String ow) {
         this.id = id;
         title = tit;
         description = des;
         owner = ow;
     }
-
-    /*public long getId() {
-        return id;
-    }*/
-
-    /*public void setId(long id) {
-        this.id = id;
-    }*/
 
     public String getTitle() {
         return title;
@@ -66,11 +58,11 @@ public class Proposals {
         return String.format("%s", title);
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 }

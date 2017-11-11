@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,7 +76,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
                 Intent myIntent = new Intent(context, EditProposalActivity.class);
                 myIntent.putExtra("Title", proposal.getTitle());
                 myIntent.putExtra("Description", proposal.getDescription());
-                myIntent.putExtra("ID", proposal.getId());
+                myIntent.putExtra("id", proposal.getId());
                 context.startActivity(myIntent);
             }
         });

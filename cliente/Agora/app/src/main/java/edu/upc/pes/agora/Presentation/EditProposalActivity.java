@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import java.util.Locale;
 
 import edu.upc.pes.agora.Logic.PostAsyncTask;
+import edu.upc.pes.agora.Logic.PutAsyncTask;
 import edu.upc.pes.agora.R;
 
 import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
@@ -65,6 +66,8 @@ public class EditProposalActivity extends AppCompatActivity {
             editDescription.setText(i.getStringExtra("Description"));
         }
 
+        final int id = i.getIntExtra("id",0);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_edit_proposal);
         toolbar.setLogo(R.mipmap.ic_editw);
@@ -104,23 +107,19 @@ public class EditProposalActivity extends AppCompatActivity {
                         }
                         values.put("title", newTitle);
                         values.put("content", newDescription);
-                        values.put("Authorization", token);
-                        if(getIntent().hasExtra("ID")) {
-                            values.put("ID", getIntent().getExtras().getLong("ID"));
-                        }else{
-                            values.put("ID", 0);
-                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
+                    String editUrl = "https://agora-pes.herokuapp.com/api/proposal/"+id;
+                    Log.i("Link",editUrl);
+
                     // nou server : agora-pes.herokuapp.com/api/proposal
-                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal", EditProposalActivity.this) {
-                        @SuppressLint("StaticFieldLeak")
-                        @Override
+                    new PutAsyncTask(editUrl, EditProposalActivity.this){
                         protected void onPostExecute(JSONObject resObject) {
                             Boolean result = false;
-                            String error = res.getString(R.string.errorCreacion);
+                            String error = res.getString(R.string.errorEdit);
 
                             try {
 
@@ -129,30 +128,20 @@ public class EditProposalActivity extends AppCompatActivity {
                                 }
 
                                 if (!result && resObject.has("errorMessage")) {
-                                    error = res.getString(R.string.errorCreacion);
+                                    error = resObject.getString("errorMessage");
                                     Log.i("asdCreacion", error);
-                                    Toast.makeText(getApplicationContext(), error , Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                                 }
 
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-                            String savedChanges = res.getString(R.string.savedChanges)+ " \"" + newTitle + "\"";
-
-                            if (result) {
-                                Toast.makeText(getApplicationContext(), savedChanges, Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(EditProposalActivity.this, MainActivity.class));
-                            }
-
-                            else {
-                                Log.i("asdCreacion", "reset");
-                                editTitle.setText("");
-                                editDescription.setText("");
-                            }
                         }
                     }.execute(values);
+
+                    Intent myIntent = new Intent(getApplicationContext(),MyProposalsActivity.class);
+                    startActivity(myIntent);
 
                 }
             }
