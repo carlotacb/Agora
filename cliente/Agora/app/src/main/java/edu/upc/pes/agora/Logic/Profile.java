@@ -17,7 +17,17 @@ public class Profile {
     private String neighborhood;
     private Date born;
     private String description;
-    //private String password;
+    private Integer sex;
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+
 
     public String getName() {
         return name;

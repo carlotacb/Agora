@@ -30,6 +30,7 @@ import java.util.Locale;
 import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.NavMenuListener;
+import edu.upc.pes.agora.Logic.Profile;
 import edu.upc.pes.agora.R;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -38,7 +39,9 @@ public class ProfileActivity extends AppCompatActivity {
     private Locale locale;
     private JSONObject Jason = new JSONObject();
     private ImageButton editar;
+    
     private TextView username;
+    private Profile p;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -111,7 +114,16 @@ public class ProfileActivity extends AppCompatActivity {
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));
+                Intent myIntent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+                myIntent.putExtra("cp", p.getCP());
+                myIntent.putExtra("barrio", p.getNeighborhood());
+                myIntent.putExtra("nombre", p.getName());
+                myIntent.putExtra("fecha", p.getBorn().getTime());
+                myIntent.putExtra("sex", p.getSex());
+
+
+
+                startActivity(myIntent);
             }
         });
 
