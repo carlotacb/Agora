@@ -66,7 +66,7 @@ public class ProfileActivity extends AppCompatActivity {
         username = (TextView) findViewById(R.id.user);
 
 
-        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
+       /* new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
@@ -91,7 +91,7 @@ public class ProfileActivity extends AppCompatActivity {
                             username.setText(usernameJ);
 
                             if(jsonObject.has("")) {
-                                
+
                             }
                             //String owner = jas.getString("owner");
                             //String description = jas.getString("content");
@@ -106,7 +106,7 @@ public class ProfileActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }.execute(Jason);
+        }.execute(Jason);*/
 
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
