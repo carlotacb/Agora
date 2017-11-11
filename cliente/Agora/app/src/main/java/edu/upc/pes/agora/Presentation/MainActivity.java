@@ -98,8 +98,9 @@ public class MainActivity extends AppCompatActivity {
                                 String title = jas.getString("title");
                                 String owner = jas.getString("owner");
                                 String description = jas.getString("content");
+                                Integer id = jas.getInt("id");
 
-                                Proposals aux = new Proposals(title, description, owner);
+                                Proposals aux = new Proposals(id, title, description, owner);
 
                                 propostes.add(aux);
                             }

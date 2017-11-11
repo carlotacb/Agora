@@ -49,6 +49,7 @@
     <string name="saveButton">Save</string>
     <string name="cancelButton">Cancel</string>
     <string name="savedChanges">Saved changes to proposal</string>
+    <string name="errorEdit">Error editing proposal</string>
 
 
     <!-- Strings Nav Drawer TODO: quitar Name: y Username: -->
