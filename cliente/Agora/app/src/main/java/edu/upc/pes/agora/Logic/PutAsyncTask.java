@@ -21,10 +21,6 @@ import edu.upc.pes.agora.R;
 
 import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
 
-/**
- * Created by Kerstin on 10.11.2017.
- */
-
 public class PutAsyncTask extends AsyncTask<JSONObject, Void, JSONObject>{
 
     private URL url;
