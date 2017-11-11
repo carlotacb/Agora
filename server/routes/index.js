@@ -149,7 +149,11 @@ module.exports = app => {
     app.delete('/api/proposal/:id', isAuthenticated, async function (req, res) {
         try {
             const id = req.params.id
-            await proposalsModule.deleteProposal(id)
+            const proposal = await proposalsModule.getProposalById({id})
+            if (proposal.owner !== req.username) {
+                return res.sendStatus(403)
+            }
+            await proposalsModule.deleteProposal({id})
             res.sendStatus(200)
         } catch (error) {
             console.error('error on delete post', error)
