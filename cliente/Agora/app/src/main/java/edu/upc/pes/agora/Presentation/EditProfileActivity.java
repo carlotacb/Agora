@@ -91,7 +91,8 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
 
         if(i.hasExtra("cp")) {
        //     editTitle.setText(i.getStringExtra("Title"));
-            CP.setText(i.getIntExtra("cp",0));
+            Integer p = i.getIntExtra("cp",0);
+            CP.setText(p.toString());
         }
         if(i.hasExtra("barrio")) {
         //    editDescription.setText(i.getStringExtra("Description"));

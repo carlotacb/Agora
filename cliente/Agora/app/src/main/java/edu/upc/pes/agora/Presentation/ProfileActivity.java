@@ -45,7 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageButton editar;
 
     private TextView username, name, CP, Born, neigh;
-    private Profile p;
+    private Profile p = new Profile();
 
     private String usernameJ, neighJ, nameJ, BornJ;
     private Integer CPJ;
@@ -150,10 +150,10 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-                myIntent.putExtra("coCode", CPJ);
-                myIntent.putExtra("barrio", neighJ);
-                myIntent.putExtra("nombre", nameJ);
-                myIntent.putExtra("fecha", BornJ);
+                myIntent.putExtra("cp", p.getCP());
+                myIntent.putExtra("barrio", p.getNeighborhood());
+                myIntent.putExtra("nombre", p.getName());
+                myIntent.putExtra("fecha", p.getBorn());
                 //myIntent.putExtra("sex", p.getSex());
 
 
