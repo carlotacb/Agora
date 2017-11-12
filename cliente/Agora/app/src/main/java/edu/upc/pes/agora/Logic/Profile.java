@@ -2,10 +2,6 @@ package edu.upc.pes.agora.Logic;
 
 import java.util.Date;
 
-/**
- * Created by carlo on 07/11/2017.
- */
-
 public class Profile {
 
     // Basic proposals data manipulation class
@@ -15,7 +11,7 @@ public class Profile {
     private String username;
     private Integer CP;
     private String neighborhood;
-    private Date born;
+    private String born;
     private String description;
     private Integer sex;
 
@@ -26,8 +22,6 @@ public class Profile {
     public void setSex(Integer sex) {
         this.sex = sex;
     }
-
-
 
     public String getName() {
         return name;
@@ -42,7 +36,7 @@ public class Profile {
     }
 
     public void setUsername(String username) {
-        this.description = username;
+        this.username = username;
     }
 
     public Integer getCP() {
@@ -60,11 +54,12 @@ public class Profile {
     public void setNeighborhood(String neighborhood) {
         this.neighborhood = neighborhood;
     }
-    public Date getBorn() {
+
+    public String getBorn() {
         return born;
     }
 
-    public void setBorn(Date born) {
+    public void setBorn(String born) {
         this.born = born;
     }
 
@@ -75,12 +70,4 @@ public class Profile {
     public void setDescription(String director) {
         this.description = director;
     }
-
-    // Will be used by the ArrayAdapter in the ListView
-    /*@Override
-    public String toString() {
-        //return String.format("%s - %s", title, description);
-        return String.format("%s", title);
-    }*/
-
 }

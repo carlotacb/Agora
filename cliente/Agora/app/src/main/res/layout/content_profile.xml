@@ -128,7 +128,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/barrio"
+            android:id="@+id/born"
             android:textSize="14dp"
             android:textColor="#3419aa"
             android:layout_marginBottom="10dp"

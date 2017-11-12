@@ -25,7 +25,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 
 import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
@@ -39,9 +43,12 @@ public class ProfileActivity extends AppCompatActivity {
     private Locale locale;
     private JSONObject Jason = new JSONObject();
     private ImageButton editar;
-    
-    private TextView username;
+
+    private TextView username, name, CP, Born, neigh;
     private Profile p;
+
+    private String usernameJ, neighJ, nameJ, BornJ;
+    private Integer CPJ;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -67,9 +74,15 @@ public class ProfileActivity extends AppCompatActivity {
         editar = (ImageButton) findViewById(R.id.editarperfil);
 
         username = (TextView) findViewById(R.id.user);
+        name = (TextView) findViewById(R.id.nameprofile);
+        neigh = (TextView) findViewById(R.id.barrio);
+        CP = (TextView) findViewById(R.id.codipostal);
+        Born = (TextView) findViewById(R.id.born);
 
+        @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        final String dateInString = "07/06/2013";
 
-       /* new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
@@ -82,26 +95,48 @@ public class ProfileActivity extends AppCompatActivity {
                         toast.show();
                     }
 
-                    else if (jsonObject != null) {
+                    else {
 
-                        JSONObject User = jsonObject;
+                        Log.i("asdProfile", (jsonObject.toString()));
 
-                        if (User != null) {
+                        usernameJ = jsonObject.getString("username");
+                        username.setText(usernameJ);
+//                        p.setUsername(usernameJ);
 
-                            Log.i("asdProfile", (User.toString()));
+                        if(jsonObject.has("realname")) {
+                            nameJ = jsonObject.getString("realname");
+                            name.setText(nameJ);
+                            p.setName(nameJ);
+                        }
+                        else {
+                            name.setText("");
+                        }
 
-                            String usernameJ = jsonObject.getString("username");
-                            username.setText(usernameJ);
+                        if(jsonObject.has("neighbourhood")) {
+                            neighJ = jsonObject.getString("neighbourhood");
+                            neigh.setText(neighJ);
+                            p.setNeighborhood(neighJ);
+                        }
+                        else {
+                            neigh.setText("");
+                        }
 
-                            if(jsonObject.has("")) {
+                        if(jsonObject.has("coCode")) {
+                            CPJ = jsonObject.getInt("coCode");
+                            CP.setText(CPJ);
+                            p.setCP(CPJ);
+                        }
+                        else {
+                            CP.setText("");
+                        }
 
-                            }
-                            //String owner = jas.getString("owner");
-                            //String description = jas.getString("content");
-
-                            //Proposals aux = new Proposals(title, description, owner);
-
-                            //propostes.add(aux);
+                        if(jsonObject.has("bdate")) {
+                            BornJ = jsonObject.getString("bdate");
+                            Born.setText(BornJ);
+                            p.setBorn(BornJ);
+                        }
+                        else {
+                            Born.setText("");
                         }
                     }
 
@@ -109,17 +144,17 @@ public class ProfileActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }.execute(Jason);*/
+        }.execute(Jason);
 
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-                myIntent.putExtra("cp", p.getCP());
-                myIntent.putExtra("barrio", p.getNeighborhood());
-                myIntent.putExtra("nombre", p.getName());
-                myIntent.putExtra("fecha", p.getBorn().getTime());
-                myIntent.putExtra("sex", p.getSex());
+                myIntent.putExtra("coCode", CPJ);
+                myIntent.putExtra("barrio", neighJ);
+                myIntent.putExtra("nombre", nameJ);
+                myIntent.putExtra("fecha", BornJ);
+                //myIntent.putExtra("sex", p.getSex());
 
 
 
