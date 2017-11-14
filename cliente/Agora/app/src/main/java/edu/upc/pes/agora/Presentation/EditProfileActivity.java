@@ -52,7 +52,8 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
     private EditText Fecha;
     private EditText Descripcion;
     private Spinner spin;
-
+    private TextView Username;
+    
     private TextView Change;
 
     private Button Aceptar;
@@ -80,6 +81,7 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
         Barrio = (EditText) findViewById(R.id.barrio);
         Fecha = (EditText) findViewById(R.id.fecha);
         Descripcion = (EditText) findViewById(R.id.descript);
+        Username = (TextView) findViewById(R.id.usernameprofile);
 
         p = new Profile();
       /*  p.setName("pepe");
@@ -228,7 +230,9 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
                     String fecha = Fecha.getText().toString() ;
                     String sexo = diferentesSexosGenerico[spin.getSelectedItemPosition()];
                     String descripcion = Descripcion.getText().toString() ;
+                    String username = Username.getText().toString();
 
+                    values.put("username",username);
                     values.put("bdate",fecha);
                     values.put("cpCode",CPcode);
                     values.put("sex",sexo);

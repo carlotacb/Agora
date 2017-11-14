@@ -112,8 +112,8 @@ public class ProfileActivity extends AppCompatActivity {
                             name.setText("");
                         }
 
-                        if(jsonObject.has("neighbourhood")) {
-                            neighJ = jsonObject.getString("neighbourhood");
+                        if(jsonObject.has("neighborhood")) {
+                            neighJ = jsonObject.getString("neighborhood");
                             neigh.setText(neighJ);
                             p.setNeighborhood(neighJ);
                         }
@@ -121,9 +121,9 @@ public class ProfileActivity extends AppCompatActivity {
                             neigh.setText("");
                         }
 
-                        if(jsonObject.has("coCode")) {
-                            CPJ = jsonObject.getInt("coCode");
-                            CP.setText(CPJ);
+                        if(jsonObject.has("cpCode")) {
+                            CPJ = jsonObject.getInt("cpCode");
+                            CP.setText(CPJ.toString());
                             p.setCP(CPJ);
                         }
                         else {
