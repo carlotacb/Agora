@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 
+import edu.upc.pes.agora.Logic.Constants;
 import edu.upc.pes.agora.Logic.ItemData;
 import edu.upc.pes.agora.Logic.PostSesionAsyncTask;
 import edu.upc.pes.agora.R;
@@ -150,6 +151,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
                             if (result) {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                Constants.Username = username;
                             } else {
                                 Log.i("asd", "gfgffgfgf");
                                 Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();

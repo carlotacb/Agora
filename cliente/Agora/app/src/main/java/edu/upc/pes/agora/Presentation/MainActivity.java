@@ -16,7 +16,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -59,6 +61,10 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
+        headerUserName.setText(Constants.Username);
+
 
         navigationView.getMenu().getItem(NavMenuListener.homneButton).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));

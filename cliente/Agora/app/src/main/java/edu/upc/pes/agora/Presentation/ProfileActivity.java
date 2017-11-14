@@ -31,6 +31,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 
+import edu.upc.pes.agora.Logic.Constants;
 import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.NavMenuListener;
@@ -61,6 +62,9 @@ public class ProfileActivity extends AppCompatActivity {
 
         navigationView.getMenu().getItem(NavMenuListener.profile).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
+
+        TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
+        headerUserName.setText(Constants.Username);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_profile);

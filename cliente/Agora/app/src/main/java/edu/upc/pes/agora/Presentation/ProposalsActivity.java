@@ -24,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.Locale;
 
+import edu.upc.pes.agora.Logic.Constants;
 import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.NavMenuListener;
 import edu.upc.pes.agora.Logic.PostAsyncTask;
@@ -52,6 +53,9 @@ public class ProposalsActivity extends AppCompatActivity {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navMenu);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+
+        TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
+        headerUserName.setText(Constants.Username);
 
         navigationView.getMenu().getItem(NavMenuListener.addproposalbutton).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));

@@ -1,5 +1,6 @@
 package edu.upc.pes.agora.Presentation;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.Intent;
@@ -53,7 +54,7 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
     private EditText Descripcion;
     private Spinner spin;
     private TextView Username;
-    
+
     private TextView Change;
 
     private Button Aceptar;
@@ -111,6 +112,9 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
                 String s = dateFormat.format(b);
                 Fecha.setText(s);
             }
+        }
+        if(i.hasExtra("username")){
+            Username.setText(i.getStringExtra("username"));
         }
 
 
@@ -213,6 +217,7 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
         });
 
         Aceptar.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View view) {
                 // implementar cambios de los atributos del usuario en el servidor
@@ -286,17 +291,8 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
 
                     }
                 }.execute(values);
-
-
-
-
-
             }
         });
-
-
-
-
     }
 
 

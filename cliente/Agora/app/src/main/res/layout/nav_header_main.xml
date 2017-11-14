@@ -14,24 +14,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <!-- TODO: mirar de cambiar la imagen por la imagen de perfil del usuario -->
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"
-    />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/username"
+        android:id="@+id/head_username"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:fontFamily="serif"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
-    <TextView
-        android:id="@+id/textView"
+    <!-- <TextView
+        android:id="@+id/head_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nom"/>
+        android:text="@string/nom"/> -->
 
 </LinearLayout>
