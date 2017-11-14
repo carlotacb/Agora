@@ -137,7 +137,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
                 myIntent.putExtra("Title", proposal.getTitle());
                 myIntent.putExtra("Description", proposal.getDescription());
                 myIntent.putExtra("id", proposal.getId());
-                context.startActivity(myIntent);
+                v.getRootView().getContext().startActivity(myIntent);
             }
         });
 
