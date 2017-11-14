@@ -18,7 +18,7 @@
         <activity
             android:name=".Presentation.LoginActivity"
             android:label="Agora">
-            <intent-filter>
+           <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -29,8 +29,12 @@
         <activity
             android:name=".Presentation.MainActivity"
             android:label="@string/title_activity_main2"
+
             android:theme="@style/AppTheme">
+
+
         </activity>
+
         <activity
             android:name=".Presentation.MyProposalsActivity"
             android:label="@string/title_activity_my_propuestas"

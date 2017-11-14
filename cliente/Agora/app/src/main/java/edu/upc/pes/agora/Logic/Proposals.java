@@ -5,7 +5,6 @@ public class Proposals {
     // Basic proposals data manipulation class
     // Contains basic information of the proposals
 
-
     private int id;
     private String title;
     private String description;
@@ -18,6 +17,14 @@ public class Proposals {
         title = tit;
         description = des;
         owner = ow;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -59,11 +66,5 @@ public class Proposals {
         return String.format("%s", title);
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 }

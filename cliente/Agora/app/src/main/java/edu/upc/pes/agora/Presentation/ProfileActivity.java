@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -24,11 +25,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
+
+import edu.upc.pes.agora.Logic.Constants;
 import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.NavMenuListener;
+import edu.upc.pes.agora.Logic.Profile;
 import edu.upc.pes.agora.R;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -37,6 +44,12 @@ public class ProfileActivity extends AppCompatActivity {
     private Locale locale;
     private JSONObject Jason = new JSONObject();
     private ImageButton editar;
+
+    private TextView username, name, CP, Born, neigh;
+    private Profile p = new Profile();
+
+    private String usernameJ, neighJ, nameJ, BornJ;
+    private Integer CPJ;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -50,6 +63,9 @@ public class ProfileActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(NavMenuListener.profile).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
 
+        TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
+        headerUserName.setText(Constants.Username);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_profile);
         toolbar.setLogo(R.mipmap.ic_personw);
@@ -61,50 +77,92 @@ public class ProfileActivity extends AppCompatActivity {
 
         editar = (ImageButton) findViewById(R.id.editarperfil);
 
+        username = (TextView) findViewById(R.id.user);
+        name = (TextView) findViewById(R.id.nameprofile);
+        neigh = (TextView) findViewById(R.id.barrio);
+        CP = (TextView) findViewById(R.id.codipostal);
+        Born = (TextView) findViewById(R.id.born);
 
-     /*   new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
+        @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        final String dateInString = "07/06/2013";
+
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
                 try {
                     if (jsonObject.has("error")) {
                         String error = jsonObject.get("error").toString();
-                        Log.i("asd123", "Error");
+                        Log.i("asdProfile", "Error");
 
                         Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
                         toast.show();
                     }
 
-                    else if (jsonObject != null){
-                        JSONArray ArrayUser = jsonObject.getJSONArray("arrayResponse");
+                    else {
 
-                        if (ArrayUser != null) {
-                            for (int i=0; i < ArrayUser.length(); i++){
+                        Log.i("asdProfile", (jsonObject.toString()));
 
-                                Log.i("asd123", (ArrayUser.get(i).toString()));
+                        usernameJ = jsonObject.getString("username");
+                        username.setText(usernameJ);
+//                        p.setUsername(usernameJ);
 
-                                /*JSONObject jas = ArrayUser.getJSONObject(i);
-                                String title = jas.getString("title");
-                                String owner = jas.getString("owner");
-                                String description = jas.getString("content");
-
-                                //Proposals aux = new Proposals(title, description, owner);
-
-                                //propostes.add(aux);
-                            }
+                        if(jsonObject.has("realname")) {
+                            nameJ = jsonObject.getString("realname");
+                            name.setText(nameJ);
+                            p.setName(nameJ);
                         }
-                        //llista_propostes.setAdapter(new ProposalsAdapter(getApplicationContext(), propostes));
+                        else {
+                            name.setText("");
+                        }
+
+                        if(jsonObject.has("neighborhood")) {
+                            neighJ = jsonObject.getString("neighborhood");
+                            neigh.setText(neighJ);
+                            p.setNeighborhood(neighJ);
+                        }
+                        else {
+                            neigh.setText("");
+                        }
+
+                        if(jsonObject.has("cpCode")) {
+                            CPJ = jsonObject.getInt("cpCode");
+                            CP.setText(CPJ.toString());
+                            p.setCP(CPJ);
+                        }
+                        else {
+                            CP.setText("");
+                        }
+
+                        if(jsonObject.has("bdate")) {
+                            BornJ = jsonObject.getString("bdate");
+                            Born.setText(BornJ);
+                            p.setBorn(BornJ);
+                        }
+                        else {
+                            Born.setText("");
+                        }
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
-        }.execute(Jason);*/
+        }.execute(Jason);
 
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));
+                Intent myIntent = new Intent(ProfileActivity.this, EditProfileActivity.class);
+                myIntent.putExtra("cp", p.getCP());
+                myIntent.putExtra("barrio", p.getNeighborhood());
+                myIntent.putExtra("nombre", p.getName());
+                myIntent.putExtra("fecha", p.getBorn());
+                //myIntent.putExtra("sex", p.getSex());
+
+
+
+                startActivity(myIntent);
             }
         });
 

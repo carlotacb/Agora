@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import edu.upc.pes.agora.Logic.Constants;
 import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.NavMenuListener;
@@ -51,6 +53,9 @@ public class MyProposalsActivity extends AppCompatActivity {
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navMenu);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+
+        TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
+        headerUserName.setText(Constants.Username);
 
         navigationView.getMenu().getItem(NavMenuListener.myproposals).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
@@ -98,7 +103,7 @@ public class MyProposalsActivity extends AppCompatActivity {
                                 String title = jas.getString("title");
                                 String owner = jas.getString("owner");
                                 String description = jas.getString("content");
-                                int id = jas.getInt("id");
+                                Integer id = jas.getInt("id");
 
                                 Proposals aux = new Proposals(id, title, description, owner);
 

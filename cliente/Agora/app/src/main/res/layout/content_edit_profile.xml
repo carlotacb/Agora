@@ -22,26 +22,6 @@
             android:layout_height="100dp"
             android:src="@mipmap/ic_person"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:fontFamily="serif"
-            android:textSize="19dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/nomusuario"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/nameprofile"
-            android:textSize="14dp"
-            android:textColor="#3419aa"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="serif"
-            android:text="ranasdfasdfasdfdom"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -62,7 +42,30 @@
             android:textColor="#3419aa"
             android:layout_marginBottom="10dp"
             android:fontFamily="serif"
-            android:text="random"/>
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            android:textSize="19dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="2dp"
+            android:text="@string/nomusuario"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/nameprofile"
+            android:textSize="14dp"
+            android:textColor="#3419aa"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="serif"
+            />
+
+
 
         <TextView
             android:layout_width="match_parent"
@@ -75,7 +78,7 @@
             android:layout_marginBottom="2dp"
             android:text="CODIGO POSTAL:"/>
 
-        <TextView
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/codipostal"
@@ -83,7 +86,7 @@
             android:textColor="#3419aa"
             android:layout_marginBottom="10dp"
             android:fontFamily="serif"
-            android:text="random"/>
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -96,7 +99,7 @@
             android:layout_marginBottom="2dp"
             android:text="Barrio:"/>
 
-        <TextView
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/barrio"
@@ -104,7 +107,7 @@
             android:textColor="#3419aa"
             android:layout_marginBottom="10dp"
             android:fontFamily="serif"
-            android:text="random"/>
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -117,15 +120,16 @@
             android:layout_marginBottom="2dp"
             android:text="Fecha Nacimiento:"/>
 
-        <TextView
+        <EditText
+            android:id="@+id/fecha"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/barrio"
-            android:textSize="14dp"
-            android:textColor="#3419aa"
             android:layout_marginBottom="10dp"
             android:fontFamily="serif"
-            android:text="random"/>
+            android:textColor="#3419aa"
+            android:textSize="14dp"
+            android:hint="dd-MM-yyyy"
+            />
 
         <TextView
             android:layout_width="match_parent"
@@ -138,7 +142,7 @@
             android:layout_marginBottom="2dp"
             android:text="Descripcion:"/>
 
-        <TextView
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/descript"
@@ -146,7 +150,29 @@
             android:textColor="#3419aa"
             android:layout_marginBottom="10dp"
             android:fontFamily="serif"
-            android:text="random"/>
+           />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:fontFamily="serif"
+            android:textSize="19dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="2dp"
+            android:text="Sexo:"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/sexo"
+            android:textSize="14dp"
+            android:textColor="#3419aa"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="serif"
+            android:text="Sexo"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -158,6 +184,17 @@
             android:textStyle="italic"
             android:text="LINK con Xarxes Socials??"/>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="ACEPTAR"
+            android:id="@+id/aceptar"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Change Password"
+            android:id="@+id/changePassword"/>
 
 
     </LinearLayout>

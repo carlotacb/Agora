@@ -26,6 +26,13 @@
     <string name="errorpw">Passw needed</string>
     <string name="Registrat">Usuario %1$s registrado correctamente</string>
 
+
+    <!-- Strings related to edit profile -->
+    <string name="M">Hombre</string>
+    <string name="F">Mujer</string>
+    <string name="I">Indefinido</string>
+
+
     <!-- Multiidioma -->
     <string name="tria_idioma">Seleccionar Idioma</string>
     <string name="Castella">Castellano</string>

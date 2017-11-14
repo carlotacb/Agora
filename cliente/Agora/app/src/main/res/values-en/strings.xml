@@ -50,4 +50,7 @@
     <string name="nomusuario">Complete Name:</string>
     <string name="done">Proposal: \"%1$s\" created correctly</string>
     <string name="title_activity_edit_proposal">Edit Proposal</string>
+    <string name="M">Man</string>
+    <string name="F">Woman</string>
+    <string name="I">Undefined</string>
 </resources>

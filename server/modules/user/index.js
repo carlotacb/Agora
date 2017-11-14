@@ -39,4 +39,6 @@ module.exports = {
     createUser: createUser,
     login: login,
     get: db.get,
+    getProfile: db.getProfile,
+    updateProfile: db.updateProfile,
 }

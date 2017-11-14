@@ -60,15 +60,30 @@ module.exports = app => {
 
     app.get('/api/profile', isAuthenticated, async function (req, res) {
         try {
-            const user = await userModule.get({username: req.username})
-
-            res.json({
-                username: user.username,
-                createdDateTime: user.createdDateTime
-            })
+            const user = await userModule.getProfile({username: req.username})
+            res.json(user)
         } catch (error) {
             console.error('error on getting profile', error)
             res.sendStatus(500)
+        }
+    })
+
+    app.post('/api/profile', isAuthenticated, async function (req, res) {
+        try {
+            const {cpCode, realname, description, neighborhood, bdate, sex} = req.body
+            const user = await userModule.updateProfile({
+                username: req.username,
+                description,
+                cpCode,
+                realname,
+                neighborhood,
+                bdate,
+                sex
+            })
+            res.json(user)
+        } catch (error) {
+            console.error('error on updating profile', error)
+            res.sendStatus(403)
         }
     })
 
@@ -111,7 +126,8 @@ module.exports = app => {
 
     app.get('/api/proposal', isAuthenticated, async function (req, res) {
         try {
-            const proposals = await proposalsModule.getAllProposals()
+            const username = req.username
+            const proposals = await proposalsModule.getProposalsByUsername({username})
             res.send(proposals)
         } catch (error) {
             console.error('error on get proposals', error)

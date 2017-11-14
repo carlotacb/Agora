@@ -10,6 +10,17 @@ async function get({username}) {
     return await collection().findOne(query)
 }
 
+async function getProfile({username}) {
+    const collection = await getCollection()
+    return collection.findOne({username}, {_id: 0, password: 0})
+}
+
+async function updateProfile({username, description, cpCode, realname, neighborhood, bdate, sex}) {
+    const collection = await getCollection()
+    return collection.updateOne({username: username}, {$set: {cpCode: cpCode, realname: realname,
+        neighborhood: neighborhood, bdate: bdate, sex: sex, description: description}})
+}
+
 async function create({username, password}) {
     const object = {
         id: await getNextId(),
@@ -24,5 +35,7 @@ async function create({username, password}) {
 
 module.exports = {
     get: get,
+    getProfile: getProfile,
+    updateProfile: updateProfile,
     create: create,
 }

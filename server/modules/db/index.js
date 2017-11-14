@@ -41,12 +41,12 @@ const generateNextId = collectionName => {
 
     const options = {
         upsert: true,
-        returnNewDocument: true
+        returnOriginal: true
     }
 
     return collection
         .findOneAndUpdate(query, update, options)
-        .then(response => response.value.id)
+        .then(response => response && response.value && response.value.id ? response.value.id : 0)
 }
 
 
