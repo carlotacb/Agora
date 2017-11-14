@@ -127,7 +127,7 @@ module.exports = app => {
     app.get('/api/proposal', isAuthenticated, async function (req, res) {
         try {
             const username = req.username
-            const proposals = await proposalsModule.getProposalsByUsername({username})
+            const proposals = await proposalsModule.getAllProposals()
             res.send(proposals)
         } catch (error) {
             console.error('error on get proposals', error)
@@ -149,7 +149,11 @@ module.exports = app => {
     app.delete('/api/proposal/:id', isAuthenticated, async function (req, res) {
         try {
             const id = req.params.id
-            await proposalsModule.deleteProposal(id)
+            const proposal = await proposalsModule.getProposalById({id})
+            if (proposal.owner !== req.username) {
+                return res.sendStatus(403)
+            }
+            await proposalsModule.deleteProposal({id})
             res.sendStatus(200)
         } catch (error) {
             console.error('error on delete post', error)

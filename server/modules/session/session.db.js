@@ -23,7 +23,7 @@ async function get(token) {
 }
 
 async function deleteSession(username, token) {
-    return collection().delete({username, token})
+    return collection().deleteOne({username, token})
 }
 
 module.exports = {

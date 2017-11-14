@@ -11,13 +11,11 @@ async function get({username}) {
 }
 
 async function getProfile({username}) {
-    const collection = await getCollection()
-    return collection.findOne({username}, {_id: 0, password: 0})
+    return collection().findOne({username}, {_id: 0, password: 0})
 }
 
 async function updateProfile({username, description, cpCode, realname, neighborhood, bdate, sex}) {
-    const collection = await getCollection()
-    return collection.updateOne({username: username}, {$set: {cpCode: cpCode, realname: realname,
+    return collection().updateOne({username: username}, {$set: {cpCode: cpCode, realname: realname,
         neighborhood: neighborhood, bdate: bdate, sex: sex, description: description}})
 }
 
