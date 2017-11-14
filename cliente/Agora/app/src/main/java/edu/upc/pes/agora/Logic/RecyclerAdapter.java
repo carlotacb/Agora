@@ -1,5 +1,6 @@
 package edu.upc.pes.agora.Logic;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,12 +10,14 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,13 +29,11 @@ import edu.upc.pes.agora.R;
 
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder> /* implements PopupMenu.OnMenuItemClickListener*/ {
 
     private LayoutInflater inflater;
     private List<Proposals> listProposals;
     private Context context;
-
-    //private Boolean Desplegat = false;
 
     public RecyclerAdapter(List<Proposals> listProposals, Context context){
         this.context = context;
@@ -80,13 +81,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             public void onClick(final View view) {
                 Toast.makeText(context, "BORRAR", Toast.LENGTH_SHORT).show();
 
-                AlertDialog.Builder dialogo1 = new AlertDialog.Builder((Activity) view.getRootView().getContext() );
+                AlertDialog.Builder dialogo1 = new AlertDialog.Builder(view.getRootView().getContext() );
                 dialogo1.setTitle("Importante");
                 dialogo1.setMessage("¿ Esta seguro de eliminar esta propuesta ?");
                 dialogo1.setCancelable(false);
                 dialogo1.setIcon(R.drawable.logo);
                 dialogo1.setCancelable(false);
                 dialogo1.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @SuppressLint("StaticFieldLeak")
                     public void onClick(DialogInterface dialogo1, int id) {
                         Toast.makeText(context, "ACEPTADO", Toast.LENGTH_SHORT).show();
 
@@ -124,8 +126,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
                 // cridar delete async task
                 // refresh de la llista
 
-
-
             }
         });
 
@@ -143,12 +143,56 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     }
 
+    /*private void showPopUpMenu(View view) {
+        // poner el menu
+
+        PopupMenu pop = new PopupMenu(context, view);
+        MenuInflater infl = pop.getMenuInflater();
+        infl.inflate(R.menu.popup_menu, pop.getMenu());
+        Log.i("asdRA","1");
+        pop.setOnMenuItemClickListener(this);
+        Log.i("asdRA","2");
+        pop.show();
+    }*/
+
+    //@Override
+    /*public boolean onMenuItemClick(MenuItem item) {
+
+        Log.i("asdRA","5");
+        return false;
+    }*/
+
+    /**
+     * Click listener for popup menu items
+     */
+   /* class MyMenuClickListener implements PopupMenu.OnMenuItemClickListener {
+
+        public MyMenuClickListener() {
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+
+            Log.i("asdRA","3");
+            switch (menuItem.getItemId()) {
+                case R.id.editprop:
+                    Toast.makeText(context, "Edit", Toast.LENGTH_SHORT).show();
+                    return true;
+                case R.id.deleteprop:
+                    Toast.makeText(context, "Delete", Toast.LENGTH_SHORT).show();
+                    return true;
+                default:
+            }
+            return false;
+        }
+    }*/
+
     @Override
     public int getItemCount() {
         return listProposals.size();
     }
 
-    class RecyclerHolder extends RecyclerView.ViewHolder {
+    class RecyclerHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener, PopupMenu.OnMenuItemClickListener*/{
 
         private TextView title;
         private TextView description;
@@ -156,6 +200,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
         private Button edit;
         private Button borrar;
+
+        private ImageView popupMenu;
 
 
         public RecyclerHolder(View itemView) {
@@ -166,6 +212,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             llayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
             edit = (Button) itemView.findViewById(R.id.editproposal);
             borrar = (Button) itemView.findViewById(R.id.erraseproposal);
+            //popupMenu = (ImageView) itemView.findViewById(R.id.popupView);
 
         }
     }

@@ -77,6 +77,8 @@
     <!-- Strings for Principal Profile -->
     <string name="nomusuario">Nom Usuario:</string>
 
+    <string name="editar">Editar Propuesta</string>
+    <string name="borrar">Borrar Propuesta</string>
 
     <string name="str_en" translatable="false">English</string>
     <string name="str_es" translatable="false">Spanish</string>

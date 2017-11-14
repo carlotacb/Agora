@@ -38,6 +38,7 @@ public class MyProposalsActivity extends AppCompatActivity {
 
     private RecyclerView myrecycler;
     private RecyclerView.Adapter adapter;
+    private RecyclerAdapter radapter;
 
     private List<Proposals> listProposals;
     private JSONObject Jason = new JSONObject();
@@ -63,23 +64,12 @@ public class MyProposalsActivity extends AppCompatActivity {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        //TODO: List of own proposals
         myrecycler = (RecyclerView) findViewById(R.id.recyclerView);
         myrecycler.setHasFixedSize(true); // cada item del RecyclerView te un Size en concret.
         myrecycler.setLayoutManager(new LinearLayoutManager(this));
 
 
         listProposals = new ArrayList<>();
-
-       /* Proposals p = new Proposals(123,"hola", "provant 1", "YO");
-        Proposals p2 = new Proposals(456,"hola2","provant 2","YO");
-
-        listProposals.add(p);
-        listProposals.add(p2);
-
-        adapter = new RecyclerAdapter(listProposals, getApplicationContext());
-        myrecycler.setAdapter(adapter);*/
-
 
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal/user", this) {
 
@@ -116,8 +106,8 @@ public class MyProposalsActivity extends AppCompatActivity {
                             }
                         }
 
-                        adapter = new RecyclerAdapter(propostes, getApplicationContext());
-                        myrecycler.setAdapter(adapter);
+                        radapter = new RecyclerAdapter(propostes, getApplicationContext());
+                        myrecycler.setAdapter(radapter);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

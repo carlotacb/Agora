@@ -2,12 +2,16 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    class = "edu.upc.pes.agora.Logic.RecyclerAdapter">
     
     <android.support.v7.widget.CardView
+        android:id="@+id/cardview"
         android:layout_width="match_parent"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:background="#d68c8c"
+        app:cardCornerRadius="15dp"
+        android:background="#a6a4a4"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -15,11 +19,11 @@
             android:orientation="vertical"
             android:padding="@dimen/activity_horizontal_margin"
             android:layout_width="match_parent"
-            android:background="#dfb8b8"
+            android:background="#a6a4a4"
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/textHead"
                 android:textColor="#000"
@@ -49,7 +53,20 @@
                 android:text="BORRAR"/>
 
         </LinearLayout>
-        
+
+      <!--   <ImageView
+            android:id="@+id/popupView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/ic_more"
+            android:layout_gravity="right"
+            android:clickable="true"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:alpha="0.7" android:focusable="true"/> -->
+
+
+
     </android.support.v7.widget.CardView>
 
 </LinearLayout>
