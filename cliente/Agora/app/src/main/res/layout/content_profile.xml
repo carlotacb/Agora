@@ -18,6 +18,7 @@
                   android:layout_height="match_parent">
 
         <LinearLayout android:layout_width="match_parent"
+                      android:layout_marginBottom="10dp"
                         android:layout_height="wrap_content">
             <ImageView
                 android:layout_width="70dp"
@@ -32,7 +33,6 @@
                 android:textColor="#000"
                 android:textStyle="bold"
                 android:id="@+id/user"
-                android:fontFamily="serif"
                 android:textSize="19sp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="2dp"
@@ -44,128 +44,154 @@
                 android:layout_height="50dp"
                 android:src="@mipmap/ic_edit"
                 android:background="@drawable/botonedit"
-                android:layout_gravity="bottom"/>
+                android:layout_gravity="center|right"/>
 
         </LinearLayout>
 
 
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_marginTop="20dp"
+                      android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:fontFamily="serif"
-            android:textSize="19dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/nomusuario"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:layout_marginBottom="2dp"
+                android:text="@string/nomusuario2"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/nameprofile"
-            android:textSize="14dp"
-            android:textColor="#3419aa"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="serif"
-            android:text="random"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/nameprofile"
+                android:textSize="18dp"
+                android:textColorHint="#e89b9696"
+                android:text="random"/>
 
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:fontFamily="serif"
-            android:textSize="19dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="2dp"
-            android:text="CODIGO POSTAL:"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_marginTop="15dp"
+                      android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/codipostal"
-            android:textSize="14dp"
-            android:textColor="#3419aa"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="serif"
-            android:text="random"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:layout_marginBottom="2dp"
+                android:text="@string/codigopostal2"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:fontFamily="serif"
-            android:textSize="19dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="2dp"
-            android:text="Barrio:"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/codipostal"
+                android:textSize="18dp"
+                android:textColorHint="#e89b9696"
+                android:text="random"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/barrio"
-            android:textSize="14dp"
-            android:textColor="#3419aa"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="serif"
-            android:text="random"/>
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:fontFamily="serif"
-            android:textSize="19dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="2dp"
-            android:text="Fecha Nacimiento:"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_marginTop="15dp"
+                      android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/born"
-            android:textSize="14dp"
-            android:textColor="#3419aa"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="serif"
-            android:text="random"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:layout_marginBottom="2dp"
+                android:text="@string/barrio2"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:fontFamily="serif"
-            android:textSize="19dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="2dp"
-            android:text="Descripcion:"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/barrio"
+                android:textSize="18dp"
+                android:textColorHint="#e89b9696"
+                android:text="random"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/descript"
-            android:textSize="14dp"
-            android:textColor="#3419aa"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="serif"
-            android:text="random"/>
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="14dp"
-            android:textColor="#aa1934"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="serif"
-            android:textStyle="italic"
-            android:text="LINK con Xarxes Socials??"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_marginTop="15dp"
+                      android:layout_height="wrap_content">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:layout_marginBottom="2dp"
+                android:text="@string/fnaix2"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/born"
+                android:textSize="18dp"
+                android:textColorHint="#e89b9696"
+                android:text="random"/>
+
+        </LinearLayout>
+
+        <!-- <LinearLayout android:layout_width="match_parent"
+                      android:layout_marginTop="15dp"
+                      android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:layout_marginBottom="2dp"
+                android:text="@string/sexo2"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/sexo"
+                android:textSize="18dp"
+                android:textColorHint="#e89b9696"
+                android:text="random"/>
+
+        </LinearLayout> -->
+
+        <!-- <LinearLayout android:layout_width="match_parent"
+                      android:layout_marginTop="15dp"
+                      android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:layout_marginBottom="2dp"
+                android:text="@string/fnaix2"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/descript"
+                android:textSize="18dp"
+                android:textColorHint="#e89b9696"
+                android:text="random"/>
+
+        </LinearLayout> -->
 
 
     </LinearLayout>

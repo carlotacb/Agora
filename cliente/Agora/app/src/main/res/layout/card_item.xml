@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     class = "edu.upc.pes.agora.Logic.RecyclerAdapter">
     
@@ -10,8 +10,7 @@
         android:id="@+id/cardview"
         android:layout_width="match_parent"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        app:cardCornerRadius="15dp"
-        android:background="#a6a4a4"
+        style="@style/MyCardViewStyle"
         android:layout_height="wrap_content">
 
         <LinearLayout
@@ -19,54 +18,75 @@
             android:orientation="vertical"
             android:padding="@dimen/activity_horizontal_margin"
             android:layout_width="match_parent"
-            android:background="#a6a4a4"
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="280dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:id="@+id/textHead"
                 android:textColor="#000"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                android:textSize="20sp"
+                android:textAllCaps="true"
+                android:layout_marginBottom="15dp"
                 android:text="Heading"/>
+
+           <!-- <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textCreated"
+                android:textColor="#414040"
+                android:layout_marginBottom="8dp"
+                android:text="Creada el 25/11/2012"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textCategoria"
+                android:textColor="#414040"
+                android:layout_marginBottom="8dp"
+                android:text="Categoria: Plantas"/> -->
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#000"
                 android:id="@+id/textDescription"
-                android:visibility="gone"
-                android:text="Description"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editproposal"
-                android:visibility="gone"
-                android:text="EDITAR"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/erraseproposal"
-                android:visibility="gone"
-                android:text="BORRAR"/>
+                android:text="Description: "/>
 
         </LinearLayout>
 
-      <!--   <ImageView
-            android:id="@+id/popupView"
-            android:layout_width="50dp"
+        <ImageView
+            android:layout_width="30dp"
             android:layout_height="50dp"
+            android:id="@+id/more"
             android:src="@mipmap/ic_more"
-            android:layout_gravity="right"
+            android:layout_gravity="right|top"
+            android:layout_marginTop="20dp"
             android:clickable="true"
-            android:layout_marginTop="8dp"
-            android:padding="8dp"
-            android:alpha="0.7" android:focusable="true"/> -->
+            android:focusable="true"/>
+
+
+<!--        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:id="@+id/editproposal"
+            android:src="@mipmap/ic_edit"
+            android:layout_gravity="right|top"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"/> -->
+
+        <!-- <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/erraseproposal"
+            android:src="@mipmap/ic_delete"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"/> -->
 
 
 
     </android.support.v7.widget.CardView>
 
-</LinearLayout>
+</RelativeLayout>

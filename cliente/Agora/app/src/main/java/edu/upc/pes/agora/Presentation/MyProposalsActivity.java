@@ -104,6 +104,9 @@ public class MyProposalsActivity extends AppCompatActivity {
                                 String owner = jas.getString("owner");
                                 String description = jas.getString("content");
                                 Integer id = jas.getInt("id");
+                                String creada = jas.getString("createdDateTime");
+
+                                Log.i("asdCreate", creada);
 
                                 Proposals aux = new Proposals(id, title, description, owner);
 
@@ -131,8 +134,6 @@ public class MyProposalsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        //TODO: posar-ho al MenuListener
 
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long

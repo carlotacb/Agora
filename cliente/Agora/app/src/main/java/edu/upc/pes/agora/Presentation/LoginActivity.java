@@ -90,8 +90,6 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
         prog = (ProgressBar) findViewById(R.id.loginprogressbar);
 
-
-
         login.setOnClickListener(new OnClickListener() {
             @SuppressLint("StaticFieldLeak")
             @Override
@@ -99,8 +97,6 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
-
-
 
                 if (username.length() == 0 || password.length() == 0) {
                     String error2 = res.getString(R.string.error2);

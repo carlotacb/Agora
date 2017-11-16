@@ -26,18 +26,28 @@
     <string name="errorpw">Passw needed</string>
     <string name="Registrat">Usuario %1$s registrado correctamente</string>
 
-
-    <!-- Strings related to edit profile -->
-    <string name="M">Hombre</string>
-    <string name="F">Mujer</string>
-    <string name="I">Indefinido</string>
-
+    <!-- Strings Nav Drawer -->
+    <string name="username" translatable="false">"Username"</string>
+    <string name="home">Home</string>
+    <string name="novaproposta">Nova Proposta</string>
+    <string name="lesmevespropostes">Les Meves Propostes</string>
+    <string name="miperfil">About me</string>
+    <string name="perfil">My Profile</string>
+    <string name="editarp">Edit Profile</string>
+    <string name="surt">Sortir</string>
 
     <!-- Multiidioma -->
     <string name="tria_idioma">Seleccionar Idioma</string>
     <string name="Castella">Castellano</string>
     <string name="Catalan">Catalan</string>
     <string name="Ingles">Inglés</string>
+
+    <!-- Menus -->
+    <string name="idioma">Canviar Idioma</string>
+    <string name="search">Search</string>
+
+    <!-- Página principal -->
+    <string name="title_activity_main">Main Page</string>
 
     <!-- Strings Creacion Propuesta -->
     <string name="errorTitulo">Campo titulo necesario</string>
@@ -50,6 +60,7 @@
     <string name="nuevapropuesta">Nueva Propuesta</string>
     <string name="done">Propuesta "%1$s" creada correctamnete</string>
 
+
     <!-- Strings Edit Proposal -->
     <string name="editTitle">Title</string>
     <string name="editDescription">Description</string>
@@ -57,35 +68,41 @@
     <string name="cancelButton">Cancel</string>
     <string name="savedChanges">Saved changes to proposal</string>
     <string name="errorEdit">Error editing proposal</string>
+    <string name="editar">Editar</string>
 
 
-    <!-- Strings Nav Drawer TODO: quitar Name: y Username: -->
-    <string name="nom" translatable="false">Name: %1$s</string>
-    <string name="username" translatable="false">"Username: "</string>
-    <string name="home">Home</string>
-    <string name="novaproposta">Nova Proposta</string>
-    <string name="lesmevespropostes">Les Meves Propostes</string>
-    <string name="miperfil">About me</string>
-    <string name="perfil">My Profile</string>
-    <string name="editarp">Edit Profile</string>
-    <string name="surt">Sortir</string>
+    <!-- Strings to Delete Proposal -->
+    <string name="importante">Importante</string>
+    <string name="seguro">¿ Esta seguro de eliminar esta propuesta ?</string>
+    <string name="Aceptar">Aceptar</string>
+    <string name="Cancelar">Cancelar</string>
+    <string name="Borrado">Propuesta %1$s borrada</string>
+    <string name="delete">Borrar</string>
 
-    <!-- Menus -->
-    <string name="idioma">Canviar Idioma</string>
-    <string name="search">Search</string>
-
-    <!-- Página principal -->
-    <string name="title_activity_main">Main Page</string>
-
-
-    <!-- Strings to test -->
-    <string name="Loged">FELICIDADES, ESTAS DENTRO :)</string>
 
     <!-- Strings for Principal Profile -->
-    <string name="nomusuario">Nom Usuario:</string>
+    <string name="nomusuario2">Nom Usuario:</string>
+    <string name="codigopostal2">Codigo Postal:</string>
+    <string name="barrio2">Barrio:</string>
+    <string name="fnaix2">Fecha Nacimiento:</string>
+    <string name="sexo2">Sexo:</string>
 
-    <string name="editar">Editar Propuesta</string>
-    <string name="borrar">Borrar Propuesta</string>
+    <!-- Strings related to edit profile -->
+    <string name="M">Hombre</string>
+    <string name="F">Mujer</string>
+    <string name="I">Indefinido</string>
+    <string name="cps">Cambiar Password</string>
+    <string name="nomusuario">Nom Usuario</string>
+    <string name="codigopostal">Codigo Postal</string>
+    <string name="barrio">Barrio</string>
+    <string name="fnaix">Fecha Nacimiento</string>
+    <string name="sexo">Sexo</string>
+
+    <!-- Passwords -->
+    <string name="pwactual">Password Actual</string>
+    <string name="pwnueva">Password Nueva</string>
+    <string name="pwnueva2">Confirmar password</string>
+
 
     <string name="str_en" translatable="false">English</string>
     <string name="str_es" translatable="false">Spanish</string>

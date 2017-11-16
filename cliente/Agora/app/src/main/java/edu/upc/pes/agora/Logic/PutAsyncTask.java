@@ -67,7 +67,6 @@ public class PutAsyncTask extends AsyncTask<JSONObject, Void, JSONObject>{
             try {
                 if (con.getResponseCode() == 200) {
                     response.put("success",true);
-                    //response.put("token", token);
                 }
                 else  {
                     Log.i("asdTAG","response code: "+con.getResponseCode());

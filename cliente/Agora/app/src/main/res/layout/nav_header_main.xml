@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/side_nav_bar"
+    android:background="@drawable/skyline"
     android:gravity="bottom"
     android:id="@+id/nav_head"
     android:orientation="vertical"
@@ -20,7 +20,8 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/username"
         android:id="@+id/head_username"
-        android:textSize="30dp"
+        android:textColor="#dadada"
+        android:textSize="40dp"
         android:textStyle="bold"
         android:fontFamily="serif"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>

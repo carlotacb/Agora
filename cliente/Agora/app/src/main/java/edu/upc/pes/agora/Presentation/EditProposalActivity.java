@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -29,9 +30,6 @@ import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
 
 public class EditProposalActivity extends AppCompatActivity {
 
-    private Configuration config = new Configuration();
-    private Locale locale;
-
     EditText editTitle;
     EditText editDescription;
     Button saveButton;
@@ -40,6 +38,8 @@ public class EditProposalActivity extends AppCompatActivity {
     String newTitle;
     String newDescription;
     String token;
+
+    private ProgressBar prog;
 
     SharedPreferences prefs;
     SharedPreferences.Editor edit;
@@ -53,6 +53,7 @@ public class EditProposalActivity extends AppCompatActivity {
         editDescription = (EditText) findViewById(R.id.editDescription);
         saveButton = (Button) findViewById(R.id.saveButton);
         cancelButton = (Button) findViewById(R.id.cancelButton);
+        prog = (ProgressBar) findViewById(R.id.saveprogressbar);
 
         prefs = this.getSharedPreferences(SH_PREF_NAME, MODE_PRIVATE);
         edit = prefs.edit();
@@ -67,11 +68,6 @@ public class EditProposalActivity extends AppCompatActivity {
         }
 
         final int id = i.getIntExtra("id",0);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.title_activity_edit_proposal);
-        toolbar.setLogo(R.mipmap.ic_editw);
-        setSupportActionBar(toolbar);
 
         final Resources res = this.getResources();
 
@@ -88,6 +84,7 @@ public class EditProposalActivity extends AppCompatActivity {
             @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View view) {
+
                 if (editTitle.getText().toString().equals("") ){
                     String error = res.getString(R.string.errorTitulo);
                     Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
@@ -98,6 +95,10 @@ public class EditProposalActivity extends AppCompatActivity {
 
                 }
                 else {
+
+                    saveButton.setVisibility(View.GONE);
+                    prog.setVisibility(View.VISIBLE);
+
                     JSONObject values = new JSONObject();
                     try {
                         newTitle = editTitle.getText().toString();
@@ -133,69 +134,19 @@ public class EditProposalActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                                 }
 
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }
                     }.execute(values);
 
-                    Intent myIntent = new Intent(getApplicationContext(),MyProposalsActivity.class);
+                    Intent myIntent = new Intent(getApplicationContext(), MyProposalsActivity.class);
                     startActivity(myIntent);
 
                 }
             }
         });
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        Intent refresh = new Intent(this, EditProposalActivity.class);
-        refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.men_castella) {
-            locale = new Locale("es");
-            config.locale = locale;
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-        }
-
-        else if (id == R.id.men_catala){
-            locale = new Locale("ca");
-            config.locale = locale;
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-
-        }
-
-        else if (id == R.id.men_angles){
-            locale = new Locale("en");
-            config.locale = locale;
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 }

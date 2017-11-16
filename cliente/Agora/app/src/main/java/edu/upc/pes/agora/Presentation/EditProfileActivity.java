@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,10 +43,7 @@ import edu.upc.pes.agora.Logic.PostAsyncTask;
 import edu.upc.pes.agora.Logic.Profile;
 import edu.upc.pes.agora.R;
 
-public class EditProfileActivity extends AppCompatActivity implements  AdapterView.OnItemSelectedListener {
-
-    private Configuration config = new Configuration();
-    private Locale locale;
+public class EditProfileActivity extends AppCompatActivity {
 
     private EditText Nombre;
     private EditText CP;
@@ -55,13 +53,15 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
     private Spinner spin;
     private TextView Username;
 
+    private ProgressBar prog;
+
     private TextView Change;
 
     private Button Aceptar;
+    private Button Cancelar;
 
-
-    String[] diferentesSexos; //{getString(R.string.M), getString(R.string.F), getString(R.string.I)};
-    String[] diferentesSexosGenerico = {"I", "F", "M"};
+   // String[] diferentesSexos; //{getString(R.string.M), getString(R.string.F), getString(R.string.I)};
+   // String[] diferentesSexosGenerico = {"I", "F", "M"};
 
     Profile p ;
 
@@ -70,35 +70,23 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.title_activity_edit_profile);
-        toolbar.setLogo(R.mipmap.ic_editw);
-        setSupportActionBar(toolbar);
-
-        diferentesSexos = new String[]{getString(R.string.I), getString(R.string.F), getString(R.string.M)};
+      //  diferentesSexos = new String[]{getString(R.string.I), getString(R.string.F), getString(R.string.M)};
 
         Nombre = (EditText) findViewById(R.id.nameprofile);
         CP = (EditText) findViewById(R.id.codipostal);
         Barrio = (EditText) findViewById(R.id.barrio);
         Fecha = (EditText) findViewById(R.id.fecha);
-        Descripcion = (EditText) findViewById(R.id.descript);
+        //Descripcion = (EditText) findViewById(R.id.descript);
         Username = (TextView) findViewById(R.id.usernameprofile);
 
         p = new Profile();
-      /*  p.setName("pepe");
-        p.setCP(123);
-        p.setNeighborhood("sants");
-        p.setBorn(new Date());
-        */
         Intent i = getIntent();
 
         if(i.hasExtra("cp")) {
-       //     editTitle.setText(i.getStringExtra("Title"));
             Integer p = i.getIntExtra("cp",0);
             CP.setText(p.toString());
         }
         if(i.hasExtra("barrio")) {
-        //    editDescription.setText(i.getStringExtra("Description"));
             Barrio.setText(i.getStringExtra("barrio"));
         }
         if(i.hasExtra("nombre")){
@@ -117,49 +105,28 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
             Username.setText(i.getStringExtra("username"));
         }
 
-
         //Getting the instance of Spinner and applying OnItemSelectedListener on it
-        // spin.setOnItemSelectedListener(this);
-        spin = (Spinner) findViewById(R.id.sexo);
+        //spin = (Spinner) findViewById(R.id.sexo);
 
-        if(i.hasExtra("sex")){
+       /* if(i.hasExtra("sex")){
             spin.setSelection(i.getIntExtra("sex",0));
-        }
-
-        //  Nombre.setText(p.getName());
-     //   if (p.getCP() != null)  CP.setText(String.valueOf(p.getCP()));
-
-      //  Barrio.setText(p.getNeighborhood());
-
-    /*    Date b = p.getBorn();
-        if(b!= null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-            String s = dateFormat.format(b);
-            Fecha.setText(s);
-        }
-*/
+        }*/
 
         Change = (TextView) findViewById(R.id.changePassword);
 
         Aceptar = (Button) findViewById(R.id.aceptar);
+        Cancelar = (Button) findViewById(R.id.cancelar);
+
+        prog = (ProgressBar) findViewById(R.id.saveprogressbar);
 
         final Resources res = this.getResources();
 
 
-
-//Creating the ArrayAdapter instance having the bank name list
-        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,diferentesSexos);
+        //Creating the ArrayAdapter instance having the bank name list
+       /* ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,diferentesSexos);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//Setting the ArrayAdapter data on the Spinner
-        spin.setAdapter(aa);
-
-
-
-        // Spinner element
-     //   Spinner spinner = (Spinner) findViewById(R.id.sexo);
-
-        // Spinner click listener
-     //   spinner.setOnItemSelectedListener(this);
+        //Setting the ArrayAdapter data on the Spinner
+        spin.setAdapter(aa);*/
 
 
         Change.setOnClickListener(new View.OnClickListener() {
@@ -173,6 +140,7 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
                 final EditText mNewPass1 = (EditText) mView.findViewById(R.id.etPassword2);
                 final EditText mNewPass2 = (EditText) mView.findViewById(R.id.etPassword3);
                 Button mAccept = (Button) mView.findViewById(R.id.etAccept);
+                Button mCancel = (Button) mView.findViewById(R.id.etCancel);
 
                 mBuilder.setView(mView);
                 final AlertDialog dialog = mBuilder.create();
@@ -209,7 +177,13 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
                     }
                 });
 
-
+                mCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Toast.makeText(getApplicationContext(),"Password actualizado correctamente", Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    }
+                });
                 Toast.makeText(getApplicationContext(),"A CAMBIAR PASSWORD", Toast.LENGTH_LONG).show();
                // show.DialogFragment();
 
@@ -221,29 +195,31 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
             @Override
             public void onClick(View view) {
                 // implementar cambios de los atributos del usuario en el servidor
-                Toast.makeText(getApplicationContext(),"aqui cambiaremos los valores al server", Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(),"aqui cambiaremos los valores al server", Toast.LENGTH_LONG).show();
+
+                Aceptar.setVisibility(View.GONE);
+                prog.setVisibility(View.VISIBLE);
 
                 JSONObject values = new JSONObject();
                 try {
                   //  strTitulo = Titulo.getText().toString();
                   //  strDescripcion = Descripcion.getText().toString();
 
-
                     String nombre = Nombre.getText().toString() ;
                     String CPcode = CP.getText().toString() ;
                     String barrio = Barrio.getText().toString() ;
                     String fecha = Fecha.getText().toString() ;
-                    String sexo = diferentesSexosGenerico[spin.getSelectedItemPosition()];
-                    String descripcion = Descripcion.getText().toString() ;
+                    //String sexo = diferentesSexosGenerico[spin.getSelectedItemPosition()];
+                    //String descripcion = Descripcion.getText().toString() ;
                     String username = Username.getText().toString();
 
                     values.put("username",username);
                     values.put("bdate",fecha);
                     values.put("cpCode",CPcode);
-                    values.put("sex",sexo);
+                    //values.put("sex",sexo);
                     values.put("neighborhood",barrio);
                     values.put("realname",nombre);
-                    values.put("description",descripcion);
+                    //values.put("description",descripcion);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -252,7 +228,6 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
                     @Override
                     protected void onPostExecute(JSONObject resObject) {
                         Boolean result = false;
-
 
                         try {
 
@@ -273,86 +248,32 @@ public class EditProfileActivity extends AppCompatActivity implements  AdapterVi
                         }
                         //Log.i("asdBool", result.toString());
 
-                      //  String creacionok = String.format(res.getString(R.string.done), strTitulo);
-
                         if (result) {
                             //Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
                        //     Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(EditProfileActivity.this, MainActivity.class));
+                            startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
                         }
 
                         else {
                             Log.i("asdCreacion", "reset");
-                           // Titulo.setText("");
-                            Descripcion.setText("");
-                         //   Create.setVisibility(View.VISIBLE);
-                         //   prog.setVisibility(View.GONE);
+                            Aceptar.setVisibility(View.VISIBLE);
+                            prog.setVisibility(View.GONE);
                         }
 
                     }
                 }.execute(values);
             }
         });
+
+        Cancelar.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(EditProfileActivity.this, ProfileActivity.class));
+            }
+        });
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
 
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        Intent refresh = new Intent(this, EditProfileActivity.class);
-        refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.men_castella) {
-            locale = new Locale("es");
-            config.locale = locale;
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-        }
-
-        else if (id == R.id.men_catala){
-            locale = new Locale("ca");
-            config.locale = locale;
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-
-        }
-
-        else if (id == R.id.men_angles){
-            locale = new Locale("en");
-            config.locale = locale;
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 }

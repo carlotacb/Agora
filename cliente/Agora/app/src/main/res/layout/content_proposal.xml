@@ -49,48 +49,47 @@
             android:textStyle="italic"/>
 
 
-        <Button
-            android:id="@+id/resetButton"
-            android:layout_width="280dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/botonlogin"
-            android:fontFamily="serif"
-            android:textStyle="bold"
-            android:textSize="17dp"
-            android:text="@string/reset" />
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_gravity="right"
+                      android:layout_marginTop="20dp"
+                      android:layout_marginBottom="20dp"
+                      android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="280dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp">
+            <RelativeLayout android:layout_width="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/createButton"
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/botonok"
+                    android:textColor="#FFF"
+                    android:textStyle="bold"
+                    android:textSize="17dp"
+                    android:text="@string/create" />
+
+                <ProgressBar
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/crproposalprogressbar"
+                    android:layout_centerInParent="true"
+                    style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+                    android:indeterminateDrawable="@drawable/progress_bar_circular_style"
+                    android:visibility="gone"/>
+
+            </RelativeLayout>
 
             <Button
-                android:id="@+id/createButton"
-                android:layout_width="280dp"
+                android:id="@+id/resetButton"
+                android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:background="@drawable/botonlogin"
+                android:background="@drawable/botoncancel"
                 android:fontFamily="serif"
                 android:textStyle="bold"
                 android:textSize="17dp"
-                android:text="@string/create" />
+                android:text="@string/reset" />
 
-            <ProgressBar
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/crproposalprogressbar"
-                android:layout_centerInParent="true"
-                style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
-                android:indeterminateDrawable="@drawable/progress_bar_circular_style"
-                android:visibility="gone"/>
-
-        </RelativeLayout>
-
-
-
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

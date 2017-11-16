@@ -45,10 +45,10 @@ public class ProfileActivity extends AppCompatActivity {
     private JSONObject Jason = new JSONObject();
     private ImageButton editar;
 
-    private TextView username, name, CP, Born, neigh;
+    private TextView username, name, CP, Born, neigh, sex;
     private Profile p = new Profile();
 
-    private String usernameJ, neighJ, nameJ, BornJ;
+    private String usernameJ, neighJ, nameJ, BornJ, SexoJ;
     private Integer CPJ;
 
     @SuppressLint("StaticFieldLeak")
@@ -82,6 +82,7 @@ public class ProfileActivity extends AppCompatActivity {
         neigh = (TextView) findViewById(R.id.barrio);
         CP = (TextView) findViewById(R.id.codipostal);
         Born = (TextView) findViewById(R.id.born);
+        //sex = (TextView) findViewById(R.id.sexo);
 
         @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         final String dateInString = "07/06/2013";
@@ -142,6 +143,15 @@ public class ProfileActivity extends AppCompatActivity {
                         else {
                             Born.setText("");
                         }
+
+                        /*if(jsonObject.has("sex")) {
+                            BornJ = jsonObject.getString("sex");
+                            Born.setText(sexJ);
+                            p.setBorn(sexJ);
+                        }
+                        else {
+                            Born.setText("");
+                        }*/
                     }
 
                 } catch (JSONException e) {
