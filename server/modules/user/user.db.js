@@ -19,6 +19,10 @@ async function updateProfile({username, description, cpCode, realname, neighborh
         neighborhood: neighborhood, bdate: bdate, sex: sex, description: description}})
 }
 
+async function updatePassword({username, newencryptedPassword}){
+    return collection().updateOne({username: username}, {$set: {password: newencryptedPassword}});
+}
+
 async function create({username, password}) {
     const object = {
         id: await getNextId(),
@@ -35,5 +39,6 @@ module.exports = {
     get: get,
     getProfile: getProfile,
     updateProfile: updateProfile,
+    updatePassword: updatePassword,
     create: create,
 }
