@@ -1,5 +1,5 @@
 # Àgora
-----
+
 Project for the subject of Software Engineering Project (PES) in 3rd Course of FIB (BarcelonaTech), Autumn 2017. 
 
 // Description of the Aplication once we finish.
