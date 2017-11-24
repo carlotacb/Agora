@@ -87,12 +87,28 @@ module.exports = app => {
         }
     })
 
+    app.put('/api/profile', isAuthenticated, async function (req, res) {
+        try {
+            const {oldpassword, password, confirmpassword} = req.body
+            const user = await userModule.updatePassword({
+                username: req.username,
+                oldpassword,
+                password,
+                confirmpassword,
+            })
+            res.json(user)
+        } catch (error) {
+            console.error('error on updating profile', error)
+            res.sendStatus(403)
+        }
+    })
+
     app.post('/api/proposal', isAuthenticated, async function (req, res) {
         try {
             const username = req.username
-            const {title, content} = req.body
+            const {title, content, location} = req.body
             console.log(title + "\n" + content)
-            const proposal = await proposalsModule.createProposal({username, title, content})
+            const proposal = await proposalsModule.createProposal({username, title, content, location})
             res.send(proposal)
         } catch (error) {
             console.error('error on new post', error)
