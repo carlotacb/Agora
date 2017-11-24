@@ -76,7 +76,7 @@ public class MyProposalsActivity extends AppCompatActivity {
 
         listProposals = new ArrayList<>();
 
-        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal/user", this) {
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal?username=" + Constants.Username, this) {
 
 
             @Override
