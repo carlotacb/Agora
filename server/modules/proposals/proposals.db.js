@@ -14,8 +14,15 @@ async function create({username, title, content}) {
     return collection().insertOne(object)
 }
 
-async function getAll() {
-    return collection().find().toArray()
+async function getAllBy({username}) {
+
+    const query = {}
+
+    if (username) {
+        query.owner = username.toString()
+    }
+
+    return collection().find(query).toArray()
 }
 
 async function getByUsername({username}) {
@@ -61,7 +68,7 @@ async function deleteProposal({id}) {
 module.exports = {
     create: create,
     update: update,
-    getAll: getAll,
+    getAllBy: getAllBy,
     getByUsername: getByUsername,
     getProposalById: getProposalById,
     delete: deleteProposal

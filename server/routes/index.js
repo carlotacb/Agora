@@ -140,21 +140,12 @@ module.exports = app => {
         }
     })
 
-    app.get('/api/proposal', isAuthenticated, async function (req, res) {
+    app.get('/api/proposal', async function (req, res) {
         try {
-            const username = req.username
-            const proposals = await proposalsModule.getAllProposals()
-            res.send(proposals)
-        } catch (error) {
-            console.error('error on get proposals', error)
-            res.sendStatus(500)
-        }
-    })
-
-    app.get('/api/proposal/user', isAuthenticated, async function (req, res) {
-        try {
-            const username = req.username
-            const proposals = await proposalsModule.getProposalsByUsername({username})
+            const query = {
+                username: req.query.username
+            }
+            const proposals = await proposalsModule.getAllProposals(query)
             res.send(proposals)
         } catch (error) {
             console.error('error on get proposals', error)

@@ -9,27 +9,10 @@ async function createProposal({username, title, content}) {
     return await db.create({username, title, content})
 }
 
-async function getAllProposals() {
-    const proposals = await db.getAll();
-    if (!proposals) {
-        throw new Error(`No Proposals`)
-    }
-    return proposals
-}
-
-async function getProposalsByUsername({username}) {
-    const proposals = await db.getByUsername({username});
-    if (!proposals) {
-        throw new Error(`No Proposals`)
-    }
-    return proposals
-}
-
 module.exports = {
     createProposal: createProposal,
-    getAllProposals: getAllProposals,
+    getAllProposals: db.getAllBy,
     update: db.update,
     deleteProposal: db.delete,
-    getProposalsByUsername: getProposalsByUsername,
     getProposalById: db.getProposalById,
 }
