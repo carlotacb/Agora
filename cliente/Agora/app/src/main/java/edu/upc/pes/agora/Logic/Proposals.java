@@ -1,5 +1,7 @@
 package edu.upc.pes.agora.Logic;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class Proposals {
 
     // Basic proposals data manipulation class
@@ -11,6 +13,7 @@ public class Proposals {
     private String owner;
     //private String categoria;
     //private int token_creator;
+    private LatLng position;
 
     public Proposals (int id, String tit, String des, String ow) {
         this.id = id;
@@ -51,14 +54,22 @@ public class Proposals {
         this.owner = owner;
     }
 
-    /*public int getToken_creator() {
-        return token_creator;
+    public LatLng getPosition() {
+        return position;
     }
 
-    public void setToken_creator(int token_creator) {
-        this.token_creator = token_creator;
+    public void setPosition(LatLng position) {
+        this.position = position;
     }
-*/
+
+    /*public int getToken_creator() {
+            return token_creator;
+        }
+
+        public void setToken_creator(int token_creator) {
+            this.token_creator = token_creator;
+        }
+    */
     // Will be used by the ArrayAdapter in the ListView
     @Override
     public String toString() {

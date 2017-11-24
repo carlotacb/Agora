@@ -91,5 +91,18 @@
                 android:text="@string/reset" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtPosAttached"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+        <Button
+            android:id="@+id/btnAddPosition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/addPosition" />
     </LinearLayout>
+
 </ScrollView>

@@ -1,0 +1,34 @@
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="100">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:apiKey="AIzaSyC95I96hwPsV83M-y2Dp9OZgqjGuGkD0-Y"
+        android:layout_weight="10"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        tools:context="edu.upc.pes.agora.Presentation.AddLocationActivity"
+        />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:id="@+id/btnSavePos"
+        android:text="@string/savePosition"
+        android:layout_height="fill_parent"
+        android:layout_weight="45"/>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:id="@+id/btnCancelPos"
+        android:text="@string/cancelButton"
+        android:layout_height="fill_parent"
+        android:layout_weight="45"/>
+
+</LinearLayout>

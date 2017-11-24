@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="edu.upc.pes.agora">
+    package="edu.upc.pes.agora">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.READ_PROFILE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permissions.INTERNET"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permissions.INTERNET" />
+
+    <!-- Get GPS position -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+
+
 
     <application
         android:allowBackup="true"
@@ -18,43 +26,51 @@
         <activity
             android:name=".Presentation.LoginActivity"
             android:label="Agora">
-           <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Presentation.RegisterActivity"/>
-        <activity android:name=".Presentation.ProposalsActivity"/>
+        <activity android:name=".Presentation.RegisterActivity" />
+        <activity android:name=".Presentation.ProposalsActivity" />
         <activity
             android:name=".Presentation.MainActivity"
             android:label="@string/title_activity_main2"
-
-            android:theme="@style/AppTheme">
-
-
-        </activity>
-
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".Presentation.MyProposalsActivity"
             android:label="@string/title_activity_my_propuestas"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".Presentation.ProfileActivity"
             android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".Presentation.EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".Presentation.EditProposalActivity"
             android:label="@string/title_activity_edit_proposal"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+
+        <activity
+            android:name=".Presentation.AddLocationActivity"
+            android:label="@string/title_activity_add_location"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC95I96hwPsV83M-y2Dp9OZgqjGuGkD0-Y"/>
+
     </application>
 
 </manifest>
