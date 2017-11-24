@@ -1,14 +1,10 @@
-Proyecto "ÀGORA"
+# Àgora
 
-Assignatura: PES
+Project for the subject of Software Engineering Project (PES) in 3rd Course of FIB (BarcelonaTech), Autumn 2017. 
 
-Universidad: UPC - FIB
+// Description of the Aplication once we finish.
 
-Miembros del Equipo:
-
- * Pau Alos
- * Carlota Catot
- * Gerard Esteve
- * Dragos Fotescu
- * Oriol Saborido
- * Kerstin Winter
+Team Members, separated by Front-End and Back-End:
+ * __Back-End__: Pau Alòs and Dragos Fotescu.
+ * __Front-End__: Carlota Catot, Gerard Esteve, Kerstin Winter.
+ * __Testing__: Oriol Saborido
