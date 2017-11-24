@@ -90,9 +90,9 @@ module.exports = app => {
     app.post('/api/proposal', isAuthenticated, async function (req, res) {
         try {
             const username = req.username
-            const {title, content} = req.body
+            const {title, content, location} = req.body
             console.log(title + "\n" + content)
-            const proposal = await proposalsModule.createProposal({username, title, content})
+            const proposal = await proposalsModule.createProposal({username, title, content, location})
             res.send(proposal)
         } catch (error) {
             console.error('error on new post', error)

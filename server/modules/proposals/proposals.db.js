@@ -2,7 +2,7 @@ const {getCollection, collectionNames, generateNextId} = require('../db')
 const collection = () => getCollection(collectionNames.proposals)
 const getNextId = () => generateNextId(collectionNames.proposals)
 
-async function create({username, title, content}) {
+async function create({username, title, content, location}) {
     const object = {
         id: await getNextId(),
         owner: username,
@@ -10,6 +10,12 @@ async function create({username, title, content}) {
         content: content,
         createdDateTime: new Date(),
         updatedDateTime: null,
+    }
+    if (location && locaiton.lat && location.long) {
+        object.location = {
+            lat: location.lat,
+            long: location.long,
+        }
     }
     return collection().insertOne(object)
 }
