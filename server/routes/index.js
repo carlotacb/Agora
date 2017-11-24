@@ -153,6 +153,66 @@ module.exports = app => {
         }
     })
 
+    app.get('/api/proposal/:id', async function (req, res) {
+        try {
+            const id = req.params.id
+            const proposal = await proposalsModule.getProposalById({id})
+
+            const minMockProposals = 1, maxMockProposals = 5
+            const numberOfMockProposals = (Math.floor(Math.random() * maxMockProposals) + minMockProposals)
+
+            const mockComments = [
+                {
+                    id: 1,
+                    author: {
+                        id: 1,
+                        username: 'mock-dragos',
+                    },
+                    body: 'I like your proposal'
+                },
+                {
+                    id: 2,
+                    author: {
+                        id: 1,
+                        username: 'mock-dragos',
+                    },
+                    body: 'I like it very much'
+                },
+                {
+                    id: 3,
+                    author: {
+                        id: 2,
+                        username: 'mock-admin',
+                    },
+                    body: 'Thank you very much'
+                },
+                {
+                    id: 4,
+                    author: {
+                        id: 3,
+                        username: 'mock-spam',
+                    },
+                    body: 'Spam'
+                },
+                {
+                    id: 5,
+                    author: {
+                        id: 2,
+                        username: 'mock-admin',
+                    },
+                    body: 'No spam'
+                }
+            ]
+
+            proposal.comments = mockComments.slice(0, numberOfMockProposals)
+
+            res.send(proposal)
+        } catch (error) {
+            console.error('error on get proposals', error)
+            res.sendStatus(500)
+        }
+    })
+
     app.delete('/api/proposal/:id', isAuthenticated, async function (req, res) {
         try {
             const id = req.params.id
