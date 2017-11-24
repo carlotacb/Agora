@@ -27,4 +27,10 @@
               android:layout_marginBottom="5dp"
               android:textAppearance="?android:attr/textAppearanceListItemSmall"
               android:textColor="#434343" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_edit"
+        android:id="@+id/compartir"/>
 </LinearLayout>
