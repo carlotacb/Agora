@@ -11,7 +11,7 @@ async function create({username, title, content, location}) {
         createdDateTime: new Date(),
         updatedDateTime: null,
     }
-    if (location && locaiton.lat && location.long) {
+    if (location && location.lat && location.long) {
         object.location = {
             lat: location.lat,
             long: location.long,
