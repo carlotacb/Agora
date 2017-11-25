@@ -9,10 +9,33 @@ async function createProposal({username, title, content, location}) {
     return await db.create({username, title, content, location})
 }
 
+async function addComment({proposalId, author, comment}) {
+    const proposal = await db.getProposalById({id: proposalId})
+    if (!proposal) {
+        throw new Error('Proposal not found')
+    }
+
+    const user = await userModule.get({username: author})
+
+    if (!user) {
+        throw new Error('User not found')
+    }
+
+    return db.addComment({
+        proposalId,
+        author: {
+            username: user.username,
+            id: user.id
+        },
+        comment
+    })
+}
+
 module.exports = {
     createProposal: createProposal,
     getAllProposals: db.getAllBy,
     update: db.update,
     deleteProposal: db.delete,
     getProposalById: db.getProposalById,
+    addComment: addComment,
 }

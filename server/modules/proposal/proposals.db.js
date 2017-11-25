@@ -10,6 +10,7 @@ async function create({username, title, content, location}) {
         content: content,
         createdDateTime: new Date(),
         updatedDateTime: null,
+        comments: []
     }
     if (location && location.lat && location.long) {
         object.location = {
@@ -71,11 +72,41 @@ async function deleteProposal({id}) {
     return collection().deleteOne({id: parseInt(id)})
 }
 
+async function addComment({proposalId, author, comment}) {
+    const query = {
+        id: parseInt(proposalId),
+    }
+
+    const update = {
+        $push: {
+            comments: {
+                id: await generateNextId('comment'),
+                createdDateTime: new Date(),
+                updatedDateTime: null,
+                author: {
+                    id: parseInt(author.id),
+                    username: author.username.toString()
+                },
+                comment: comment.toString()
+            }
+        }
+    }
+
+    const options = {
+        upsert: false,
+        returnOriginal: false
+    }
+
+    return collection().findOneAndUpdate(query, update, options)
+        .then(response => response.value)
+}
+
 module.exports = {
     create: create,
     update: update,
     getAllBy: getAllBy,
     getByUsername: getByUsername,
     getProposalById: getProposalById,
+    addComment: addComment,
     delete: deleteProposal
 }
