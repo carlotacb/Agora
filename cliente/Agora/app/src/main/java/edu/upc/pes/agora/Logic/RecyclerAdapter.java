@@ -126,18 +126,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             }
         });
 
-
-
-         /*holder.edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(context, EditProposalActivity.class);
-                myIntent.putExtra("Title", proposal.getTitle());
-                myIntent.putExtra("Description", proposal.getDescription());
-                myIntent.putExtra("id", proposal.getId());
-                v.getRootView().getContext().startActivity(myIntent);
-            }
-        });*/
     }
 
     @Override

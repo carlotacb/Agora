@@ -27,16 +27,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import edu.upc.pes.agora.Logic.Constants;
-import edu.upc.pes.agora.Logic.GetAsyncTask;
 import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.NavMenuListener;
 import edu.upc.pes.agora.Logic.ProposalAdapter;
 import edu.upc.pes.agora.Logic.Proposals;
-import edu.upc.pes.agora.Logic.ProposalsAdapter;
 import edu.upc.pes.agora.R;
 
 import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
@@ -116,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
                     }
-                } catch (JSONException e) {
+                } catch (JSONException e ) {
                     e.printStackTrace();
                 }
             }
@@ -126,6 +123,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Proposals proposal = propostes.get(position);
+
+                Intent myIntent = new Intent(getApplicationContext(), DetailsProposalActivity.class);
+                myIntent.putExtra("Title", proposal.getTitle());
+                myIntent.putExtra("Description", proposal.getDescription());
+                myIntent.putExtra("id", proposal.getId());
+                view.getRootView().getContext().startActivity(myIntent);
 
                 Log.i("asd", "clica");
 

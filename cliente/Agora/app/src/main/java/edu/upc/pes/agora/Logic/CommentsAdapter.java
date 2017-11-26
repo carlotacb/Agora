@@ -3,6 +3,7 @@ package edu.upc.pes.agora.Logic;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 import edu.upc.pes.agora.R;
 
-public class ProposalsAdapter extends ArrayAdapter<Proposals> {
+public class CommentsAdapter extends ArrayAdapter<Comment> {
 
-    public ProposalsAdapter(Context context, ArrayList<Proposals> propo) {
-        super(context, 0, propo);
+    public CommentsAdapter(Context context, ArrayList<Comment> coment) {
+        super(context, 0, coment);
     }
 
     @SuppressLint("SetTextI18n")
@@ -24,7 +25,7 @@ public class ProposalsAdapter extends ArrayAdapter<Proposals> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        Proposals proposals = getItem(position);
+        Comment comentaris = getItem(position);
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
@@ -32,13 +33,13 @@ public class ProposalsAdapter extends ArrayAdapter<Proposals> {
         }
 
         // Lookup view for data population
-        TextView title = (TextView) convertView.findViewById(R.id.titleTextViewItem);
-        TextView description = (TextView)convertView.findViewById(R.id.descriptionTextViewItem);
+        TextView Autor = (TextView) convertView.findViewById(R.id.autorcomentari);
+        TextView Content = (TextView)convertView.findViewById(R.id.descripciocomentari);
 
         // Populate the data into the template view using the data object
-        assert proposals != null;
-        title.setText(proposals.getTitle() + " (" + proposals.getOwner() + ")");
-        description.setText(proposals.getDescription());
+        assert comentaris != null;
+        Autor.setText(comentaris.getAutor());
+        Content.setText(comentaris.getComentario());
 
         // Return the completed view to render on screen
         return convertView;
