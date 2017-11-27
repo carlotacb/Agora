@@ -3,12 +3,15 @@ package edu.upc.pes.agora.Presentation;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.JsonReader;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,6 +21,18 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Scanner;
 
 import edu.upc.pes.agora.R;
 
@@ -84,8 +99,20 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        try {
+            setMapBorders();
+            /*Polygon polygon = mMap.addPolygon(new PolygonOptions()
+                    .add(new LatLng(0, 0), new LatLng(0, 5), new LatLng(3, 5), new LatLng(0, 0))
+                    .strokeColor(Color.RED)
+                    .fillColor(Color.BLUE));
+            LatLng bcn = new LatLng(2.5, 2.5);
+            mMap.addMarker(new MarkerOptions().position(bcn).title("Marker in Barcelona"));
+            moveCamera(bcn);*/
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
-        if(gpsAvailable()){
+        /*if(gpsAvailable()){
             //If current location is available show in map
             LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 0, this);
@@ -93,15 +120,15 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
             if (lat != 0 && lng != 0) {
                 mMap.addMarker(new MarkerOptions().position(currentLoc).title("Your location"));
                 moveCamera(currentLoc);
-            }
+
         }else {
             //Else show Barcelona -> Barrio?
-            lat = 41;
-            lng = 2;
+            lat = 41.4035997;
+            lng = 2.1553129;
             LatLng bcn = new LatLng(lat, lng);
             mMap.addMarker(new MarkerOptions().position(bcn).title("Marker in Barcelona"));
             moveCamera(bcn);
-        }
+        }*/
 
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -127,6 +154,51 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
         ContentResolver contentResolver = getBaseContext().getContentResolver();
         boolean gpsStatus = Settings.Secure.isLocationProviderEnabled(contentResolver, LocationManager.GPS_PROVIDER);
         return gpsStatus;
+    }
+
+    /**
+     * Reads JSON file including map borders and transfers data into a polygon shown in the map
+     * @throws JSONException
+     */
+    public void setMapBorders() throws JSONException {
+        try {
+            //TODO: replace name with variable (reading district from user data)
+            InputStream is = getAssets().open("gracia.json");
+            Scanner sc = new Scanner(is);
+            String data = new String();
+
+            while (sc.hasNextLine()) {
+                data += (sc.nextLine());
+            }
+            sc.close();
+
+            JSONObject obj = new JSONObject(data);
+            JSONArray coordinates = obj.getJSONArray("geometries").getJSONObject(0).getJSONArray("coordinates").getJSONArray(0).getJSONArray(0);
+            LatLng[] coord = new LatLng[coordinates.length()];
+            for (int i = 0; i < coordinates.length(); i++) {
+                coord[i] = new LatLng(coordinates.getJSONArray(i).getDouble(0),coordinates.getJSONArray(i).getDouble(1));
+            }
+            Polygon border = mMap.addPolygon(new PolygonOptions().add(coord).strokeColor(Color.RED).fillColor(Color.BLUE));
+            lat = 41.4101636;
+            lng = 2.1332756;
+            LatLng bcn = new LatLng(lat, lng);
+            mMap.addMarker(new MarkerOptions().position(bcn).title("Marker in Barcelona"));
+            moveCamera(bcn);
+            mMap.animateCamera(CameraUpdateFactory.zoomIn());
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(18), 2000, null);
+
+            /*
+            //Test - works
+            Polygon polygon = mMap.addPolygon(new PolygonOptions()
+                    .add(new LatLng(0, 0), new LatLng(0, 5), new LatLng(3, 5), new LatLng(0, 0))
+                    .strokeColor(Color.RED)
+                    .fillColor(Color.BLUE));
+            LatLng x = new LatLng(2.5, 2.5);
+            mMap.addMarker(new MarkerOptions().position(x).title("Marker at polygon"));
+            moveCamera(x);*/
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
