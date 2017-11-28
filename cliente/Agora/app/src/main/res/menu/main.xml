@@ -9,6 +9,13 @@
 
     <item android:title="@string/idioma">
         <menu>
+
+            <item
+                android:id="@+id/menu_refresh"
+                android:title="holis"
+                app:showAsAction="never" />
+
+
             <item
                 android:id="@+id/men_castella"
                 android:icon="@drawable/spa"
