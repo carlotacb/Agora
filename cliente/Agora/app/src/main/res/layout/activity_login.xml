@@ -40,20 +40,27 @@
         </LinearLayout>
 
 
-        <EditText
+        <android.support.design.widget.TextInputLayout
             android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:id="@+id/username"
-            android:hint="@string/hint_username"
-            android:textColorHint="#e89b9696"
-            android:padding="10dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="serif"
-            android:background="@drawable/edittext_bg"
-            android:textCursorDrawable="@null"
-            android:textColor="#000"
-            android:textStyle="italic"/>
+            android:id="@+id/username_up"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:id="@+id/username"
+                android:hint="@string/hint_username"
+                android:textColorHint="#e89b9696"
+                android:padding="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="serif"
+                android:background="@drawable/edittext_bg"
+                android:textCursorDrawable="@null"
+                android:textColor="#000"
+                android:textStyle="italic"/>
+
+        </android.support.design.widget.TextInputLayout>
 
         <EditText
             android:layout_width="320dp"
