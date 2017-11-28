@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/titleTextViewItem"
+              android:id="@+id/autorcomentari"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
@@ -13,18 +13,34 @@
               android:paddingStart="?android:attr/listPreferredItemPaddingStart"
               android:layout_marginTop="5dp"
               android:layout_marginBottom="5dp"
+              android:text="NomAutor"
               android:textAppearance="?android:attr/textAppearanceListItemSmall"
               android:textColor="#000"
               android:textStyle="bold" />
 
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="50dp"
+        android:id="@+id/more"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignRight="@id/autorcomentari"
+        android:src="@mipmap/ic_more"
+        android:clickable="true"
+        android:focusable="true"/>
+
+
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/descriptionTextViewItem"
+              android:id="@+id/descripciocomentari"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:gravity="center_vertical"
+              android:layout_below="@+id/autorcomentari"
               android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
               android:paddingStart="?android:attr/listPreferredItemPaddingStart"
               android:layout_marginBottom="5dp"
+              android:text="comentari"
               android:textAppearance="?android:attr/textAppearanceListItemSmall"
               android:textColor="#434343" />
-</LinearLayout>
+
+</RelativeLayout>

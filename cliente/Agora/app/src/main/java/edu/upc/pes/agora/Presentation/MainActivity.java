@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,11 +30,10 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import edu.upc.pes.agora.Logic.Constants;
-import edu.upc.pes.agora.Logic.GetAsyncTask;
 import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.NavMenuListener;
+import edu.upc.pes.agora.Logic.ProposalAdapter;
 import edu.upc.pes.agora.Logic.Proposals;
-import edu.upc.pes.agora.Logic.ProposalsAdapter;
 import edu.upc.pes.agora.R;
 
 import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
@@ -43,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private Configuration config = new Configuration();
     private Locale locale;
     private JSONObject Jason = new JSONObject();
+
     private ListView llista_propostes;
+    private ArrayList<Proposals> propostes;
 
     public static Context mainContext;
 
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
                     else if (jsonObject != null){
                         JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
-                        ArrayList<Proposals> propostes = new ArrayList<>();
+                        propostes = new ArrayList<>();
 
                         if (ArrayProp != null) {
                             for (int i=0; i < ArrayProp.length(); i++){
@@ -109,13 +111,30 @@ public class MainActivity extends AppCompatActivity {
                                 propostes.add(aux);
                             }
                         }
-                        llista_propostes.setAdapter(new ProposalsAdapter(getApplicationContext(), propostes));
+                        llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
                     }
-                } catch (JSONException e) {
+                } catch (JSONException e ) {
                     e.printStackTrace();
                 }
             }
         }.execute(Jason);
+
+        llista_propostes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Proposals proposal = propostes.get(position);
+
+                Intent myIntent = new Intent(getApplicationContext(), DetailsProposalActivity.class);
+                myIntent.putExtra("Title", proposal.getTitle());
+                myIntent.putExtra("Description", proposal.getDescription());
+                myIntent.putExtra("id", proposal.getId());
+                view.getRootView().getContext().startActivity(myIntent);
+
+                Log.i("asd", "clica");
+
+
+            }
+        });
 
         SharedPreferences prefs = this.getSharedPreferences(SH_PREF_NAME,MODE_PRIVATE);
 
