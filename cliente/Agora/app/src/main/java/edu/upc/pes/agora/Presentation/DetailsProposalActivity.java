@@ -77,9 +77,6 @@ public class DetailsProposalActivity extends AppCompatActivity {
         final Resources res = this.getResources();
 
         llista_comentaris = (ListView) findViewById(R.id.listcommentaris);
-        moreim = (ImageView) findViewById(R.id.more);
-        final String[] owner = {""};
-        final String[] contentcoment = new String[1];
 
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + id, this) {
 
@@ -107,13 +104,13 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
                                 JSONObject jas = ArrayComments.getJSONObject(i);
                                 String id = jas.getString("id");
-                                contentcoment[0] = jas.getString("comment");
+                                String contentcoment = jas.getString("comment");
                                 JSONObject Usuario = jas.getJSONObject("author");
 
                                 Log.i("asd123", (Usuario.toString()));
-                                owner[0] = Usuario.getString("username");
+                                String owner = Usuario.getString("username");
 
-                                Comment aux = new Comment(owner[0], id, contentcoment[0]);
+                                Comment aux = new Comment(owner, id, contentcoment);
 
                                 comentarios.add(aux);
                             }
@@ -128,12 +125,6 @@ public class DetailsProposalActivity extends AppCompatActivity {
             }
         }.execute(Jason);
 
-        if (owner[0].equals(Constants.Username)) {
-            moreim.setVisibility(View.VISIBLE);
-        }
-        else {
-            moreim.setVisibility(View.GONE);
-        }
 
         crear = (Button) findViewById(R.id.crearcomentari);
         mComment = (TextView) findViewById(R.id.textComentario);
@@ -153,8 +144,8 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
                     JSONObject values = new JSONObject();
                     try {
-                        contentcoment[0] = mComment.getText().toString();
-                        values.put("comment", contentcoment[0]);
+                        contentcoment = mComment.getText().toString();
+                        values.put("comment", contentcoment);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
