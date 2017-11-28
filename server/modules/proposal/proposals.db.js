@@ -126,6 +126,26 @@ async function deleteComment({proposalId, author, commentId}) {
         .then(response => response.value)
 }
 
+async function editComment({proposalId, author, commentId, comment}) {
+    const query = {
+        id: parseInt(proposalId),
+        "comments.comment": commentId,
+        "comments.author.username": author
+    }
+
+    const update = {
+        $set: {
+            "comments.$.comment": comment
+        }
+    }
+
+    const options = {
+    }
+
+    return collection().update(query, update, options)
+        .then(response => response.value)
+}
+
 
 module.exports = {
     create: create,
@@ -134,5 +154,7 @@ module.exports = {
     getByUsername: getByUsername,
     getProposalById: getProposalById,
     addComment: addComment,
-    delete: deleteProposal
+    editComment: editComment,
+    deleteComment: deleteComment,
+    delete: deleteProposal,
 }

@@ -80,12 +80,13 @@ module.exports = app => {
         }
     })
 
-    app.put('/api/proposal/:id/comment/:id', isAuthenticated, async function (req, res) {
+    app.put('/api/proposal/:id/comment/:idc', isAuthenticated, async function (req, res) {
         try {
             const comment = req.body.comment.toString()
+            const commentId = req.params.idc
             const proposalId = req.params.id
-            const newComment = await proposalsModule.addComment({proposalId: proposalId, author: req.username, comment})
-            return res.send(newComment)
+            const updatedComment = await proposalsModule.editComment({proposalId: proposalId, author: req.username, commentId, comment})
+            return res.send(updatedComment)
         } catch (error) {
             console.error('Error commenting proposal', error)
             res.sendStatus(500)

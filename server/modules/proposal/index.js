@@ -37,6 +37,10 @@ async function deleteComment({proposalId, author, commentId}) {
         throw new Error('Proposal not found')
     }
 
+    if (!proposal.comment[commentId]) {
+        throw new Error('Comment not found')
+    }
+
     const user = await userModule.get({username: author})
 
     if (!user) {
@@ -50,6 +54,30 @@ async function deleteComment({proposalId, author, commentId}) {
     })
 }
 
+async function editComment({proposalId, author, comment, commentId}) {
+    const proposal = await db.getProposalById({id: proposalId})
+    if (!proposal) {
+        throw new Error('Proposal not found')
+    }
+
+    if (!proposal.comment[commentId]) {
+        throw new Error('Comment not found')
+    }
+
+    const user = await userModule.get({username: author})
+
+    if (!user) {
+        throw new Error('User not found')
+    }
+
+    return db.editComment({
+        proposalId,
+        author,
+        commentId,
+        comment,
+    })
+}
+
 module.exports = {
     createProposal: createProposal,
     getAllProposals: db.getAllBy,
@@ -57,5 +85,6 @@ module.exports = {
     deleteProposal: db.delete,
     getProposalById: db.getProposalById,
     addComment: addComment,
+    editComment: editComment,
     deleteComment: deleteComment,
 }
