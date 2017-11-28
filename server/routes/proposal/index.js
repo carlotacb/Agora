@@ -80,6 +80,30 @@ module.exports = app => {
         }
     })
 
+    app.put('/api/proposal/:id/comment/:id', isAuthenticated, async function (req, res) {
+        try {
+            const comment = req.body.comment.toString()
+            const proposalId = req.params.id
+            const newComment = await proposalsModule.addComment({proposalId: proposalId, author: req.username, comment})
+            return res.send(newComment)
+        } catch (error) {
+            console.error('Error commenting proposal', error)
+            res.sendStatus(500)
+        }
+    })
+
+    app.delete('/api/proposal/:id/comment/:idc', isAuthenticated, async function (req, res) {
+        try {
+            const proposalId = req.params.id
+            const commentId = req.params.idc
+            await proposalsModule.deleteComment({proposalId: proposalId, author: req.username, commentId: commentId})
+            return res.send(newComment)
+        } catch (error) {
+            console.error('Error commenting proposal', error)
+            res.sendStatus(500)
+        }
+    })
+
     app.delete('/api/proposal/:id', isAuthenticated, async function (req, res) {
         try {
             const id = req.params.id

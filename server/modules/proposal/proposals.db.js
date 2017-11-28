@@ -101,6 +101,32 @@ async function addComment({proposalId, author, comment}) {
         .then(response => response.value)
 }
 
+async function deleteComment({proposalId, author, commentId}) {
+    const query = {
+        id: parseInt(proposalId),
+
+    }
+
+    const update = {
+        $pull: {
+            comments: {
+                id: commentId,
+                author: {
+                    username: author,
+                }
+            }
+        }
+    }
+
+    const options = {
+        multi: true
+    }
+
+    return collection().findOneAndUpdate(query, update, options)
+        .then(response => response.value)
+}
+
+
 module.exports = {
     create: create,
     update: update,
