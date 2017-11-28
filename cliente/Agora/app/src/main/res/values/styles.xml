@@ -19,5 +19,13 @@
         <item name="cardBackgroundColor">#ffff</item>
     </style>
 
+    <style name="MyCardViewStyle2" parent="Theme.AppCompat.Light">
+        <item name="cardCornerRadius">2dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="contentPaddingLeft">16dp</item>
+        <item name="contentPaddingRight">16dp</item>
+        <item name="cardBackgroundColor">#ffff</item>
+    </style>
+
 
 </resources>
