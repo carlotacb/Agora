@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 
 import edu.upc.pes.agora.Logic.Comment;
 import edu.upc.pes.agora.Logic.CommentsAdapter;
+import edu.upc.pes.agora.Logic.Constants;
 import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.PostAsyncTask;
 import edu.upc.pes.agora.Logic.ProposalAdapter;
@@ -40,6 +42,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
     private ListView llista_comentaris;
     private TextView mComment;
     private ProgressBar pbar;
+    private ImageView moreim;
 
     String mtit, mdesc;
 
@@ -74,6 +77,9 @@ public class DetailsProposalActivity extends AppCompatActivity {
         final Resources res = this.getResources();
 
         llista_comentaris = (ListView) findViewById(R.id.listcommentaris);
+        moreim = (ImageView) findViewById(R.id.more);
+        final String[] owner = {""};
+        final String[] contentcoment = new String[1];
 
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + id, this) {
 
@@ -93,6 +99,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                         JSONArray ArrayComments = jsonObject.getJSONArray("comments");
                         ArrayList<Comment> comentarios = new ArrayList<>();
 
+
                         if (ArrayComments != null) {
                             for (int i=0; i < ArrayComments.length(); i++){
 
@@ -100,18 +107,19 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
                                 JSONObject jas = ArrayComments.getJSONObject(i);
                                 String id = jas.getString("id");
-                                String contentcoment = jas.getString("comment");
-
+                                contentcoment[0] = jas.getString("comment");
                                 JSONObject Usuario = jas.getJSONObject("author");
-                                Log.i("asd123", (Usuario.toString()));
-                                String owner = Usuario.getString("username");
 
-                                Comment aux = new Comment(owner, id, contentcoment);
+                                Log.i("asd123", (Usuario.toString()));
+                                owner[0] = Usuario.getString("username");
+
+                                Comment aux = new Comment(owner[0], id, contentcoment[0]);
 
                                 comentarios.add(aux);
                             }
                         }
                         llista_comentaris.setAdapter(new CommentsAdapter(getApplicationContext(), comentarios));
+
                     }
 
                 } catch (JSONException e) {
@@ -119,6 +127,13 @@ public class DetailsProposalActivity extends AppCompatActivity {
                 }
             }
         }.execute(Jason);
+
+        if (owner[0].equals(Constants.Username)) {
+            moreim.setVisibility(View.VISIBLE);
+        }
+        else {
+            moreim.setVisibility(View.GONE);
+        }
 
         crear = (Button) findViewById(R.id.crearcomentari);
         mComment = (TextView) findViewById(R.id.textComentario);
@@ -138,8 +153,8 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
                     JSONObject values = new JSONObject();
                     try {
-                        contentcoment = mComment.getText().toString();
-                        values.put("comment", contentcoment);
+                        contentcoment[0] = mComment.getText().toString();
+                        values.put("comment", contentcoment[0]);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

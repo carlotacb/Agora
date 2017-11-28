@@ -138,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences prefs = this.getSharedPreferences(SH_PREF_NAME,MODE_PRIVATE);
 
-
-
     }
 
     @Override
