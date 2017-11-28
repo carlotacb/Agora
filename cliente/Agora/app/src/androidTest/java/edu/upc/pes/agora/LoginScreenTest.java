@@ -52,5 +52,5 @@ public class LoginScreenTest {
         Intents.release();
         //onView(withId(R.id.drawer_layout)).check(matches(isDisplayed()));
     }
-
+    
 }
