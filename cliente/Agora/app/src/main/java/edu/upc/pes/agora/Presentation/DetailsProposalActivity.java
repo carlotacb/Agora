@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import edu.upc.pes.agora.Logic.Comment;
 import edu.upc.pes.agora.Logic.CommentsAdapter;
@@ -105,8 +106,8 @@ public class DetailsProposalActivity extends AppCompatActivity {
                                 JSONObject jas = ArrayComments.getJSONObject(i);
                                 String id = jas.getString("id");
                                 String contentcoment = jas.getString("comment");
-                                JSONObject Usuario = jas.getJSONObject("author");
 
+                                JSONObject Usuario = jas.getJSONObject("author");
                                 Log.i("asd123", (Usuario.toString()));
                                 String owner = Usuario.getString("username");
 
