@@ -104,7 +104,8 @@ async function addComment({proposalId, author, comment}) {
 async function deleteComment({proposalId, author, commentId}) {
     const query = {
         id: parseInt(proposalId),
-
+        "comments.comment": commentId,
+        "comments.author.username": author
     }
 
     const update = {
