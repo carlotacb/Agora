@@ -82,7 +82,7 @@ module.exports = app => {
 
     app.put('/api/proposal/:id/comment/:idc', isAuthenticated, async function (req, res) {
         try {
-            const comment = req.body.content.toString()
+            const comment = req.body.comment.toString()
             const commentId = req.params.idc
             const proposalId = req.params.id
             const updatedComment = await proposalsModule.editComment({proposalId: proposalId, author: req.username, commentId, comment})
