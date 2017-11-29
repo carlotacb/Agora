@@ -6,4 +6,12 @@
     <color name="gris">#aab4b4b4</color>
     <color name="blue">#aa2626ca</color>
     <color name="white">#FFFF</color>
+
+        <color name="refresh">#008000</color>
+        <color name="refresh1">#008080</color>
+        <color name="refresh2">#800080</color>
+
+
+
+
 </resources>
