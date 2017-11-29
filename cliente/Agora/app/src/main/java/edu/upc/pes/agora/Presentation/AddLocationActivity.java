@@ -20,6 +20,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
@@ -32,6 +33,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import edu.upc.pes.agora.R;
@@ -43,6 +46,7 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
     private double lng;
     private Button savePos;
     private Button cancelPos;
+    Polygon border;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,23 +178,30 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
 
             JSONObject obj = new JSONObject(data);
             JSONArray coordinates = obj.getJSONArray("geometries").getJSONObject(0).getJSONArray("coordinates").getJSONArray(0).getJSONArray(0);
-            LatLng[] coord = new LatLng[coordinates.length()];
+            List<LatLng> coord = new ArrayList<>(coordinates.length());
             for (int i = 0; i < coordinates.length(); i++) {
-                coord[i] = new LatLng(coordinates.getJSONArray(i).getDouble(0),coordinates.getJSONArray(i).getDouble(1));
+                coord.add(new LatLng(coordinates.getJSONArray(i).getDouble(0),coordinates.getJSONArray(i).getDouble(1)));
             }
-            Polygon border = mMap.addPolygon(new PolygonOptions().add(coord).strokeColor(Color.RED).fillColor(Color.BLUE));
+            border = mMap.addPolygon(new PolygonOptions().addAll(coord).strokeColor(Color.RED).fillColor(Color.BLUE));
             lat = 41.4101636;
             lng = 2.1332756;
             LatLng bcn = new LatLng(lat, lng);
             mMap.addMarker(new MarkerOptions().position(bcn).title("Marker in Barcelona"));
             moveCamera(bcn);
-            mMap.animateCamera(CameraUpdateFactory.zoomIn());
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(18), 2000, null);
+            //mMap.animateCamera(CameraUpdateFactory.zoomIn());
+            //mMap.animateCamera(CameraUpdateFactory.zoomTo(18), 2000, null);
 
-            /*
+/*
             //Test - works
+            List<LatLng> test = new ArrayList<>();
+            test.add(new LatLng(0, 0));
+            test.add(new LatLng(0, 5));
+            test.add(new LatLng(3, 5));
+            test.add(new LatLng(0, 0));
+
             Polygon polygon = mMap.addPolygon(new PolygonOptions()
-                    .add(new LatLng(0, 0), new LatLng(0, 5), new LatLng(3, 5), new LatLng(0, 0))
+                    .addAll(test)
+                    //.add(new LatLng(0, 0), new LatLng(0, 5), new LatLng(3, 5), new LatLng(0, 0))
                     .strokeColor(Color.RED)
                     .fillColor(Color.BLUE));
             LatLng x = new LatLng(2.5, 2.5);
