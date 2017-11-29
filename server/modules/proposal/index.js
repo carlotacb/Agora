@@ -37,9 +37,9 @@ async function deleteComment({proposalId, author, commentId}) {
         throw new Error('Proposal not found')
     }
 
-    if (!proposal.comment[commentId]) {
-        throw new Error('Comment not found')
-    }
+    console.log(proposalId)
+    console.log(commentId)
+    console.log(author)
 
     const user = await userModule.get({username: author})
 
@@ -47,6 +47,9 @@ async function deleteComment({proposalId, author, commentId}) {
         throw new Error('User not found')
     }
 
+    console.log(proposalId)
+    console.log(commentId)
+    console.log(author)
     return db.deleteComment({
         proposalId,
         author,
@@ -60,17 +63,13 @@ async function editComment({proposalId, author, comment, commentId}) {
         throw new Error('Proposal not found')
     }
 
-    if (!proposal.comment[commentId]) {
-        throw new Error('Comment not found')
-    }
-
     const user = await userModule.get({username: author})
 
     if (!user) {
         throw new Error('User not found')
     }
 
-    return db.editComment({
+    return await db.editComment({
         proposalId,
         author,
         commentId,

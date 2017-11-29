@@ -104,17 +104,14 @@ async function addComment({proposalId, author, comment}) {
 async function deleteComment({proposalId, author, commentId}) {
     const query = {
         id: parseInt(proposalId),
-        "comments.comment": commentId,
-        "comments.author.username": author
+        "comments.id": parseInt(commentId),
+        "comments.author.username": author.toString()
     }
 
     const update = {
         $pull: {
             comments: {
-                id: commentId,
-                author: {
-                    username: author,
-                }
+                id: parseInt(commentId),
             }
         }
     }
@@ -123,15 +120,17 @@ async function deleteComment({proposalId, author, commentId}) {
         multi: true
     }
 
-    return collection().findOneAndUpdate(query, update, options)
+    console.log(options)
+
+    return collection().update(query, update, options)
         .then(response => response.value)
 }
 
 async function editComment({proposalId, author, commentId, comment}) {
     const query = {
         id: parseInt(proposalId),
-        "comments.comment": commentId,
-        "comments.author.username": author
+        "comments.id": parseInt(commentId),
+        "comments.author.username": author.toString()
     }
 
     const update = {

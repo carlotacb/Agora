@@ -82,7 +82,7 @@ module.exports = app => {
 
     app.put('/api/proposal/:id/comment/:idc', isAuthenticated, async function (req, res) {
         try {
-            const comment = req.body.comment.toString()
+            const comment = req.body.content.toString()
             const commentId = req.params.idc
             const proposalId = req.params.id
             const updatedComment = await proposalsModule.editComment({proposalId: proposalId, author: req.username, commentId, comment})
@@ -97,10 +97,12 @@ module.exports = app => {
         try {
             const proposalId = req.params.id
             const commentId = req.params.idc
+            console.log(proposalId)
+            console.log(commentId)
             await proposalsModule.deleteComment({proposalId: proposalId, author: req.username, commentId: commentId})
-            return res.send(newComment)
+            return res.sendStatus(200)
         } catch (error) {
-            console.error('Error commenting proposal', error)
+            console.error('Error deleting proposal', error)
             res.sendStatus(500)
         }
     })
