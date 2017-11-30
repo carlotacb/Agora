@@ -61,6 +61,7 @@
     <string name="done">Propuesta "%1$s" creada correctamnete</string>
     <string name="addPosition">Add position</string>
     <string name="savePosition">Save position</string>
+    <string name="deletePosition">Delete position</string>
     <string name="posAttached">Position attached</string>
 
 

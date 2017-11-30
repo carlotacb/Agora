@@ -61,8 +61,10 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
         savePos = (Button) findViewById(R.id.btnSavePos);
         cancelPos = (Button) findViewById(R.id.btnCancelPos);
+
 
         savePos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,12 +149,20 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
     }
 
 
+    /**
+     * Moves Camera zu chosen position and zooms in
+     * @param pos position marked
+     */
     private void moveCamera (LatLng pos){
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(pos,13));
         mMap.animateCamera(CameraUpdateFactory.zoomIn());
         mMap.animateCamera(CameraUpdateFactory.zoomTo(13), 2000, null);
     }
 
+    /**
+     * Checks if GPS is available for finding the users position
+     * @return true if GPS enabled, else false
+     */
     private Boolean gpsAvailable() {
         ContentResolver contentResolver = getBaseContext().getContentResolver();
         boolean gpsStatus = Settings.Secure.isLocationProviderEnabled(contentResolver, LocationManager.GPS_PROVIDER);
@@ -160,7 +170,7 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
     }
 
     /**
-     * Reads JSON file including map borders and transfers data into a polygon shown in the map
+     * Reads JSON file including map borders and transfers data into a polyline shown in the map
      * @throws JSONException
      */
     public void setMapBorders() throws JSONException {
