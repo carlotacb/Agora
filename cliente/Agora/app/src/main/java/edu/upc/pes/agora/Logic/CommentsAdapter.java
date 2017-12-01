@@ -34,8 +34,11 @@ import edu.upc.pes.agora.R;
 
 public class CommentsAdapter extends ArrayAdapter<Comment> {
 
+    ArrayList<Comment> listcomentaris;
+
     public CommentsAdapter(Context context, ArrayList<Comment> coment) {
         super(context, 0, coment);
+        listcomentaris = coment;
     }
 
     @SuppressLint("SetTextI18n")
@@ -43,7 +46,7 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        Comment comentaris = getItem(position);
+        final Comment comentaris = getItem(position);
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
@@ -81,28 +84,6 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
 
                             case R.id.item_editar:
 
-                                /*AlertDialog.Builder dialogoborrar = new AlertDialog.Builder(v.getRootView().getContext());
-                                dialogoborrar.setTitle(res.getString(R.string.importante));
-                                dialogoborrar.setMessage(res.getString(R.string.seguro));
-                                dialogoborrar.setCancelable(false);
-                                dialogoborrar.setIcon(R.drawable.logo);
-                                dialogoborrar.setCancelable(false);
-                                dialogoborrar.setPositiveButton(res.getString(R.string.Aceptar), new DialogInterface.OnClickListener() {
-                                    @SuppressLint("StaticFieldLeak")
-                                    public void onClick(DialogInterface dialogoborrar, int id) {
-
-                                        // DELETE ASYNCTASK
-
-                                        Toast.makeText(getContext(), "Comentario Borrado", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                                dialogoborrar.setNegativeButton(res.getString(R.string.Cancelar), new DialogInterface.OnClickListener() {
-
-                                    public void onClick(DialogInterface dialogo1, int id) {
-
-                                    }
-                                }).show();*/
-
                                 break;
 
                             case R.id.item_delete:
@@ -117,16 +98,32 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
                                     @SuppressLint("StaticFieldLeak")
                                     public void onClick(DialogInterface dialogoborrar, int id) {
 
-                                        // DELETE ASYNCTASK
+                                        new DeleteAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + comentaris.getIdentificadorProp() + "/comment/" + comentaris.getIdentificador(), v.getRootView().getContext()){
+                                            @Override
+                                            protected void onPostExecute(JSONObject jsonObject) {
+                                                if (!jsonObject.has("error")) {
+                                                    listcomentaris.remove(comentaris);
+                                                    CommentsAdapter.this.notifyDataSetChanged();
+                                                }
+                                                else {
+                                                    try {
+                                                        Toast.makeText(getContext(), jsonObject.getString("error"), Toast.LENGTH_SHORT).show();
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                                super.onPostExecute(jsonObject);
+                                            }
+                                        }.execute();
 
                                         Toast.makeText(getContext(), "Comentario Borrado", Toast.LENGTH_SHORT).show();
                                     }
                                 });
+
                                 dialogoborrar.setNegativeButton(res.getString(R.string.Cancelar), new DialogInterface.OnClickListener() {
 
-                                    public void onClick(DialogInterface dialogo1, int id) {
+                                    public void onClick(DialogInterface dialogo1, int id) { /*No fa res*/ }
 
-                                    }
                                 }).show();
 
                                 break;
