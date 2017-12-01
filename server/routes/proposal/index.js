@@ -30,8 +30,8 @@ module.exports = app => {
                 return res.sendStatus(403)
             }
 
-            const {content, title} = req.body
-            const newProposal = await proposalsModule.update({id: proposalId, content, title})
+            const {content, title, location} = req.body
+            const newProposal = await proposalsModule.update({id: proposalId, content, title, location})
             res.send(newProposal)
         } catch (error) {
             console.error('error editing proposal', error)
@@ -44,7 +44,10 @@ module.exports = app => {
             const query = {
                 username: req.query.username
             }
-            const proposals = await proposalsModule.getAllProposals(query)
+            const sort = {
+                createdDateTime: 1
+            }
+            const proposals = await proposalsModule.getAllProposals(query, sort)
             res.send(proposals)
         } catch (error) {
             console.error('error on get proposals', error)

@@ -10,26 +10,39 @@ async function create({username, title, content, location}) {
         content: content,
         createdDateTime: new Date(),
         updatedDateTime: null,
-        comments: []
-    }
-    if (location && location.lat && location.long) {
-        object.location = {
-            lat: location.lat,
-            long: location.long,
+        comments: [],
+        location: {
+            lat: null,
+            long: null
         }
     }
+    if (location && location.lat && location.long) {
+        object.location.lat = location.lat
+        object.location.long = location.long
+    }
+
     return collection().insertOne(object)
 }
 
-async function getAllBy({username}) {
+async function getAllBy(reqQuery, reqSort) {
 
-    const query = {}
+    const query = {}, sort = {}
 
-    if (username) {
-        query.owner = username.toString()
+    if (reqQuery.username) {
+        query.owner = reqQuery.username.toString()
     }
 
-    return collection().find(query).toArray()
+    if (sort.createdDateTime) {
+        sort.createdDateTime = reqSort.createdDateTime
+    }
+
+    const cursor = collection().find(query)
+
+    if (Object.keys(reqSort).length > 0) {
+        return cursor.sort(sort).toArray()
+    } else {
+        return cursor.toArray()
+    }
 }
 
 async function getByUsername({username}) {
@@ -40,7 +53,7 @@ async function getProposalById({id}) {
     return collection().findOne({id: parseInt(id)}, {_id: 0})
 }
 
-async function update({id, content, title}) {
+async function update({id, content, title, location}) {
     const query = {
         id: parseInt(id)
     }
@@ -62,6 +75,13 @@ async function update({id, content, title}) {
 
     if (title) {
         update.$set.title = title
+    }
+
+    if (location && location.lat && location.long) {
+        update.$set.location = {
+            lat: location.lat,
+            long: location.long
+        }
     }
 
     return collection().findOneAndUpdate(query, update, options)
@@ -129,20 +149,19 @@ async function deleteComment({proposalId, author, commentId}) {
 async function editComment({proposalId, author, commentId, comment}) {
     const query = {
         id: parseInt(proposalId),
-        "comments.id": parseInt(commentId),
-        "comments.author.username": author.toString()
+        'comments.id': parseInt(commentId),
+        'comments.author.username': author.toString()
     }
 
     const update = {
         $set: {
-            "comments.$.comment": comment
+            'comments.$.comment': comment,
+            'comments.$.updatedDateTime': new Date()
         }
     }
 
-    const options = {
-    }
 
-    return collection().update(query, update, options)
+    return collection().update(query, update)
         .then(response => response.value)
 }
 
