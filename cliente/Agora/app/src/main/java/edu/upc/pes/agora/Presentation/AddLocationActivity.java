@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import edu.upc.pes.agora.Logic.Constants;
 import edu.upc.pes.agora.R;
 
 public class AddLocationActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
@@ -52,6 +53,7 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
     private Button cancelPos;
     Polyline pol;
     Marker marker;
+    int zone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,10 +112,13 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        try {
-            setMapBorders();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        zone = Constants.zone;
+        if(zone >= 0 && zone <= 9) {
+            try {
+                setMapBorders(zone);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         if (gpsAvailable()) {
@@ -127,12 +132,89 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
 
             }
         }else {
-                //Else show Barcelona -> Barrio?
-                lat = 41.4035997;
-                lng = 2.1553129;
-                LatLng bcn = new LatLng(lat, lng);
-                marker = mMap.addMarker(new MarkerOptions().position(bcn).title("Barcelona"));
-                moveCamera(bcn);
+            LatLng center;
+
+            switch(zone){
+                case 0:
+                    lat = 41.37496195;
+                    lng = 2.17326530371345;
+                    center = new LatLng(lat, lng);
+                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Ciutat Vella"));
+                    moveCamera(center);
+                    break;
+                case 1:
+                    lat = 41.393351;
+                    lng = 2.16597050963639;
+                    center = new LatLng(lat, lng);
+                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Eixample"));
+                    moveCamera(center);
+                    break;
+                case 2:
+                    lat = 41.35098635;
+                    lng = 2.15256063238678;
+                    center = new LatLng(lat, lng);
+                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Sants-Montjuic"));
+                    moveCamera(center);
+                    break;
+                case 3:
+                    lat = 41.3884524;
+                    lng = 2.12171825426451;
+                    center = new LatLng(lat, lng);
+                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Les Corts"));
+                    moveCamera(center);
+                    break;
+                case 4:
+                    lat = 41.393351;
+                    lng = 2.16597050963639;
+                    center = new LatLng(lat, lng);
+                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Sarrià-Sant Gervasi"));
+                    moveCamera(center);
+                    break;
+                case 5:
+                    lat = 41.4101737;
+                    lng = 2.15514217010802;
+                    center = new LatLng(lat, lng);
+                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Gracia"));
+                    moveCamera(center);
+                    break;
+                case 6:
+                    lat = 	41.42853965;
+                    lng = 2.14359654810671;
+                    center = new LatLng(lat, lng);
+                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Horta-Guinardó"));
+                    moveCamera(center);
+                    break;
+                case 7:
+                    lat = 41.44689075;
+                    lng = 2.17256689935991;
+                    center = new LatLng(lat, lng);
+                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Nou Barris"));
+                    moveCamera(center);
+                    break;
+                case 8:
+                    lat = 41.43743905;
+                    lng = 2.19685944900109;
+                    center = new LatLng(lat, lng);
+                    marker = mMap.addMarker(new MarkerOptions().position(center).title("San Andreu"));
+                    moveCamera(center);
+                    break;
+                case 9:
+                    lat = 41.4067585;
+                    lng = 2.20368795208359;
+                    center = new LatLng(lat, lng);
+                    marker = mMap.addMarker(new MarkerOptions().position(center).title("San Martí"));
+                    moveCamera(center);
+                    break;
+                default:
+                    lat = 41.3828939;
+                    lng = 2.1774322;
+                    center = new LatLng(lat, lng);
+                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Barcelona"));
+                    moveCamera(center);
+                    break;
+
+            }
+
         }
 
 
@@ -173,9 +255,47 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
      * Reads JSON file including map borders and transfers data into a polyline shown in the map
      * @throws JSONException
      */
-    public void setMapBorders() throws JSONException {
+    public void setMapBorders(int zone) throws JSONException {
         try {
-            InputStream is = getAssets().open("gracia.json");
+            InputStream is = new InputStream() {
+                @Override
+                public int read() throws IOException {
+                    return 0;
+                }
+            };
+            switch(zone){
+                case 0:
+                    is = getAssets().open("Ciutat_Vella.json");
+                    break;
+                case 1:
+                    is = getAssets().open("Eixample.json");
+                    break;
+                case 2:
+                    is = getAssets().open("Sants-Montjuic.json");
+                    break;
+                case 3:
+                    is = getAssets().open("Les_Corts.json");
+                    break;
+                case 4:
+                    is = getAssets().open("Sarrià-Sant_Gervasi.json");
+                    break;
+                case 5:
+                    is = getAssets().open("Gracia.json");
+                    break;
+                case 6:
+                    is = getAssets().open("Horta-Guinardó.json");
+                    break;
+                case 7:
+                    is = getAssets().open("Nou_Barris.json");
+                    break;
+                case 8:
+                    is = getAssets().open("San_Andreu.json");
+                    break;
+                case 9:
+                    is = getAssets().open("San_Martí.json");
+                    break;
+            }
+
             Scanner sc = new Scanner(is);
             String data = new String();
 
@@ -193,8 +313,6 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
             pol = mMap.addPolyline(new PolylineOptions()
                     .addAll(coord)
                     .width(2).color(Color.RED));
-
-
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -137,6 +137,10 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
                                         Log.i("SavedToken", prefs.getString("token","none saved"));
                                     }
+                                    if(resObject.has("zone")){
+                                        Constants.zone = resObject.getInt("zone");
+                                        Log.i("Zone:", ""+resObject.getInt("zone"));
+                                    }
                                 }
                                 if (!result && resObject.has("errorMessage"))
                                     error = res.getString(R.string.error);

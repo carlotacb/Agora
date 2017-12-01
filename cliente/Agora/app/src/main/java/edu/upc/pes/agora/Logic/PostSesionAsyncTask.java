@@ -62,12 +62,14 @@ public class PostSesionAsyncTask extends AsyncTask<JSONObject, Void, JSONObject>
             }
             JSONObject jo = new JSONObject(sb.toString());
             String token = jo.getString("token");
+            int zone = jo.getInt("zone");
 
             try {
                 if (client.getResponseCode() == 200) {
 
                     response.put("success", true);
                     response.put("token", token);
+                    response.put("zone", zone);
                 } else {
                     Log.i("asdTAG", "response code: " + client.getResponseCode());
                     String error = client.getResponseMessage();
