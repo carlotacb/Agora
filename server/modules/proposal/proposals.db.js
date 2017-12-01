@@ -61,7 +61,7 @@ async function getProposalById({id, zone}) {
     if (zone) {
         query.zone = parseInt(zone)
     }
-    return collection().findOne({query}, {_id: 0})
+    return collection().findOne(query, {_id: 0})
 }
 
 async function update({id, content, title, location}) {
