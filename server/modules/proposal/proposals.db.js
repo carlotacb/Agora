@@ -33,7 +33,7 @@ async function getAllBy(reqQuery, reqSort) {
         query.owner = reqQuery.username.toString()
     }
 
-    if (reqQuery.zone) {
+    if (reqQuery.zone !== undefined) {
         query.zone = parseInt(reqQuery.zone)
     }
 
@@ -58,7 +58,7 @@ async function getProposalById({id, zone}) {
     const query = {
         id: parseInt(id)
     }
-    if (zone) {
+    if (zone !== undefined) {
         query.zone = parseInt(zone)
     }
     return collection().findOne(query, {_id: 0})
