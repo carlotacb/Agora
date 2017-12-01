@@ -55,7 +55,13 @@ async function getByUsername({username}) {
 }
 
 async function getProposalById({id, zone}) {
-    return collection().findOne({id: parseInt(id), zone: parseInt(zone)}, {_id: 0})
+    const query = {
+        id: parseInt(id)
+    }
+    if (zone) {
+        query.zone = parseInt(zone)
+    }
+    return collection().findOne({query}, {_id: 0})
 }
 
 async function update({id, content, title, location}) {
