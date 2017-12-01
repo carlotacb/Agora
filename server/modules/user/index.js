@@ -1,19 +1,40 @@
 const crypto = require('crypto')
 const config = require('../../config')
 const db = require('./user.db.js')
+const zoneModule = require('../zone')
+const signupCodes = require('../signup-code')
 
-async function createUser({username, password}) {
+async function createUser({username, password, signupCode}) {
+    if (!username || !password || !signupCode) {
+        throw new TypeError('Missing arguments')
+    }
+
     const existingUser = await db.get({username})
     if (existingUser) {
         throw new Error(`Username already used`)
     }
 
+    const isWhitelistedCode = config.constants.whitelistedSignupCodes.includes(signupCode)
+
+    if (!isWhitelistedCode) {
+        const code = await signupCodes.getSignupCode(signupCode)
+        if (!code) throw new Error(`Code used or not valid`)
+    }
+
     const encryptedPassword = encryptPassword(password)
-    const user = await db.create({username: username, password: encryptedPassword})
+
+    const zone = await zoneModule.getZoneForSignupCode(signupCode)
+    const user = await db.create({username: username, password: encryptedPassword, zone: zone.id})
 
     if (!user) {
         throw new Error(`Could not create the user`)
     }
+
+    if (!isWhitelistedCode) {
+        await signupCodes.useSignupCode({code: signupCode, userId: username})
+    }
+
+
     return user
 }
 

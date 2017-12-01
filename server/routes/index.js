@@ -1,3 +1,5 @@
+const zoneModules = require('../modules/zone')
+
 module.exports = app => {
 
     require('./auth')(app)
@@ -6,6 +8,10 @@ module.exports = app => {
 
     app.get('/', function (req, res) {
         return res.send({status: 'up'})
+    })
+
+    app.get('/api/zones', async function (req, res) {
+        return res.send(zoneModules.zones)
     })
 
 }

@@ -43,14 +43,14 @@ async function updatePassword({username, newencryptedPassword}) {
     return collection().updateOne(query, update);
 }
 
-async function create({username, password}) {
+async function create({username, password, zone}) {
     const object = {
         id: await getNextId(),
-        username: username,
+        username: username.toString(),
         password: password,
         createdDateTime: new Date(),
         updatedDateTime: null,
-        zone: null,
+        zone: parseInt(zone),
     }
 
     const insertResult = await collection().insertOne(object)
