@@ -198,4 +198,10 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent refresh = new Intent(this, MainActivity.class);
+        startActivity(refresh);
+    }
+
 }
