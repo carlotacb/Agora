@@ -6,7 +6,7 @@ async function createProposal({username, title, content, location}) {
     if (!existingUser) {
         throw new Error(`User does not exists`)
     }
-    return await db.create({username, title, content, location})
+    return await db.create({username, title, content, location, zone: existingUser.zone})
 }
 
 async function addComment({proposalId, author, comment}) {

@@ -2,7 +2,7 @@ const {getCollection, collectionNames, generateNextId} = require('../db')
 const collection = () => getCollection(collectionNames.proposals)
 const getNextId = () => generateNextId(collectionNames.proposals)
 
-async function create({username, title, content, location}) {
+async function create({username, title, content, location, zone}) {
     const object = {
         id: await getNextId(),
         owner: username,
@@ -11,6 +11,7 @@ async function create({username, title, content, location}) {
         createdDateTime: new Date(),
         updatedDateTime: null,
         comments: [],
+        zone: zone,
         location: {
             lat: null,
             long: null
@@ -32,6 +33,10 @@ async function getAllBy(reqQuery, reqSort) {
         query.owner = reqQuery.username.toString()
     }
 
+    if (reqQuery.zone) {
+        query.zone = parseInt(reqQuery.zone)
+    }
+
     if (sort.createdDateTime) {
         sort.createdDateTime = reqSort.createdDateTime
     }
@@ -49,8 +54,8 @@ async function getByUsername({username}) {
     return collection().find({owner: username}, {_id: 0}).toArray()
 }
 
-async function getProposalById({id}) {
-    return collection().findOne({id: parseInt(id)}, {_id: 0})
+async function getProposalById({id, zone}) {
+    return collection().findOne({id: parseInt(id), zone: parseInt(zone)}, {_id: 0})
 }
 
 async function update({id, content, title, location}) {

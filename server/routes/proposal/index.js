@@ -1,4 +1,5 @@
 const proposalsModule = require('../../modules/proposal')
+const userModule = require('../../modules/user')
 const {isAuthenticated} = require('../middleware')
 
 module.exports = app => {
@@ -41,8 +42,10 @@ module.exports = app => {
 
     app.get('/api/proposal', isAuthenticated, async function (req, res) {
         try {
+            const user = await userModule.get({username: req.username})
             const query = {
-                username: req.query.username
+                username: req.query.username,
+                zone: user.zone
             }
             const sort = {
                 createdDateTime: 1
@@ -58,7 +61,8 @@ module.exports = app => {
     app.get('/api/proposal/:id', isAuthenticated, async function (req, res) {
         try {
             const id = req.params.id
-            const proposal = await proposalsModule.getProposalById({id})
+            const user = await userModule.get({username: req.username})
+            const proposal = await proposalsModule.getProposalById({id, zone: user.zone})
 
             if (!proposal) {
                 return res.sendStatus(404)
