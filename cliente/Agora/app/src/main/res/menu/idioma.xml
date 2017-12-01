@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/men_castella"
+        android:icon="@drawable/spa"
+        android:title="@string/Castella"/>
+    <item
+        android:id="@+id/men_catala"
+        android:icon="@drawable/rep"
+        android:title="@string/Catalan"/>
+    <item
+        android:id="@+id/men_angles"
+        android:icon="@drawable/ing"
+        android:title="@string/Ingles"/>
+
+</menu>
