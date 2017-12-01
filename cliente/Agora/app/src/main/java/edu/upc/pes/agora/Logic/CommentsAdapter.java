@@ -60,7 +60,7 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
 
         // Lookup view for data population
         TextView Autor = (TextView) convertView.findViewById(R.id.autorcomentari);
-        TextView Content = (TextView) convertView.findViewById(R.id.descripciocomentari);
+        final TextView Content = (TextView) convertView.findViewById(R.id.descripciocomentari);
         final ImageView more = (ImageView) convertView.findViewById(R.id.more);
 
         // Populate the data into the template view using the data object
@@ -132,6 +132,8 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
 
                                                     if (resObject.has("success")) {
                                                         result = resObject.getBoolean("success");
+                                                        comentaris.setComentario(m_Text);
+                                                        Content.setText(comentaris.getComentario());
                                                     }
 
                                                     if (!result && resObject.has("errorMessage")) {
@@ -146,8 +148,7 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
                                             }
                                         }.execute(values);
 
-
-
+                                        CommentsAdapter.this.notifyDataSetChanged();
 
                                         Toast.makeText(getContext(), "Comentario Editado", Toast.LENGTH_SHORT).show();
                                     }
