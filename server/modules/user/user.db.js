@@ -15,20 +15,42 @@ async function getProfile({username}) {
 }
 
 async function updateProfile({username, description, cpCode, realname, neighborhood, bdate, sex}) {
-    return collection().updateOne({username: username}, {$set: {cpCode: cpCode, realname: realname,
-        neighborhood: neighborhood, bdate: bdate, sex: sex, description: description}})
+    return collection().updateOne({username: username}, {
+        $set: {
+            cpCode: cpCode,
+            realname: realname,
+            neighborhood: neighborhood,
+            bdate: new Date(bdate),
+            sex: sex,
+            description: description,
+            updatedDateTime: new Date()
+        }
+    })
 }
 
-async function updatePassword({username, newencryptedPassword}){
-    return collection().updateOne({username: username}, {$set: {password: newencryptedPassword}});
+async function updatePassword({username, newencryptedPassword}) {
+    const query = {
+        username: username
+    }
+
+    const update = {
+        $set: {
+            password: newencryptedPassword,
+            updatedDateTime: new Date()
+        }
+    }
+
+    return collection().updateOne(query, update);
 }
 
-async function create({username, password}) {
+async function create({username, password, zone}) {
     const object = {
         id: await getNextId(),
-        username: username,
+        username: username.toString(),
         password: password,
-        createdDateTime: new Date()
+        createdDateTime: new Date(),
+        updatedDateTime: null,
+        zone: parseInt(zone),
     }
 
     const insertResult = await collection().insertOne(object)

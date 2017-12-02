@@ -7,7 +7,16 @@ module.exports = {
 
     constants: {
         whitelistedSignupCodes: [
-            '007'
+            '007',
+            '107',
+            '207',
+            '307',
+            '407',
+            '507',
+            '607',
+            '707',
+            '807',
+            '907',
         ]
     }
 }

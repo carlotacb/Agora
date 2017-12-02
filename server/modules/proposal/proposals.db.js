@@ -2,7 +2,7 @@ const {getCollection, collectionNames, generateNextId} = require('../db')
 const collection = () => getCollection(collectionNames.proposals)
 const getNextId = () => generateNextId(collectionNames.proposals)
 
-async function create({username, title, content, location}) {
+async function create({username, title, content, location, zone}) {
     const object = {
         id: await getNextId(),
         owner: username,
@@ -10,37 +10,61 @@ async function create({username, title, content, location}) {
         content: content,
         createdDateTime: new Date(),
         updatedDateTime: null,
-        comments: []
-    }
-    if (location && location.lat && location.long) {
-        object.location = {
-            lat: location.lat,
-            long: location.long,
+        comments: [],
+        zone: zone,
+        location: {
+            lat: null,
+            long: null
         }
     }
+    if (location && location.lat && location.long) {
+        object.location.lat = location.lat
+        object.location.long = location.long
+    }
+
     return collection().insertOne(object)
 }
 
-async function getAllBy({username}) {
+async function getAllBy(reqQuery, reqSort) {
 
-    const query = {}
+    const query = {}, sort = {}
 
-    if (username) {
-        query.owner = username.toString()
+    if (reqQuery.username) {
+        query.owner = reqQuery.username.toString()
     }
 
-    return collection().find(query).toArray()
+    if (reqQuery.zone !== undefined) {
+        query.zone = parseInt(reqQuery.zone)
+    }
+
+    if (sort.createdDateTime) {
+        sort.createdDateTime = reqSort.createdDateTime
+    }
+
+    const cursor = collection().find(query)
+
+    if (Object.keys(reqSort).length > 0) {
+        return cursor.sort(sort).toArray()
+    } else {
+        return cursor.toArray()
+    }
 }
 
 async function getByUsername({username}) {
     return collection().find({owner: username}, {_id: 0}).toArray()
 }
 
-async function getProposalById({id}) {
-    return collection().findOne({id: parseInt(id)}, {_id: 0})
+async function getProposalById({id, zone}) {
+    const query = {
+        id: parseInt(id)
+    }
+    if (zone !== undefined) {
+        query.zone = parseInt(zone)
+    }
+    return collection().findOne(query, {_id: 0})
 }
 
-async function update({id, content, title}) {
+async function update({id, content, title, location}) {
     const query = {
         id: parseInt(id)
     }
@@ -62,6 +86,13 @@ async function update({id, content, title}) {
 
     if (title) {
         update.$set.title = title
+    }
+
+    if (location && location.lat && location.long) {
+        update.$set.location = {
+            lat: location.lat,
+            long: location.long
+        }
     }
 
     return collection().findOneAndUpdate(query, update, options)
@@ -101,6 +132,51 @@ async function addComment({proposalId, author, comment}) {
         .then(response => response.value)
 }
 
+async function deleteComment({proposalId, author, commentId}) {
+    const query = {
+        id: parseInt(proposalId),
+        "comments.id": parseInt(commentId),
+        "comments.author.username": author.toString()
+    }
+
+    const update = {
+        $pull: {
+            comments: {
+                id: parseInt(commentId),
+            }
+        }
+    }
+
+    const options = {
+        multi: true
+    }
+
+    console.log(options)
+
+    return collection().update(query, update, options)
+        .then(response => response.value)
+}
+
+async function editComment({proposalId, author, commentId, comment}) {
+    const query = {
+        id: parseInt(proposalId),
+        'comments.id': parseInt(commentId),
+        'comments.author.username': author.toString()
+    }
+
+    const update = {
+        $set: {
+            'comments.$.comment': comment,
+            'comments.$.updatedDateTime': new Date()
+        }
+    }
+
+
+    return collection().update(query, update)
+        .then(response => response.value)
+}
+
+
 module.exports = {
     create: create,
     update: update,
@@ -108,5 +184,7 @@ module.exports = {
     getByUsername: getByUsername,
     getProposalById: getProposalById,
     addComment: addComment,
-    delete: deleteProposal
+    editComment: editComment,
+    deleteComment: deleteComment,
+    delete: deleteProposal,
 }

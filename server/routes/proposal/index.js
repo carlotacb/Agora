@@ -1,4 +1,5 @@
 const proposalsModule = require('../../modules/proposal')
+const userModule = require('../../modules/user')
 const {isAuthenticated} = require('../middleware')
 
 module.exports = app => {
@@ -30,8 +31,8 @@ module.exports = app => {
                 return res.sendStatus(403)
             }
 
-            const {content, title} = req.body
-            const newProposal = await proposalsModule.update({id: proposalId, content, title})
+            const {content, title, location} = req.body
+            const newProposal = await proposalsModule.update({id: proposalId, content, title, location})
             res.send(newProposal)
         } catch (error) {
             console.error('error editing proposal', error)
@@ -41,10 +42,15 @@ module.exports = app => {
 
     app.get('/api/proposal', isAuthenticated, async function (req, res) {
         try {
+            const user = await userModule.get({username: req.username})
             const query = {
-                username: req.query.username
+                username: req.query.username,
+                zone: user.zone
             }
-            const proposals = await proposalsModule.getAllProposals(query)
+            const sort = {
+                createdDateTime: 1
+            }
+            const proposals = await proposalsModule.getAllProposals(query, sort)
             res.send(proposals)
         } catch (error) {
             console.error('error on get proposals', error)
@@ -55,7 +61,8 @@ module.exports = app => {
     app.get('/api/proposal/:id', isAuthenticated, async function (req, res) {
         try {
             const id = req.params.id
-            const proposal = await proposalsModule.getProposalById({id})
+            const user = await userModule.get({username: req.username})
+            const proposal = await proposalsModule.getProposalById({id, zone: user.zone})
 
             if (!proposal) {
                 return res.sendStatus(404)
@@ -76,6 +83,33 @@ module.exports = app => {
             return res.send(newComment)
         } catch (error) {
             console.error('Error commenting proposal', error)
+            res.sendStatus(500)
+        }
+    })
+
+    app.put('/api/proposal/:id/comment/:idc', isAuthenticated, async function (req, res) {
+        try {
+            const comment = req.body.comment.toString()
+            const commentId = req.params.idc
+            const proposalId = req.params.id
+            const updatedComment = await proposalsModule.editComment({proposalId: proposalId, author: req.username, commentId, comment})
+            return res.send(updatedComment)
+        } catch (error) {
+            console.error('Error commenting proposal', error)
+            res.sendStatus(500)
+        }
+    })
+
+    app.delete('/api/proposal/:id/comment/:idc', isAuthenticated, async function (req, res) {
+        try {
+            const proposalId = req.params.id
+            const commentId = req.params.idc
+            console.log(proposalId)
+            console.log(commentId)
+            await proposalsModule.deleteComment({proposalId: proposalId, author: req.username, commentId: commentId})
+            return res.sendStatus(200)
+        } catch (error) {
+            console.error('Error deleting proposal', error)
             res.sendStatus(500)
         }
     })

@@ -13,7 +13,8 @@ module.exports = app => {
             const session = await sessionModule.generateSession({username})
             res.send({
                 username: user.username,
-                token: session.token
+                token: session.token,
+                zone: user.zone,
             })
         } catch (error) {
             console.error('error on login', error)
@@ -24,27 +25,19 @@ module.exports = app => {
     app.post('/api/signup', async function (req, res) {
         try {
             const {signupCode, username, password, confirmPassword} = req.body
-            if (!signupCode || !username || !password || !confirmPassword) throw new Error(`There is an invalid field`)
+            if (!signupCode || !username || !password || !confirmPassword) {
+                throw new Error(`There is an invalid field`)
+            }
 
             if (password !== confirmPassword) throw new Error(`Passwords are different`)
 
-            const isWhitelistedCode = config.constants.whitelistedSignupCodes.includes(signupCode)
-
-            if (!isWhitelistedCode) {
-                const code = await signupCodes.getSignupCode(signupCode)
-                if (!code) throw new Error(`Code used or not valid`)
-            }
-
-            const user = await userModule.createUser({username, password})
-
-            if (!isWhitelistedCode) {
-                await signupCodes.useSignupCode({code: signupCode, userId: username})
-            }
+            const user = await userModule.createUser({username, password, signupCode})
 
             const session = await sessionModule.generateSession({username})
             res.send({
                 username: user.username,
-                token: session.token
+                token: session.token,
+                zone: user.zone,
             })
         } catch (error) {
             console.error('error on signup', error)
