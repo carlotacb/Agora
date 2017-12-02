@@ -230,13 +230,7 @@ public class ProposalsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            // TODO: el boto Back ha d'obrir el navigation drawer.
-            drawer.openDrawer(GravityCompat.START);
-        }
+        startActivity(new Intent(ProposalsActivity.this, MainActivity.class));
     }
 
 

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -43,13 +44,12 @@ import edu.upc.pes.agora.R;
 import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
 
 public class MainActivity extends AppCompatActivity {
-
+    private FloatingActionButton fab;
     private Configuration config = new Configuration();
     private Locale locale;
     private JSONObject Jason = new JSONObject();
     private ListView llista_propostes;
     private ArrayList<Proposals> propostes;
-
     public static Context mainContext;
 
     @SuppressLint("StaticFieldLeak")
@@ -60,11 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(getApplicationContext(),"estoy en el create" , Toast.LENGTH_SHORT);
         toast.show();
-
-
-
-
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_main);
@@ -86,6 +81,15 @@ public class MainActivity extends AppCompatActivity {
 
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ProposalsActivity.class));
+
+            }
+        });
 
         llista_propostes = (ListView) findViewById(R.id.list);
 
@@ -151,9 +155,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        final ListView listView;
+        /*final ListView listView;
         listView = (ListView) findViewById(R.id.list);
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                int topRowVerticalPosition =
+                        (listView == null || listView.getChildCount() == 0) ?
+                                0 : listView.getChildAt(0).getTop();
+                swipeRefreshLayout.setEnabled(firstVisibleItem == 0 && topRowVerticalPosition >= 0);
+            }
+        });*/
+        /*listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
@@ -165,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                     swipeRefreshLayout.setEnabled(listView.getFirstVisiblePosition() == 0 && listView.getChildAt(0).getTop() == 0);
                 }
             }
-        });
+        });*/
 
 
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal", this) {

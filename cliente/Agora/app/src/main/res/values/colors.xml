@@ -5,17 +5,14 @@
     <color name="colorAccent">#1A237E</color>  <!-- 900 -->
     <color name="colorSecondary">#7986CB</color>  <!-- 300 -->
     <color name="colorAccentLight">#8C9EFF</color> <!-- A100 -->
-
+    <color name="fondo">#E8EAF6</color> <!-- 50 -->
 
     <color name="gris">#aab4b4b4</color>
     <color name="blue">#aa2626ca</color>
     <color name="white">#FFFF</color>
 
-        <color name="refresh">#008000</color>
-        <color name="refresh1">#008080</color>
-        <color name="refresh2">#800080</color>
-
-
-
+    <color name="refresh">#008000</color>
+    <color name="refresh1">#008080</color>
+    <color name="refresh2">#800080</color>
 
 </resources>
