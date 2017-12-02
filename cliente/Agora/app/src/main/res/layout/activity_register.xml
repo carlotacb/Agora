@@ -3,7 +3,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="#f2f1ef"
             android:padding="10dp"
             android:fillViewport="false">
 
@@ -19,99 +18,181 @@
                   android:paddingTop="@dimen/activity_vertical_margin"
                   tools:context="edu.upc.pes.agora.Presentation.LoginActivity">
 
+        <RelativeLayout android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/backbutton"
+                android:layout_alignParentLeft="true"
+                android:clickable="true"
+                android:src="@mipmap/ic_arrow"
+                android:focusable="true"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/multiidiomareg"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:src="@mipmap/ic_language"
+                android:focusable="true"/>
+
+        </RelativeLayout>
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:layout_marginTop="30dp"
             android:text="@string/registration"
             android:textSize="30dp"
             android:textStyle="bold"
             android:padding="10dp"
-            android:layout_marginBottom="30dp"
-            android:textColor="@color/blue"
-            android:fontFamily="serif"/>
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/colorPrimaryDark"/>
 
-        <EditText
-            android:id="@+id/identifier"
-            android:hint="@string/prompt_identification"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:textColorHint="#e89b9696"
-            android:padding="10dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="serif"
-            android:background="@drawable/edittext_bg"
-            android:textCursorDrawable="@null"
-            android:textColor="#000"
-            android:textStyle="italic"/>
+            android:id="@+id/codiregistro_up"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/identifier"
+                android:hint="@string/prompt_identification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:inputType="textPersonName"
+                android:textColorHint="#e89b9696"
+                android:paddingTop="8dp"
+                android:fontFamily="sans-serif"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_margin="2sp"
+                android:textCursorDrawable="@null"
+                android:textColor="#000"
+                android:textStyle="italic"/>
+
+        </android.support.design.widget.TextInputLayout>
 
 
-        <EditText
-            android:hint="@string/prompt_choseUsername"
-            android:id="@+id/username"
-            android:inputType="textPersonName"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:textColorHint="#e89b9696"
-            android:padding="10dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="serif"
-            android:background="@drawable/edittext_bg"
-            android:textCursorDrawable="@null"
-            android:textColor="#000"
-            android:textStyle="italic"/>
+            android:id="@+id/usernamereg_up"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/password1"
-            android:hint="@string/prompt_NewPassword"
-            android:inputType="textPassword"
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:textColorHint="#e89b9696"
-            android:padding="10dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="serif"
-            android:background="@drawable/edittext_bg"
-            android:textCursorDrawable="@null"
-            android:textColor="#000"
-            android:textStyle="italic"/>
+            <EditText
+                android:hint="@string/prompt_choseUsername"
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:inputType="textPersonName"
+                android:fontFamily="sans-serif"
+                android:textColorHint="#e89b9696"
+                android:paddingTop="8dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_margin="2sp"
+                android:textCursorDrawable="@null"
+                android:textColor="#000"
+                android:textStyle="italic"/>
 
-        <EditText
-            android:id="@+id/password2"
-            android:hint="@string/prompt_repeatPassword"
-            android:inputType="textPassword"
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:textColorHint="#e89b9696"
-            android:padding="10dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="serif"
-            android:background="@drawable/edittext_bg"
-            android:textCursorDrawable="@null"
-            android:textColor="#000"
-            android:textStyle="italic"/>
+            android:id="@+id/passwordreg_up"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/password1"
+                android:hint="@string/prompt_NewPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                android:inputType="textPassword"
+                android:textColorHint="#e89b9696"
+                android:paddingTop="8dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_margin="2sp"
+                android:textCursorDrawable="@null"
+                android:textColor="#000"
+                android:textStyle="italic"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="320dp"
+            android:id="@+id/password2reg_up"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:layout_marginBottom="15sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/password2"
+                android:hint="@string/prompt_repeatPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                android:inputType="textPassword"
+                android:textColorHint="#e89b9696"
+                android:paddingTop="8dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_margin="2sp"
+                android:textCursorDrawable="@null"
+                android:textColor="#000"
+                android:textStyle="italic"/>
+
+        </android.support.design.widget.TextInputLayout>
 
         <RelativeLayout
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
+            android:layout_width="180dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
             android:layout_marginBottom="5dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp">
 
             <Button
                 android:id="@+id/btnRegistration"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
                 android:text="@string/action_Registration"
                 android:background="@drawable/botonlogin"
-                android:textColor="#000"
+                android:fontFamily="sans-serif-medium"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="#fff"
                 android:textStyle="bold"
-                android:textSize="18dp"
-                android:clickable="true"
-                android:onClick="onClick"
+                android:textSize="14sp"
+                android:onClick="Login"
                 android:visibility="visible"/>
 
             <ProgressBar
@@ -124,13 +205,6 @@
                 android:visibility="gone"/>
 
         </RelativeLayout>
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|left"
-            android:layout_marginTop="20dp" android:layout_weight="1"/>
 
     </LinearLayout>
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,18 +35,19 @@ public class ProposalsAdapter extends ArrayAdapter<Proposals> {
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.proposals_item, parent, false);
         }
 
         // Lookup view for data population
-        TextView title = (TextView) convertView.findViewById(R.id.titleTextViewItem);
-        TextView description = (TextView)convertView.findViewById(R.id.descriptionTextViewItem);
+        TextView title = (TextView) convertView.findViewById(R.id.titolcard);
+        TextView description = (TextView)convertView.findViewById(R.id.descripciocard);
 
         ImageButton button = (ImageButton) convertView.findViewById(R.id.compartir);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.i("asdCompartir", "true");
                //     Toast.makeText(v.getContext(),"entro al twitter", Toast.LENGTH_LONG).show();
                     String intro = "Mira que propuesta he encontrado en Agora!";
                     String title = proposals.getTitle();

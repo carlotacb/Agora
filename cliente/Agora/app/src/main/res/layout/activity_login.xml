@@ -2,7 +2,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="#f2f1ef"
             android:padding="10dp"
             android:fillViewport="false">
 
@@ -19,42 +18,56 @@
                   tools:context="edu.upc.pes.agora.Presentation.LoginActivity">
 
         <LinearLayout android:layout_width="wrap_content"
-                      android:layout_marginBottom="40dp"
-                      android:layout_height="match_parent">
-
-            <ImageView android:layout_width="90dp"
-                       android:layout_height="100dp"
-                       android:src="@drawable/logo"/>
-
-            <TextView
+                      android:layout_gravity="right"
+                      android:layout_height="wrap_content">
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="@string/bienvenida"
-                android:textSize="30dp"
-                android:padding="10dp"
-                android:textColor="@color/blue"
-                android:fontFamily="serif"/>
-
+                android:id="@+id/multiidioma"
+                android:clickable="true"
+                android:src="@mipmap/ic_language"
+                android:focusable="true"/>
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:layout_width="170dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/logo"/>
+
+        </LinearLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="320dp"
             android:id="@+id/username_up"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
             android:layout_height="wrap_content">
 
             <EditText
-                android:layout_width="320dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:id="@+id/username"
+                android:fontFamily="sans-serif"
+                android:textSize="16sp"
                 android:hint="@string/hint_username"
                 android:textColorHint="#e89b9696"
-                android:padding="10dp"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="serif"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_margin="2sp"
                 android:background="@drawable/edittext_bg"
                 android:textCursorDrawable="@null"
                 android:textColor="#000"
@@ -62,38 +75,55 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <EditText
+
+        <android.support.design.widget.TextInputLayout
             android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:id="@+id/password"
-            android:hint="@string/hint_password"
-            android:textColorHint="#e89b9696"
-            android:fontFamily="serif"
-            android:textColor="#000"
-            android:textCursorDrawable="@null"
-            android:padding="10dp"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/edittext_bg"
-            android:textStyle="italic"/>
+            android:id="@+id/password_up"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:layout_marginBottom="15sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:id="@+id/password"
+                android:hint="@string/hint_password"
+                android:fontFamily="sans-serif"
+                android:textColorHint="#e89b9696"
+                android:textSize="16sp"
+                android:textColor="#000"
+                android:textCursorDrawable="@null"
+                android:layout_margin="2sp"
+                android:padding="10dp"
+                android:textStyle="italic"/>
+
+        </android.support.design.widget.TextInputLayout>
 
         <RelativeLayout
-            android:layout_width="120dp"
-            android:layout_height="50dp"
+            android:layout_width="180dp"
+            android:layout_height="46dp"
             android:layout_marginTop="10dp"
+            android:gravity="center"
             android:layout_marginBottom="5dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp">
 
             <Button
                 android:id="@+id/btnLogin"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
                 android:text="@string/login"
                 android:background="@drawable/botonlogin"
-                android:textColor="#000"
+                android:fontFamily="sans-serif-medium"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="#fff"
                 android:textStyle="bold"
-                android:textSize="18dp"
+                android:textSize="14sp"
                 android:onClick="Login"
                 android:visibility="visible"/>
 
@@ -121,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="@string/pre_registre"
-                android:layout_marginRight="5dp"
+                android:fontFamily="sans-serif"
                 android:textSize="16dp"
                 android:padding="5dp"
                 android:textColor="#000"/>
@@ -131,6 +161,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btnRegister"
                 android:gravity="center_horizontal"
+                android:fontFamily="sans-serif"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:text="@string/SignIn"
                 android:textSize="16dp"
                 android:textColor="#3838e2"
@@ -139,16 +172,6 @@
 
         </LinearLayout>
 
-
-
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="30dp"
-            android:layout_weight="1"/>
-
-
     </LinearLayout>
+
 </ScrollView>

@@ -1,19 +1,33 @@
 package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
+import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,8 +41,10 @@ import java.util.Locale;
 import java.util.Objects;
 
 import edu.upc.pes.agora.Logic.Constants;
+import edu.upc.pes.agora.Logic.DeleteAsyncTask;
 import edu.upc.pes.agora.Logic.ItemData;
 import edu.upc.pes.agora.Logic.PostSesionAsyncTask;
+import edu.upc.pes.agora.Logic.RecyclerAdapter;
 import edu.upc.pes.agora.R;
 import edu.upc.pes.agora.Logic.SpinnerAdapter;
 
@@ -38,13 +54,14 @@ import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
 public class LoginActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Button login;
-    private Spinner spin;
     private TextView register;
     private ProgressBar prog;
     private EditText etUsername, etPassword;
     private String username, password;
     private Configuration config = new Configuration();
     private Locale locale;
+    private ImageView canviidioma;
+    private TextInputLayout errorusername, errorpassword;
 
     private String[] data = {"Castellano", "Català", "English"};
 
@@ -59,8 +76,29 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
         login = (Button) findViewById(R.id.btnLogin);
         register = (TextView) findViewById(R.id.btnRegister);
+        canviidioma = (ImageView) findViewById(R.id.multiidioma);
 
-        spin = (Spinner) findViewById(R.id.spinner);
+        /*String idioma;
+
+        if (Constants.Idioma.equals("")) {
+            idioma = Locale.getDefault().getDisplayLanguage();
+        }
+        else {
+            idioma = Constants.Idioma;
+        }*/
+
+
+        if (Constants.Idioma.equals("ca")) {
+            canviidioma.setImageResource(R.drawable.rep);
+        }
+
+        else if (Constants.Idioma.equals("es")) {
+            canviidioma.setImageResource(R.drawable.spa);
+        }
+
+        else if (Constants.Idioma.equals("en")) {
+            canviidioma.setImageResource(R.drawable.ing);
+        }
 
         //Get SharedPreferences containing token
         prefs = this.getSharedPreferences(SH_PREF_NAME,MODE_PRIVATE);
@@ -68,27 +106,14 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
         final Resources res = this.getResources();
 
-        String sel = res.getString(R.string.tria_idioma);
-        String cast = res.getString(R.string.Castella);
-        String cata = res.getString(R.string.Catalan);
-        String engl = res.getString(R.string.Ingles);
-
-        ArrayList<ItemData> list = new ArrayList<>();
-        list.add(new ItemData(sel, R.drawable.planeta));
-        list.add(new ItemData(cast, R.drawable.spa));
-        list.add(new ItemData(cata, R.drawable.rep));
-        list.add(new ItemData(engl, R.drawable.ing));
-
-
-        SpinnerAdapter adapter = new SpinnerAdapter(this, R.layout.spinner_layout, R.id.txt, list);
-        spin.setAdapter(adapter);
-
-        spin.setOnItemSelectedListener(this);
-
         etUsername = (EditText) findViewById(R.id.username);
         etPassword = (EditText) findViewById(R.id.password);
 
+        etUsername.setBackgroundResource(R.drawable.edittext_bg);
+
         prog = (ProgressBar) findViewById(R.id.loginprogressbar);
+        errorusername = (TextInputLayout) findViewById(R.id.username_up);
+        errorpassword = (TextInputLayout) findViewById(R.id.password_up);
 
         login.setOnClickListener(new OnClickListener() {
             @SuppressLint("StaticFieldLeak")
@@ -98,11 +123,25 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
 
-                if (username.length() == 0 || password.length() == 0) {
+                if (username.length() == 0) {
+                    errorusername.setErrorEnabled(true);
+                    errorusername.setError("Campo necesario");
+                    errorpassword.setErrorEnabled(false);
                     String error2 = res.getString(R.string.error2);
                     Toast.makeText(getApplicationContext(), error2, Toast.LENGTH_LONG).show();
-                } else {
+                }
 
+                else if (password.length() == 0) {
+                    errorpassword.setErrorEnabled(true);
+                    errorpassword.setError("Campo necesario");
+                    errorusername.setErrorEnabled(false);
+                    String error2 = res.getString(R.string.error2);
+                    Toast.makeText(getApplicationContext(), error2, Toast.LENGTH_LONG).show();
+                }
+
+                else {
+                    errorusername.setErrorEnabled(false);
+                    errorpassword.setErrorEnabled(false);
                     login.setVisibility(View.GONE);
                     prog.setVisibility(View.VISIBLE);
 
@@ -161,12 +200,53 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                     }.execute(values);
                 }
             }
-         });
+        });
 
         register.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
+
+        canviidioma.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final Intent refresh = new Intent(LoginActivity.this, LoginActivity.class);
+                refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                PopupMenu popupMenu = new PopupMenu(v.getRootView().getContext(), canviidioma);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+
+                            case R.id.men_castella:
+                                Constants.Idioma = "es";
+                                break;
+
+                            case R.id.men_catala:
+                                Constants.Idioma = "ca";
+                                break;
+
+                            case R.id.men_angles:
+                                Constants.Idioma = "en";
+                                break;
+                        }
+
+                        locale = new Locale(Constants.Idioma);
+                        config.locale = locale;
+                        getResources().updateConfiguration(config, null);
+                        startActivity(refresh);
+                        finish();
+
+                        return false;
+                    }
+                });
+                popupMenu.inflate(R.menu.idioma);
+                popupMenu.show();
+
             }
         });
     }
@@ -184,8 +264,8 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                 locale = new Locale("es");
                 config.locale = locale;
                 getResources().updateConfiguration(config, null);
-                startActivity(refresh);
-                finish();
+                startActivity(refresh)
+                ;                finish();
                 break;
             case 2:
                 locale = new Locale("ca");
@@ -195,7 +275,7 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                 finish();
                 break;
             case 3:
-                locale = new Locale("en");
+                locale = new Locale(Constants.Idioma);
                 config.locale = locale;
                 getResources().updateConfiguration(config, null);
                 startActivity(refresh);

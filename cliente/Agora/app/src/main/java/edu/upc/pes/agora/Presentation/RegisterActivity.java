@@ -6,10 +6,13 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -19,6 +22,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import edu.upc.pes.agora.Logic.Constants;
 import edu.upc.pes.agora.Logic.ItemData;
 import edu.upc.pes.agora.Logic.PostSesionAsyncTask;
 import edu.upc.pes.agora.R;
@@ -28,10 +32,10 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
 
     private EditText identifier, username, password1, password2;
     private String user, id, pw1, pw2;
-    private Spinner spin;
+    private ImageView canviaridioma;
+    private ImageView enrerre;
     private Configuration config = new Configuration();
     private Locale locale;
-    private Boolean _registerdone = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,25 +46,72 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         username = (EditText) findViewById(R.id.username);
         password1 = (EditText) findViewById(R.id.password1);
         password2 = (EditText) findViewById(R.id.password2);
-        spin = (Spinner)findViewById(R.id.spinner);
+        canviaridioma = (ImageView) findViewById(R.id.multiidiomareg);
+        enrerre = (ImageView) findViewById(R.id.backbutton);
 
         final Resources res = this.getResources();
 
-        String sel = res.getString(R.string.tria_idioma);
-        String cast = res.getString(R.string.Castella);
-        String cata = res.getString(R.string.Catalan);
-        String engl = res.getString(R.string.Ingles);
+        if (Constants.Idioma.equals("ca")) {
+            canviaridioma.setImageResource(R.drawable.rep);
+        }
 
-        ArrayList<ItemData> list = new ArrayList<>();
-        list.add(new ItemData(sel, R.drawable.planeta));
-        list.add(new ItemData(cast, R.drawable.spa));
-        list.add(new ItemData(cata, R.drawable.rep));
-        list.add(new ItemData(engl, R.drawable.ing));
+        else if (Constants.Idioma.equals("es")) {
+            canviaridioma.setImageResource(R.drawable.spa);
+        }
 
-        SpinnerAdapter adapter = new SpinnerAdapter(this, R.layout.spinner_layout, R.id.txt, list);
-        spin.setAdapter(adapter);
+        else if (Constants.Idioma.equals("en")) {
+            canviaridioma.setImageResource(R.drawable.ing);
+        }
 
-        spin.setOnItemSelectedListener(this);
+        canviaridioma.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final Intent refresh = new Intent(RegisterActivity.this, RegisterActivity.class);
+                refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                PopupMenu popupMenu = new PopupMenu(v.getRootView().getContext(), canviaridioma);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+
+                            case R.id.men_castella:
+                                Constants.Idioma = "es";
+                                break;
+
+                            case R.id.men_catala:
+                                Constants.Idioma = "ca";
+                                break;
+
+                            case R.id.men_angles:
+                                Constants.Idioma = "en";
+                                break;
+                        }
+
+                        locale = new Locale(Constants.Idioma);
+                        config.locale = locale;
+                        getResources().updateConfiguration(config, null);
+                        startActivity(refresh);
+                        finish();
+
+                        return false;
+                    }
+                });
+                popupMenu.inflate(R.menu.idioma);
+                popupMenu.show();
+
+            }
+        });
+
+        enrerre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent log = new Intent(RegisterActivity.this, LoginActivity.class);
+                log.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(log);
+            }
+        });
 
     }
 

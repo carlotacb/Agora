@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#907afe</color>
+    <color name="colorPrimary">#3F51B5</color>  <!-- 500 -->
+    <color name="colorPrimaryDark">#303F9F</color>  <!-- 700 -->
+    <color name="colorAccent">#1A237E</color>  <!-- 900 -->
+    <color name="colorSecondary">#7986CB</color>  <!-- 300 -->
+    <color name="colorAccentLight">#8C9EFF</color> <!-- A100 -->
+
+
     <color name="gris">#aab4b4b4</color>
     <color name="blue">#aa2626ca</color>
     <color name="white">#FFFF</color>

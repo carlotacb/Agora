@@ -42,7 +42,6 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
         }
 
         try {
-
             //Open connection to server
             HttpURLConnection client = (HttpURLConnection) url.openConnection();
             client.setReadTimeout(15000);
@@ -54,6 +53,8 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             client.setDoInput(true);
             client.setDoOutput(true);
 
+            Log.i("asdPostAsyncTask", "hola");
+
             OutputStreamWriter wr = new OutputStreamWriter(client.getOutputStream());
             wr.write(params[0].toString());
             wr.flush();
@@ -61,10 +62,13 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
 
             client.getOutputStream().close();
             client.connect();
+            Log.i("asdPostAsyncTask", "hola2");
             JSONObject response = new JSONObject();
 
             //return success=true and token if connection is successful
             try {
+                Log.i("asdPostAsyncTask", Integer.toString(client.getResponseCode()));
+
                 if (client.getResponseCode() == 200) {
                     response.put("success",true);
                     //response.put("token", token);

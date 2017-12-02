@@ -6,6 +6,7 @@ public class Comment {
     private String identificador;
     private String comentario;
     private String created;
+    private Integer identificadorProp;
 
     public Comment(String autor, String identificador, String comentario) {
         this.autor = autor;
@@ -38,11 +39,18 @@ public class Comment {
     }
 
     public String getCreated() {
-
         return created;
     }
 
     public void setCreated(String created) {
         this.created = created;
+    }
+
+    public Integer getIdentificadorProp() {
+        return identificadorProp;
+    }
+
+    public void setIdentificadorProp(Integer identificadorProp) {
+        this.identificadorProp = identificadorProp;
     }
 }

@@ -73,13 +73,13 @@ public class DetailsProposalActivity extends AppCompatActivity {
             mdesc = i.getStringExtra("Description");
         }
 
-        final int id = i.getIntExtra("id", 0);
+        final Integer idprop = i.getIntExtra("id", 0);
 
         final Resources res = this.getResources();
 
         llista_comentaris = (ListView) findViewById(R.id.listcommentaris);
 
-        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + id, this) {
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + idprop, this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
@@ -97,7 +97,6 @@ public class DetailsProposalActivity extends AppCompatActivity {
                         JSONArray ArrayComments = jsonObject.getJSONArray("comments");
                         ArrayList<Comment> comentarios = new ArrayList<>();
 
-
                         if (ArrayComments != null) {
                             for (int i=0; i < ArrayComments.length(); i++){
 
@@ -112,6 +111,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                                 String owner = Usuario.getString("username");
 
                                 Comment aux = new Comment(owner, id, contentcoment);
+                                aux.setIdentificadorProp(idprop);
 
                                 comentarios.add(aux);
                             }
@@ -151,7 +151,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + id + "/comment", DetailsProposalActivity.this) {
+                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + idprop + "/comment", DetailsProposalActivity.this) {
                         @Override
                         protected void onPostExecute(JSONObject resObject) {
                             Boolean result = false;
@@ -174,13 +174,12 @@ public class DetailsProposalActivity extends AppCompatActivity {
                             }
 
                             if (result) {
-                                //Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
                                 Toast.makeText(getApplicationContext(), "Comentari creat", Toast.LENGTH_LONG).show();
 
                                 Intent myIntent = new Intent(getApplicationContext(), DetailsProposalActivity.class);
                                 myIntent.putExtra("Title", mtit);
                                 myIntent.putExtra("Description", mdesc);
-                                myIntent.putExtra("id", id);
+                                myIntent.putExtra("id", idprop);
                                 startActivity(myIntent);
                             }
 
@@ -193,13 +192,16 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
                         }
                     }.execute(values);
-
-
                 }
-
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent refresh = new Intent(this, MainActivity.class);
+        startActivity(refresh);
     }
 
 }
