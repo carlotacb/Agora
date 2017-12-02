@@ -1,9 +1,14 @@
 package edu.upc.pes.agora.Logic;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -50,11 +55,32 @@ public class ProposalAdapter extends BaseAdapter {
 
         TextView titol = (TextView) convertView.findViewById(R.id.titolcard);
         TextView descripcio = (TextView) convertView.findViewById(R.id.descripciocard);
+        ImageButton button = (ImageButton) convertView.findViewById(R.id.compartir);
 
-        Proposals proposal = listProposals.get(position);
+        final Proposals proposal = listProposals.get(position);
 
         titol.setText(proposal.getTitle());
         descripcio.setText(proposal.getDescription());
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("asdCompartir", "true");
+                //     Toast.makeText(v.getContext(),"entro al twitter", Toast.LENGTH_LONG).show();
+                String intro = "Mira que propuesta he encontrado en Agora!";
+                String title = proposal.getTitle();
+                String description = proposal.getDescription();
+                //  String s = "titulo";
+                //  String s2 = "descripcion";
+                //         Toast.makeText(v.getRootView().getContext(),"Twitter is not installed on this device",Toast.LENGTH_LONG).show();
+                String tweetUrl = "https://twitter.com/intent/tweet?text=" + intro + "<br>"+ "<br>" +title + "<br>"+ description + "&url=";
+                tweetUrl = Html.fromHtml(tweetUrl).toString();
+                Uri uri = Uri.parse(tweetUrl);
+                v.getRootView().getContext().startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                //     v.getContext().getApplicationContext().startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                //  c.startActivity(new Intent(Intent.ACTION_VIEW, uri));
+            }
+        });
 
 
         return convertView;

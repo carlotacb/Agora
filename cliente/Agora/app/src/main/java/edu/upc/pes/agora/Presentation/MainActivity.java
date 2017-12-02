@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
         headerUserName.setText(Constants.Username);
 
-
         navigationView.getMenu().getItem(NavMenuListener.homneButton).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
 
@@ -131,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
                 view.getRootView().getContext().startActivity(myIntent);
 
                 Log.i("asd", "clica");
-
 
             }
         });
