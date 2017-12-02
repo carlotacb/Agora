@@ -4,7 +4,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f2f1ef"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     class = "edu.upc.pes.agora.Logic.RecyclerAdapter">
 
@@ -17,37 +16,164 @@
         style="@style/MyCardViewStyle2"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:orientation="vertical"
             android:padding="@dimen/activity_horizontal_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:id="@+id/titolcard"
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:textAllCaps="true"
-                android:layout_marginBottom="15dp"
-                android:text="Heading"/>
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_alignParentRight="true"
+                          android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:id="@+id/descripciocard"
-                android:text="Description: "/>
-
-            <ImageButton
+                <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_edit"
-                android:id="@+id/compartir"/>
+                android:layout_marginEnd="15dp"
+                android:src="@mipmap/ic_star_border"
+                android:id="@+id/fav"/>
 
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_twitter"
+                    android:id="@+id/compartir"/>
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_alignParentRight="true"
+                          android:layout_centerInParent="true"
+                          android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:src="@mipmap/ic_thumb_down"
+                    android:id="@+id/vote"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_thumb_up"
+                    android:id="@+id/unvote"/>
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:id="@+id/linearLaytext"
+                          android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/categoriaproposal"
+                    android:fontFamily="sans-serif"
+                    android:textColor="@color/colorAccentLight"
+                    android:textSize="12sp"
+                    android:text="Categoría"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:id="@+id/titolcard"
+                    android:textColor="#000"
+                    android:textSize="20sp"
+                    android:fontFamily="sans-serif"
+                    android:layout_marginBottom="5dp"
+                    android:textAllCaps="true"
+                    android:text="Heading"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/owneranddate"
+                    android:textColor="@color/colorAccentLight"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    android:layout_marginBottom="12dp"
+                    android:text="@string/creadopor"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:textSize="16sp"
+                    android:fontFamily="sans-serif"
+                    android:id="@+id/descripciocard"
+                    android:text="Description: "/>
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_below="@+id/linearLaytext"
+                          android:layout_marginTop="20dp"
+                          android:id="@+id/llinformacionum"
+                          android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/numerounvote"
+                    android:text="0"
+                    android:textColor="#000"
+                    android:layout_marginEnd="5dp"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_thumb_down_black_18dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/numerovote"
+                    android:text="0"
+                    android:textColor="#000"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_thumb_up_black_18dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/numerocomentaris"
+                    android:text="0"
+                    android:textColor="#000"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_chat_bubble_black_18dp"/>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnLernMore"
+                android:gravity="center_horizontal"
+                android:layout_below="@+id/llinformacionum"
+                android:fontFamily="sans-serif"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="MAS INFORMACION"
+                android:textSize="16dp"
+                android:textColor="#3838e2"
+                android:textAllCaps="true"
+                android:textStyle="bold"/>
+
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

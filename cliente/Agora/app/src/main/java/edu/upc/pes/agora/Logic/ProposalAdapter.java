@@ -2,6 +2,7 @@ package edu.upc.pes.agora.Logic;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.text.Html;
 import android.util.Log;
@@ -9,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
 import java.util.List;
 
+import edu.upc.pes.agora.Presentation.DetailsProposalActivity;
 import edu.upc.pes.agora.R;
 
 /**
@@ -53,14 +56,23 @@ public class ProposalAdapter extends BaseAdapter {
             convertView = View.inflate(context, R.layout.proposals_item, null);
         }
 
+        final Resources res = convertView.getResources();
+
         TextView titol = (TextView) convertView.findViewById(R.id.titolcard);
         TextView descripcio = (TextView) convertView.findViewById(R.id.descripciocard);
-        ImageButton button = (ImageButton) convertView.findViewById(R.id.compartir);
+        TextView owner = (TextView) convertView.findViewById(R.id.owneranddate);
+        ImageView button = (ImageView) convertView.findViewById(R.id.compartir);
+        TextView moreinfo = (TextView) convertView.findViewById(R.id.btnLernMore);
 
         final Proposals proposal = listProposals.get(position);
 
         titol.setText(proposal.getTitle());
         descripcio.setText(proposal.getDescription());
+        String creador = proposal.getOwner();
+        String creatper = String.format(res.getString(R.string.creadopor), creador);
+        Log.i("asdO", creador);
+        Log.i("asdOwner", creatper);
+        owner.setText(creatper);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +94,19 @@ public class ProposalAdapter extends BaseAdapter {
             }
         });
 
+        moreinfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent myIntent = new Intent(v.getContext(), DetailsProposalActivity.class);
+                myIntent.putExtra("Title", proposal.getTitle());
+                myIntent.putExtra("Description", proposal.getDescription());
+                myIntent.putExtra("id", proposal.getId());
+                v.getContext().startActivity(myIntent);
+
+                Log.i("asd", "clica");
+            }
+        });
 
         return convertView;
     }

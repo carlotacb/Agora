@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
     private Configuration config = new Configuration();
     private Locale locale;
     private JSONObject Jason = new JSONObject();
-
     private ListView llista_propostes;
     private ArrayList<Proposals> propostes;
 
@@ -117,22 +116,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }.execute(Jason);
-
-        llista_propostes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Proposals proposal = propostes.get(position);
-
-                Intent myIntent = new Intent(getApplicationContext(), DetailsProposalActivity.class);
-                myIntent.putExtra("Title", proposal.getTitle());
-                myIntent.putExtra("Description", proposal.getDescription());
-                myIntent.putExtra("id", proposal.getId());
-                view.getRootView().getContext().startActivity(myIntent);
-
-                Log.i("asd", "clica");
-
-            }
-        });
 
         SharedPreferences prefs = this.getSharedPreferences(SH_PREF_NAME,MODE_PRIVATE);
 
