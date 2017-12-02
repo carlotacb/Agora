@@ -41,6 +41,8 @@ public class PostSesionAsyncTask extends AsyncTask<JSONObject, Void, JSONObject>
             client.setDoInput(true);
             client.setDoOutput(true);
 
+            Log.i("asdPostAsyncTask", "hola");
+
             OutputStreamWriter wr = new OutputStreamWriter(client.getOutputStream());
             wr.write(params[0].toString());
             wr.flush();
@@ -48,6 +50,7 @@ public class PostSesionAsyncTask extends AsyncTask<JSONObject, Void, JSONObject>
 
             client.getOutputStream().close();
             client.connect();
+            Log.i("asdPostAsyncTask", "hola2");
             JSONObject response = new JSONObject();
 
             //Get JSON Object containing the token
@@ -64,6 +67,7 @@ public class PostSesionAsyncTask extends AsyncTask<JSONObject, Void, JSONObject>
             String token = jo.getString("token");
 
             try {
+                Log.i("asdPostAsyncTask", Integer.toString(client.getResponseCode()));
                 if (client.getResponseCode() == 200) {
 
                     response.put("success", true);

@@ -33,10 +33,9 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     private EditText identifier, username, password1, password2;
     private String user, id, pw1, pw2;
     private ImageView canviaridioma;
-    private Spinner spin;
+    private ImageView enrerre;
     private Configuration config = new Configuration();
     private Locale locale;
-    private Boolean _registerdone = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +47,7 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
         password1 = (EditText) findViewById(R.id.password1);
         password2 = (EditText) findViewById(R.id.password2);
         canviaridioma = (ImageView) findViewById(R.id.multiidiomareg);
+        enrerre = (ImageView) findViewById(R.id.backbutton);
 
         final Resources res = this.getResources();
 
@@ -101,6 +101,15 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                 popupMenu.inflate(R.menu.idioma);
                 popupMenu.show();
 
+            }
+        });
+
+        enrerre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent log = new Intent(RegisterActivity.this, LoginActivity.class);
+                log.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(log);
             }
         });
 

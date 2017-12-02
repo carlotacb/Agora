@@ -78,6 +78,16 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
         register = (TextView) findViewById(R.id.btnRegister);
         canviidioma = (ImageView) findViewById(R.id.multiidioma);
 
+        /*String idioma;
+
+        if (Constants.Idioma.equals("")) {
+            idioma = Locale.getDefault().getDisplayLanguage();
+        }
+        else {
+            idioma = Constants.Idioma;
+        }*/
+
+
         if (Constants.Idioma.equals("ca")) {
             canviidioma.setImageResource(R.drawable.rep);
         }
