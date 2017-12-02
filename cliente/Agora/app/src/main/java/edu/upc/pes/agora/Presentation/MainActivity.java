@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,6 +31,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 
 import edu.upc.pes.agora.Logic.Constants;
 import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
@@ -53,6 +57,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toast toast = Toast.makeText(getApplicationContext(),"estoy en el create" , Toast.LENGTH_SHORT);
+        toast.show();
+
+
+
+
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_main);
         toolbar.setLogo(R.mipmap.ic_homew);
@@ -75,6 +88,85 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         llista_propostes = (ListView) findViewById(R.id.list);
+
+
+        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeRefreshLayout.setRefreshing(true);
+                (new Handler()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(false);
+
+
+                        Toast toast = Toast.makeText(getApplicationContext(),"estoy en el run" , Toast.LENGTH_SHORT);
+                        toast.show();
+                        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal", getApplicationContext()) {
+
+                            @Override
+                            protected void onPostExecute(JSONObject jsonObject) {
+                                try {
+                                    if (jsonObject.has("error")) {
+                                        String error = jsonObject.get("error").toString();
+                                        Log.i("asd123", "Error");
+
+                                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                                        toast.show();
+                                    }
+
+                                    else if (jsonObject != null){
+                                        JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
+                                        propostes = new ArrayList<>();
+
+                                        if (ArrayProp != null) {
+                                            for (int i=0; i < ArrayProp.length(); i++){
+
+                                                Log.i("asd123", (ArrayProp.get(i).toString()));
+
+                                                JSONObject jas = ArrayProp.getJSONObject(i);
+                                                String title = jas.getString("title");
+                                                String owner = jas.getString("owner");
+                                                String description = jas.getString("content");
+                                                Integer id = jas.getInt("id");
+
+                                                Proposals aux = new Proposals(id, title, description, owner);
+
+                                                propostes.add(aux);
+                                            }
+                                        }
+                                        llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
+                                    }
+                                } catch (JSONException e ) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }.execute(Jason);
+
+                    }
+                },3000);
+            }
+        });
+
+
+        final ListView listView;
+        listView = (ListView) findViewById(R.id.list);
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (listView.getChildAt(0) != null) {
+                    swipeRefreshLayout.setEnabled(listView.getFirstVisiblePosition() == 0 && listView.getChildAt(0).getTop() == 0);
+                }
+            }
+        });
+
 
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal", this) {
 

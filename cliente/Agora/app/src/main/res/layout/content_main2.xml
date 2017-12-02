@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+ <ListView xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:app="http://schemas.android.com/apk/res-auto"
           xmlns:tools="http://schemas.android.com/tools"
           android:id="@+id/list"
@@ -14,3 +14,5 @@
           tools:showIn="@layout/app_bar_main"
           tools:layout_editor_absoluteY="0dp"
           tools:layout_editor_absoluteX="8dp"/>
+
+
