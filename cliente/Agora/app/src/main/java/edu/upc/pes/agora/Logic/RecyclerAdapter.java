@@ -145,6 +145,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             title = (TextView) itemView.findViewById(R.id.textHead);
             description = (TextView) itemView.findViewById(R.id.textDescription);
             more = (ImageView) itemView.findViewById(R.id.more);
+
         }
     }
 }

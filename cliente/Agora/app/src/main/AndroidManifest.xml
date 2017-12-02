@@ -51,11 +51,13 @@
             android:label="@string/title_activity_edit_proposal"
             android:theme="@style/AppTheme">
         </activity>
+
         <activity
             android:name=".Presentation.DetailsProposalActivity"
             android:label="@string/title_activity_details_proposal"
             android:theme="@style/AppTheme">
         </activity>
+
     </application>
 
 </manifest>
