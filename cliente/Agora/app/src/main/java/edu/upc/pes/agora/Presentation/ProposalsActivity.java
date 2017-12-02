@@ -14,8 +14,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,11 +42,13 @@ public class ProposalsActivity extends AppCompatActivity {
 
     private TextView Titulo;
     private TextView Descripcion;
+    private Spinner spinC;
 
     private ProgressBar prog;
 
     String strTitulo;
     String strDescripcion;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,24 @@ public class ProposalsActivity extends AppCompatActivity {
 
         Titulo = (TextView) findViewById(R.id.titulo);
         Descripcion = (TextView) findViewById(R.id.descripcion);
+        spinC = (Spinner) findViewById(R.id.CategorySpinner);
+
+        /*cultura
+        deportes
+        ocio
+        mantenimiento
+        eventos
+        turismo
+        quejas
+        soporte*/
+
+        String[] diferentesCategoriasGenerico = {"C", "D", "O","M", "E", "T","Q", "S"};
+
+        //Creating the ArrayAdapter instance having the bank name list
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,diferentesCategoriasGenerico);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        spinC.setAdapter(aa);
 
         prog = (ProgressBar) findViewById(R.id.crproposalprogressbar);
 

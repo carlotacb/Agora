@@ -107,7 +107,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
         //Getting the instance of Spinner and applying OnItemSelectedListener on it
         //spin = (Spinner) findViewById(R.id.sexo);
-
        /* if(i.hasExtra("sex")){
             spin.setSelection(i.getIntExtra("sex",0));
         }*/
