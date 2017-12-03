@@ -34,6 +34,9 @@
     <string name="miperfil">About me</string>
     <string name="perfil">My Profile</string>
     <string name="editarp">Edit Profile</string>
+    <string name="serchuser">Search User</string>
+    <string name="help">Help</string>
+    <string name="about">About</string>
     <string name="surt">Sortir</string>
 
     <!-- Multiidioma -->

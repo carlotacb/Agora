@@ -28,7 +28,7 @@ import edu.upc.pes.agora.Logic.PostSesionAsyncTask;
 import edu.upc.pes.agora.R;
 import edu.upc.pes.agora.Logic.SpinnerAdapter;
 
-public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class RegisterActivity extends AppCompatActivity {
 
     private EditText identifier, username, password1, password2;
     private String user, id, pw1, pw2;
@@ -212,45 +212,6 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                 break;
 
         }
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Intent refresh = new Intent(RegisterActivity.this, RegisterActivity.class);
-        refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        switch(position) {
-            case 0:
-                break;
-            case 1:
-                locale = new Locale("es");
-                config.locale = locale;
-                getResources().updateConfiguration(config, null);
-                startActivity(refresh);
-                finish();
-                break;
-            case 2:
-                locale = new Locale("ca");
-                config.locale = locale;
-                getResources().updateConfiguration(config, null);
-                startActivity(refresh);
-
-                break;
-            case 3:
-                locale = new Locale("en");
-                config.locale = locale;
-                getResources().updateConfiguration(config, null);
-                startActivity(refresh);
-                break;
-        }
-
-
-        getResources().updateConfiguration(config,null);
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     @Override

@@ -59,18 +59,14 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:id="@+id/username"
-                android:fontFamily="sans-serif"
-                android:textSize="16sp"
                 android:hint="@string/hint_username"
+                android:fontFamily="sans-serif"
                 android:textColorHint="#e89b9696"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:layout_margin="2sp"
-                android:background="@drawable/edittext_bg"
-                android:textCursorDrawable="@null"
+                android:textSize="16sp"
                 android:textColor="#000"
+                android:textCursorDrawable="@null"
+                android:layout_margin="2sp"
+                android:padding="10dp"
                 android:textStyle="italic"/>
 
         </android.support.design.widget.TextInputLayout>

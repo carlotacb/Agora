@@ -25,9 +25,8 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
     private static boolean activityChanged;
 
     public static final int homneButton = 0;
-    public static final int addproposalbutton = 1;
-    public static final int myproposals = 2;
-    public static final int profile = 3;
+    public static final int myproposals = 1;
+    public static final int profile = 2;
 
     public NavMenuListener(Context context, DrawerLayout navDrawer) {
         this.context = context;
@@ -51,27 +50,20 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
 
         if (id == R.id.nav_home) {
             // Va a la pagina principal on surten totes les propostes
-
             if (!context.getClass().equals(MainActivity.class)) {
                 Intent myIntent = new Intent(context, MainActivity.class);
                 context.startActivity(myIntent);
             }
             navDrawer.closeDrawers();
 
-        } else if (id == R.id.nav_addproposta) {
-            if (!context.getClass().equals(ProposalsActivity.class)) {
-                Intent myIntent = new Intent(context, ProposalsActivity.class);
-                context.startActivity(myIntent);
-            }
-            navDrawer.closeDrawers();
-
-            //  Va a Proposals
         } else if (id == R.id.nav_myporposals) {
+            // Va a la pantalla de MyProposals
             if (!context.getClass().equals(MyProposalsActivity.class)) {
                 Intent myIntent = new Intent(context, MyProposalsActivity.class);
                 context.startActivity(myIntent);
             }
             navDrawer.closeDrawers();
+
         } else if (id == R.id.nav_perfilprinc) {
             // Va a la Pagina principal del perfil
             if (!context.getClass().equals(ProfileActivity.class)) {
@@ -79,9 +71,17 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
                 context.startActivity(myIntent);
             }
             navDrawer.closeDrawers();
-        }  else if (id == R.id.nav_logout) {
-            // Logout --> TODO: Desasignacion de token
 
+        } else if (id == R.id.nav_perfilprinc) {
+            // Va a la Pagina principal del perfil
+            if (!context.getClass().equals(ProfileActivity.class)) {
+                Intent myIntent = new Intent(context, ProfileActivity.class);
+                context.startActivity(myIntent);
+            }
+            navDrawer.closeDrawers();
+
+        }  else if (id == R.id.nav_logout) {
+            // Es desasigna el token per sortir de l'aplicació
             JSONObject jObject = new JSONObject();
 
             new DeleteAsyncTask("https://agora-pes.herokuapp.com/api/logout", context) {

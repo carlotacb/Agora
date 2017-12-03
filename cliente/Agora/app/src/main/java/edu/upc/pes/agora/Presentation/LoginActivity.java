@@ -78,16 +78,6 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
         register = (TextView) findViewById(R.id.btnRegister);
         canviidioma = (ImageView) findViewById(R.id.multiidioma);
 
-        /*String idioma;
-
-        if (Constants.Idioma.equals("")) {
-            idioma = Locale.getDefault().getDisplayLanguage();
-        }
-        else {
-            idioma = Constants.Idioma;
-        }*/
-
-
         if (Constants.Idioma.equals("ca")) {
             canviidioma.setImageResource(R.drawable.rep);
         }
@@ -108,8 +98,6 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
         etUsername = (EditText) findViewById(R.id.username);
         etPassword = (EditText) findViewById(R.id.password);
-
-        etUsername.setBackgroundResource(R.drawable.edittext_bg);
 
         prog = (ProgressBar) findViewById(R.id.loginprogressbar);
         errorusername = (TextInputLayout) findViewById(R.id.username_up);
