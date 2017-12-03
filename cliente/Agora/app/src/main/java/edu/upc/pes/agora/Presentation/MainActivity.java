@@ -1,6 +1,7 @@
 package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toast toast = Toast.makeText(getApplicationContext(),"estoy en el create" , Toast.LENGTH_SHORT);
-        toast.show();
+        /*Toast toast = Toast.makeText(getApplicationContext(),"estoy en el create" , Toast.LENGTH_SHORT);
+        toast.show();*/
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_main);
@@ -93,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
 
         llista_propostes = (ListView) findViewById(R.id.list);
 
-
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -104,51 +105,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
-
-
-                        Toast toast = Toast.makeText(getApplicationContext(),"estoy en el run" , Toast.LENGTH_SHORT);
-                        toast.show();
-                        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal", getApplicationContext()) {
-
-                            @Override
-                            protected void onPostExecute(JSONObject jsonObject) {
-                                try {
-                                    if (jsonObject.has("error")) {
-                                        String error = jsonObject.get("error").toString();
-                                        Log.i("asd123", "Error");
-
-                                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
-                                        toast.show();
-                                    }
-
-                                    else if (jsonObject != null){
-                                        JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
-                                        propostes = new ArrayList<>();
-
-                                        if (ArrayProp != null) {
-                                            for (int i=0; i < ArrayProp.length(); i++){
-
-                                                Log.i("asd123", (ArrayProp.get(i).toString()));
-
-                                                JSONObject jas = ArrayProp.getJSONObject(i);
-                                                String title = jas.getString("title");
-                                                String owner = jas.getString("owner");
-                                                String description = jas.getString("content");
-                                                Integer id = jas.getInt("id");
-
-                                                Proposals aux = new Proposals(id, title, description, owner);
-
-                                                propostes.add(aux);
-                                            }
-                                        }
-                                        llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
-                                    }
-                                } catch (JSONException e ) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }.execute(Jason);
-
+                        /* Toast toast = Toast.makeText(getApplicationContext(),"estoy en el run" , Toast.LENGTH_SHORT);
+                        toast.show();*/
+                        ferGetAsyncTask();
                     }
                 },3000);
             }
@@ -185,7 +144,94 @@ public class MainActivity extends AppCompatActivity {
             }
         });*/
 
+        ferGetAsyncTask();
+    }
 
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            drawer.openDrawer(GravityCompat.START);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_search_menu, menu);
+        inflater.inflate(R.menu.main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        MenuItem bandera = menu.findItem(R.id.bandera);
+        if(Constants.Idioma.equals("es")){
+            bandera.setIcon(R.drawable.spa);
+        }
+        else if(Constants.Idioma.equals("en")){
+            bandera.setIcon(R.drawable.ing);
+        }
+        else if(Constants.Idioma.equals("ca")){
+            bandera.setIcon(R.drawable.rep);
+        }
+
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        Intent refresh = new Intent(this, MainActivity.class);
+        refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.men_castella) {
+            locale = new Locale("es");
+            config.locale = locale;
+            Constants.Idioma = "es";
+            getResources().updateConfiguration(config, null);
+            startActivity(refresh);
+            finish();
+        }
+
+        else if (id == R.id.men_catala){
+            locale = new Locale("ca");
+            config.locale = locale;
+            Constants.Idioma = "ca";
+            getResources().updateConfiguration(config, null);
+            startActivity(refresh);
+            finish();
+
+        }
+
+        else if (id == R.id.men_angles){
+            locale = new Locale("en");
+            config.locale = locale;
+            Constants.Idioma = "en";
+            getResources().updateConfiguration(config, null);
+            startActivity(refresh);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public static Context getContextOfApplication(){
+        return mainContext;
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public void ferGetAsyncTask() {
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal", this) {
 
             @Override
@@ -226,82 +272,5 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }.execute(Jason);
-
-        SharedPreferences prefs = this.getSharedPreferences(SH_PREF_NAME,MODE_PRIVATE);
-
     }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            // TODO: el BACK ha d'obrir el drawer
-            drawer.openDrawer(GravityCompat.START);
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_search_menu, menu);
-
-        // TODO: fer el search funcional (Sprint 3...)
-
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        Intent refresh = new Intent(this, MainActivity.class);
-        refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.men_castella) {
-            locale = new Locale("es");
-            config.locale = locale;
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-        }
-
-        else if (id == R.id.men_catala){
-            locale = new Locale("ca");
-            config.locale = locale;
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-
-        }
-
-        else if (id == R.id.men_angles){
-            locale = new Locale("en");
-            config.locale = locale;
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public static Context getContextOfApplication(){
-        return mainContext;
-    }
-
-
-    //TODO: refresh
-
-
 }

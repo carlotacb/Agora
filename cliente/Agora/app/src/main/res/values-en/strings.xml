@@ -79,4 +79,9 @@
     <string name="pwactual">Actual Password</string>
     <string name="pwnueva">New Password</string>
     <string name="pwnueva2">Confirm New Password</string>
+    <string name="serchuser">Search User</string>
+    <string name="help">Help</string>
+    <string name="about">About us</string>
+    <string name="creadopor">Created by %1$s</string>
+    <string name="mesinfo">LEARN MORE</string>
 </resources>

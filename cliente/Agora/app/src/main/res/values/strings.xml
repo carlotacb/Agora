@@ -52,6 +52,7 @@
     <!-- Página principal -->
     <string name="title_activity_main">Main Page</string>
     <string name="creadopor">Creado por %1$s</string>
+    <string name="mesinfo">MAS INFORMACION</string>
 
     <!-- Strings Creacion Propuesta -->
     <string name="errorTitulo">Campo titulo necesario</string>
@@ -125,6 +126,7 @@
     <string name="title_activity_edit_profile">EditProfileActivity</string>
     <string name="title_activity_edit_proposal">EditProposalActivity</string>
     <string name="title_activity_details_proposal">DetailsProposalActivity</string>
+
 
 
 </resources>

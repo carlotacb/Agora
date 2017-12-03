@@ -6,12 +6,12 @@
           android:title="@string/action_settings"
           app:showAsAction="never"/> -->
 
-
-    <item android:title="@string/idioma">
+    <item
+        android:title="@string/idioma"
+        android:id="@+id/bandera"
+        android:icon="@mipmap/ic_language"
+        app:showAsAction="ifRoom">
         <menu>
-
-
-
             <item
                 android:id="@+id/men_castella"
                 android:icon="@drawable/spa"

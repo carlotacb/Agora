@@ -168,7 +168,7 @@
                 android:layout_alignParentRight="true"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:text="MAS INFORMACION"
+                android:text="@string/mesinfo"
                 android:textSize="16dp"
                 android:textColor="#3838e2"
                 android:textAllCaps="true"

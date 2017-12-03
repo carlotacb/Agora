@@ -79,4 +79,9 @@
     <string name="pwactual">Password Actual</string>
     <string name="sexo">Sexo</string>
     <string name="fnaix">Fecha de Nacimiento</string>
+    <string name="serchuser">Buscar Usuario</string>
+    <string name="help">Ayuda</string>
+    <string name="about">Acerca de nosotros</string>
+    <string name="creadopor">Creado por %1$s</string>
+    <string name="mesinfo">VER MÁS</string>
 </resources>
