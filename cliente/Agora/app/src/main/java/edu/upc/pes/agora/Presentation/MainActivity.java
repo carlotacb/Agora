@@ -223,8 +223,6 @@ public class MainActivity extends AppCompatActivity {
                     case 2: // USUARIOS
                         Log.i("asdse", selectedItem);
 
-
-
                         buscartext.setVisibility(View.VISIBLE);
                         searchSpinner.setVisibility(View.VISIBLE);
 

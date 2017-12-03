@@ -98,6 +98,8 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
         etUsername = (EditText) findViewById(R.id.username);
         etPassword = (EditText) findViewById(R.id.password);
+        etPassword.getBackground().clearColorFilter();
+        etUsername.getBackground().clearColorFilter();
 
         prog = (ProgressBar) findViewById(R.id.loginprogressbar);
         errorusername = (TextInputLayout) findViewById(R.id.username_up);
@@ -115,17 +117,21 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                 if (username.length() == 0) {
                     errorusername.setErrorEnabled(true);
                     errorusername.setError(camponecesario);
-                    errorpassword.setErrorEnabled(false);
-                    String error2 = res.getString(R.string.error2);
-                    //Toast.makeText(getApplicationContext(), error2, Toast.LENGTH_LONG).show();
+                    etUsername.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                    if (password.length() != 0) {
+                        errorpassword.setErrorEnabled(false);
+                        etPassword.getBackground().clearColorFilter();
+                    }
                 }
 
-                else if (password.length() == 0) {
+                if (password.length() == 0) {
                     errorpassword.setErrorEnabled(true);
                     errorpassword.setError(camponecesario);
-                    errorusername.setErrorEnabled(false);
-                    String error2 = res.getString(R.string.error2);
-                    //Toast.makeText(getApplicationContext(), error2, Toast.LENGTH_LONG).show();
+                    etPassword.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                    if(username.length() != 0) {
+                        errorusername.setErrorEnabled(false);
+                        etUsername.getBackground().clearColorFilter();
+                    }
                 }
 
                 else {
@@ -178,11 +184,16 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                                 Constants.Username = username;
                             } else {
                                 Log.i("asd", "gfgffgfgf");
-                                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                                 etUsername.setText("");
                                 etPassword.setText("");
                                 login.setVisibility(View.VISIBLE);
                                 prog.setVisibility(View.GONE);
+                                errorpassword.setErrorEnabled(true);
+                                errorpassword.setError(error);
+                                etPassword.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                                errorusername.setErrorEnabled(true);
+                                errorusername.setError(error);
+                                etUsername.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
                             }
 
                         }

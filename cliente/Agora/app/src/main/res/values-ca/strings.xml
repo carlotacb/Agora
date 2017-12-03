@@ -83,7 +83,7 @@
     <string name="serchuser">Buscar Usuari</string>
     <string name="help">Ajuda</string>
     <string name="about">Sobre nosaltres</string>
-    <string name="creadopor">Creat per %1$s</string>
+    <string name="creadopor">"Creat per "</string>
     <string name="mesinfo">VEURE MÉS</string>
     <string name="filtro">"Filtra per: "</string>
     <string name="buscar">"Buscar: "</string>

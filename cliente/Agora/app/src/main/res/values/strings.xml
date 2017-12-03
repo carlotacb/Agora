@@ -54,7 +54,7 @@
 
     <!-- Página principal -->
     <string name="title_activity_main">Main Page</string>
-    <string name="creadopor">Creado por %1$s</string>
+    <string name="creadopor">"Creado por "</string>
     <string name="mesinfo">MAS INFORMACION</string>
     <string name="filtro">Filter by: </string>
     <string name="buscar">Find: </string>

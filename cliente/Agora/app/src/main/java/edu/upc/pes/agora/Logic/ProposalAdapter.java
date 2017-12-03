@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -60,21 +61,17 @@ public class ProposalAdapter extends BaseAdapter {
 
         TextView titol = (TextView) convertView.findViewById(R.id.titolcard);
         TextView descripcio = (TextView) convertView.findViewById(R.id.descripciocard);
-        TextView owner = (TextView) convertView.findViewById(R.id.owneranddate);
-        ImageView button = (ImageView) convertView.findViewById(R.id.compartir);
+        TextView owner = (TextView) convertView.findViewById(R.id.owner);
+        //ImageView button = (ImageView) convertView.findViewById(R.id.compartir);
         TextView moreinfo = (TextView) convertView.findViewById(R.id.btnLernMore);
 
         final Proposals proposal = listProposals.get(position);
 
         titol.setText(proposal.getTitle());
         descripcio.setText(proposal.getDescription());
-        String creador = proposal.getOwner();
-        String creatper = String.format(res.getString(R.string.creadopor), creador);
-        Log.i("asdO", creador);
-        Log.i("asdOwner", creatper);
-        owner.setText(creatper);
+        owner.setText(proposal.getOwner());
 
-        button.setOnClickListener(new View.OnClickListener() {
+        /*button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("asdCompartir", "true");
@@ -92,7 +89,7 @@ public class ProposalAdapter extends BaseAdapter {
                 //     v.getContext().getApplicationContext().startActivity(new Intent(Intent.ACTION_VIEW, uri));
                 //  c.startActivity(new Intent(Intent.ACTION_VIEW, uri));
             }
-        });
+        });*/
 
         moreinfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,6 +104,16 @@ public class ProposalAdapter extends BaseAdapter {
                 Log.i("asd", "clica");
             }
         });
+
+        owner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(v.getContext(), "Anirem al usuari " + proposal.getOwner(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
 
         return convertView;
     }
