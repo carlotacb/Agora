@@ -53,6 +53,13 @@
     <string name="title_activity_main">Main Page</string>
     <string name="creadopor">Creado por %1$s</string>
     <string name="mesinfo">MAS INFORMACION</string>
+    <string name="filtro">Filter by: </string>
+    <string name="buscar">Find: </string>
+
+    <string name="tot">Tot</string>
+    <string name="user">Per Usuari</string>
+    <string name="categ">Per Categories</string>
+
 
     <!-- Strings Creacion Propuesta -->
     <string name="errorTitulo">Campo titulo necesario</string>
@@ -92,6 +99,7 @@
     <string name="fnaix2">Fecha Nacimiento:</string>
     <string name="sexo2">Sexo:</string>
 
+
     <!-- Strings related to edit profile -->
     <string name="M">Hombre</string>
     <string name="F">Mujer</string>
@@ -108,6 +116,16 @@
     <string name="pwnueva">Password Nueva</string>
     <string name="pwnueva2">Confirmar password</string>
 
+
+    <!-- Categorias -->
+    <string name="cultura">Cultura</string>
+    <string name="deportes">Deportes</string>
+    <string name="ocio">Ocio</string>
+    <string name="mantenimiento">Mantenimiento</string>
+    <string name="eventos">Eventos</string>
+    <string name="turismo">Turismo</string>
+    <string name="quejas">Quejas</string>
+    <string name="soporte">soporte</string>
 
     <string name="str_en" translatable="false">English</string>
     <string name="str_es" translatable="false">Spanish</string>

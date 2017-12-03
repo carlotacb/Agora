@@ -84,4 +84,17 @@
     <string name="about">Acerca de nosotros</string>
     <string name="creadopor">Creado por %1$s</string>
     <string name="mesinfo">VER MÁS</string>
+    <string name="filtro">"Filtra por: "</string>
+    <string name="buscar">"Buscar: "</string>
+    <string name="tot">Todo</string>
+    <string name="user">Usuario</string>
+    <string name="categ">Categoría</string>
+    <string name="cultura">Cultura</string>
+    <string name="deportes">Deportes</string>
+    <string name="ocio">Ocio</string>
+    <string name="mantenimiento">Mantenimiento</string>
+    <string name="eventos">Eventos</string>
+    <string name="turismo">Turismo</string>
+    <string name="quejas">Quejas</string>
+    <string name="soporte">Soporte</string>
 </resources>

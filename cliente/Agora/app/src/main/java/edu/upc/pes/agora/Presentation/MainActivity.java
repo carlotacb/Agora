@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -23,8 +24,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +36,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Random;
 
 import edu.upc.pes.agora.Logic.Constants;
@@ -53,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
     private ListView llista_propostes;
     private ArrayList<Proposals> propostes;
     public static Context mainContext;
+    private List<String> opcions = new ArrayList<>();
+    private List<String> usuaris = new ArrayList<>();
+    private List<String> categories = new ArrayList<>();
+    private Spinner filterSpinner, searchSpinner;
+    private TextView buscartext;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -113,38 +123,137 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        /*final ListView listView;
-        listView = (ListView) findViewById(R.id.list);
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                int topRowVerticalPosition =
-                        (listView == null || listView.getChildCount() == 0) ?
-                                0 : listView.getChildAt(0).getTop();
-                swipeRefreshLayout.setEnabled(firstVisibleItem == 0 && topRowVerticalPosition >= 0);
-            }
-        });*/
-        /*listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (listView.getChildAt(0) != null) {
-                    swipeRefreshLayout.setEnabled(listView.getFirstVisiblePosition() == 0 && listView.getChildAt(0).getTop() == 0);
-                }
-            }
-        });*/
-
         ferGetAsyncTask();
+
+        filterSpinner = (Spinner) findViewById(R.id.filterSpinnerView);
+        searchSpinner = (Spinner) findViewById(R.id.searchSpinnerView);
+        buscartext = (TextView) findViewById(R.id.buscar);
+
+        final Resources res = this.getResources();
+
+        opcions.add(res.getString(R.string.tot));
+        opcions.add(res.getString(R.string.categ));
+        opcions.add(res.getString(R.string.user));
+
+        usuaris.add("Usuario1");
+        usuaris.add("Usuario2");
+        usuaris.add("Usuario3");
+        usuaris.add("Usuario4");
+        usuaris.add("Usuario5");
+        usuaris.add("Usuario6");
+        usuaris.add("Usuario7");
+
+
+        categories.add(res.getString(R.string.cultura));
+        categories.add(res.getString(R.string.deportes));
+        categories.add(res.getString(R.string.ocio));
+        categories.add(res.getString(R.string.mantenimiento));
+        categories.add(res.getString(R.string.eventos));
+        categories.add(res.getString(R.string.turismo));
+        categories.add(res.getString(R.string.quejas));
+        categories.add(res.getString(R.string.soporte));
+
+        ArrayAdapter<String> filterSpinnerAdapter = new ArrayAdapter<>(this, R.layout.filter_spinner_style, opcions);
+        filterSpinnerAdapter.setDropDownViewResource(R.layout.filter_spinner_style);
+        filterSpinner.setAdapter(filterSpinnerAdapter);
+        filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = filterSpinner.getSelectedItem().toString().toLowerCase();
+
+                switch (position) {
+                    case 0: // TOT
+                        ferGetAsyncTask();
+
+                        buscartext.setVisibility(View.GONE);
+                        searchSpinner.setVisibility(View.GONE);
+
+                        break;
+
+                    case 1: // CATEGORIAS
+                        Log.i("asdse", selectedItem);
+
+                        buscartext.setVisibility(View.VISIBLE);
+                        searchSpinner.setVisibility(View.VISIBLE);
+
+                        ArrayAdapter<String> opcionsSpinnerAdapter = new ArrayAdapter<>(view.getContext(), R.layout.filter_spinner_style, categories);
+                        opcionsSpinnerAdapter.setDropDownViewResource(R.layout.filter_spinner_style);
+                        searchSpinner.setAdapter(opcionsSpinnerAdapter);
+                        searchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                String selectedItem = searchSpinner.getSelectedItem().toString().toLowerCase();
+                                switch (position) {
+                                    case 0: //cultura
+                                        Log.i("asdse", selectedItem);
+                                        break;
+                                    case 1: //deportes
+                                        Log.i("asdse", selectedItem);
+                                        break;
+                                    case 2: //ocio
+                                        Log.i("asdse", selectedItem);
+                                        break;
+                                    case 3: // mantenimiento
+                                        Log.i("asdse", selectedItem);
+                                        break;
+                                    case 4: // eventos
+                                        Log.i("asdse", selectedItem);
+                                        break;
+                                    case 5: // turismo
+                                        Log.i("asdse", selectedItem);
+                                        break;
+                                    case 6: // quejas
+                                        Log.i("asdse", selectedItem);
+                                        break;
+                                    case 7: // soporte
+                                        Log.i("asdse", selectedItem);
+                                        break;
+                                }
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+
+                        break;
+
+
+                    case 2: // USUARIOS
+                        Log.i("asdse", selectedItem);
+
+
+
+                        buscartext.setVisibility(View.VISIBLE);
+                        searchSpinner.setVisibility(View.VISIBLE);
+
+                        ArrayAdapter<String> opcionsSpinnerAdapter2 = new ArrayAdapter<>(view.getContext(), R.layout.filter_spinner_style, usuaris);
+                        opcionsSpinnerAdapter2.setDropDownViewResource(R.layout.filter_spinner_style);
+                        searchSpinner.setAdapter(opcionsSpinnerAdapter2);
+                        searchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                String selectedItem = searchSpinner.getSelectedItem().toString().toLowerCase();
+                                Log.i("asdse", selectedItem);
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+
+                        break;
+                }
+
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
     @Override

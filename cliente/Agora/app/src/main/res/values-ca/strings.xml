@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Agora</string>
     <string name="Login" translatable="false">Entrar</string>
-    <string name="SignIn">Registrat</string>
+    <string name="SignIn">Registra\'t</string>
     <string name="action_Registration">Registrar-se</string>
     <string name="bienvenida">BENVINGUT A ÀGORA</string>
     <string name="hint_password">Contrasenya</string>
@@ -85,4 +85,17 @@
     <string name="about">Sobre nosaltres</string>
     <string name="creadopor">Creat per %1$s</string>
     <string name="mesinfo">VEURE MÉS</string>
+    <string name="filtro">"Filtra per: "</string>
+    <string name="buscar">"Buscar: "</string>
+    <string name="tot">Tot</string>
+    <string name="user">Usuari</string>
+    <string name="categ">Categoría</string>
+    <string name="cultura">Cultura</string>
+    <string name="deportes">Esports</string>
+    <string name="ocio">Oci</string>
+    <string name="mantenimiento">Manteniment</string>
+    <string name="eventos">Esdeveniments</string>
+    <string name="turismo">Turisme</string>
+    <string name="quejas">Queixes</string>
+    <string name="soporte">Suport</string>
 </resources>
