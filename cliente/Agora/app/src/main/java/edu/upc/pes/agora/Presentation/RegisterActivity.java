@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.PorterDuff;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
@@ -11,8 +13,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -34,13 +38,19 @@ public class RegisterActivity extends AppCompatActivity {
     private String user, id, pw1, pw2;
     private ImageView canviaridioma;
     private ImageView enrerre;
+    private Button registro;
     private Configuration config = new Configuration();
     private Locale locale;
+    private TextInputLayout codiup, userup, pas1up, pas2up;
+    private ProgressBar progbar;
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        Log.i("asdCreate", "creando usuario");
 
         identifier = (EditText) findViewById(R.id.identifier);
         username = (EditText) findViewById(R.id.username);
@@ -48,8 +58,14 @@ public class RegisterActivity extends AppCompatActivity {
         password2 = (EditText) findViewById(R.id.password2);
         canviaridioma = (ImageView) findViewById(R.id.multiidiomareg);
         enrerre = (ImageView) findViewById(R.id.backbutton);
+        registro = (Button) findViewById(R.id.btnRegistration);
+        codiup = (TextInputLayout) findViewById(R.id.codiregistro_up);
+        userup = (TextInputLayout) findViewById(R.id.usernamereg_up);
+        pas1up = (TextInputLayout) findViewById(R.id.passwordreg_up);
+        pas2up = (TextInputLayout) findViewById(R.id.password2reg_up);
+        progbar = (ProgressBar) findViewById(R.id.registerprogressbar);
 
-        final Resources res = this.getResources();
+        final Resources res = getResources();
 
         if (Constants.Idioma.equals("ca")) {
             canviaridioma.setImageResource(R.drawable.rep);
@@ -113,106 +129,182 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-    }
+        registro.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
+            @Override
+            public void onClick(View v) {
+                Log.i("asdCreate", "entra al boton registro");
+                id = identifier.getText().toString();
+                user = username.getText().toString();
+                pw1 = password1.getText().toString();
+                pw2 = password2.getText().toString();
 
-    @SuppressLint("StaticFieldLeak")
-    public void register(){
+                String camponecesario = res.getString(R.string.fieldnecesary);
 
-        id = identifier.getText().toString();
-        user = username.getText().toString();
-        pw1 = password1.getText().toString();
-        pw2 = password2.getText().toString();
-
-        final Resources res = this.getResources();
-
-        if (id.length() == 0) {
-            String errorid = res.getString(R.string.errorid);
-            Toast.makeText(RegisterActivity.this, errorid, Toast.LENGTH_SHORT).show();
-            password1.setText("");
-            password2.setText("");
-        }
-
-        else if (user.length() == 0) {
-            String erroruser = res.getString(R.string.erroruser);
-            Toast.makeText(RegisterActivity.this, erroruser, Toast.LENGTH_SHORT).show();
-            password1.setText("");
-            password2.setText("");
-        }
-
-        else if (pw1.length() == 0 || pw2.length() == 0) {
-            String errorpass = res.getString(R.string.errorpw);
-            Toast.makeText(RegisterActivity.this, errorpass, Toast.LENGTH_SHORT).show();
-            password1.setText("");
-            password2.setText("");
-        }
-
-        else {
-            if(pw1.equals(pw2)){
-
-                JSONObject data = new JSONObject();
-                try {
-                    data.put("signupCode", id);
-                    data.put("username", user);
-                    data.put("password", pw1);
-                    data.put("confirmPassword", pw2);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (id.length() == 0) {
+                    codiup.setErrorEnabled(true);
+                    codiup.setError(camponecesario);
+                    identifier.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                    if (user.length() != 0) {
+                        userup.setErrorEnabled(false);
+                        username.getBackground().clearColorFilter();
+                    }
+                    if (pw1.length() != 0) {
+                        pas1up.setErrorEnabled(false);
+                        password1.getBackground().clearColorFilter();
+                        password1.setText("");
+                    }
+                    if (pw2.length() != 0) {
+                        pas2up.setErrorEnabled(false);
+                        password2.getBackground().clearColorFilter();
+                        password2.setText("");
+                    }
                 }
-                new PostSesionAsyncTask("https://agora-pes.herokuapp.com/api/signup",RegisterActivity.this){
-                    @Override
-                    protected void onPostExecute(JSONObject resObject) {
-                        Boolean result = false;
-                        String error = res.getString(R.string.errorreg);
+
+                if (user.length() == 0) {
+                    userup.setErrorEnabled(true);
+                    userup.setError(camponecesario);
+                    username.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                    if (id.length() != 0) {
+                        codiup.setErrorEnabled(false);
+                        identifier.getBackground().clearColorFilter();
+                    }
+                    if (pw1.length() != 0) {
+                        pas1up.setErrorEnabled(false);
+                        password1.getBackground().clearColorFilter();
+                        password1.setText("");
+                    }
+                    if (pw2.length() != 0) {
+                        pas2up.setErrorEnabled(false);
+                        password2.getBackground().clearColorFilter();
+                        password2.setText("");
+                    }
+                }
+
+                if (pw1.length() == 0) {
+                    pas1up.setErrorEnabled(true);
+                    pas1up.setError(camponecesario);
+                    password1.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                    if (id.length() != 0) {
+                        codiup.setErrorEnabled(false);
+                        identifier.getBackground().clearColorFilter();
+                    }
+                    if (user.length() != 0) {
+                        userup.setErrorEnabled(false);
+                        username.getBackground().clearColorFilter();
+                    }
+                    if (pw2.length() != 0) {
+                        pas2up.setErrorEnabled(false);
+                        password2.getBackground().clearColorFilter();
+                        password2.setText("");
+                    }
+                }
+
+                if (pw2.length() == 0) {
+                    pas2up.setErrorEnabled(true);
+                    pas2up.setError(camponecesario);
+                    password2.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                    if (id.length() != 0) {
+                        codiup.setErrorEnabled(false);
+                        identifier.getBackground().clearColorFilter();
+                    }
+                    if (user.length() != 0) {
+                        userup.setErrorEnabled(false);
+                        username.getBackground().clearColorFilter();
+                    }
+                    if (pw1.length() != 0) {
+                        pas1up.setErrorEnabled(false);
+                        password1.getBackground().clearColorFilter();
+                        password1.setText("");
+                    }
+                }
+
+                else {
+                    if(pw1.equals(pw2)){
+
+                        registro.setVisibility(View.GONE);
+                        progbar.setVisibility(View.VISIBLE);
+
+                        JSONObject data = new JSONObject();
 
                         try {
-                            if(resObject.has("success")) {
-                                result = resObject.getBoolean("success");
-
-                            }
-                            if(!result && resObject.has("errorMessage") ) error = res.getString(R.string.errorreg);
-
+                            data.put("signupCode", id);
+                            data.put("username", user);
+                            data.put("password", pw1);
+                            data.put("confirmPassword", pw2);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        new PostSesionAsyncTask("https://agora-pes.herokuapp.com/api/signup",RegisterActivity.this){
+                            @Override
+                            protected void onPostExecute(JSONObject resObject) {
+                                Boolean result = false;
+                                String error = res.getString(R.string.errorreg);
 
-                        Log.i("asdBool", result.toString());
+                                try {
+                                    if(resObject.has("success")) {
+                                        result = resObject.getBoolean("success");
 
-                        String registreok = String.format(res.getString(R.string.Registrat), user);
+                                    }
+                                    if(!result && resObject.has("errorMessage") ) {
+                                        error = res.getString(R.string.errorreg);
+                                        pas1up.setErrorEnabled(false);
+                                        pas2up.setErrorEnabled(false);
+                                        codiup.setErrorEnabled(true);
+                                        codiup.setError(error);
+                                        userup.setErrorEnabled(true);
+                                        userup.setError(error);
+                                        identifier.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                                        username.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                                        password1.getBackground().clearColorFilter();
+                                        password2.getBackground().clearColorFilter();
+                                    }
 
-                        if (result){
-                            //access app
-                            Toast.makeText(RegisterActivity.this, registreok, Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
 
-                        } else {
-                            Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
-                            identifier.setText("");
-                            username.setText("");
-                            password1.setText("");
-                            password2.setText("");
-                        }
+                                Log.i("asdBool", result.toString());
 
+                                String registreok = String.format(res.getString(R.string.Registrat), user);
+
+                                if (result){
+                                    //access app
+                                    Toast.makeText(RegisterActivity.this, registreok, Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+
+                                } else {
+                                    identifier.setText("");
+                                    username.setText("");
+                                    password1.setText("");
+                                    password2.setText("");
+                                    registro.setVisibility(View.VISIBLE);
+                                    progbar.setVisibility(View.GONE);
+                                }
+
+                            }
+                        }.execute(data);
+
+                    } else {
+                        //String passerror = res.getString(R.string.samepass);
+                        String passwordsIguales = res.getString(R.string.passwodsiguals);
+                        //Toast.makeText(getApplicationContext(), passerror, Toast.LENGTH_SHORT).show();
+                        pas1up.setErrorEnabled(true);
+                        pas2up.setErrorEnabled(true);
+                        userup.setErrorEnabled(false);
+                        codiup.setErrorEnabled(false);
+                        password1.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                        password2.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                        pas1up.setError(passwordsIguales);
+                        pas2up.setError(passwordsIguales);
+                        username.getBackground().clearColorFilter();
+                        identifier.getBackground().clearColorFilter();
                     }
-                }.execute(data);
-
-            } else {
-                String passerror = res.getString(R.string.samepass);
-                Toast.makeText(this.getApplicationContext(), passerror, Toast.LENGTH_SHORT).show();
+                }
             }
-        }
+        });
     }
 
-    public void onClick(View v) {
-
-        switch (v.getId()){
-            case R.id.btnRegistration:
-                register();
-                break;
-            default:
-                break;
-
-        }
-    }
 
     @Override
     public void onBackPressed() {

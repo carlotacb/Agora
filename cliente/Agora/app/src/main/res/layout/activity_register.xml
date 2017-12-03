@@ -200,7 +200,7 @@
             <ProgressBar
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/loginprogressbar"
+                android:id="@+id/registerprogressbar"
                 android:layout_centerInParent="true"
                 style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
                 android:indeterminateDrawable="@drawable/progress_bar_circular_style"

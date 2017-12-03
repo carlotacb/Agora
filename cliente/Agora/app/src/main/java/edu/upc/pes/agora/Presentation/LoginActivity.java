@@ -110,21 +110,22 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
 
                 username = etUsername.getText().toString();
                 password = etPassword.getText().toString();
+                String camponecesario = res.getString(R.string.fieldnecesary);
 
                 if (username.length() == 0) {
                     errorusername.setErrorEnabled(true);
-                    errorusername.setError("Campo necesario");
+                    errorusername.setError(camponecesario);
                     errorpassword.setErrorEnabled(false);
                     String error2 = res.getString(R.string.error2);
-                    Toast.makeText(getApplicationContext(), error2, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), error2, Toast.LENGTH_LONG).show();
                 }
 
                 else if (password.length() == 0) {
                     errorpassword.setErrorEnabled(true);
-                    errorpassword.setError("Campo necesario");
+                    errorpassword.setError(camponecesario);
                     errorusername.setErrorEnabled(false);
                     String error2 = res.getString(R.string.error2);
-                    Toast.makeText(getApplicationContext(), error2, Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), error2, Toast.LENGTH_LONG).show();
                 }
 
                 else {

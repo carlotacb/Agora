@@ -97,4 +97,6 @@
     <string name="turismo">Turismo</string>
     <string name="quejas">Quejas</string>
     <string name="soporte">Soporte</string>
+    <string name="fieldnecesary">Campo Necesario *</string>
+    <string name="passwodsiguals">Los passwords tienen que ser los mismos</string>
 </resources>

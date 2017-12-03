@@ -25,6 +25,9 @@
     <string name="erroruser">User needed</string>
     <string name="errorpw">Passw needed</string>
     <string name="Registrat">Usuario %1$s registrado correctamente</string>
+    <string name="fieldnecesary">Campo Necesario</string>
+    <string name="passwodsiguals">Passwords no coinciden</string>
+
 
     <!-- Strings Nav Drawer -->
     <string name="username" translatable="false">"Username"</string>
