@@ -96,83 +96,74 @@ public class ProposalsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+            if (Titulo.getText().toString().equals("") ){
+                String error = res.getString(R.string.errorTitulo);
+                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+            }
+            else if (Descripcion.getText().toString().equals("")){
+                String error = res.getString(R.string.errorDescripcion);
+                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
 
-             //   Toast.makeText(getApplicationContext(),"titulo" + Titulo.getText().toString(), Toast.LENGTH_LONG).show();
-             //   Toast.makeText(getApplicationContext(), "descripcion" +Descripcion.getText().toString(), Toast.LENGTH_LONG).show();
+            }
+            else {
 
+                Create.setVisibility(View.GONE);
+                prog.setVisibility(View.VISIBLE);
 
-                if (Titulo.getText().toString().equals("") ){
-                    String error = res.getString(R.string.errorTitulo);
-                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                JSONObject values = new JSONObject();
+                try {
+                    strTitulo = Titulo.getText().toString();
+                    strDescripcion = Descripcion.getText().toString();
+                    values.put("title", strTitulo);
+                    values.put("content", strDescripcion);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                else if (Descripcion.getText().toString().equals("")){
-                    String error = res.getString(R.string.errorDescripcion);
-                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
 
-                }
-                else {
+                // nou server : agora-pes.herokuapp.com/api/proposal
+                new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal", ProposalsActivity.this) {
+                    @Override
+                    protected void onPostExecute(JSONObject resObject) {
+                        Boolean result = false;
+                        String error = res.getString(R.string.errorCreacion);
 
-                    Create.setVisibility(View.GONE);
-                    prog.setVisibility(View.VISIBLE);
+                        try {
 
-                    JSONObject values = new JSONObject();
-                    try {
-                        strTitulo = Titulo.getText().toString();
-                        strDescripcion = Descripcion.getText().toString();
-                        values.put("title", strTitulo);
-                        values.put("content", strDescripcion);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    // nou server : agora-pes.herokuapp.com/api/proposal
-                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal", ProposalsActivity.this) {
-                        @Override
-                        protected void onPostExecute(JSONObject resObject) {
-                            Boolean result = false;
-                            String error = res.getString(R.string.errorCreacion);
-
-                            try {
-
-                                if (resObject.has("success")) {
-                                    result = resObject.getBoolean("success");
-                                }
-
-                                if (!result && resObject.has("errorMessage")) {
-                                    error = res.getString(R.string.errorCreacion);
-                                    Log.i("asdCreacion", error);
-                                    Toast.makeText(getApplicationContext(), error , Toast.LENGTH_LONG).show();
-                                }
-                                //Toast.makeText(getApplicationContext(), "Result : " + result , Toast.LENGTH_LONG).show();
-
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            //Log.i("asdBool", result.toString());
-
-                            String creacionok = String.format(res.getString(R.string.done), strTitulo);
-
-                            if (result) {
-                                //Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
-                                Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(ProposalsActivity.this, MainActivity.class));
+                            if (resObject.has("success")) {
+                                result = resObject.getBoolean("success");
                             }
 
-                            else {
-                                Log.i("asdCreacion", "reset");
-                                Titulo.setText("");
-                                Descripcion.setText("");
-                                Create.setVisibility(View.VISIBLE);
-                                prog.setVisibility(View.GONE);
+                            if (!result && resObject.has("errorMessage")) {
+                                error = res.getString(R.string.errorCreacion);
+                                Log.i("asdCreacion", error);
+                                Toast.makeText(getApplicationContext(), error , Toast.LENGTH_LONG).show();
                             }
+                            //Toast.makeText(getApplicationContext(), "Result : " + result , Toast.LENGTH_LONG).show();
 
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    }.execute(values);
+                        //Log.i("asdBool", result.toString());
 
-                }
+                        String creacionok = String.format(res.getString(R.string.done), strTitulo);
 
+                        if (result) {
+                            //Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(ProposalsActivity.this, MainActivity.class));
+                        }
 
+                        else {
+                            Log.i("asdCreacion", "reset");
+                            Titulo.setText("");
+                            Descripcion.setText("");
+                            Create.setVisibility(View.VISIBLE);
+                            prog.setVisibility(View.GONE);
+                        }
+                    }
+                }.execute(values);
+            }
             }
         });
     }
@@ -222,7 +213,6 @@ public class ProposalsActivity extends AppCompatActivity {
             getResources().updateConfiguration(config, null);
             startActivity(refresh);
             finish();
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -232,6 +222,4 @@ public class ProposalsActivity extends AppCompatActivity {
     public void onBackPressed() {
         startActivity(new Intent(ProposalsActivity.this, MainActivity.class));
     }
-
-
 }

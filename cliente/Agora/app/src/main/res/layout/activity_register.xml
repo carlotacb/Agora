@@ -189,6 +189,8 @@
                 android:fontFamily="sans-serif-medium"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:textColor="#fff"
                 android:textStyle="bold"
                 android:textSize="14sp"

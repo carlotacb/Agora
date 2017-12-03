@@ -120,6 +120,8 @@
                 android:background="@drawable/botonlogin"
                 android:fontFamily="sans-serif-medium"
                 android:paddingLeft="16dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:paddingRight="16dp"
                 android:textColor="#fff"
                 android:textStyle="bold"
@@ -166,6 +168,8 @@
                 android:paddingRight="8dp"
                 android:text="@string/SignIn"
                 android:textSize="16dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:textColor="#3838e2"
                 android:textAllCaps="true"
                 android:textStyle="bold"/>
