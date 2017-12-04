@@ -99,4 +99,5 @@
     <string name="soporte">Support</string>
     <string name="fieldnecesary">Necessary Field *</string>
     <string name="passwodsiguals">The passwords must be the same</string>
+    <string name="determinant">" on "</string>
 </resources>

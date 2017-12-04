@@ -99,6 +99,7 @@ public class ProposalAdapter extends BaseAdapter {
                 myIntent.putExtra("Title", proposal.getTitle());
                 myIntent.putExtra("Description", proposal.getDescription());
                 myIntent.putExtra("id", proposal.getId());
+                myIntent.putExtra("Owner", proposal.getOwner());
                 v.getContext().startActivity(myIntent);
 
                 Log.i("asd", "clica");

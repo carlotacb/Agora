@@ -9,12 +9,4 @@
             />
         </shape>
     </item>
-    <!-- Overlap the left, top and right border using background color  -->
-    <item
-        android:bottom="2dp"
-    >
-        <shape android:shape="rectangle">
-            <solid android:color="#fff"/>
-        </shape>
-    </item>
 </layer-list>

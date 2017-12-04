@@ -1,42 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:fillViewport="false"
+    android:gravity="center_horizontal"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
 
+    <RelativeLayout android:layout_width="wrap_content"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/backbutton"
+            android:layout_alignParentLeft="true"
+            android:clickable="true"
+            android:src="@mipmap/ic_arrow"
+            android:focusable="true"/>
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/multiidiomareg"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:src="@mipmap/ic_language"
+            android:focusable="true"/>
 
+    </RelativeLayout>
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:background="#f2f1ef"
-        android:fillViewport="false"
-        android:gravity="center_horizontal"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+    <RelativeLayout android:layout_width="match_parent"
+                  android:padding="10dp"
+                  android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/categoriaproposta"
+            android:text="categoria"
+            android:layout_alignParentStart="true"
+            android:textColor="@color/colorAccentLight"
+            android:textSize="14sp"/>
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
+            android:layout_below="@+id/categoriaproposta"
             android:id="@+id/titolproposal"
-            android:text="Titol"
+            android:text="Títol"
+            android:layout_alignParentStart="true"
             android:textColor="#000"
-            android:layout_gravity="left"
-            android:textSize="35dp"/>
+            android:textSize="30sp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ownerproposal"
-            android:layout_gravity="left"
-            android:layout_marginBottom="15dp"
-            android:text="Creat per: XXX el DD-MM-YYYY"/>
+        <LinearLayout android:layout_width="match_parent"
+                      android:orientation="horizontal"
+                      android:id="@+id/linearlayoutinfo"
+                      android:layout_height="wrap_content"
+                      android:layout_below="@+id/titolproposal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccentLight"
+                android:layout_marginEnd="2sp"
+                android:text="@string/creadopor"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"
+                android:id="@+id/ownerproposal"
+                android:text="Usuario Random"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccentLight"
+                android:layout_marginStart="4sp"
+                android:layout_marginEnd="2sp"
+                android:text="@string/determinant"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorAccentLight"
+                android:id="@+id/date"
+                android:text="DD-MM-YYYY"/>
+
+        </LinearLayout>
+
 
         <TextView
             android:layout_width="match_parent"
@@ -44,74 +109,56 @@
             android:textColor="#000"
             android:id="@+id/descripcioproposta"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="25dp"
             android:layout_gravity="left"
+            android:layout_below="@+id/linearlayoutinfo"
             android:text="descripcio"/>
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@drawable/separador"
-            android:layout_marginBottom="10dp"/>
 
-    <EditText
-        android:id="@+id/textComentario"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edittext_bg"
-        android:layout_marginTop="5dp"
-        android:gravity="top|left"
-        android:inputType="textMultiLine"
-        android:overScrollMode="always"
-        android:scrollbarStyle="insideInset"
-        android:scrollbars="vertical"
-        android:lines="2"
-        android:textSize="14sp"
-        android:hint="Add coment here"
-        android:scrollHorizontally="false" />
+        <LinearLayout android:layout_width="wrap_content"
+                      android:layout_alignParentRight="true"
+                      android:layout_below="@+id/descripcioproposta"
+                      android:layout_height="wrap_content">
 
-
-    <LinearLayout android:layout_width="wrap_content"
-                  android:layout_gravity="right"
-                  android:layout_marginTop="20dp"
-                  android:layout_marginBottom="20dp"
-                  android:layout_height="wrap_content">
-
-        <RelativeLayout android:layout_width="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/crearcomentari"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:background="@drawable/botonok"
-                android:textColor="#FFF"
-                android:textStyle="bold"
-                android:textSize="17dp"
-                android:text="Comment" />
-
-            <ProgressBar
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:id="@+id/crcomentprogressbar"
-                android:layout_centerInParent="true"
-                style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
-                android:indeterminateDrawable="@drawable/progress_bar_circular_style"
-                android:visibility="gone"/>
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-            <ListView
-                android:id="@+id/listcommentaris"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:listSelector="@android:color/transparent"
-                tools:context="edu.upc.pes.agora.Presentation.DetailsProposalActivity"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+                android:layout_marginEnd="15dp"
+                android:src="@mipmap/ic_thumb_down"
+                android:id="@+id/vote"/>
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_thumb_up"
+                android:id="@+id/unvote"/>
 
-    </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/listcommentaris"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:listSelector="@android:color/transparent"
+            tools:context="edu.upc.pes.agora.Presentation.DetailsProposalActivity"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabcoment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:src="@mipmap/ic_chatbubblew"
+            android:layout_margin="@dimen/fab_margin"/>
+
+    </FrameLayout>
+
+</LinearLayout>
