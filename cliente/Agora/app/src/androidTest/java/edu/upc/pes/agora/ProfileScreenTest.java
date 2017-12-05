@@ -26,7 +26,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 public class ProfileScreenTest {
 
     @Rule
-    public ActivityTestRule<ProfileActivity> mProposalsActivityTestRule =
+    public ActivityTestRule<ProfileActivity> mProfileActivityTestRule =
             new ActivityTestRule(ProfileActivity.class);
 
     @Test
