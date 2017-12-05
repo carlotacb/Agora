@@ -41,7 +41,8 @@ public class ProposalsActivity extends AppCompatActivity {
 
     private Button Reset;
     private Button Create;
-    private Button AddPos;
+    private Button addPos;
+    private Button deletePos;
 
     private TextView Titulo;
     private TextView Descripcion;
@@ -54,6 +55,8 @@ public class ProposalsActivity extends AppCompatActivity {
 
     String strTitulo;
     String strDescripcion;
+    private double lat;
+    private double lng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +65,9 @@ public class ProposalsActivity extends AppCompatActivity {
 
         Reset = (Button) findViewById(R.id.resetButton);
         Create = (Button) findViewById(R.id.createButton);
-        AddPos = (Button) findViewById(R.id.btnAddPosition);
+        addPos = (Button) findViewById(R.id.btnAddPosition);
+        deletePos = (Button) findViewById(R.id.btnDeletePosition);
+
 
         Titulo = (TextView) findViewById(R.id.titulo);
         Descripcion = (TextView) findViewById(R.id.descripcion);
@@ -77,8 +82,15 @@ public class ProposalsActivity extends AppCompatActivity {
         if (getIntent().hasExtra("Description")){
             Descripcion.setText(getIntent().getStringExtra("Description"));
         }
-        if(getIntent().hasExtra("lat")){
+        if(getIntent().hasExtra("lat") && getIntent().hasExtra("lng")){
+            lat = getIntent().getDoubleExtra("lat",0);
+            lng = getIntent().getDoubleExtra("lng",0);
             txtPosAttached.setText(R.string.posAttached);
+            deletePos.setVisibility(View.VISIBLE);
+        }else{
+            lat = 0;
+            lng = 0;
+            deletePos.setVisibility(View.INVISIBLE);
         }
 
         prog = (ProgressBar) findViewById(R.id.crproposalprogressbar);
@@ -170,7 +182,11 @@ public class ProposalsActivity extends AppCompatActivity {
                                 if (!result && resObject.has("errorMessage")) {
                                     error = res.getString(R.string.errorCreacion);
                                     Log.i("asdCreacion", error);
-                                    Toast.makeText(getApplicationContext(), error , Toast.LENGTH_LONG).show();
+                                    if(resObject.getString("errorMessage") == ""){ //TODO: Add errorMessage received if position is out of neighbourhood
+                                        Toast.makeText(getApplicationContext(), res.getString(R.string.errorPosition), Toast.LENGTH_LONG).show();
+                                    }else {
+                                        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                                    }
                                 }
 
 
@@ -198,13 +214,23 @@ public class ProposalsActivity extends AppCompatActivity {
             }
         });
 
-        AddPos.setOnClickListener(new View.OnClickListener() {
+        addPos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), AddLocationActivity.class);
                 i.putExtra("Title", Titulo.getText().toString());
                 i.putExtra("Description", Descripcion.getText().toString());
                 startActivity(i);
+            }
+        });
+
+        deletePos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lat = 0;
+                lng = 0;
+                txtPosAttached.setText("");
+                deletePos.setVisibility(View.INVISIBLE);
             }
         });
 

@@ -67,7 +67,8 @@
     <!-- Strings Creacion Propuesta -->
     <string name="errorTitulo">Campo titulo necesario</string>
     <string name="errorDescripcion">Campo Descripcion necesario</string>
-    <string name="errorCreacion">Cracion incorrecta</string>
+    <string name="errorCreacion">Creacion incorrecta</string>
+    <string name="errorPosition">Please select a position in your neighbourhood!</string>
     <string name="titulo">Titulo</string>
     <string name="descrpicion">Descripcion</string>
     <string name="reset">Reset</string>
@@ -76,6 +77,7 @@
     <string name="done">Propuesta "%1$s" creada correctamnete</string>
     <string name="addPosition">Add position</string>
     <string name="savePosition">Save position</string>
+    <string name="deletePosition">Delete position</string>
     <string name="posAttached">Position attached</string>
 
 

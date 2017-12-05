@@ -10,4 +10,7 @@ public abstract class Constants {
     public static String Username = "username";
 
     public static String Idioma = Locale.getDefault().getLanguage();
+
+    public static int zone = 100;
+
 }

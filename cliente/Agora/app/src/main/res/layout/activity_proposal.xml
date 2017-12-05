@@ -121,7 +121,14 @@
             android:id="@+id/btnAddPosition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/addPosition" />
+            android:text="@string/addPosition"/>
+
+        <Button
+            android:id="@+id/btnDeletePosition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/deletePosition"
+            tools:visibility="invisible" />
 
         <LinearLayout android:layout_width="wrap_content"
                       android:layout_gravity="center"
