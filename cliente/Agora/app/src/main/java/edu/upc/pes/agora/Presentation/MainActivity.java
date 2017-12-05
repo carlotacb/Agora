@@ -112,8 +112,6 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
-                        /* Toast toast = Toast.makeText(getApplicationContext(),"estoy en el run" , Toast.LENGTH_SHORT);
-                        toast.show();*/
                         ferGetAsyncTask();
                     }
                 },3000);
@@ -139,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
         usuaris.add("Usuario5");
         usuaris.add("Usuario6");
         usuaris.add("Usuario7");
-
 
         categories.add(res.getString(R.string.cultura));
         categories.add(res.getString(R.string.deportes));
@@ -183,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
                                 switch (position) {
                                     case 0: //cultura
                                         Log.i("asdse", selectedItem);
+
                                         break;
                                     case 1: //deportes
                                         Log.i("asdse", selectedItem);
@@ -291,9 +289,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         Intent refresh = new Intent(this, MainActivity.class);
