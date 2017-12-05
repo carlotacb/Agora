@@ -74,6 +74,9 @@
     <string name="create">Create</string>
     <string name="nuevapropuesta">Nueva Propuesta</string>
     <string name="done">Propuesta "%1$s" creada correctamnete</string>
+    <string name="addPosition">Add position</string>
+    <string name="savePosition">Save position</string>
+    <string name="posAttached">Position attached</string>
 
 
     <!-- Strings Edit Proposal -->
@@ -149,8 +152,10 @@
     <string name="title_activity_profile">ProfileActivity</string>
     <string name="title_activity_edit_profile">EditProfileActivity</string>
     <string name="title_activity_edit_proposal">EditProposalActivity</string>
+
     <string name="title_activity_details_proposal">DetailsProposalActivity</string>
 
+    <string name="title_activity_add_location">Map</string>
 
 
 </resources>

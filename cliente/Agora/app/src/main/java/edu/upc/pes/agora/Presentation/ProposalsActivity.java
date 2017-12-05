@@ -41,9 +41,11 @@ public class ProposalsActivity extends AppCompatActivity {
 
     private Button Reset;
     private Button Create;
+    private Button AddPos;
 
     private TextView Titulo;
     private TextView Descripcion;
+    private TextView txtPosAttached;
 
     private TextInputLayout errortitulo, errordescripcion;
 
@@ -60,11 +62,24 @@ public class ProposalsActivity extends AppCompatActivity {
 
         Reset = (Button) findViewById(R.id.resetButton);
         Create = (Button) findViewById(R.id.createButton);
+        AddPos = (Button) findViewById(R.id.btnAddPosition);
 
         Titulo = (TextView) findViewById(R.id.titulo);
         Descripcion = (TextView) findViewById(R.id.descripcion);
         errortitulo = (TextInputLayout) findViewById(R.id.titulo_up);
         errordescripcion = (TextInputLayout) findViewById(R.id.descripcion_up);
+
+        txtPosAttached = (TextView) findViewById(R.id.txtPosAttached);
+
+        if (getIntent().hasExtra("Title")){
+            Titulo.setText(getIntent().getStringExtra("Title"));
+        }
+        if (getIntent().hasExtra("Description")){
+            Descripcion.setText(getIntent().getStringExtra("Description"));
+        }
+        if(getIntent().hasExtra("lat")){
+            txtPosAttached.setText(R.string.posAttached);
+        }
 
         prog = (ProgressBar) findViewById(R.id.crproposalprogressbar);
 
@@ -126,12 +141,17 @@ public class ProposalsActivity extends AppCompatActivity {
                     prog.setVisibility(View.VISIBLE);
 
                     JSONObject values = new JSONObject();
+                    JSONObject location = new JSONObject();
 
                     try {
                         values.put("title", strTitulo);
                         values.put("content", strDescripcion);
+                        location.put("lat", getIntent().getDoubleExtra("lat",0));
+                        location.put("long", getIntent().getDoubleExtra("lng",0));
+                        values.put("location", location);
                     }
                     catch (JSONException e) {
+
                         e.printStackTrace();
                     }
 
@@ -175,6 +195,16 @@ public class ProposalsActivity extends AppCompatActivity {
                         }
                     }.execute(values);
                 }
+            }
+        });
+
+        AddPos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), AddLocationActivity.class);
+                i.putExtra("Title", Titulo.getText().toString());
+                i.putExtra("Description", Descripcion.getText().toString());
+                startActivity(i);
             }
         });
 
@@ -227,6 +257,14 @@ public class ProposalsActivity extends AppCompatActivity {
                 startActivity(log);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return true;
     }
 
     @Override
