@@ -175,8 +175,9 @@ public class ProposalsActivity extends AppCompatActivity {
                                     Log.i("asdCreacion", error);
                                     if(resObject.getString("errorMessage") == ""){ //TODO: Add errorMessage received if position is out of neighbourhood
                                         Toast.makeText(getApplicationContext(), res.getString(R.string.errorPosition), Toast.LENGTH_LONG).show();
+                                    }else {
+                                        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                                     }
-                                    Toast.makeText(getApplicationContext(), error , Toast.LENGTH_LONG).show();
                                 }
                                 //Toast.makeText(getApplicationContext(), "Result : " + result , Toast.LENGTH_LONG).show();
 
