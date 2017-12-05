@@ -17,6 +17,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -153,19 +154,19 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
                 AlertDialog.Builder dialogoaddcoment = new AlertDialog.Builder(v.getRootView().getContext());
 
-                dialogoaddcoment.setTitle("Nou Comentari");
-                dialogoaddcoment.setCancelable(false);
-                dialogoaddcoment.setCancelable(false);
-
                 final EditText input = new EditText(v.getRootView().getContext());
                 input.setSingleLine();
-                FrameLayout container = new FrameLayout(v.getRootView().getContext());
+                FrameLayout container = new FrameLayout(DetailsProposalActivity.this);
                 FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.leftMargin = v.getRootView().getContext().getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
                 input.setLayoutParams(params);
-
+                input.getBackground().clearColorFilter();
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
-                dialogoaddcoment.setView(input);
+                container.addView(input);
+                dialogoaddcoment.setTitle("Nou Comentari");
+                dialogoaddcoment.setCancelable(false);
+                dialogoaddcoment.setView(container);
 
                 dialogoaddcoment.setPositiveButton("Afegir", new DialogInterface.OnClickListener() {
                     @SuppressLint("StaticFieldLeak")
@@ -269,11 +270,29 @@ public class DetailsProposalActivity extends AppCompatActivity {
             }
         });
 
-        /*canviidioma.setOnClickListener(new View.OnClickListener() {
+        if (Constants.Idioma.equals("ca")) {
+            canviidioma.setImageResource(R.drawable.rep);
+        }
+
+        else if (Constants.Idioma.equals("es")) {
+            canviidioma.setImageResource(R.drawable.spa);
+        }
+
+        else if (Constants.Idioma.equals("en")) {
+            canviidioma.setImageResource(R.drawable.ing);
+        }
+
+        canviidioma.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 final Intent refresh = new Intent(DetailsProposalActivity.this, DetailsProposalActivity.class);
+                refresh.putExtra("Title", mtit);
+                refresh.putExtra("Description", mdesc);
+                refresh.putExtra("id", idprop);
+                refresh.putExtra("Owner", mowner);
+
+                Log.i("asd", "clica");
                 refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                 PopupMenu popupMenu = new PopupMenu(v.getRootView().getContext(), canviidioma);
@@ -317,7 +336,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                 log.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(log);
             }
-        });*/
+        });
 
     }
 
@@ -325,6 +344,10 @@ public class DetailsProposalActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent refresh = new Intent(this, MainActivity.class);
         startActivity(refresh);
+    }
+
+    public static int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
 }

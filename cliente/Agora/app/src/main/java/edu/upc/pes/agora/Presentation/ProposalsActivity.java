@@ -108,14 +108,14 @@ public class ProposalsActivity extends AppCompatActivity {
                 if (strTitulo.equals("") ){
                     errortitulo.setErrorEnabled(true);
                     errortitulo.setError("Campo necesario");
-                    errortitulo.setErrorEnabled(false);
+                    errordescripcion.setErrorEnabled(false);
                     String error = res.getString(R.string.errorTitulo);
                     Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                 }
                 else if (strDescripcion.equals("")){
                     errordescripcion.setErrorEnabled(true);
                     errordescripcion.setError("Campo necesario");
-                    errordescripcion.setErrorEnabled(false);
+                    errortitulo.setErrorEnabled(false);
                     String error = res.getString(R.string.errorDescripcion);
                     Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                 }

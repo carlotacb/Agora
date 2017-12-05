@@ -70,9 +70,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*Toast toast = Toast.makeText(getApplicationContext(),"estoy en el create" , Toast.LENGTH_SHORT);
-        toast.show();*/
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_main);
         toolbar.setLogo(R.mipmap.ic_homew);
