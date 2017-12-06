@@ -34,6 +34,10 @@ async function getAllBy(reqQuery, reqSort) {
         query.owner = reqQuery.username.toString()
     }
 
+    if (reqQuery.category !== undefined) {
+        query.categoria = reqQuery.category.toString()
+    }
+
     if (reqQuery.zone !== undefined) {
         query.zone = parseInt(reqQuery.zone)
     }

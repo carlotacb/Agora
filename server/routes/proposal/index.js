@@ -45,6 +45,7 @@ module.exports = app => {
             const user = await userModule.get({username: req.username})
             const query = {
                 username: req.query.username,
+                category: req.query.category,
                 zone: user.zone
             }
             const sort = {
