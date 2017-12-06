@@ -47,4 +47,15 @@ module.exports = app => {
             res.sendStatus(403)
         }
     })
+
+    app.get('/api/profile/comunity', isAuthenticated, async function (req, res) {
+        try {
+            const user = await userModule.getProfile({username: req.username})
+            const users = await userModule.getByZone(user)
+            res.json(users)
+        } catch (error) {
+            console.error('error on getting profile', error)
+            res.sendStatus(500)
+        }
+    })
 }

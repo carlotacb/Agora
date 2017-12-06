@@ -2,11 +2,12 @@ const {getCollection, collectionNames, generateNextId} = require('../db')
 const collection = () => getCollection(collectionNames.proposals)
 const getNextId = () => generateNextId(collectionNames.proposals)
 
-async function create({username, title, content, location, zone}) {
+async function create({username, title, content, location, zone, categoria}) {
     const object = {
         id: await getNextId(),
         owner: username,
         title: title,
+        categoria: categoria,
         content: content,
         createdDateTime: new Date(),
         updatedDateTime: null,

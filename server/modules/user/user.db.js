@@ -10,6 +10,17 @@ async function get({username}) {
     return await collection().findOne(query)
 }
 
+async function getByZone({user}) {
+    const query = {
+        zone: user.zone
+    }
+    const options = {
+        _id: 0,
+        password: 0,
+    }
+    return await collection().find(query, options)
+}
+
 async function getProfile({username}) {
     return collection().findOne({username}, {_id: 0, password: 0})
 }
@@ -63,4 +74,5 @@ module.exports = {
     updateProfile: updateProfile,
     updatePassword: updatePassword,
     create: create,
+    getByZone: getByZone,
 }
