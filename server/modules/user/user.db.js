@@ -17,8 +17,11 @@ async function getByZone({user}) {
     const options = {
         _id: 0,
         password: 0,
+        createdDateTime: 0,
+        updatedDateTime: 0,
+        zone : 0,
     }
-    return await collection().find(query, options)
+    return await collection().find(query, options).toArray()
 }
 
 async function getProfile({username}) {

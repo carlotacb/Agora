@@ -51,7 +51,7 @@ module.exports = app => {
     app.get('/api/profile/comunity', isAuthenticated, async function (req, res) {
         try {
             const user = await userModule.getProfile({username: req.username})
-            const users = await userModule.getByZone(user)
+            const users = await userModule.getByZone({user})
             res.json(users)
         } catch (error) {
             console.error('error on getting profile', error)
