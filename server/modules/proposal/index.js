@@ -1,12 +1,17 @@
 const db = require('./proposals.db')
 const userModule = require('../user')
+const zoneModule = require('../zone')
 
 async function createProposal({username, title, content, location, categoria}) {
     const existingUser = await userModule.get({username})
     if (!existingUser) {
         throw new Error(`User does not exists`)
     }
-    return await db.create({username, title, content, location, zone: existingUser.zone, categoria})
+
+    const zone = existingUser.zone
+    await zoneModule.throwIfInvalidLocationForZone({location, zoneId: zone})
+
+    return await db.create({username, title, content, location, zone: zone, categoria})
 }
 
 async function addComment({proposalId, author, comment}) {
