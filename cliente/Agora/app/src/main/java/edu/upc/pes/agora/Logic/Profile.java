@@ -13,13 +13,19 @@ public class Profile {
     private String neighborhood;
     private String born;
     private String description;
-    private Integer sex;
+    private String sex;
 
-    public Integer getSex() {
-        return sex;
+    public int getSex() {
+        int sexo = 0;
+
+        if(sex.equals("I")) sexo = 0;
+        if(sex.equals("M")) sexo = 2;
+        if(sex.equals("F")) sexo = 1;
+
+        return sexo;
     }
 
-    public void setSex(Integer sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 

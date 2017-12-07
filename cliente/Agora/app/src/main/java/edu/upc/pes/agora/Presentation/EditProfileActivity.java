@@ -60,8 +60,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button Aceptar;
     private Button Cancelar;
 
-   // String[] diferentesSexos; //{getString(R.string.M), getString(R.string.F), getString(R.string.I)};
-   // String[] diferentesSexosGenerico = {"I", "F", "M"};
+    String[] diferentesSexos; //{getString(R.string.M), getString(R.string.F), getString(R.string.I)};
+    String[] diferentesSexosGenerico = {"I", "F", "M"};
 
     Profile p ;
 
@@ -70,7 +70,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
-      //  diferentesSexos = new String[]{getString(R.string.I), getString(R.string.F), getString(R.string.M)};
+        diferentesSexos = new String[]{getString(R.string.I), getString(R.string.F), getString(R.string.M)};
 
         Nombre = (EditText) findViewById(R.id.nameprofile);
         CP = (EditText) findViewById(R.id.codipostal);
@@ -106,11 +106,11 @@ public class EditProfileActivity extends AppCompatActivity {
         }
 
         //Getting the instance of Spinner and applying OnItemSelectedListener on it
-        //spin = (Spinner) findViewById(R.id.sexo);
+        spin = (Spinner) findViewById(R.id.sexo);
 
-       /* if(i.hasExtra("sex")){
+        if(i.hasExtra("sex")){
             spin.setSelection(i.getIntExtra("sex",0));
-        }*/
+        }
 
         Change = (TextView) findViewById(R.id.changePassword);
 
@@ -123,10 +123,10 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
         //Creating the ArrayAdapter instance having the bank name list
-       /* ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,diferentesSexos);
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,diferentesSexos);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         //Setting the ArrayAdapter data on the Spinner
-        spin.setAdapter(aa);*/
+        spin.setAdapter(aa);
 
 
         Change.setOnClickListener(new View.OnClickListener() {
@@ -209,14 +209,14 @@ public class EditProfileActivity extends AppCompatActivity {
                     String CPcode = CP.getText().toString() ;
                     String barrio = Barrio.getText().toString() ;
                     String fecha = Fecha.getText().toString() ;
-                    //String sexo = diferentesSexosGenerico[spin.getSelectedItemPosition()];
+                    String sexo = diferentesSexosGenerico[spin.getSelectedItemPosition()];
                     //String descripcion = Descripcion.getText().toString() ;
                     String username = Username.getText().toString();
 
                     values.put("username",username);
                     values.put("bdate",fecha);
                     values.put("cpCode",CPcode);
-                    //values.put("sex",sexo);
+                    values.put("sex",sexo);
                     values.put("neighborhood",barrio);
                     values.put("realname",nombre);
                     //values.put("description",descripcion);

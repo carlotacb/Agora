@@ -16,10 +16,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +60,10 @@ public class ProposalsActivity extends AppCompatActivity {
     private double lat;
     private double lng;
 
+    private Spinner spin;
+    String[] categorias;
+    String[] categoriasGenericas = {"C", "D", "O","M", "E", "T","Q", "S","A"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,13 +75,27 @@ public class ProposalsActivity extends AppCompatActivity {
         deletePos = (Button) findViewById(R.id.btnDeletePosition);
 
 
+        categorias = new String[]{getString(R.string.cultura), getString(R.string.deportes), getString(R.string.ocio),
+                                  getString(R.string.mantenimiento), getString(R.string.eventos), getString(R.string.turismo),
+                                  getString(R.string.quejas), getString(R.string.soporte),getString(R.string.todo)};
+
+        spin = (Spinner) findViewById(R.id.cate);
+        //Creating the ArrayAdapter instance having the bank name list
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,categorias);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        spin.setAdapter(aa);
+
+
         Titulo = (TextView) findViewById(R.id.titulo);
         Descripcion = (TextView) findViewById(R.id.descripcion);
         errortitulo = (TextInputLayout) findViewById(R.id.titulo_up);
         errordescripcion = (TextInputLayout) findViewById(R.id.descripcion_up);
 
         txtPosAttached = (TextView) findViewById(R.id.txtPosAttached);
-
+        if(getIntent().hasExtra("cat")){
+            spin.setSelection(getIntent().getIntExtra("cat",0));
+        }
         if (getIntent().hasExtra("Title")){
             Titulo.setText(getIntent().getStringExtra("Title"));
         }
@@ -156,11 +176,15 @@ public class ProposalsActivity extends AppCompatActivity {
                     JSONObject location = new JSONObject();
 
                     try {
+                        String ca = categoriasGenericas[spin.getSelectedItemPosition()];
+
                         values.put("title", strTitulo);
                         values.put("content", strDescripcion);
                         location.put("lat", getIntent().getDoubleExtra("lat",0));
                         location.put("long", getIntent().getDoubleExtra("lng",0));
                         values.put("location", location);
+                        values.put("categoria",ca);
+                        Toast.makeText(getApplicationContext(), ca, Toast.LENGTH_LONG).show();
                     }
                     catch (JSONException e) {
 

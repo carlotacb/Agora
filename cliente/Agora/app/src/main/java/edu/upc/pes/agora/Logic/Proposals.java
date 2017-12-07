@@ -11,15 +11,16 @@ public class Proposals {
     private String title;
     private String description;
     private String owner;
-    //private String categoria;
+    private String categoria;
     //private int token_creator;
     private LatLng position;
 
-    public Proposals (int id, String tit, String des, String ow) {
+    public Proposals (int id, String tit, String des, String ow, String ca) {
         this.id = id;
         title = tit;
         description = des;
         owner = ow;
+        categoria = ca;
     }
 
     public int getId() {
@@ -52,6 +53,14 @@ public class Proposals {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public LatLng getPosition() {

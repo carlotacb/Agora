@@ -48,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView username, name, CP, Born, neigh, sex;
     private Profile p = new Profile();
 
-    private String usernameJ, neighJ, nameJ, BornJ, SexoJ;
+    private String usernameJ, neighJ, nameJ, BornJ, sexJ;
     private Integer CPJ;
 
     @SuppressLint("StaticFieldLeak")
@@ -82,7 +82,7 @@ public class ProfileActivity extends AppCompatActivity {
         neigh = (TextView) findViewById(R.id.barrio);
         CP = (TextView) findViewById(R.id.codipostal);
         Born = (TextView) findViewById(R.id.born);
-        //sex = (TextView) findViewById(R.id.sexo);
+        sex = (TextView) findViewById(R.id.sexo);
 
         @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         final String dateInString = "07/06/2013";
@@ -144,14 +144,17 @@ public class ProfileActivity extends AppCompatActivity {
                             Born.setText("");
                         }
 
-                        /*if(jsonObject.has("sex")) {
-                            BornJ = jsonObject.getString("sex");
-                            Born.setText(sexJ);
-                            p.setBorn(sexJ);
+                        if(jsonObject.has("sex")) {
+                            sexJ = jsonObject.getString("sex");
+                            if (sexJ.equals("I")) sex.setText(R.string.I);
+                            else if (sexJ.equals("M")) sex.setText(R.string.M);
+                            else if (sexJ.equals("F")) sex.setText(R.string.F);
+
+                            p.setSex(sexJ);
                         }
                         else {
-                            Born.setText("");
-                        }*/
+                            sex.setText("");
+                        }
                     }
 
                 } catch (JSONException e) {
@@ -168,7 +171,7 @@ public class ProfileActivity extends AppCompatActivity {
                 myIntent.putExtra("barrio", p.getNeighborhood());
                 myIntent.putExtra("nombre", p.getName());
                 myIntent.putExtra("fecha", p.getBorn());
-                //myIntent.putExtra("sex", p.getSex());
+                myIntent.putExtra("sex", p.getSex());
 
 
 

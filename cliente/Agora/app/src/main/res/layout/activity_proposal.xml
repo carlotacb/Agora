@@ -113,6 +113,26 @@
         </android.support.design.widget.TextInputLayout>
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="4dp"
+            android:text="@string/categoria"/>
+
+        <Spinner
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/cate"
+            android:padding="8dp"
+            android:textSize="14dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="serif"/>
+
+
+        <TextView
             android:id="@+id/txtPosAttached"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
