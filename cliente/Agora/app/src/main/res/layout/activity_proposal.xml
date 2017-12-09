@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:inputType="textPersonName"
+                android:inputType="textCapSentences"
                 android:textColorHint="#e89b9696"
                 android:paddingTop="8dp"
                 android:fontFamily="sans-serif"
