@@ -43,7 +43,6 @@ public class ProposalsActivity extends AppCompatActivity {
     private TextView Descripcion;
     private TextView txtPosAttached;
     private TextInputLayout errortitulo, errordescripcion;
-    private Spinner spinC;
 
     private ProgressBar prog;
     private ImageView canviidioma, enrerre;
@@ -53,6 +52,9 @@ public class ProposalsActivity extends AppCompatActivity {
     private double lat;
     private double lng;
 
+    private Spinner spin;
+    String[] categorias;
+    String[] categoriasGenericas = {"C", "D", "O","M", "E", "T","Q", "S","A"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +67,27 @@ public class ProposalsActivity extends AppCompatActivity {
         deletePos = (Button) findViewById(R.id.btnDeletePosition);
 
 
+        categorias = new String[]{getString(R.string.cultura), getString(R.string.deportes), getString(R.string.ocio),
+                                  getString(R.string.mantenimiento), getString(R.string.eventos), getString(R.string.turismo),
+                                  getString(R.string.quejas), getString(R.string.soporte),getString(R.string.todo)};
+
+        spin = (Spinner) findViewById(R.id.cate);
+        //Creating the ArrayAdapter instance having the bank name list
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item,categorias);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        spin.setAdapter(aa);
+
+
         Titulo = (TextView) findViewById(R.id.titulo);
         Descripcion = (TextView) findViewById(R.id.descripcion);
         errortitulo = (TextInputLayout) findViewById(R.id.titulo_up);
         errordescripcion = (TextInputLayout) findViewById(R.id.descripcion_up);
 
         txtPosAttached = (TextView) findViewById(R.id.txtPosAttached);
-
+        if(getIntent().hasExtra("cat")){
+            spin.setSelection(getIntent().getIntExtra("cat",0));
+        }
         if (getIntent().hasExtra("Title")){
             Titulo.setText(getIntent().getStringExtra("Title"));
         }
@@ -88,24 +104,6 @@ public class ProposalsActivity extends AppCompatActivity {
             lng = 0;
             deletePos.setVisibility(View.INVISIBLE);
         }
-        spinC = (Spinner) findViewById(R.id.CategorySpinner);
-
-        /*cultura
-        deportes
-        ocio
-        mantenimiento
-        eventos
-        turismo
-        quejas
-        soporte*/
-
-        String[] diferentesCategoriasGenerico = {"C", "D", "O","M", "E", "T","Q", "S"};
-
-        //Creating the ArrayAdapter instance having the bank name list
-        ArrayAdapter<String> aa = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,diferentesCategoriasGenerico);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //Setting the ArrayAdapter data on the Spinner
-        spinC.setAdapter(aa);
 
         prog = (ProgressBar) findViewById(R.id.crproposalprogressbar);
 
@@ -170,11 +168,15 @@ public class ProposalsActivity extends AppCompatActivity {
                     JSONObject location = new JSONObject();
 
                     try {
+                        String ca = categoriasGenericas[spin.getSelectedItemPosition()];
+
                         values.put("title", strTitulo);
                         values.put("content", strDescripcion);
                         location.put("lat", getIntent().getDoubleExtra("lat",0));
                         location.put("long", getIntent().getDoubleExtra("lng",0));
                         values.put("location", location);
+                        values.put("categoria",ca);
+                        Toast.makeText(getApplicationContext(), ca, Toast.LENGTH_LONG).show();
                     }
                     catch (JSONException e) {
 

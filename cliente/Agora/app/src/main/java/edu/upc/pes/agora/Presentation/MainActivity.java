@@ -129,21 +129,22 @@ public class MainActivity extends AppCompatActivity {
         opcions.add(res.getString(R.string.tot));
         opcions.add(res.getString(R.string.categ));
         opcions.add(res.getString(R.string.user));
-
+/*
         usuaris.add("Usuario1");
         usuaris.add("Usuario2");
         usuaris.add("Usuario3");
         usuaris.add("Usuario4");
         usuaris.add("Usuario5");
         usuaris.add("Usuario6");
-        usuaris.add("Usuario7");
+        usuaris.add("Usuario7");*/
 
+        categories.add(res.getString(R.string.todo));
         categories.add(res.getString(R.string.cultura));
-        categories.add(res.getString(R.string.deportes));
         categories.add(res.getString(R.string.ocio));
         categories.add(res.getString(R.string.mantenimiento));
         categories.add(res.getString(R.string.eventos));
         categories.add(res.getString(R.string.turismo));
+        categories.add(res.getString(R.string.deportes));
         categories.add(res.getString(R.string.quejas));
         categories.add(res.getString(R.string.soporte));
 
@@ -154,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem = filterSpinner.getSelectedItem().toString().toLowerCase();
-
+                final View V = view;
                 switch (position) {
                     case 0: // TOT
                         ferGetAsyncTask();
@@ -177,33 +178,124 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 String selectedItem = searchSpinner.getSelectedItem().toString().toLowerCase();
+                                String categoriaS = "";
+                                Toast toast;
+                                String url = "https://agora-pes.herokuapp.com/api/proposal";
                                 switch (position) {
-                                    case 0: //cultura
+                                    case 0: //todas las categorias
                                         Log.i("asdse", selectedItem);
+                                        categoriaS = "A";
+                                         toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
+                                        toast.show();
 
                                         break;
-                                    case 1: //deportes
+                                    case 1: //cultura
                                         Log.i("asdse", selectedItem);
+                                        categoriaS = "C";
+                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
+                                        toast.show();
+                                        url += "?category="+categoriaS;
                                         break;
                                     case 2: //ocio
                                         Log.i("asdse", selectedItem);
+                                        categoriaS = "O";
+                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
+                                        toast.show();
+                                        url += "?category="+categoriaS;
+
                                         break;
                                     case 3: // mantenimiento
                                         Log.i("asdse", selectedItem);
+                                        categoriaS = "M";
+                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
+                                        toast.show();
+                                        url += "?category="+categoriaS;
+
                                         break;
                                     case 4: // eventos
                                         Log.i("asdse", selectedItem);
+                                        categoriaS = "E";
+                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
+                                        toast.show();
+                                        url += "?category="+categoriaS;
+
                                         break;
                                     case 5: // turismo
                                         Log.i("asdse", selectedItem);
+                                        categoriaS = "T";
+                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
+                                        toast.show();
+                                        url += "?category="+categoriaS;
+
                                         break;
-                                    case 6: // quejas
+                                    case 6: // deportes
                                         Log.i("asdse", selectedItem);
+                                        categoriaS = "D";
+                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
+                                        toast.show();
+                                        url += "?category="+categoriaS;
+
                                         break;
-                                    case 7: // soporte
+                                    case 7: // quejas
                                         Log.i("asdse", selectedItem);
+                                        categoriaS = "Q";
+                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
+                                        toast.show();
+                                        url += "?category="+categoriaS;
+
+                                        break;
+                                    case 8: // soporte
+                                        Log.i("asdse", selectedItem);
+                                        categoriaS = "S";
+                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
+                                        toast.show();
+                                        url += "?category="+categoriaS;
+
                                         break;
                                 }
+
+                                new GetTokenAsyncTask(url, mainContext) {
+
+                                    @Override
+                                    protected void onPostExecute(JSONObject jsonObject) {
+                                        try {
+                                            if (jsonObject.has("error")) {
+                                                String error = jsonObject.get("error").toString();
+                                                Log.i("asd123", "Error");
+
+                                                Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                                                toast.show();
+                                            }
+
+                                            else if (jsonObject != null){
+                                                JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
+                                                propostes = new ArrayList<>();
+
+                                                if (ArrayProp != null) {
+                                                    for (int i=0; i < ArrayProp.length(); i++){
+
+                                                        Log.i("asd123", (ArrayProp.get(i).toString()));
+
+                                                        JSONObject jas = ArrayProp.getJSONObject(i);
+                                                        String title = jas.getString("title");
+                                                        String owner = jas.getString("owner");
+                                                        String description = jas.getString("content");
+                                                        Integer id = jas.getInt("id");
+                                                        String ca = jas.getString("categoria");
+
+                                                        Proposals aux = new Proposals(id, title, description, owner, ca);
+
+                                                        propostes.add(aux);
+                                                    }
+                                                }
+                                                llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
+                                            }
+                                        } catch (JSONException e ) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }.execute(Jason);
+
                             }
 
                             @Override
@@ -221,21 +313,76 @@ public class MainActivity extends AppCompatActivity {
                         buscartext.setVisibility(View.VISIBLE);
                         searchSpinner.setVisibility(View.VISIBLE);
 
-                        ArrayAdapter<String> opcionsSpinnerAdapter2 = new ArrayAdapter<>(view.getContext(), R.layout.filter_spinner_style, usuaris);
-                        opcionsSpinnerAdapter2.setDropDownViewResource(R.layout.filter_spinner_style);
-                        searchSpinner.setAdapter(opcionsSpinnerAdapter2);
-                        searchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                String selectedItem = searchSpinner.getSelectedItem().toString().toLowerCase();
-                                Log.i("asdse", selectedItem);
-                            }
+
+                        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile/comunity", mainContext) {
 
                             @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
+                            protected void onPostExecute(JSONObject jsonObject) {
+                                try {
+                                    if (jsonObject.has("error")) {
+                                        String error = jsonObject.get("error").toString();
+                                        Log.i("asd123", "Error");
 
+                                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                                        toast.show();
+                                    }
+
+                                    else if (jsonObject != null){
+                                        JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
+                                        usuaris = new ArrayList<>();
+
+                                        if (ArrayProp != null) {
+                                            for (int i=0; i < ArrayProp.length(); i++){
+
+                                                Log.i("asd123", (ArrayProp.get(i).toString()));
+
+                                                JSONObject jas = ArrayProp.getJSONObject(i);
+                                          /*      String title = jas.getString("title");
+                                                String owner = jas.getString("owner");
+                                                String description = jas.getString("content");
+                                                Integer id = jas.getInt("id");
+                                                String ca = jas.getString("categoria");
+
+                                                Proposals aux = new Proposals(id, title, description, owner, ca);
+
+                                                propostes.add(aux);
+                                                */
+
+
+                                               String username = jas.getString("username");
+                                               usuaris.add(username);
+                                                Toast toast = Toast.makeText(getApplicationContext(), username, Toast.LENGTH_SHORT);
+                                                toast.show();
+
+                                            }
+                                        }
+                                        //llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
+
+                                        ArrayAdapter<String> opcionsSpinnerAdapter2 = new ArrayAdapter<>(V.getContext(), R.layout.filter_spinner_style, usuaris);
+                                        opcionsSpinnerAdapter2.setDropDownViewResource(R.layout.filter_spinner_style);
+                                        searchSpinner.setAdapter(opcionsSpinnerAdapter2);
+                                        searchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                            @Override
+                                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                String selectedItem = searchSpinner.getSelectedItem().toString().toLowerCase();
+                                                Log.i("asdse", selectedItem);
+                                            }
+
+                                            @Override
+                                            public void onNothingSelected(AdapterView<?> parent) {
+
+                                            }
+                                        });
+
+                                    }
+                                } catch (JSONException e ) {
+                                    e.printStackTrace();
+                                }
                             }
-                        });
+                        }.execute(Jason);
+
+
+
 
                         break;
                 }
@@ -358,8 +505,9 @@ public class MainActivity extends AppCompatActivity {
                                 String owner = jas.getString("owner");
                                 String description = jas.getString("content");
                                 Integer id = jas.getInt("id");
+                                String ca = jas.getString("categoria");
 
-                                Proposals aux = new Proposals(id, title, description, owner);
+                                Proposals aux = new Proposals(id, title, description, owner, ca);
 
                                 propostes.add(aux);
                             }

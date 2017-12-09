@@ -105,10 +105,11 @@ public class MyProposalsActivity extends AppCompatActivity {
                                 String description = jas.getString("content");
                                 Integer id = jas.getInt("id");
                                 String creada = jas.getString("createdDateTime");
+                                String ca = jas.getString("categoria");
 
                                 Log.i("asdCreate", creada);
 
-                                Proposals aux = new Proposals(id, title, description, owner);
+                                Proposals aux = new Proposals(id, title, description, owner,ca);
 
                                 propostes.add(aux);
                             }

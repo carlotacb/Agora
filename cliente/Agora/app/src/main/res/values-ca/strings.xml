@@ -101,4 +101,5 @@
     <string name="fieldnecesary">Camp Necesari *</string>
     <string name="passwodsiguals">Els passwords han de ser iguals</string>
     <string name="determinant">" el "</string>
+    <string name="todo">Totes</string>
 </resources>

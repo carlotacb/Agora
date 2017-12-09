@@ -129,6 +129,7 @@
 
 
     <!-- Categorias -->
+    <string name="categoria">Categoria</string>
     <string name="cultura">Cultura</string>
     <string name="deportes">Deportes</string>
     <string name="ocio">Ocio</string>
@@ -137,6 +138,8 @@
     <string name="turismo">Turismo</string>
     <string name="quejas">Quejas</string>
     <string name="soporte">soporte</string>
+    <string name="todo">Todas</string>
+
 
     <string name="str_en" translatable="false">English</string>
     <string name="str_es" translatable="false">Spanish</string>

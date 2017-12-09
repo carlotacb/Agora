@@ -64,12 +64,28 @@ public class ProposalAdapter extends BaseAdapter {
         TextView owner = (TextView) convertView.findViewById(R.id.owner);
         //ImageView button = (ImageView) convertView.findViewById(R.id.compartir);
         TextView moreinfo = (TextView) convertView.findViewById(R.id.btnLernMore);
+        TextView categoria = (TextView) convertView.findViewById(R.id.categoria);
 
         final Proposals proposal = listProposals.get(position);
 
         titol.setText(proposal.getTitle());
         descripcio.setText(proposal.getDescription());
         owner.setText(proposal.getOwner());
+        String c = proposal.getCategoria();
+
+        if (c.equals("C")) c = context.getString(R.string.cultura);
+        else if (c.equals("D")) c = context.getString(R.string.deportes);
+        else if (c.equals("O")) c = context.getString(R.string.ocio);
+        else if (c.equals("M")) c = context.getString(R.string.mantenimiento);
+        else if (c.equals("E")) c = context.getString(R.string.eventos);
+        else if (c.equals("T")) c = context.getString(R.string.turismo);
+        else if (c.equals("Q")) c = context.getString(R.string.quejas);
+        else if (c.equals("S")) c = context.getString(R.string.soporte);
+        else if (c.equals("A")) c = context.getString(R.string.todo); // para mostrar todas las categorias
+
+
+
+        categoria.setText(c);
 
         /*button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +116,7 @@ public class ProposalAdapter extends BaseAdapter {
                 myIntent.putExtra("Description", proposal.getDescription());
                 myIntent.putExtra("id", proposal.getId());
                 myIntent.putExtra("Owner", proposal.getOwner());
+                myIntent.putExtra("categoria", proposal.getCategoria());
                 v.getContext().startActivity(myIntent);
 
                 Log.i("asd", "clica");
