@@ -15,7 +15,7 @@ module.exports = app => {
 
     app.post('/api/profile', isAuthenticated, async function (req, res) {
         try {
-            const {cpCode, realname, description, neighborhood, bdate, sex} = req.body
+            const {cpCode, realname, description, neighborhood, bdate, sex, image} = req.body
             const user = await userModule.updateProfile({
                 username: req.username,
                 description,
@@ -23,7 +23,8 @@ module.exports = app => {
                 realname,
                 neighborhood,
                 bdate,
-                sex
+                sex,
+                image,
             })
             res.json(user)
         } catch (error) {

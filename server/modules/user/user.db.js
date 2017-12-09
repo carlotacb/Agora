@@ -28,7 +28,7 @@ async function getProfile({username}) {
     return collection().findOne({username}, {_id: 0, password: 0})
 }
 
-async function updateProfile({username, description, cpCode, realname, neighborhood, bdate, sex}) {
+async function updateProfile({username, description, cpCode, realname, neighborhood, bdate, sex, image}) {
     return collection().updateOne({username: username}, {
         $set: {
             cpCode: cpCode,
@@ -37,6 +37,7 @@ async function updateProfile({username, description, cpCode, realname, neighborh
             bdate: new Date(bdate),
             sex: sex,
             description: description,
+            image: image,
             updatedDateTime: new Date()
         }
     })
