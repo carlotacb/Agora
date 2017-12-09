@@ -4,22 +4,19 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +26,6 @@ import org.json.JSONObject;
 import java.util.Locale;
 
 import edu.upc.pes.agora.Logic.Constants;
-import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
-import edu.upc.pes.agora.Logic.NavMenuListener;
 import edu.upc.pes.agora.Logic.PostAsyncTask;
 import edu.upc.pes.agora.R;
 
@@ -47,8 +42,8 @@ public class ProposalsActivity extends AppCompatActivity {
     private TextView Titulo;
     private TextView Descripcion;
     private TextView txtPosAttached;
-
     private TextInputLayout errortitulo, errordescripcion;
+    private Spinner spinC;
 
     private ProgressBar prog;
     private ImageView canviidioma, enrerre;
@@ -57,6 +52,7 @@ public class ProposalsActivity extends AppCompatActivity {
     String strDescripcion;
     private double lat;
     private double lng;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +88,24 @@ public class ProposalsActivity extends AppCompatActivity {
             lng = 0;
             deletePos.setVisibility(View.INVISIBLE);
         }
+        spinC = (Spinner) findViewById(R.id.CategorySpinner);
+
+        /*cultura
+        deportes
+        ocio
+        mantenimiento
+        eventos
+        turismo
+        quejas
+        soporte*/
+
+        String[] diferentesCategoriasGenerico = {"C", "D", "O","M", "E", "T","Q", "S"};
+
+        //Creating the ArrayAdapter instance having the bank name list
+        ArrayAdapter<String> aa = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,diferentesCategoriasGenerico);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        spinC.setAdapter(aa);
 
         prog = (ProgressBar) findViewById(R.id.crproposalprogressbar);
 
