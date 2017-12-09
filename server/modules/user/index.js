@@ -79,4 +79,5 @@ module.exports = {
     getProfile: db.getProfile,
     updateProfile: db.updateProfile,
     updatePassword: updatePassword,
+    getByZone: db.getByZone,
 }
