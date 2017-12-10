@@ -1,4 +1,5 @@
 const inside = require('point-in-polygon')
+const error = require('../error')
 
 const loadPolygon = id => require(`./geometries/${parseInt(id)}.json`).geometries[0].coordinates[0][0]
 
@@ -79,7 +80,8 @@ async function throwIfInvalidLocationForZone({zoneId, location}) {
     const pointIsInsideZone = inside(point, zone.polygon)
 
     if (!pointIsInsideZone) {
-        throw new Error(`Point ${JSON.stringify(location)} is not in zone ${zone.name}`)
+        console.error(`Point ${JSON.stringify(location)} is not in zone ${zone.name}`);
+        throw new error.locationOutsideAllowedZone()
     }
 }
 
