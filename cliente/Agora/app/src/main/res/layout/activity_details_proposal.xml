@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/backbutton"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:clickable="true"
             android:src="@mipmap/ic_arrow"
             android:focusable="true"/>
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/multiidiomareg"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:clickable="true"
             android:src="@mipmap/ic_language"
             android:focusable="true"/>
@@ -46,7 +46,8 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentEnd="true"
             android:src="@drawable/ic_twitter"
             android:id="@+id/compartir"/>
 
@@ -69,7 +70,7 @@
             android:text="Títol"
             android:layout_alignParentStart="true"
             android:textColor="#000"
-            android:textSize="30sp"/>
+            android:textSize="25sp"/>
 
         <LinearLayout android:layout_width="match_parent"
                       android:orientation="horizontal"
@@ -81,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccentLight"
-                android:layout_marginEnd="2sp"
+                android:layout_marginEnd="1sp"
                 android:text="@string/creadopor"/>
 
             <TextView
@@ -96,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorAccentLight"
-                android:layout_marginStart="4sp"
+                android:layout_marginStart="3sp"
                 android:layout_marginEnd="2sp"
                 android:text="@string/determinant"/>
 
@@ -109,7 +110,6 @@
 
         </LinearLayout>
 
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -120,6 +120,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="25dp"
             android:layout_gravity="left"
+            android:textSize="16sp"
             android:layout_below="@+id/linearlayoutinfo"
             android:text="descripcio"/>
 
@@ -129,12 +130,29 @@
                       android:layout_below="@+id/descripcioproposta"
                       android:layout_height="wrap_content">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/numerounvote"
+                android:text="0"
+                android:textColor="#000"
+                android:layout_marginEnd="10dp"
+                android:layout_height="wrap_content"/>
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="15dp"
                 android:src="@mipmap/ic_thumb_down"
                 android:id="@+id/vote"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/numerovote"
+                android:text="0"
+                android:textColor="#000"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_height="wrap_content"/>
 
             <ImageView
                 android:layout_width="wrap_content"

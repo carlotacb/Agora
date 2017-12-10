@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -40,10 +41,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import edu.upc.pes.agora.Logic.BackOnClickListener;
 import edu.upc.pes.agora.Logic.Comment;
 import edu.upc.pes.agora.Logic.CommentsAdapter;
 import edu.upc.pes.agora.Logic.Constants;
 import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
+import edu.upc.pes.agora.Logic.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.PostAsyncTask;
 import edu.upc.pes.agora.Logic.ProposalAdapter;
 import edu.upc.pes.agora.Logic.Proposals;
@@ -61,12 +64,11 @@ public class DetailsProposalActivity extends AppCompatActivity {
     private String newComent;
     private ImageView canviidioma, enrerre, compartir;
 
-    String mtit, mdesc, mowner, mcategorias, c;
-
-    private Configuration config = new Configuration();
-    private Locale locale;
+    private String mtit, mdesc, mowner, mcategorias, c;
 
     private FloatingActionButton addcoment;
+
+    private Integer idprop;
 
     private JSONObject Jason = new JSONObject();
 
@@ -79,9 +81,12 @@ public class DetailsProposalActivity extends AppCompatActivity {
         titol = (TextView) findViewById(R.id.titolproposal);
         descripcio = (TextView) findViewById(R.id.descripcioproposta);
         categoria = (TextView) findViewById(R.id.categoriaproposta);
-        llista_comentaris = (ListView) findViewById(R.id.listcommentaris);
-        addcoment = (FloatingActionButton) findViewById(R.id.fabcoment);
         owner = (TextView) findViewById(R.id.ownerproposal);
+
+        llista_comentaris = (ListView) findViewById(R.id.listcommentaris);
+
+        addcoment = (FloatingActionButton) findViewById(R.id.fabcoment);
+
         canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
         enrerre = (ImageView) findViewById(R.id.backbutton);
         compartir = (ImageView) findViewById(R.id.compartir);
@@ -106,19 +111,216 @@ public class DetailsProposalActivity extends AppCompatActivity {
             c = i.getStringExtra("Categoria");
         }
 
-        if (c.equals("C")) mcategorias = res.getString(R.string.cultura);
-        else if (c.equals("D")) mcategorias = res.getString(R.string.deportes);
-        else if (c.equals("O")) mcategorias = res.getString(R.string.ocio);
-        else if (c.equals("M")) mcategorias = res.getString(R.string.mantenimiento);
-        else if (c.equals("E")) mcategorias = res.getString(R.string.eventos);
-        else if (c.equals("T")) mcategorias = res.getString(R.string.turismo);
-        else if (c.equals("Q")) mcategorias = res.getString(R.string.quejas);
-        else if (c.equals("S")) mcategorias = res.getString(R.string.soporte);
+        idprop = i.getIntExtra("id", 0);
+
+        switch (c) {
+            case "C":
+                mcategorias = res.getString(R.string.cultura);
+                break;
+            case "D":
+                mcategorias = res.getString(R.string.deportes);
+                break;
+            case "O":
+                mcategorias = res.getString(R.string.ocio);
+                break;
+            case "M":
+                mcategorias = res.getString(R.string.mantenimiento);
+                break;
+            case "E":
+                mcategorias = res.getString(R.string.eventos);
+                break;
+            case "T":
+                mcategorias = res.getString(R.string.turismo);
+                break;
+            case "Q":
+                mcategorias = res.getString(R.string.quejas);
+                break;
+            case "S":
+                mcategorias = res.getString(R.string.soporte);
+                break;
+        }
 
         categoria.setText(mcategorias);
 
-        final Integer idprop = i.getIntExtra("id", 0);
+        llistarcomentaris();
 
+        if (Constants.Idioma.equals("ca")) {
+            canviidioma.setImageResource(R.drawable.rep);
+        }
+
+        else if (Constants.Idioma.equals("es")) {
+            canviidioma.setImageResource(R.drawable.spa);
+        }
+
+        else if (Constants.Idioma.equals("en")) {
+            canviidioma.setImageResource(R.drawable.ing);
+        }
+
+        final Intent idioma = new Intent(DetailsProposalActivity.this, DetailsProposalActivity.class);
+        Intent back = new Intent(DetailsProposalActivity.this, MainActivity.class);
+        idioma.putExtra("Title", mtit);
+        idioma.putExtra("Description", mdesc);
+        idioma.putExtra("id", idprop);
+        idioma.putExtra("Owner", mowner);
+        idioma.putExtra("Categoria", c);
+        idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
+
+        enrerre.setOnClickListener(new BackOnClickListener(back, getApplicationContext()));
+
+        compartir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("asdCompartir", "true");
+                String intro = getString(R.string.mensajecompartir);
+                String tweetUrl = "https://twitter.com/intent/tweet?text=" + intro + "<br>" + "<br>" + mtit + "<br>"+ mdesc + "&url=";
+                tweetUrl = Html.fromHtml(tweetUrl).toString();
+                Uri uri = Uri.parse(tweetUrl);
+                v.getRootView().getContext().startActivity(new Intent(Intent.ACTION_VIEW, uri));
+            }
+        });
+
+        addcoment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder dialogoaddcoment = new AlertDialog.Builder(v.getRootView().getContext());
+
+                final EditText input = new EditText(v.getRootView().getContext());
+                input.setSingleLine();
+                FrameLayout container = new FrameLayout(DetailsProposalActivity.this);
+                FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                input.setLayoutParams(params);
+                input.getBackground().clearColorFilter();
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                container.addView(input);
+                dialogoaddcoment.setTitle(getString(R.string.nou));
+                String mensajeparaañadir = String.format(res.getString(R.string.mensajenc), mtit);
+                dialogoaddcoment.setMessage(mensajeparaañadir);
+                dialogoaddcoment.setIcon(R.drawable.logo);
+                dialogoaddcoment.setCancelable(false);
+                dialogoaddcoment.setView(container);
+
+                dialogoaddcoment.setPositiveButton(getString(R.string.añadir), new DialogInterface.OnClickListener() {
+                    @SuppressLint("StaticFieldLeak")
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        newComent = input.getText().toString();
+
+                        JSONObject values = new JSONObject();
+                        try {
+                            values.put("comment", newComent);
+                        }
+                        catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + idprop + "/comment", DetailsProposalActivity.this) {
+                            @Override
+                            protected void onPostExecute(JSONObject resObject) {
+                                Boolean result = false;
+                                String error = res.getString(R.string.errorCreacion);
+
+                                try {
+                                    if (resObject.has("success")) {
+                                        result = resObject.getBoolean("success");
+                                    }
+
+                                    if (!result && resObject.has("errorMessage")) {
+                                        Log.i("asdCreacion", error);
+                                        //Toast.makeText(getApplicationContext(), error , Toast.LENGTH_LONG).show();
+                                    }
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                if (result) {
+                                    input.getBackground().clearColorFilter();
+                                    Intent myIntent = new Intent(getApplicationContext(), DetailsProposalActivity.class);
+                                    myIntent.putExtra("Title", mtit);
+                                    myIntent.putExtra("Description", mdesc);
+                                    myIntent.putExtra("id", idprop);
+                                    myIntent.putExtra("Owner", mowner);
+                                    myIntent.putExtra("Categoria", c);
+                                    startActivity(myIntent);
+                                }
+
+                                else {
+                                    Log.i("asdCreacion", "reset");
+                                    input.setText("");
+                                    input.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                                }
+                            }
+                        }.execute(values);
+                    }
+                });
+
+                dialogoaddcoment.setNegativeButton(getString(R.string.Cancelar), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                final AlertDialog dialog = dialogoaddcoment.create();
+                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+                    @Override
+                    public void onShow(DialogInterface dialog) {
+                        if(input.getText().toString().equals("")) ((AlertDialog)dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                    }
+                });
+
+                dialog.show();
+
+                input.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        if (input.getText().toString().equals("")) {
+                            // Disable ok button
+                            (dialog).getButton(
+                                    AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                        } else {
+                            // Something into edit text. Enable the button.
+                            (dialog).getButton(
+                                    AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                        }
+                    }
+                });
+
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent refresh = new Intent(this, MainActivity.class);
+        startActivity(refresh);
+    }
+
+    public static int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private void llistarcomentaris() {
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + idprop, this) {
 
             @Override
@@ -165,223 +367,6 @@ public class DetailsProposalActivity extends AppCompatActivity {
                 }
             }
         }.execute(Jason);
-
-
-        addcoment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                AlertDialog.Builder dialogoaddcoment = new AlertDialog.Builder(v.getRootView().getContext());
-
-                final EditText input = new EditText(v.getRootView().getContext());
-                input.setSingleLine();
-                FrameLayout container = new FrameLayout(DetailsProposalActivity.this);
-                FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
-                params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
-                input.setLayoutParams(params);
-                input.getBackground().clearColorFilter();
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                container.addView(input);
-                dialogoaddcoment.setTitle("Nou Comentari");
-                dialogoaddcoment.setCancelable(false);
-                dialogoaddcoment.setView(container);
-
-                dialogoaddcoment.setPositiveButton("Afegir", new DialogInterface.OnClickListener() {
-                    @SuppressLint("StaticFieldLeak")
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        newComent = input.getText().toString();
-
-                        JSONObject values = new JSONObject();
-                        try {
-                            values.put("comment", newComent);
-                        }
-                        catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + idprop + "/comment", DetailsProposalActivity.this) {
-                            @Override
-                            protected void onPostExecute(JSONObject resObject) {
-                                Boolean result = false;
-                                String error = res.getString(R.string.errorCreacion);
-
-                                try {
-                                    if (resObject.has("success")) {
-                                        result = resObject.getBoolean("success");
-                                    }
-
-                                    if (!result && resObject.has("errorMessage")) {
-                                        Log.i("asdCreacion", error);
-                                        Toast.makeText(getApplicationContext(), error , Toast.LENGTH_LONG).show();
-                                    }
-
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                                if (result) {
-                                    Toast.makeText(getApplicationContext(), "Comentari creat", Toast.LENGTH_LONG).show();
-
-                                    Intent myIntent = new Intent(getApplicationContext(), DetailsProposalActivity.class);
-                                    myIntent.putExtra("Title", mtit);
-                                    myIntent.putExtra("Description", mdesc);
-                                    myIntent.putExtra("id", idprop);
-                                    myIntent.putExtra("Owner", mowner);
-                                    myIntent.putExtra("Categoria", c);
-                                    startActivity(myIntent);
-                                }
-
-                                else {
-                                    Log.i("asdCreacion", "reset");
-                                    input.setText("");
-                                }
-                            }
-                        }.execute(values);
-                    }
-                });
-
-                dialogoaddcoment.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                final AlertDialog dialog = dialogoaddcoment.create();
-                dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-
-                    @Override
-                    public void onShow(DialogInterface dialog) {
-                        if(input.getText().toString().equals("")) ((AlertDialog)dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-                    }
-                });
-
-                dialog.show();
-
-                input.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        if (input.getText().toString().equals("")) {
-                            // Disable ok button
-                            (dialog).getButton(
-                                    AlertDialog.BUTTON_POSITIVE).setEnabled(false);
-                        } else {
-                            // Something into edit text. Enable the button.
-                            (dialog).getButton(
-                                    AlertDialog.BUTTON_POSITIVE).setEnabled(true);
-                        }
-                    }
-                });
-
-            }
-        });
-
-        if (Constants.Idioma.equals("ca")) {
-            canviidioma.setImageResource(R.drawable.rep);
-        }
-
-        else if (Constants.Idioma.equals("es")) {
-            canviidioma.setImageResource(R.drawable.spa);
-        }
-
-        else if (Constants.Idioma.equals("en")) {
-            canviidioma.setImageResource(R.drawable.ing);
-        }
-
-        canviidioma.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                final Intent refresh = new Intent(DetailsProposalActivity.this, DetailsProposalActivity.class);
-                refresh.putExtra("Title", mtit);
-                refresh.putExtra("Description", mdesc);
-                refresh.putExtra("id", idprop);
-                refresh.putExtra("Owner", mowner);
-                refresh.putExtra("Categoria", c);
-
-                Log.i("asd", "clica");
-                refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                PopupMenu popupMenu = new PopupMenu(v.getRootView().getContext(), canviidioma);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-
-                            case R.id.men_castella:
-                                Constants.Idioma = "es";
-                                break;
-
-                            case R.id.men_catala:
-                                Constants.Idioma = "ca";
-                                break;
-
-                            case R.id.men_angles:
-                                Constants.Idioma = "en";
-                                break;
-                        }
-
-                        locale = new Locale(Constants.Idioma);
-                        config.locale = locale;
-                        getResources().updateConfiguration(config, null);
-                        startActivity(refresh);
-                        finish();
-
-                        return false;
-                    }
-                });
-                popupMenu.inflate(R.menu.idioma);
-                popupMenu.show();
-
-            }
-        });
-
-        enrerre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent log = new Intent(DetailsProposalActivity.this, MainActivity.class);
-                log.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(log);
-            }
-        });
-
-        compartir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("asdCompartir", "true");
-                String intro = "Mira que propuesta he encontrado en Agora!";
-                String tweetUrl = "https://twitter.com/intent/tweet?text=" + intro + "<br>" + "<br>" + mtit + "<br>"+ mdesc + "&url=";
-                tweetUrl = Html.fromHtml(tweetUrl).toString();
-                Uri uri = Uri.parse(tweetUrl);
-                v.getRootView().getContext().startActivity(new Intent(Intent.ACTION_VIEW, uri));
-            }
-        });
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent refresh = new Intent(this, MainActivity.class);
-        startActivity(refresh);
-    }
-
-    public static int dpToPx(int dp) {
-        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
 }

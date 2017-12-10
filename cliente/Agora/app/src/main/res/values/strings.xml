@@ -76,8 +76,8 @@
     <string name="done">Propuesta "%1$s" creada correctamnete</string>
     <string name="addPosition">Add position</string>
     <string name="savePosition">Save position</string>
-    <string name="deletePosition">Delete position</string>
-    <string name="posAttached">Position attached</string>
+    <string name="deletePosition" translatable="false">Delete position</string>
+    <string name="posAttached" translatable="false">Position attached</string>
     <string name="nuevapropuesta">Nueva Propuesta</string>
     <string name="spinnerhint">Seleccionar una Categoria...</string>
 
@@ -109,7 +109,9 @@
 
     <!-- Strings per Detalls de la proposta -->
     <string name="determinant"> el </string>
-
+    <string name="nou">Nuevo Comentario</string>
+    <string name="mensajenc">Introducir el nuevo comentario para la propuesta %1$s</string>
+    <string name="añadir">añadir</string>
 
     <!-- Strings related to edit profile -->
     <string name="M">Hombre</string>
@@ -129,7 +131,7 @@
 
 
     <!-- Categorias -->
-    <string name="categoria">Categoria</string>
+    <string name="categoria" translatable="false">Categoria</string>
     <string name="cultura">Cultura</string>
     <string name="deportes">Deportes</string>
     <string name="ocio">Ocio</string>
@@ -139,6 +141,9 @@
     <string name="quejas">Quejas</string>
     <string name="soporte">soporte</string>
     <string name="todo">Todas</string>
+
+    <!-- Strings para compartir -->
+    <string name="mensajecompartir">Mira que propuesta he encontrado en Agora!</string>
 
 
     <string name="str_en" translatable="false">English</string>
@@ -158,9 +163,9 @@
     <string name="title_activity_edit_profile">EditProfileActivity</string>
     <string name="title_activity_edit_proposal">EditProposalActivity</string>
 
-    <string name="title_activity_details_proposal">DetailsProposalActivity</string>
+    <string name="title_activity_details_proposal" translatable="false">DetailsProposalActivity</string>
 
-    <string name="title_activity_add_location">Map</string>
+    <string name="title_activity_add_location" translatable="false">Map</string>
 
 
 </resources>

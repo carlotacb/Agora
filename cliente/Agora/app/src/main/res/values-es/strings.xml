@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Agora</string>
-    <string name="Login" translatable="false">Entrar</string>
     <string name="SignIn">Regístrate</string>
     <string name="action_Registration">Registrarse</string>
     <string name="bienvenida">BIENVENIDO a ÀGORA</string>
@@ -41,7 +40,6 @@
     <string name="nuevapropuesta">Nueva Propuesta</string>
     <string name="title_activity_main">Página Principal</string>
     <string name="titulo">Título</string>
-    <string name="reset" translatable="false">Reset</string>
     <string name="search">Buscar</string>
     <string name="lesmevespropostes">Mis Propuestas</string>
     <string name="title_activity_my_propuestas">Mis Propuestas</string>
@@ -101,4 +99,9 @@
     <string name="passwodsiguals">Los passwords tienen que ser los mismos</string>
     <string name="determinant">" el "</string>
     <string name="todo">Todas</string>
+    <string name="spinnerhint">Seleccionar una categoria...</string>
+    <string name="nou">Nuevo Comentario</string>
+    <string name="mensajenc">Introduce el nuevo comentario para la propuesta \"%1$s\"</string>
+    <string name="añadir">Añadir</string>
+    <string name="mensajecompartir">Mira que propuesta he encontrado en Àgora!</string>
 </resources>

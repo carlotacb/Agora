@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Agora</string>
-    <string name="Login" translatable="false">Entrar</string>
     <string name="SignIn">Registra\'t</string>
     <string name="action_Registration">Registrar-se</string>
     <string name="bienvenida">BENVINGUT A ÀGORA</string>
     <string name="hint_password">Contrasenya</string>
-    <string name="hint_username">Username</string>
     <string name="pre_registre">Encara no estas registrat?</string>
     <string name="prompt_NewPassword">Contrasenya</string>
     <string name="prompt_identification">Codi de Registre</string>
@@ -40,7 +38,6 @@
     <string name="descrpicion">Descripció</string>
     <string name="home">Pàgina Principal</string>
     <string name="nuevapropuesta">Nova Proposta</string>
-    <string name="reset">Reset</string>
     <string name="title_activity_main">Pàgina Principal</string>
     <string name="titulo">Títol</string>
     <string name="search">Buscar</string>
@@ -102,4 +99,9 @@
     <string name="passwodsiguals">Els passwords han de ser iguals</string>
     <string name="determinant">" el "</string>
     <string name="todo">Totes</string>
+    <string name="spinnerhint">Sel·leccionar una categoria...</string>
+    <string name="nou">Nou Comentari</string>
+    <string name="mensajenc">Introdueix el nou comentari per la proposta \"%1$s\"</string>
+    <string name="añadir">Afegir</string>
+    <string name="mensajecompartir">Mira quina proposta he trobar a Àgora!</string>
 </resources>
