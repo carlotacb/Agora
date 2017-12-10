@@ -13,7 +13,7 @@ module.exports = app => {
         return res.send({status: 'up'})
     })
 
-    app.get('/api/zones', async function (req, res) {
+    app.get('/api/zones', function (req, res) {
         return res.send(zoneModules.zones)
     })
 
