@@ -73,6 +73,10 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
                     response.put("success",true);
                     //response.put("token", token);
                 }
+                else if(client.getResponseCode() == 400){
+                    response.put("success", false);
+                    response.put("errorMessage","Selected location outside of allowed zone.");
+                }
                 else  {
                     Log.i("asdTAG","response code: "+client.getResponseCode());
                     String error = client.getResponseMessage();

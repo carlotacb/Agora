@@ -248,7 +248,7 @@ public class ProposalsActivity extends AppCompatActivity {
                                 if (!result && resObject.has("errorMessage")) {
                                     String error = res.getString(R.string.errorCreacion);
                                     Log.i("asdCreacion", error);
-                                    if(resObject.getString("errorMessage").equals("")){ //TODO: Add errorMessage received if position is out of neighbourhood
+                                    if(resObject.getString("errorMessage").equals("Selected location outside of allowed zone.")){
                                         Toast.makeText(getApplicationContext(), res.getString(R.string.errorPosition), Toast.LENGTH_LONG).show();
                                     }else {
                                         Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
@@ -269,8 +269,8 @@ public class ProposalsActivity extends AppCompatActivity {
 
                             else {
                                 Log.i("asdCreacion", "reset");
-                                Titulo.setText("");
-                                Descripcion.setText("");
+                                //Titulo.setText("");
+                                //Descripcion.setText("");
                                 Create.setVisibility(View.VISIBLE);
                                 prog.setVisibility(View.GONE);
                             }
@@ -287,6 +287,7 @@ public class ProposalsActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), AddLocationActivity.class);
                 i.putExtra("Title", Titulo.getText().toString());
                 i.putExtra("Description", Descripcion.getText().toString());
+                i.putExtra("Category",spin.getSelectedItemPosition());
                 startActivity(i);
             }
         });
@@ -302,8 +303,8 @@ public class ProposalsActivity extends AppCompatActivity {
             }
         });
 
-        if (getIntent().hasExtra("cat")){
-            spin.setSelection(getIntent().getIntExtra("cat",0));
+        if (getIntent().hasExtra("Category")){
+            spin.setSelection(getIntent().getIntExtra("Category",0));
         }
 
         if (getIntent().hasExtra("Title")){

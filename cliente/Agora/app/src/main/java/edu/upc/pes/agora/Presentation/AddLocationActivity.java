@@ -78,6 +78,9 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
                 if (getIntent().hasExtra("Description")){
                     i.putExtra("Description", getIntent().getStringExtra("Description"));
                 }
+                if (getIntent().hasExtra("Category")){
+                    i.putExtra("Category", getIntent().getIntExtra("Category",0));
+                }
                 i.putExtra("lat", lat);
                 i.putExtra("lng", lng);
                 startActivity(i);
@@ -124,12 +127,15 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
         if (gpsAvailable()) {
             //If current location is available show in map
             LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
             LatLng currentLoc = new LatLng(lat, lng);
-            if (lat != 0 && lng != 0) {
-                marker = mMap.addMarker(new MarkerOptions().position(currentLoc).title("Your location"));
-                moveCamera(currentLoc);
-
+            if (lat ==0 && lng == 0){
+                lat = 41.3828939;
+                lng = 2.1774322;
+                LatLng defaultPos = new LatLng(lat, lng);
+                marker = mMap.addMarker(new MarkerOptions().position(defaultPos).title("Barcelona"));
+                moveCamera(defaultPos);
             }
         }else {
             LatLng center;
@@ -323,6 +329,9 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
     public void onLocationChanged(Location location) {
         this.setLat(location.getLatitude());
         this.setLng(location.getLongitude());
+        marker.remove();
+        marker = mMap.addMarker(new MarkerOptions().position(new LatLng(lat,lng)).title("Your location"));
+        moveCamera(new LatLng(lat,lng));
     }
 
     @Override
