@@ -12,6 +12,8 @@
     <color name="white">#FFFF</color>
 
     <color name="red_500_primary">#F44336</color>
+    <color name="red_100">#FFCDD2</color>
+
 
     <color name="refresh">#008000</color>
     <color name="refresh1">#008080</color>

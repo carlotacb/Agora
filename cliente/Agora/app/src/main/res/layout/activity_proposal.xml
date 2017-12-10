@@ -17,7 +17,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <RelativeLayout android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/backbutton"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:clickable="true"
                 android:src="@mipmap/ic_arrow"
                 android:focusable="true"/>
@@ -35,23 +35,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/multiidiomareg"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:clickable="true"
                 android:src="@mipmap/ic_language"
-                android:focusable="true"/>
+                android:focusable="true" />
 
         </RelativeLayout>
-
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="Nueva Propuesta"
-            android:textSize="30dp"
+            android:text="@string/nuevapropuesta"
+            android:textSize="30sp"
             android:textStyle="bold"
             android:padding="10dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:textColor="@color/colorPrimaryDark"/>
 
         <android.support.design.widget.TextInputLayout
@@ -89,7 +88,7 @@
             android:layout_marginLeft="10sp"
             android:layout_marginRight="10sp"
             android:paddingTop="16dp"
-            android:paddingBottom="8dp"
+            android:paddingBottom="10dp"
             android:layout_height="wrap_content">
 
             <EditText
@@ -112,43 +111,101 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="4dp"
-            android:text="@string/categoria"/>
-
         <Spinner
-            android:layout_width="300dp"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:id="@+id/cate"
             android:padding="8dp"
-            android:textSize="14dp"
+            android:textSize="16sp"
             android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="serif"/>
 
-
-        <TextView
+       <!-- <TextView
             android:id="@+id/txtPosAttached"
+            android:textSize="16sp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"/> -->
 
-        <Button
-            android:id="@+id/btnAddPosition"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/addPosition"/>
 
-        <Button
-            android:id="@+id/btnDeletePosition"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/deletePosition"
-            tools:visibility="invisible" />
+    <LinearLayout android:layout_width="wrap_content"
+                  android:orientation="horizontal"
+                  android:layout_gravity="center"
+                  android:layout_height="match_parent">
+
+        <RelativeLayout android:layout_width="match_parent"
+                        android:gravity="center"
+                        android:layout_height="36dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp">
+
+            <ImageButton
+                android:id="@+id/btnAddImage"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:background="@drawable/botonadd"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textSize="14sp"
+                android:src="@drawable/if_image_add_103590"
+                android:visibility="visible"/>
+
+            <ImageButton
+                android:id="@+id/btnDeleteImage"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:background="@drawable/botonremove"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textSize="14sp"
+                android:src="@drawable/if_image_remove_103594"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="match_parent"
+                        android:gravity="center"
+                        android:layout_height="36dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp">
+
+            <ImageButton
+                android:id="@+id/btnAddPosition"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:background="@drawable/botonadd"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textSize="14sp"
+                android:src="@mipmap/ic_locationonb"
+                android:visibility="visible"/>
+
+            <ImageButton
+                android:id="@+id/btnDeletePosition"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:background="@drawable/botonremove"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textSize="14sp"
+                android:src="@mipmap/ic_locationoff"
+                android:visibility="gone"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
         <LinearLayout android:layout_width="wrap_content"
                       android:layout_gravity="center"

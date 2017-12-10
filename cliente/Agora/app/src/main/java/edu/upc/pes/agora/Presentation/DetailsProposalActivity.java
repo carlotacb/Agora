@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.Html;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -53,12 +55,13 @@ public class DetailsProposalActivity extends AppCompatActivity {
     private TextView titol;
     private TextView descripcio;
     private TextView owner;
+    private TextView categoria;
 
     private ListView llista_comentaris;
     private String newComent;
-    private ImageView canviidioma, enrerre;
+    private ImageView canviidioma, enrerre, compartir;
 
-    String mtit, mdesc, mowner;
+    String mtit, mdesc, mowner, mcategorias, c;
 
     private Configuration config = new Configuration();
     private Locale locale;
@@ -75,11 +78,15 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
         titol = (TextView) findViewById(R.id.titolproposal);
         descripcio = (TextView) findViewById(R.id.descripcioproposta);
+        categoria = (TextView) findViewById(R.id.categoriaproposta);
         llista_comentaris = (ListView) findViewById(R.id.listcommentaris);
         addcoment = (FloatingActionButton) findViewById(R.id.fabcoment);
         owner = (TextView) findViewById(R.id.ownerproposal);
         canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
         enrerre = (ImageView) findViewById(R.id.backbutton);
+        compartir = (ImageView) findViewById(R.id.compartir);
+
+        final Resources res = this.getResources();
 
         Intent i = getIntent();
 
@@ -95,10 +102,22 @@ public class DetailsProposalActivity extends AppCompatActivity {
             owner.setText(i.getStringExtra("Owner"));
             mowner = i.getStringExtra("Owner");
         }
+        if (i.hasExtra("Categoria")) {
+            c = i.getStringExtra("Categoria");
+        }
+
+        if (c.equals("C")) mcategorias = res.getString(R.string.cultura);
+        else if (c.equals("D")) mcategorias = res.getString(R.string.deportes);
+        else if (c.equals("O")) mcategorias = res.getString(R.string.ocio);
+        else if (c.equals("M")) mcategorias = res.getString(R.string.mantenimiento);
+        else if (c.equals("E")) mcategorias = res.getString(R.string.eventos);
+        else if (c.equals("T")) mcategorias = res.getString(R.string.turismo);
+        else if (c.equals("Q")) mcategorias = res.getString(R.string.quejas);
+        else if (c.equals("S")) mcategorias = res.getString(R.string.soporte);
+
+        categoria.setText(mcategorias);
 
         final Integer idprop = i.getIntExtra("id", 0);
-
-        final Resources res = this.getResources();
 
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + idprop, this) {
 
@@ -211,6 +230,8 @@ public class DetailsProposalActivity extends AppCompatActivity {
                                     myIntent.putExtra("Title", mtit);
                                     myIntent.putExtra("Description", mdesc);
                                     myIntent.putExtra("id", idprop);
+                                    myIntent.putExtra("Owner", mowner);
+                                    myIntent.putExtra("Categoria", c);
                                     startActivity(myIntent);
                                 }
 
@@ -257,11 +278,11 @@ public class DetailsProposalActivity extends AppCompatActivity {
                     public void afterTextChanged(Editable s) {
                         if (input.getText().toString().equals("")) {
                             // Disable ok button
-                            ((AlertDialog) dialog).getButton(
+                            (dialog).getButton(
                                     AlertDialog.BUTTON_POSITIVE).setEnabled(false);
                         } else {
                             // Something into edit text. Enable the button.
-                            ((AlertDialog) dialog).getButton(
+                            (dialog).getButton(
                                     AlertDialog.BUTTON_POSITIVE).setEnabled(true);
                         }
                     }
@@ -291,6 +312,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                 refresh.putExtra("Description", mdesc);
                 refresh.putExtra("id", idprop);
                 refresh.putExtra("Owner", mowner);
+                refresh.putExtra("Categoria", c);
 
                 Log.i("asd", "clica");
                 refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -335,6 +357,18 @@ public class DetailsProposalActivity extends AppCompatActivity {
                 Intent log = new Intent(DetailsProposalActivity.this, MainActivity.class);
                 log.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(log);
+            }
+        });
+
+        compartir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("asdCompartir", "true");
+                String intro = "Mira que propuesta he encontrado en Agora!";
+                String tweetUrl = "https://twitter.com/intent/tweet?text=" + intro + "<br>" + "<br>" + mtit + "<br>"+ mdesc + "&url=";
+                tweetUrl = Html.fromHtml(tweetUrl).toString();
+                Uri uri = Uri.parse(tweetUrl);
+                v.getRootView().getContext().startActivity(new Intent(Intent.ACTION_VIEW, uri));
             }
         });
 

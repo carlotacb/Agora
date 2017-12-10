@@ -50,7 +50,7 @@ import edu.upc.pes.agora.R;
     }
 */
 
-public class SpinnerAdapter extends ArrayAdapter<ItemData> {
+/*public class SpinnerAdapter extends ArrayAdapter<ItemData> {
     int groupid;
     Activity context;
     ArrayList<ItemData> list;
@@ -77,5 +77,5 @@ public class SpinnerAdapter extends ArrayAdapter<ItemData> {
         return getView(position, convertView, parent);
 
     }
-}
+}*/
 

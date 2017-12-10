@@ -129,14 +129,6 @@ public class MainActivity extends AppCompatActivity {
         opcions.add(res.getString(R.string.tot));
         opcions.add(res.getString(R.string.categ));
         opcions.add(res.getString(R.string.user));
-/*
-        usuaris.add("Usuario1");
-        usuaris.add("Usuario2");
-        usuaris.add("Usuario3");
-        usuaris.add("Usuario4");
-        usuaris.add("Usuario5");
-        usuaris.add("Usuario6");
-        usuaris.add("Usuario7");*/
 
         categories.add(res.getString(R.string.todo));
         categories.add(res.getString(R.string.cultura));
@@ -337,16 +329,6 @@ public class MainActivity extends AppCompatActivity {
                                                 Log.i("asd123", (ArrayProp.get(i).toString()));
 
                                                 JSONObject jas = ArrayProp.getJSONObject(i);
-                                          /*      String title = jas.getString("title");
-                                                String owner = jas.getString("owner");
-                                                String description = jas.getString("content");
-                                                Integer id = jas.getInt("id");
-                                                String ca = jas.getString("categoria");
-
-                                                Proposals aux = new Proposals(id, title, description, owner, ca);
-
-                                                propostes.add(aux);
-                                                */
 
 
                                                String username = jas.getString("username");
@@ -356,7 +338,6 @@ public class MainActivity extends AppCompatActivity {
 
                                             }
                                         }
-                                        //llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
 
                                         ArrayAdapter<String> opcionsSpinnerAdapter2 = new ArrayAdapter<>(V.getContext(), R.layout.filter_spinner_style, usuaris);
                                         opcionsSpinnerAdapter2.setDropDownViewResource(R.layout.filter_spinner_style);
@@ -380,9 +361,6 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }
                         }.execute(Jason);
-
-
-
 
                         break;
                 }

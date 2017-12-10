@@ -41,12 +41,8 @@ import java.util.Locale;
 import java.util.Objects;
 
 import edu.upc.pes.agora.Logic.Constants;
-import edu.upc.pes.agora.Logic.DeleteAsyncTask;
-import edu.upc.pes.agora.Logic.ItemData;
 import edu.upc.pes.agora.Logic.PostSesionAsyncTask;
-import edu.upc.pes.agora.Logic.RecyclerAdapter;
 import edu.upc.pes.agora.R;
-import edu.upc.pes.agora.Logic.SpinnerAdapter;
 
 import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
 
@@ -62,8 +58,6 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
     private Locale locale;
     private ImageView canviidioma;
     private TextInputLayout errorusername, errorpassword;
-
-    private String[] data = {"Castellano", "Català", "English"};
 
     SharedPreferences prefs;
     SharedPreferences.Editor edit;

@@ -23,14 +23,11 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 import edu.upc.pes.agora.Logic.Constants;
-import edu.upc.pes.agora.Logic.ItemData;
 import edu.upc.pes.agora.Logic.PostSesionAsyncTask;
 import edu.upc.pes.agora.R;
-import edu.upc.pes.agora.Logic.SpinnerAdapter;
 
 public class RegisterActivity extends AppCompatActivity {
 

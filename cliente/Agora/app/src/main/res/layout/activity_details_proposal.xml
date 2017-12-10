@@ -43,6 +43,13 @@
                   android:padding="10dp"
                   android:layout_height="wrap_content">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_twitter"
+            android:id="@+id/compartir"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
