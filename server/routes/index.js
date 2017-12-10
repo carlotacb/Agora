@@ -1,6 +1,9 @@
 const zoneModules = require('../modules/zone')
+const bodyParser = require('body-parser')
 
 module.exports = app => {
+
+    app.use(bodyParser.json())
 
     require('./auth')(app)
     require('./profile')(app)

@@ -1,20 +1,15 @@
 const proposalsModule = require('../../modules/proposal')
 const userModule = require('../../modules/user')
 const {isAuthenticated} = require('../middleware')
+const f = require('../util').wrapAsyncRouterFunction
 
 module.exports = app => {
-    app.post('/api/proposal', isAuthenticated, async function (req, res) {
-        try {
-            const username = req.username
-            const {title, content, location, categoria} = req.body
-            console.log(title + "\n" + content)
-            const proposal = await proposalsModule.createProposal({username, title, content, location, categoria})
-            res.send(proposal)
-        } catch (error) {
-            console.error('error on new post', error)
-            res.sendStatus(500)
-        }
-    })
+    app.post('/api/proposal', isAuthenticated, f(async function (req, res) {
+        const username = req.username
+        const {title, content, location, categoria} = req.body
+        const proposal = await proposalsModule.createProposal({username, title, content, location, categoria})
+        res.send(proposal)
+    }))
 
     app.put('/api/proposal/:id', isAuthenticated, async function (req, res) {
         try {
@@ -93,7 +88,12 @@ module.exports = app => {
             const comment = req.body.comment.toString()
             const commentId = req.params.idc
             const proposalId = req.params.id
-            const updatedComment = await proposalsModule.editComment({proposalId: proposalId, author: req.username, commentId, comment})
+            const updatedComment = await proposalsModule.editComment({
+                proposalId: proposalId,
+                author: req.username,
+                commentId,
+                comment
+            })
             return res.send(updatedComment)
         } catch (error) {
             console.error('Error commenting proposal', error)
