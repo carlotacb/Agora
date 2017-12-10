@@ -51,16 +51,16 @@ public class ProfileEditScreenTest {
         Intents.init();
 
         onView(withId(R.id.nameprofile)).perform(replaceText("Oriol Saborido Orús"));
-        onView(withId(R.id.codipostal)).perform(closeSoftKeyboard(), replaceText("08201"));
+        //onView(withId(R.id.codipostal)).perform(closeSoftKeyboard(), replaceText("08201"));
         onView(withId(R.id.barrio)).perform(closeSoftKeyboard(), replaceText("Centre"));
-        onView(withId(R.id.fecha)).perform(closeSoftKeyboard(), replaceText("19/04/1994"));
+        //onView(withId(R.id.fecha)).perform(closeSoftKeyboard(), replaceText("19/04/1994"));
 
         onView(withId(R.id.aceptar)).perform(closeSoftKeyboard(), click());
 
         onView(withId(R.id.nameprofile)).check(matches(withText("Oriol Saborido Orús")));
         //onView(withId(R.id.codipostal)).check(matches(withText("08201")));
         onView(withId(R.id.barrio)).check(matches(withText("Centre")));
-        onView(withId(R.id.born)).check(matches(withText("19/04/1994")));
+        //onView(withId(R.id.born)).check(matches(withText("19/04/1994")));
 
         intended(hasComponent(ProfileActivity.class.getName()));
 
@@ -72,16 +72,16 @@ public class ProfileEditScreenTest {
         Intents.init();
 
         onView(withId(R.id.nameprofile)).perform(replaceText(""));
-        onView(withId(R.id.codipostal)).perform(closeSoftKeyboard(), replaceText(""));
+        //onView(withId(R.id.codipostal)).perform(closeSoftKeyboard(), replaceText(""));
         onView(withId(R.id.barrio)).perform(closeSoftKeyboard(), replaceText(""));
-        onView(withId(R.id.fecha)).perform(closeSoftKeyboard(), replaceText(""));
+        //onView(withId(R.id.fecha)).perform(closeSoftKeyboard(), replaceText(""));
 
         onView(withId(R.id.cancelar)).perform(closeSoftKeyboard(), click());
 
         onView(withId(R.id.nameprofile)).check(matches(withText("Oriol Saborido Orús")));
         //onView(withId(R.id.codipostal)).check(matches(withText("08201")));
         onView(withId(R.id.barrio)).check(matches(withText("Centre")));
-        onView(withId(R.id.born)).check(matches(withText("19/04/1994")));
+        //onView(withId(R.id.born)).check(matches(withText("19/04/1994")));
 
         intended(hasComponent(ProfileActivity.class.getName()));
 
