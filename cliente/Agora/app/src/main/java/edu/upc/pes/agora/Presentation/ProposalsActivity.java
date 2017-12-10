@@ -4,28 +4,31 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import edu.upc.pes.agora.Logic.BackOnClickListener;
@@ -39,7 +42,8 @@ public class ProposalsActivity extends AppCompatActivity {
     private Configuration config = new Configuration();
     private Locale locale;
 
-    private Button Create, deletePos;
+    private Button Create;
+    private ImageButton deletePos, addPos;
 
     private TextView Titulo, Descripcion;/*txtPosAttached*/
 
@@ -51,7 +55,8 @@ public class ProposalsActivity extends AppCompatActivity {
 
     private String strTitulo = "";
     private String strDescripcion = "";
-    private String[] categoriasGenericas = {"C", "D", "O","M", "E", "T","Q", "S","A"};
+    private String strCategoria = "";
+    private String[] categoriasGenericas = {"X", "C", "D", "O","M", "E", "T","Q", "S", "A"};
 
     private double lat;
     private double lng;
@@ -66,8 +71,8 @@ public class ProposalsActivity extends AppCompatActivity {
 
         Button reset = (Button) findViewById(R.id.resetButton);
         Create = (Button) findViewById(R.id.createButton);
-        final Button addPos = (Button) findViewById(R.id.btnAddPosition);
-        deletePos = (Button) findViewById(R.id.btnDeletePosition);
+        addPos = (ImageButton) findViewById(R.id.btnAddPosition);
+        deletePos = (ImageButton) findViewById(R.id.btnDeletePosition);
 
         ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
         ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
@@ -81,13 +86,16 @@ public class ProposalsActivity extends AppCompatActivity {
         errortitulo = (TextInputLayout) findViewById(R.id.titulo_up);
         errordescripcion = (TextInputLayout) findViewById(R.id.descripcion_up);
 
-
         prog = (ProgressBar) findViewById(R.id.crproposalprogressbar);
 
         final Resources res = this.getResources();
 
-        // Lista de Categorias con los nombres buenos (cambian con el idioma).
-        String[] categorias = new String[]{
+        Titulo.getBackground().clearColorFilter();
+        Descripcion.getBackground().clearColorFilter();
+
+        // Lista de Categorias con los nombres buenos (cambia con el idioma).
+        final String[] categorias = new String[]{
+                getString(R.string.spinnerhint),
                 getString(R.string.cultura),
                 getString(R.string.deportes),
                 getString(R.string.ocio),
@@ -97,10 +105,37 @@ public class ProposalsActivity extends AppCompatActivity {
                 getString(R.string.quejas),
                 getString(R.string.soporte)};
 
-        // Adapter para el Spinner:
-        ArrayAdapter<String> categoriesAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, categorias);
-        categoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spin.setAdapter(categoriesAdapter);
+
+        final List<String> categoriesList = new ArrayList<>(Arrays.asList(categorias));
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, categoriesList){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0) {
+                    // Disable the first item from Spinner. The first item will be use for hint
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (categorias[position].equals(getString(R.string.spinnerhint))){
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_layout);
+        spin.setAdapter(spinnerArrayAdapter);
 
         switch (Constants.Idioma) {
             case "ca":
@@ -128,7 +163,11 @@ public class ProposalsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Titulo.setText("");
                 Descripcion.setText("");
-                //txtPosAttached.setText("");
+                errortitulo.setErrorEnabled(false);
+                Titulo.getBackground().clearColorFilter();
+                errordescripcion.setErrorEnabled(false);
+                Descripcion.getBackground().clearColorFilter();
+                spin.setSelection(0);
             }
         });
 
@@ -138,41 +177,56 @@ public class ProposalsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 strTitulo = Titulo.getText().toString();
                 strDescripcion = Descripcion.getText().toString();
+                strCategoria = categoriasGenericas[spin.getSelectedItemPosition()];
 
-                errortitulo.getBackground().clearColorFilter();
-                errordescripcion.getBackground().clearColorFilter();
-
-                if (strTitulo.equals("") ){
+                if (Titulo.length() == 0){
                     errortitulo.setErrorEnabled(true);
                     errortitulo.setError(res.getString(R.string.fieldnecesary));
                     Titulo.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
-                    errordescripcion.setErrorEnabled(false);
-                    String error = res.getString(R.string.errorTitulo);
-                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                    if (Descripcion.length() != 0) {
+                        errordescripcion.setErrorEnabled(false);
+                        Descripcion.getBackground().clearColorFilter();
+                    }
                 }
-                else if (strDescripcion.equals("")){
+
+                if (Descripcion.length() == 0){
                     errordescripcion.setErrorEnabled(true);
                     errordescripcion.setError(res.getString(R.string.fieldnecesary));
                     Descripcion.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
-                    errortitulo.setErrorEnabled(false);
-                    String error = res.getString(R.string.errorDescripcion);
-                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                    if (Titulo.length() != 0) {
+                        errortitulo.setErrorEnabled(false);
+                        Titulo.getBackground().clearColorFilter();
+                    }
                 }
 
-                else {
+                if (strCategoria.equals("X")) {
+                    TextView errorText = (TextView)spin.getSelectedView();
+                    errorText.setTextColor(Color.RED);//just to highlight that this is an error
+                    if (Titulo.length() != 0) {
+                        errortitulo.setErrorEnabled(false);
+                        Titulo.getBackground().clearColorFilter();
+                    }
+                    if (Descripcion.length() != 0) {
+                        errordescripcion.setErrorEnabled(false);
+                        Descripcion.getBackground().clearColorFilter();
+                    }
+                }
 
+                else if (Titulo.length() != 0 && Descripcion.length() != 0 && !strCategoria.equals("X")){
                     Create.setVisibility(View.GONE);
                     prog.setVisibility(View.VISIBLE);
+                    Descripcion.getBackground().clearColorFilter();
+                    Titulo.getBackground().clearColorFilter();
 
                     JSONObject values = new JSONObject();
                     JSONObject location = new JSONObject();
 
                     try {
-                        String ca = categoriasGenericas[spin.getSelectedItemPosition()];
+
 
                         values.put("title", strTitulo);
                         values.put("content", strDescripcion);
-                        values.put("categoria", ca);
+                        values.put("categoria", strCategoria);
                         location.put("lat", getIntent().getDoubleExtra("lat",0));
                         location.put("long", getIntent().getDoubleExtra("lng",0));
                         values.put("location", location);
@@ -234,8 +288,6 @@ public class ProposalsActivity extends AppCompatActivity {
                 i.putExtra("Title", Titulo.getText().toString());
                 i.putExtra("Description", Descripcion.getText().toString());
                 startActivity(i);
-                deletePos.setVisibility(View.VISIBLE);
-                addPos.setVisibility(View.GONE);
             }
         });
 
@@ -267,12 +319,14 @@ public class ProposalsActivity extends AppCompatActivity {
             lng = getIntent().getDoubleExtra("lng",0);
             //txtPosAttached.setText(R.string.posAttached);
             deletePos.setVisibility(View.VISIBLE);
+            addPos.setVisibility(View.GONE);
         }
 
         else {
             lat = 0;
             lng = 0;
-            deletePos.setVisibility(View.INVISIBLE);
+            deletePos.setVisibility(View.GONE);
+            addPos.setVisibility(View.VISIBLE);
         }
     }
 }

@@ -73,14 +73,13 @@
     <string name="descrpicion">Descripcion</string>
     <string name="reset">Reset</string>
     <string name="create">Create</string>
-    <string name="nuevapropuesta">Nueva Propuesta</string>
     <string name="done">Propuesta "%1$s" creada correctamnete</string>
     <string name="addPosition">Add position</string>
     <string name="savePosition">Save position</string>
     <string name="deletePosition">Delete position</string>
     <string name="posAttached">Position attached</string>
     <string name="nuevapropuesta">Nueva Propuesta</string>
-
+    <string name="spinnerhint">Seleccionar una Categoria...</string>
 
     <!-- Strings Edit Proposal -->
     <string name="editTitle">Title</string>
