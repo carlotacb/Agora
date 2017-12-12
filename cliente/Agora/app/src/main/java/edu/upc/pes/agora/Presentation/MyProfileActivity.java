@@ -160,7 +160,7 @@ public class MyProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(MyProfileActivity.this, EditProfileActivity.class);
-                myIntent.putExtra("cp", p.getCP());
+                myIntent.putExtra("cp", p.getCP()); 
                 myIntent.putExtra("barrio", p.getNeighborhood());
                 myIntent.putExtra("nombre", p.getName());
                 myIntent.putExtra("fecha", p.getBorn());
