@@ -16,7 +16,7 @@ import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
 import edu.upc.pes.agora.Presentation.LoginActivity;
 import edu.upc.pes.agora.Presentation.MainActivity;
 import edu.upc.pes.agora.Presentation.MyProposalsActivity;
-import edu.upc.pes.agora.Presentation.ProfileActivity;
+import edu.upc.pes.agora.Presentation.MyProfileActivity;
 import edu.upc.pes.agora.R;
 
 public class NavMenuListener implements NavigationView.OnNavigationItemSelectedListener {
@@ -66,16 +66,16 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
 
         } else if (id == R.id.nav_perfilprinc) {
             // Va a la Pagina principal del perfil
-            if (!context.getClass().equals(ProfileActivity.class)) {
-                Intent myIntent = new Intent(context, ProfileActivity.class);
+            if (!context.getClass().equals(MyProfileActivity.class)) {
+                Intent myIntent = new Intent(context, MyProfileActivity.class);
                 context.startActivity(myIntent);
             }
             navDrawer.closeDrawers();
 
         } else if (id == R.id.nav_perfilprinc) {
             // Va a la Pagina principal del perfil
-            if (!context.getClass().equals(ProfileActivity.class)) {
-                Intent myIntent = new Intent(context, ProfileActivity.class);
+            if (!context.getClass().equals(MyProfileActivity.class)) {
+                Intent myIntent = new Intent(context, MyProfileActivity.class);
                 context.startActivity(myIntent);
             }
             navDrawer.closeDrawers();

@@ -63,7 +63,7 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
         savePos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), ProposalsActivity.class);
+                Intent i = new Intent(getApplicationContext(), CreateProposalActivity.class);
                 if (getIntent().hasExtra("Title")){
                     i.putExtra("Title", getIntent().getStringExtra("Title"));
                 }
@@ -82,7 +82,7 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
         cancelPos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), ProposalsActivity.class);
+                Intent i = new Intent(getApplicationContext(), CreateProposalActivity.class);
                 if (getIntent().hasExtra("Title")){
                     i.putExtra("Title", getIntent().getStringExtra("Title"));
                 }

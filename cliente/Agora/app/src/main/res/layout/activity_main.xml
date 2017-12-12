@@ -95,7 +95,6 @@
             <ListView
                 android:id="@+id/list"
                 android:divider="@null"
-                tools:showIn="@layout/app_bar_main"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

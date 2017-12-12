@@ -36,7 +36,7 @@ import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
 import edu.upc.pes.agora.R;
 
-public class ProposalsActivity extends AppCompatActivity {
+public class CreateProposalActivity extends AppCompatActivity {
 
     private Configuration config = new Configuration();
     private Locale locale;
@@ -66,7 +66,7 @@ public class ProposalsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_proposal);
+        setContentView(R.layout.activity_create_proposal);
 
         Button reset = (Button) findViewById(R.id.resetButton);
         Create = (Button) findViewById(R.id.createButton);
@@ -106,7 +106,7 @@ public class ProposalsActivity extends AppCompatActivity {
 
 
         final List<String> categoriesList = new ArrayList<>(Arrays.asList(categorias));
-        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, categoriesList){
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_categories_layout, categoriesList){
             @Override
             public boolean isEnabled(int position){
                 if(position == 0) {
@@ -133,7 +133,7 @@ public class ProposalsActivity extends AppCompatActivity {
             }
         };
 
-        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_layout);
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_categories_layout);
         spin.setAdapter(spinnerArrayAdapter);
 
         switch (Constants.Idioma) {
@@ -148,8 +148,8 @@ public class ProposalsActivity extends AppCompatActivity {
                 break;
         }
 
-        Intent idioma = new Intent(ProposalsActivity.this, ProposalsActivity.class);
-        Intent back = new Intent(ProposalsActivity.this, MainActivity.class);
+        Intent idioma = new Intent(CreateProposalActivity.this, CreateProposalActivity.class);
+        Intent back = new Intent(CreateProposalActivity.this, MainActivity.class);
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -234,7 +234,7 @@ public class ProposalsActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal", ProposalsActivity.this) {
+                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal", CreateProposalActivity.this) {
                         @Override
                         protected void onPostExecute(JSONObject resObject) {
                             Boolean result = false;
@@ -263,7 +263,7 @@ public class ProposalsActivity extends AppCompatActivity {
 
                             if (result) {
                                 Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(ProposalsActivity.this, MainActivity.class));
+                                startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
                             }
 
                             else {

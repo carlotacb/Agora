@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
 import edu.upc.pes.agora.Logic.Models.Comment;
-import edu.upc.pes.agora.Logic.Adapters.CommentsAdapter;
+import edu.upc.pes.agora.Logic.Adapters.CommentAdapter;
 import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
@@ -344,7 +344,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                                 comentarios.add(aux);
                             }
                         }
-                        llista_comentaris.setAdapter(new CommentsAdapter(getApplicationContext(), comentarios));
+                        llista_comentaris.setAdapter(new CommentAdapter(getApplicationContext(), comentarios));
 
                     }
 

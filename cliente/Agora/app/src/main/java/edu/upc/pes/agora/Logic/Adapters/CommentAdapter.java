@@ -31,13 +31,13 @@ import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
 import edu.upc.pes.agora.Logic.ServerConection.PutAsyncTask;
 import edu.upc.pes.agora.R;
 
-public class CommentsAdapter extends ArrayAdapter<Comment> {
+public class CommentAdapter extends ArrayAdapter<Comment> {
 
     private ArrayList<Comment> listcomentaris;
     private String m_Text = "";
     private String newComent;
 
-    public CommentsAdapter(Context context, ArrayList<Comment> coment) {
+    public CommentAdapter(Context context, ArrayList<Comment> coment) {
         super(context, 0, coment);
         listcomentaris = coment;
     }
@@ -51,7 +51,7 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_comment_item, parent, false);
         }
 
         // Lookup view for data population
@@ -144,7 +144,7 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
                                             }
                                         }.execute(values);
 
-                                        CommentsAdapter.this.notifyDataSetChanged();
+                                        CommentAdapter.this.notifyDataSetChanged();
 
                                         Toast.makeText(getContext(), "Comentario Editado", Toast.LENGTH_SHORT).show();
                                     }
@@ -178,7 +178,7 @@ public class CommentsAdapter extends ArrayAdapter<Comment> {
                                             protected void onPostExecute(JSONObject jsonObject) {
                                                 if (!jsonObject.has("error")) {
                                                     listcomentaris.remove(comentaris);
-                                                    CommentsAdapter.this.notifyDataSetChanged();
+                                                    CommentAdapter.this.notifyDataSetChanged();
                                                 }
                                                 else {
                                                     try {

@@ -2,7 +2,7 @@ package edu.upc.pes.agora.Logic.Models;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class Proposals {
+public class Proposal {
 
     // Basic proposals data manipulation class
     // Contains basic information of the proposals
@@ -15,7 +15,7 @@ public class Proposals {
     //private int token_creator;
     private LatLng position;
 
-    public Proposals (int id, String tit, String des, String ow, String ca) {
+    public Proposal(int id, String tit, String des, String ow, String ca) {
         this.id = id;
         title = tit;
         description = des;
