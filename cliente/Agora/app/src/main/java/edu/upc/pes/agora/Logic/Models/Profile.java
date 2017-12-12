@@ -1,4 +1,4 @@
-package edu.upc.pes.agora.Logic;
+package edu.upc.pes.agora.Logic.Models;
 
 import java.util.Date;
 

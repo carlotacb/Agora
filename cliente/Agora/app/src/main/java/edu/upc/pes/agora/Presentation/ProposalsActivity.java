@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -31,10 +30,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import edu.upc.pes.agora.Logic.BackOnClickListener;
-import edu.upc.pes.agora.Logic.Constants;
-import edu.upc.pes.agora.Logic.LanguageOnClickListener;
-import edu.upc.pes.agora.Logic.PostAsyncTask;
+import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
+import edu.upc.pes.agora.Logic.Utils.Constants;
+import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
+import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
 import edu.upc.pes.agora.R;
 
 public class ProposalsActivity extends AppCompatActivity {

@@ -1,10 +1,8 @@
 package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -22,10 +20,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,17 +34,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
-import java.util.Random;
 
-import edu.upc.pes.agora.Logic.Constants;
-import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
-import edu.upc.pes.agora.Logic.NavMenuListener;
-import edu.upc.pes.agora.Logic.ProposalAdapter;
-import edu.upc.pes.agora.Logic.Proposals;
+import edu.upc.pes.agora.Logic.Utils.Constants;
+import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
+import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
+import edu.upc.pes.agora.Logic.Adapters.ProposalAdapter;
+import edu.upc.pes.agora.Logic.Models.Proposals;
 import edu.upc.pes.agora.R;
-
-import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
 
 public class MainActivity extends AppCompatActivity {
     private FloatingActionButton fab;

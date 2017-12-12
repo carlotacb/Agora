@@ -4,9 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,27 +13,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 
-import edu.upc.pes.agora.Logic.Constants;
-import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
-import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
-import edu.upc.pes.agora.Logic.NavMenuListener;
-import edu.upc.pes.agora.Logic.Profile;
+import edu.upc.pes.agora.Logic.Utils.Constants;
+import edu.upc.pes.agora.Logic.Listeners.DrawerToggleAdvanced;
+import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
+import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
+import edu.upc.pes.agora.Logic.Models.Profile;
 import edu.upc.pes.agora.R;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -172,8 +165,6 @@ public class ProfileActivity extends AppCompatActivity {
                 myIntent.putExtra("nombre", p.getName());
                 myIntent.putExtra("fecha", p.getBorn());
                 myIntent.putExtra("sex", p.getSex());
-
-
 
                 startActivity(myIntent);
             }

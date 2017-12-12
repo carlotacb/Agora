@@ -1,4 +1,4 @@
-package edu.upc.pes.agora.Logic;
+package edu.upc.pes.agora.Logic.Listeners;
 
 import android.app.Activity;
 import android.content.Context;

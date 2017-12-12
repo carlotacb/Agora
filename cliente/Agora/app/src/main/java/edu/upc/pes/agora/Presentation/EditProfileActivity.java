@@ -2,24 +2,12 @@ package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.media.session.MediaSession;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.internal.widget.AdapterViewCompat;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,16 +19,11 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
-import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
-import edu.upc.pes.agora.Logic.NavMenuListener;
-
-import edu.upc.pes.agora.Logic.PostAsyncTask;
-import edu.upc.pes.agora.Logic.Profile;
+import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
+import edu.upc.pes.agora.Logic.Models.Profile;
 import edu.upc.pes.agora.R;
 
 public class EditProfileActivity extends AppCompatActivity {

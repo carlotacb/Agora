@@ -18,10 +18,10 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.upc.pes.agora.Logic.BackOnClickListener;
-import edu.upc.pes.agora.Logic.Constants;
-import edu.upc.pes.agora.Logic.LanguageOnClickListener;
-import edu.upc.pes.agora.Logic.PostSesionAsyncTask;
+import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
+import edu.upc.pes.agora.Logic.Utils.Constants;
+import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
+import edu.upc.pes.agora.Logic.ServerConection.PostSesionAsyncTask;
 import edu.upc.pes.agora.R;
 
 public class RegisterActivity extends AppCompatActivity {

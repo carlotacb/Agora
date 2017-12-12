@@ -25,12 +25,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import edu.upc.pes.agora.Logic.Constants;
-import edu.upc.pes.agora.Logic.DrawerToggleAdvanced;
-import edu.upc.pes.agora.Logic.GetTokenAsyncTask;
-import edu.upc.pes.agora.Logic.NavMenuListener;
-import edu.upc.pes.agora.Logic.Proposals;
-import edu.upc.pes.agora.Logic.RecyclerAdapter;
+import edu.upc.pes.agora.Logic.Utils.Constants;
+import edu.upc.pes.agora.Logic.Listeners.DrawerToggleAdvanced;
+import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
+import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
+import edu.upc.pes.agora.Logic.Models.Proposals;
+import edu.upc.pes.agora.Logic.Adapters.RecyclerAdapter;
 import edu.upc.pes.agora.R;
 
 public class MyProposalsActivity extends AppCompatActivity {

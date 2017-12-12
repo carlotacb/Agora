@@ -1,4 +1,4 @@
-package edu.upc.pes.agora.Logic;
+package edu.upc.pes.agora.Logic.Listeners;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,16 +7,16 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import edu.upc.pes.agora.Logic.Utils.Helpers;
+import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
 import edu.upc.pes.agora.Presentation.LoginActivity;
 import edu.upc.pes.agora.Presentation.MainActivity;
 import edu.upc.pes.agora.Presentation.MyProposalsActivity;
 import edu.upc.pes.agora.Presentation.ProfileActivity;
-import edu.upc.pes.agora.Presentation.ProposalsActivity;
 import edu.upc.pes.agora.R;
 
 public class NavMenuListener implements NavigationView.OnNavigationItemSelectedListener {

@@ -1,34 +1,24 @@
-package edu.upc.pes.agora.Logic;
+package edu.upc.pes.agora.Logic.ServerConection;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Base64;
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import edu.upc.pes.agora.Presentation.MainActivity;
-import edu.upc.pes.agora.R;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 
-import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
+import static edu.upc.pes.agora.Logic.Utils.Constants.SH_PREF_NAME;
 
 public class DeleteAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
 

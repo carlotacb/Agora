@@ -1,26 +1,22 @@
-package edu.upc.pes.agora.Logic;
+package edu.upc.pes.agora.Logic.Adapters;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.PopupMenu;
 import android.text.InputType;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,11 +24,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import edu.upc.pes.agora.Presentation.DetailsProposalActivity;
-import edu.upc.pes.agora.Presentation.EditProfileActivity;
-import edu.upc.pes.agora.Presentation.EditProposalActivity;
+import edu.upc.pes.agora.Logic.Utils.Constants;
+import edu.upc.pes.agora.Logic.Models.Comment;
+import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
+import edu.upc.pes.agora.Logic.ServerConection.PutAsyncTask;
 import edu.upc.pes.agora.R;
 
 public class CommentsAdapter extends ArrayAdapter<Comment> {

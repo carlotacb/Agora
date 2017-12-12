@@ -23,12 +23,12 @@ import org.json.JSONObject;
 
 import java.util.Objects;
 
-import edu.upc.pes.agora.Logic.Constants;
-import edu.upc.pes.agora.Logic.LanguageOnClickListener;
-import edu.upc.pes.agora.Logic.PostSesionAsyncTask;
+import edu.upc.pes.agora.Logic.Utils.Constants;
+import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
+import edu.upc.pes.agora.Logic.ServerConection.PostSesionAsyncTask;
 import edu.upc.pes.agora.R;
 
-import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
+import static edu.upc.pes.agora.Logic.Utils.Constants.SH_PREF_NAME;
 
 
 public class LoginActivity extends AppCompatActivity /*implements AdapterView.OnItemSelectedListener*/ {

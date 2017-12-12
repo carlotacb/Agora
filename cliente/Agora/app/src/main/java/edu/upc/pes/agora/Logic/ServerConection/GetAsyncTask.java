@@ -1,9 +1,8 @@
-package edu.upc.pes.agora.Logic;
+package edu.upc.pes.agora.Logic.ServerConection;
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.content.Context;
-import android.util.Base64;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -11,14 +10,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import edu.upc.pes.agora.R;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 
 public class GetAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     private URL url;

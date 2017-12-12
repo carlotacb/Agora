@@ -1,4 +1,4 @@
-package edu.upc.pes.agora.Logic;
+package edu.upc.pes.agora.Logic.Listeners;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import java.util.Locale;
 
+import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.R;
 
 public class LanguageOnClickListener implements View.OnClickListener {

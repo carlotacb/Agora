@@ -1,4 +1,4 @@
-package edu.upc.pes.agora.Logic;
+package edu.upc.pes.agora.Logic.ServerConection;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,13 +13,10 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 import edu.upc.pes.agora.Presentation.MainActivity;
-import edu.upc.pes.agora.R;
 
-import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
+import static edu.upc.pes.agora.Logic.Utils.Constants.SH_PREF_NAME;
 
 public class PutAsyncTask extends AsyncTask<JSONObject, Void, JSONObject>{
 

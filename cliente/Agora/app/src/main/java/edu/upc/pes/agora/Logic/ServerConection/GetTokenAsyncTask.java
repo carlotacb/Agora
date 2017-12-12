@@ -1,4 +1,4 @@
-package edu.upc.pes.agora.Logic;
+package edu.upc.pes.agora.Logic.ServerConection;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -16,9 +16,10 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.Presentation.MainActivity;
 
-import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
+import static edu.upc.pes.agora.Logic.Utils.Constants.SH_PREF_NAME;
 
 public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     private URL url;
