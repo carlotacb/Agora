@@ -14,8 +14,8 @@ public class Profile {
     private String sex;
 
     public int getSex() {
-        int sexo = 3;
-
+        int sexo = 0;
+        if(sex==null)return sexo;
         if(sex.equals("I")) sexo = 0;
         if(sex.equals("M")) sexo = 2;
         if(sex.equals("F")) sexo = 1;

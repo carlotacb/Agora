@@ -65,19 +65,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     Profile p ;
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode) {
-            case SELECT_PICTURE:
-                if(resultCode == RESULT_OK) {
-                    Uri path = data.getData();
-                    image.setImageURI(path);
-                }
-                break;
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -339,6 +327,20 @@ public class EditProfileActivity extends AppCompatActivity {
                     startActivity(new Intent(EditProfileActivity.this, MyProfileActivity.class));
                 }
             });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case SELECT_PICTURE:
+                if(resultCode == RESULT_OK) {
+                    Uri path = data.getData();
+                    image.setImageURI(path);
+                }
+                break;
         }
     }
 }
