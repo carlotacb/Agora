@@ -2,30 +2,25 @@ package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.PopupMenu;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Locale;
-
+import edu.upc.pes.agora.Logic.BackOnClickListener;
 import edu.upc.pes.agora.Logic.Constants;
+import edu.upc.pes.agora.Logic.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.PostSesionAsyncTask;
 import edu.upc.pes.agora.R;
 
@@ -33,11 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText identifier, username, password1, password2;
     private String user, id, pw1, pw2;
-    private ImageView canviaridioma;
-    private ImageView enrerre;
     private Button registro;
-    private Configuration config = new Configuration();
-    private Locale locale;
     private TextInputLayout codiup, userup, pas1up, pas2up;
     private ProgressBar progbar;
 
@@ -49,82 +40,44 @@ public class RegisterActivity extends AppCompatActivity {
 
         Log.i("asdCreate", "creando usuario");
 
+        ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
+        ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
+
         identifier = (EditText) findViewById(R.id.identifier);
         username = (EditText) findViewById(R.id.username);
         password1 = (EditText) findViewById(R.id.password1);
         password2 = (EditText) findViewById(R.id.password2);
-        canviaridioma = (ImageView) findViewById(R.id.multiidiomareg);
-        enrerre = (ImageView) findViewById(R.id.backbutton);
-        registro = (Button) findViewById(R.id.btnRegistration);
+
         codiup = (TextInputLayout) findViewById(R.id.codiregistro_up);
         userup = (TextInputLayout) findViewById(R.id.usernamereg_up);
         pas1up = (TextInputLayout) findViewById(R.id.passwordreg_up);
         pas2up = (TextInputLayout) findViewById(R.id.password2reg_up);
+
+        registro = (Button) findViewById(R.id.btnRegistration);
         progbar = (ProgressBar) findViewById(R.id.registerprogressbar);
 
         final Resources res = getResources();
 
-        if (Constants.Idioma.equals("ca")) {
-            canviaridioma.setImageResource(R.drawable.rep);
+        switch (Constants.Idioma) {
+            case "ca":
+                canviidioma.setImageResource(R.drawable.rep);
+                break;
+            case "es":
+                canviidioma.setImageResource(R.drawable.spa);
+                break;
+            case "en":
+                canviidioma.setImageResource(R.drawable.ing);
+                break;
         }
 
-        else if (Constants.Idioma.equals("es")) {
-            canviaridioma.setImageResource(R.drawable.spa);
-        }
+        Intent idioma = new Intent(RegisterActivity.this, RegisterActivity.class);
+        Intent back = new Intent(RegisterActivity.this, LoginActivity.class);
+        idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        else if (Constants.Idioma.equals("en")) {
-            canviaridioma.setImageResource(R.drawable.ing);
-        }
+        canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
 
-        canviaridioma.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                final Intent refresh = new Intent(RegisterActivity.this, RegisterActivity.class);
-                refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                PopupMenu popupMenu = new PopupMenu(v.getRootView().getContext(), canviaridioma);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-
-                            case R.id.men_castella:
-                                Constants.Idioma = "es";
-                                break;
-
-                            case R.id.men_catala:
-                                Constants.Idioma = "ca";
-                                break;
-
-                            case R.id.men_angles:
-                                Constants.Idioma = "en";
-                                break;
-                        }
-
-                        locale = new Locale(Constants.Idioma);
-                        config.locale = locale;
-                        getResources().updateConfiguration(config, null);
-                        startActivity(refresh);
-                        finish();
-
-                        return false;
-                    }
-                });
-                popupMenu.inflate(R.menu.idioma);
-                popupMenu.show();
-
-            }
-        });
-
-        enrerre.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent log = new Intent(RegisterActivity.this, LoginActivity.class);
-                log.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(log);
-            }
-        });
+        enrerre.setOnClickListener(new BackOnClickListener(back, getApplicationContext()));
 
         registro.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("StaticFieldLeak")
@@ -236,7 +189,6 @@ public class RegisterActivity extends AppCompatActivity {
                             @Override
                             protected void onPostExecute(JSONObject resObject) {
                                 Boolean result = false;
-                                String error = res.getString(R.string.errorreg);
 
                                 try {
                                     if(resObject.has("success")) {
@@ -244,7 +196,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                     }
                                     if(!result && resObject.has("errorMessage") ) {
-                                        error = res.getString(R.string.errorreg);
+                                        String error = res.getString(R.string.errorreg);
                                         pas1up.setErrorEnabled(false);
                                         pas2up.setErrorEnabled(false);
                                         codiup.setErrorEnabled(true);
@@ -283,9 +235,7 @@ public class RegisterActivity extends AppCompatActivity {
                         }.execute(data);
 
                     } else {
-                        //String passerror = res.getString(R.string.samepass);
                         String passwordsIguales = res.getString(R.string.passwodsiguals);
-                        //Toast.makeText(getApplicationContext(), passerror, Toast.LENGTH_SHORT).show();
                         pas1up.setErrorEnabled(true);
                         pas2up.setErrorEnabled(true);
                         userup.setErrorEnabled(false);
@@ -302,12 +252,11 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-
     @Override
     public void onBackPressed() {
-        Intent log = new Intent(this, LoginActivity.class);
-        log.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(log);
+        Intent backb = new Intent(this, LoginActivity.class);
+        backb.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(backb);
         finish();
     }
 }

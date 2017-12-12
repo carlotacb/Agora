@@ -1,62 +1,42 @@
 package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
-import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.support.v7.widget.PopupMenu;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Objects;
 
 import edu.upc.pes.agora.Logic.Constants;
+import edu.upc.pes.agora.Logic.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.PostSesionAsyncTask;
 import edu.upc.pes.agora.R;
 
 import static edu.upc.pes.agora.Logic.Constants.SH_PREF_NAME;
 
 
-public class LoginActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class LoginActivity extends AppCompatActivity /*implements AdapterView.OnItemSelectedListener*/ {
 
     private Button login;
-    private TextView register;
     private ProgressBar prog;
     private EditText etUsername, etPassword;
     private String username, password;
-    private Configuration config = new Configuration();
-    private Locale locale;
-    private ImageView canviidioma;
     private TextInputLayout errorusername, errorpassword;
 
     SharedPreferences prefs;
@@ -68,36 +48,43 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        etUsername = (EditText) findViewById(R.id.username);
+        etPassword = (EditText) findViewById(R.id.password);
+
+        errorusername = (TextInputLayout) findViewById(R.id.username_up);
+        errorpassword = (TextInputLayout) findViewById(R.id.password_up);
+
+        ImageView canviidioma = (ImageView) findViewById(R.id.multiidioma);
+
+        prog = (ProgressBar) findViewById(R.id.loginprogressbar);
         login = (Button) findViewById(R.id.btnLogin);
-        register = (TextView) findViewById(R.id.btnRegister);
-        canviidioma = (ImageView) findViewById(R.id.multiidioma);
-
-        if (Constants.Idioma.equals("ca")) {
-            canviidioma.setImageResource(R.drawable.rep);
-        }
-
-        else if (Constants.Idioma.equals("es")) {
-            canviidioma.setImageResource(R.drawable.spa);
-        }
-
-        else if (Constants.Idioma.equals("en")) {
-            canviidioma.setImageResource(R.drawable.ing);
-        }
+        TextView register = (TextView) findViewById(R.id.btnRegister);
 
         //Get SharedPreferences containing token
-        prefs = this.getSharedPreferences(SH_PREF_NAME,MODE_PRIVATE);
+        prefs = this.getSharedPreferences(SH_PREF_NAME, MODE_PRIVATE);
         edit = prefs.edit();
 
         final Resources res = this.getResources();
 
-        etUsername = (EditText) findViewById(R.id.username);
-        etPassword = (EditText) findViewById(R.id.password);
         etPassword.getBackground().clearColorFilter();
         etUsername.getBackground().clearColorFilter();
 
-        prog = (ProgressBar) findViewById(R.id.loginprogressbar);
-        errorusername = (TextInputLayout) findViewById(R.id.username_up);
-        errorpassword = (TextInputLayout) findViewById(R.id.password_up);
+        switch (Constants.Idioma) {
+            case "ca":
+                canviidioma.setImageResource(R.drawable.rep);
+                break;
+            case "es":
+                canviidioma.setImageResource(R.drawable.spa);
+                break;
+            case "en":
+                canviidioma.setImageResource(R.drawable.ing);
+                break;
+        }
+
+        Intent idioma = new Intent(LoginActivity.this, LoginActivity.class);
+        idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
 
         login.setOnClickListener(new OnClickListener() {
             @SuppressLint("StaticFieldLeak")
@@ -122,13 +109,11 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                     errorpassword.setErrorEnabled(true);
                     errorpassword.setError(camponecesario);
                     etPassword.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
-                    if(username.length() != 0) {
+                    if (username.length() != 0) {
                         errorusername.setErrorEnabled(false);
                         etUsername.getBackground().clearColorFilter();
                     }
-                }
-
-                else {
+                } else {
                     errorusername.setErrorEnabled(false);
                     errorpassword.setErrorEnabled(false);
                     login.setVisibility(View.GONE);
@@ -158,16 +143,16 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                                     if (resObject.has("token")) {
                                         String t = resObject.getString("token");
 
-                                        if(!Objects.equals(prefs.getString("token", ""), t)) {
+                                        if (!Objects.equals(prefs.getString("token", ""), t)) {
                                             edit.putString("token", t);
                                             edit.apply();
                                         }
 
-                                        Log.i("SavedToken", prefs.getString("token","none saved"));
+                                        Log.i("SavedToken", prefs.getString("token", "none saved"));
                                     }
-                                    if(resObject.has("zone")){
+                                    if (resObject.has("zone")) {
                                         Constants.zone = resObject.getInt("zone");
-                                        Log.i("Zone:", ""+resObject.getInt("zone"));
+                                        Log.i("Zone:", "" + resObject.getInt("zone"));
                                     }
                                 }
                                 if (!result && resObject.has("errorMessage"))
@@ -206,93 +191,11 @@ public class LoginActivity extends AppCompatActivity implements AdapterView.OnIt
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
-
-        canviidioma.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                final Intent refresh = new Intent(LoginActivity.this, LoginActivity.class);
-                refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                PopupMenu popupMenu = new PopupMenu(v.getRootView().getContext(), canviidioma);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-
-                            case R.id.men_castella:
-                                Constants.Idioma = "es";
-                                break;
-
-                            case R.id.men_catala:
-                                Constants.Idioma = "ca";
-                                break;
-
-                            case R.id.men_angles:
-                                Constants.Idioma = "en";
-                                break;
-                        }
-
-                        locale = new Locale(Constants.Idioma);
-                        config.locale = locale;
-                        getResources().updateConfiguration(config, null);
-                        startActivity(refresh);
-                        finish();
-
-                        return false;
-                    }
-                });
-                popupMenu.inflate(R.menu.idioma);
-                popupMenu.show();
-
-            }
-        });
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        Intent refresh = new Intent(LoginActivity.this, LoginActivity.class);
-        refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-        switch (position) {
-            case 0:
-                break;
-            case 1:
-                locale = new Locale("es");
-                config.locale = locale;
-                getResources().updateConfiguration(config, null);
-                startActivity(refresh)
-                ;                finish();
-                break;
-            case 2:
-                locale = new Locale("ca");
-                config.locale = locale;
-                getResources().updateConfiguration(config, null);
-                startActivity(refresh);
-                finish();
-                break;
-            case 3:
-                locale = new Locale(Constants.Idioma);
-                config.locale = locale;
-                getResources().updateConfiguration(config, null);
-                startActivity(refresh);
-                finish();
-                break;
-        }
-
-
-        getResources().updateConfiguration(config, null);
-
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     @Override
     public void onBackPressed() {
+        // Close Aplication
         finish();
     }
 }
