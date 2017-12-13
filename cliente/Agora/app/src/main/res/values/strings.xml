@@ -40,6 +40,7 @@
     <string name="serchuser">Search User</string>
     <string name="help">Help</string>
     <string name="about">About</string>
+    <string name="logros">Logros</string>
     <string name="surt">Sortir</string>
 
     <!-- Multiidioma -->
@@ -56,8 +57,8 @@
     <string name="title_activity_main">Main Page</string>
     <string name="creadopor">"Creado por "</string>
     <string name="mesinfo">MAS INFORMACION</string>
-    <string name="filtro">Filter by: </string>
-    <string name="buscar">Find: </string>
+    <string name="filtro">Filter by:</string>
+    <string name="buscar">Find:</string>
 
     <string name="tot">Tot</string>
     <string name="user">Per Usuari</string>
@@ -108,7 +109,7 @@
     <string name="sexo2">Sexo:</string>
 
     <!-- Strings per Detalls de la proposta -->
-    <string name="determinant"> el </string>
+    <string name="determinant">el</string>
     <string name="nou">Nuevo Comentario</string>
     <string name="mensajenc">Introducir el nuevo comentario para la propuesta %1$s</string>
     <string name="añadir">añadir</string>
@@ -163,9 +164,11 @@
     <string name="title_activity_edit_profile">EditProfileActivity</string>
     <string name="title_activity_edit_proposal">EditProposalActivity</string>
 
-    <string name="title_activity_details_proposal" translatable="false">DetailsProposalActivity</string>
+    <string name="title_activity_details_proposal" translatable="false">DetailsProposalActivity
+    </string>
 
     <string name="title_activity_add_location" translatable="false">Map</string>
+    <string name="title_activity_logros">LogrosActivity</string>
 
 
 </resources>
