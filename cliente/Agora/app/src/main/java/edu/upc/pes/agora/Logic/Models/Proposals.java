@@ -1,8 +1,11 @@
 package edu.upc.pes.agora.Logic.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.android.gms.maps.model.LatLng;
 
-public class Proposals {
+public class Proposals implements Parcelable{
 
     // Basic proposals data manipulation class
     // Contains basic information of the proposals
@@ -14,14 +17,50 @@ public class Proposals {
     private String categoria;
     //private int token_creator;
     private LatLng position;
+    private double lat;
+    private double lng;
 
+    public Proposals (int id, String tit, String des, String ow, String ca, double lat, double lng) {
+        this.id = id;
+        title = tit;
+        description = des;
+        owner = ow;
+        categoria = ca;
+        this.lat = lat;
+        this.lng = lng;
+    }
     public Proposals (int id, String tit, String des, String ow, String ca) {
         this.id = id;
         title = tit;
         description = des;
         owner = ow;
         categoria = ca;
+        this.lat = 0;
+        this.lng = 0;
     }
+
+    protected Proposals(Parcel in) {
+        id = in.readInt();
+        title = in.readString();
+        description = in.readString();
+        owner = in.readString();
+        categoria = in.readString();
+        position = in.readParcelable(LatLng.class.getClassLoader());
+        lat = in.readDouble();
+        lng = in.readDouble();
+    }
+
+    public static final Creator<Proposals> CREATOR = new Creator<Proposals>() {
+        @Override
+        public Proposals createFromParcel(Parcel in) {
+            return new Proposals(in);
+        }
+
+        @Override
+        public Proposals[] newArray(int size) {
+            return new Proposals[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -71,14 +110,30 @@ public class Proposals {
         this.position = position;
     }
 
-    /*public int getToken_creator() {
-            return token_creator;
-        }
+    public double getLat() {
+        return lat;
+    }
 
-        public void setToken_creator(int token_creator) {
-            this.token_creator = token_creator;
-        }
-    */
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    /*public int getToken_creator() {
+                return token_creator;
+            }
+
+            public void setToken_creator(int token_creator) {
+                this.token_creator = token_creator;
+            }
+        */
     // Will be used by the ArrayAdapter in the ListView
     @Override
     public String toString() {
@@ -87,4 +142,20 @@ public class Proposals {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(title);
+        parcel.writeString(description);
+        parcel.writeString(owner);
+        parcel.writeString(categoria);
+        parcel.writeParcelable(position, i);
+        parcel.writeDouble(lat);
+        parcel.writeDouble(lng);
+    }
 }

@@ -287,7 +287,13 @@ public class ProposalsActivity extends AppCompatActivity {
                 i.putExtra("Title", Titulo.getText().toString());
                 i.putExtra("Description", Descripcion.getText().toString());
                 i.putExtra("Category",spin.getSelectedItemPosition());
-                startActivity(i);
+                i.putExtra("CallingActivity", "Create");
+                if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng")){
+                    Log.i("Putting Position","check");
+                    i.putExtra("lat", getIntent().getDoubleExtra("lat",0));
+                    i.putExtra("lng", getIntent().getDoubleExtra("lng",0));
+                }
+                startActivityForResult(i,1);
             }
         });
 

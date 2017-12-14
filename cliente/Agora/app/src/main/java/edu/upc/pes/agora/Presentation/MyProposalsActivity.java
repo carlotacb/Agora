@@ -106,10 +106,12 @@ public class MyProposalsActivity extends AppCompatActivity {
                                 Integer id = jas.getInt("id");
                                 String creada = jas.getString("createdDateTime");
                                 String ca = jas.getString("categoria");
+                                Double lat = jas.getJSONObject("location").getDouble("lat");
+                                Double lng = jas.getJSONObject("location").getDouble("long");
 
                                 Log.i("asdCreate", creada);
 
-                                Proposals aux = new Proposals(id, title, description, owner,ca);
+                                Proposals aux = new Proposals(id, title, description, owner,ca, lat, lng);
 
                                 propostes.add(aux);
                             }
