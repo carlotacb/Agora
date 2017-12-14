@@ -89,6 +89,7 @@
     <string name="savedChanges">Saved changes to proposal</string>
     <string name="errorEdit">Error editing proposal</string>
     <string name="editar">Editar</string>
+    <string name="editPosition">Edit Position</string>
 
 
     <!-- Strings to Delete Proposal -->
@@ -112,6 +113,7 @@
     <string name="nou">Nuevo Comentario</string>
     <string name="mensajenc">Introducir el nuevo comentario para la propuesta %1$s</string>
     <string name="añadir">añadir</string>
+    <string name="showPosition">Show Position</string>
 
     <!-- Strings related to edit profile -->
     <string name="M">Hombre</string>
@@ -166,6 +168,7 @@
     <string name="title_activity_details_proposal" translatable="false">DetailsProposalActivity</string>
 
     <string name="title_activity_add_location" translatable="false">Map</string>
+    <string name="title_activity_show_location">Map</string>
 
 
 </resources>

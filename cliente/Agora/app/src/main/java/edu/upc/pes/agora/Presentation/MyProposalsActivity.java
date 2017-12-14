@@ -96,7 +96,7 @@ public class MyProposalsActivity extends AppCompatActivity {
 
                         if (ArrayProp != null) {
                             for (int i=0; i < ArrayProp.length(); i++){
-
+                                Proposal aux;
                                 Log.i("asd123", (ArrayProp.get(i).toString()));
 
                                 JSONObject jas = ArrayProp.getJSONObject(i);
@@ -106,15 +106,16 @@ public class MyProposalsActivity extends AppCompatActivity {
                                 Integer id = jas.getInt("id");
                                 String creada = jas.getString("createdDateTime");
                                 String ca = jas.getString("categoria");
-                                Double lat = jas.getJSONObject("location").getDouble("lat");
-                                Double lng = jas.getJSONObject("location").getDouble("long");
+
+                                if(jas.has("location") && jas.getJSONObject("location").has("lat") && jas.getJSONObject("location").get("lat") != JSONObject.NULL ) {
+                                    Double lat = jas.getJSONObject("location").getDouble("lat");
+                                    Double lng = jas.getJSONObject("location").getDouble("long");
+                                    aux = new Proposal(id, title, description, owner, ca, lat, lng);
+                                }else {
+                                    aux = new Proposal(id, title, description, owner, ca);
+                                }
 
                                 Log.i("asdCreate", creada);
-
-
-                                Proposal aux = new Proposal(id, title, description, owner,ca, lat, lng);
-
-
                                 propostes.add(aux);
                             }
                         }

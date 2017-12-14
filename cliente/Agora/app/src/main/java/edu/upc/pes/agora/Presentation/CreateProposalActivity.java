@@ -221,8 +221,6 @@ public class CreateProposalActivity extends AppCompatActivity {
                     JSONObject location = new JSONObject();
 
                     try {
-
-
                         values.put("title", strTitulo);
                         values.put("content", strDescripcion);
                         values.put("categoria", strCategoria);

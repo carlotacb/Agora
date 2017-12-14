@@ -266,8 +266,10 @@ public class MainActivity extends AppCompatActivity {
                                                         String description = jas.getString("content");
                                                         Integer id = jas.getInt("id");
                                                         String ca = jas.getString("categoria");
+                                                        Double lat = jas.getJSONObject("location").getDouble("lat");
+                                                        Double lng = jas.getJSONObject("location").getDouble("long");
 
-                                                        Proposal aux = new Proposal(id, title, description, owner, ca);
+                                                        Proposal aux = new Proposal(id, title, description, owner, ca, lat, lng);
 
                                                         propostes.add(aux);
                                                     }
@@ -467,6 +469,7 @@ public class MainActivity extends AppCompatActivity {
 
                         if (ArrayProp != null) {
                             for (int i=0; i < ArrayProp.length(); i++){
+                                Proposal aux;
 
                                 Log.i("asd123", (ArrayProp.get(i).toString()));
 
@@ -476,8 +479,13 @@ public class MainActivity extends AppCompatActivity {
                                 String description = jas.getString("content");
                                 Integer id = jas.getInt("id");
                                 String ca = jas.getString("categoria");
-
-                                Proposal aux = new Proposal(id, title, description, owner, ca);
+                                if(jas.has("location") && jas.getJSONObject("location").has("lat") && jas.getJSONObject("location").get("lat") != JSONObject.NULL ) {
+                                    Double lat = jas.getJSONObject("location").getDouble("lat");
+                                    Double lng = jas.getJSONObject("location").getDouble("long");
+                                    aux = new Proposal(id, title, description, owner, ca, lat, lng);
+                                }else {
+                                     aux = new Proposal(id, title, description, owner, ca);
+                                }
 
                                 propostes.add(aux);
                             }

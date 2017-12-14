@@ -65,6 +65,10 @@ public class PutAsyncTask extends AsyncTask<JSONObject, Void, JSONObject>{
                 if (con.getResponseCode() == 200) {
                     response.put("success",true);
                 }
+                else if(con.getResponseCode() == 400){
+                    response.put("success", false);
+                    response.put("errorMessage","Selected location outside of allowed zone.");
+                }
                 else  {
                     Log.i("asdTAG","response code: "+con.getResponseCode());
                     String error = con.getResponseMessage();

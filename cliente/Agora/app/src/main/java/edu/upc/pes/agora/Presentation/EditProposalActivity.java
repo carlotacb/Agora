@@ -80,7 +80,7 @@ public class EditProposalActivity extends AppCompatActivity {
                 i.putExtra("Title", editTitle.getText().toString());
                 i.putExtra("Description", editDescription.getText().toString());
                 i.putExtra("CallingActivity", "Edit");
-                if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng")){
+                if (getIntent().hasExtra("lat") && getIntent().getDoubleExtra("lat",0) != 0){
                     i.putExtra("lat", getIntent().getDoubleExtra("lat",0));
                     i.putExtra("lng", getIntent().getDoubleExtra("lng",0));
                 }
@@ -141,11 +141,14 @@ public class EditProposalActivity extends AppCompatActivity {
                                 if (resObject.has("success")) {
                                     result = resObject.getBoolean("success");
                                 }
-
                                 if (!result && resObject.has("errorMessage")) {
                                     error = resObject.getString("errorMessage");
                                     Log.i("asdCreacion", error);
-                                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                                    if(resObject.getString("errorMessage").equals("Selected location outside of allowed zone.")){
+                                        Toast.makeText(getApplicationContext(), res.getString(R.string.errorPosition), Toast.LENGTH_LONG).show();
+                                    }else {
+                                        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                                    }
                                 }
 
                             } catch (JSONException e) {
