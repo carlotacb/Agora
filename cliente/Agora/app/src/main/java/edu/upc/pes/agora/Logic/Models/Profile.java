@@ -1,7 +1,5 @@
 package edu.upc.pes.agora.Logic.Models;
 
-import java.util.Date;
-
 public class Profile {
 
     // Basic proposals data manipulation class
@@ -17,7 +15,7 @@ public class Profile {
 
     public int getSex() {
         int sexo = 0;
-
+        if(sex==null)return sexo;
         if(sex.equals("I")) sexo = 0;
         if(sex.equals("M")) sexo = 2;
         if(sex.equals("F")) sexo = 1;

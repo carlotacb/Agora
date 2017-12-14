@@ -29,7 +29,7 @@ import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Listeners.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
-import edu.upc.pes.agora.Logic.Models.Proposals;
+import edu.upc.pes.agora.Logic.Models.Proposal;
 import edu.upc.pes.agora.Logic.Adapters.RecyclerAdapter;
 import edu.upc.pes.agora.R;
 
@@ -42,7 +42,7 @@ public class MyProposalsActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerAdapter radapter;
 
-    private List<Proposals> listProposals;
+    private List<Proposal> listProposals;
     private JSONObject Jason = new JSONObject();
 
     @SuppressLint("StaticFieldLeak")
@@ -92,7 +92,7 @@ public class MyProposalsActivity extends AppCompatActivity {
 
                     else if (jsonObject != null){
                         JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
-                        ArrayList<Proposals> propostes = new ArrayList<>();
+                        ArrayList<Proposal> propostes = new ArrayList<>();
 
                         if (ArrayProp != null) {
                             for (int i=0; i < ArrayProp.length(); i++){
@@ -111,7 +111,9 @@ public class MyProposalsActivity extends AppCompatActivity {
 
                                 Log.i("asdCreate", creada);
 
-                                Proposals aux = new Proposals(id, title, description, owner,ca, lat, lng);
+
+                                Proposal aux = new Proposal(id, title, description, owner,ca, lat, lng);
+
 
                                 propostes.add(aux);
                             }

@@ -39,7 +39,7 @@ import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
 import edu.upc.pes.agora.Logic.Adapters.ProposalAdapter;
-import edu.upc.pes.agora.Logic.Models.Proposals;
+import edu.upc.pes.agora.Logic.Models.Proposal;
 import edu.upc.pes.agora.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private Locale locale;
     private JSONObject Jason = new JSONObject();
     private ListView llista_propostes;
-    private ArrayList<Proposals> propostes;
+    private ArrayList<Proposal> propostes;
     public static Context mainContext;
     private List<String> opcions = new ArrayList<>();
     private List<String> usuaris = new ArrayList<>();
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ProposalsActivity.class));
+                startActivity(new Intent(MainActivity.this, CreateProposalActivity.class));
 
             }
         });
@@ -132,8 +132,8 @@ public class MainActivity extends AppCompatActivity {
         categories.add(res.getString(R.string.quejas));
         categories.add(res.getString(R.string.soporte));
 
-        ArrayAdapter<String> filterSpinnerAdapter = new ArrayAdapter<>(this, R.layout.filter_spinner_style, opcions);
-        filterSpinnerAdapter.setDropDownViewResource(R.layout.filter_spinner_style);
+        ArrayAdapter<String> filterSpinnerAdapter = new ArrayAdapter<>(this, R.layout.spinner_filter_style, opcions);
+        filterSpinnerAdapter.setDropDownViewResource(R.layout.spinner_filter_style);
         filterSpinner.setAdapter(filterSpinnerAdapter);
         filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -155,8 +155,8 @@ public class MainActivity extends AppCompatActivity {
                         buscartext.setVisibility(View.VISIBLE);
                         searchSpinner.setVisibility(View.VISIBLE);
 
-                        ArrayAdapter<String> opcionsSpinnerAdapter = new ArrayAdapter<>(view.getContext(), R.layout.filter_spinner_style, categories);
-                        opcionsSpinnerAdapter.setDropDownViewResource(R.layout.filter_spinner_style);
+                        ArrayAdapter<String> opcionsSpinnerAdapter = new ArrayAdapter<>(view.getContext(), R.layout.spinner_filter_style, categories);
+                        opcionsSpinnerAdapter.setDropDownViewResource(R.layout.spinner_filter_style);
                         searchSpinner.setAdapter(opcionsSpinnerAdapter);
                         searchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
@@ -267,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
                                                         Integer id = jas.getInt("id");
                                                         String ca = jas.getString("categoria");
 
-                                                        Proposals aux = new Proposals(id, title, description, owner, ca);
+                                                        Proposal aux = new Proposal(id, title, description, owner, ca);
 
                                                         propostes.add(aux);
                                                     }
@@ -331,8 +331,8 @@ public class MainActivity extends AppCompatActivity {
                                             }
                                         }
 
-                                        ArrayAdapter<String> opcionsSpinnerAdapter2 = new ArrayAdapter<>(V.getContext(), R.layout.filter_spinner_style, usuaris);
-                                        opcionsSpinnerAdapter2.setDropDownViewResource(R.layout.filter_spinner_style);
+                                        ArrayAdapter<String> opcionsSpinnerAdapter2 = new ArrayAdapter<>(V.getContext(), R.layout.spinner_filter_style, usuaris);
+                                        opcionsSpinnerAdapter2.setDropDownViewResource(R.layout.spinner_filter_style);
                                         searchSpinner.setAdapter(opcionsSpinnerAdapter2);
                                         searchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                             @Override
@@ -477,7 +477,7 @@ public class MainActivity extends AppCompatActivity {
                                 Integer id = jas.getInt("id");
                                 String ca = jas.getString("categoria");
 
-                                Proposals aux = new Proposals(id, title, description, owner, ca);
+                                Proposal aux = new Proposal(id, title, description, owner, ca);
 
                                 propostes.add(aux);
                             }

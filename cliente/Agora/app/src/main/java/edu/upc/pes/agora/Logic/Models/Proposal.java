@@ -5,7 +5,9 @@ import android.os.Parcelable;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class Proposals implements Parcelable{
+
+public class Proposal implements Parcelable{
+
 
     // Basic proposals data manipulation class
     // Contains basic information of the proposals
@@ -20,7 +22,8 @@ public class Proposals implements Parcelable{
     private double lat;
     private double lng;
 
-    public Proposals (int id, String tit, String des, String ow, String ca, double lat, double lng) {
+
+    public Proposal (int id, String tit, String des, String ow, String ca, double lat, double lng) {
         this.id = id;
         title = tit;
         description = des;
@@ -29,8 +32,8 @@ public class Proposals implements Parcelable{
         this.lat = lat;
         this.lng = lng;
     }
-    public Proposals (int id, String tit, String des, String ow, String ca) {
-        this.id = id;
+    public Proposal (int id, String tit, String des, String ow, String ca) {
+         this.id = id;
         title = tit;
         description = des;
         owner = ow;
@@ -39,7 +42,7 @@ public class Proposals implements Parcelable{
         this.lng = 0;
     }
 
-    protected Proposals(Parcel in) {
+    protected Proposal(Parcel in) {
         id = in.readInt();
         title = in.readString();
         description = in.readString();
@@ -50,15 +53,15 @@ public class Proposals implements Parcelable{
         lng = in.readDouble();
     }
 
-    public static final Creator<Proposals> CREATOR = new Creator<Proposals>() {
+    public static final Creator<Proposal> CREATOR = new Creator<Proposal>() {
         @Override
-        public Proposals createFromParcel(Parcel in) {
-            return new Proposals(in);
+        public Proposal createFromParcel(Parcel in) {
+            return new Proposal(in);
         }
 
         @Override
-        public Proposals[] newArray(int size) {
-            return new Proposals[size];
+        public Proposal[] newArray(int size) {
+            return new Proposal[size];
         }
     };
 

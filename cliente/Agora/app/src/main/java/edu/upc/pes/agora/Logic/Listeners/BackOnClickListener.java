@@ -5,9 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
-import edu.upc.pes.agora.Presentation.MainActivity;
-import edu.upc.pes.agora.Presentation.ProposalsActivity;
-
 public class BackOnClickListener implements View.OnClickListener {
 
     Intent refresh;

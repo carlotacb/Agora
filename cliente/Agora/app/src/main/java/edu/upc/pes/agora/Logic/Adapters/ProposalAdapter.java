@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import edu.upc.pes.agora.Logic.Models.Proposals;
+import edu.upc.pes.agora.Logic.Models.Proposal;
 import edu.upc.pes.agora.Presentation.DetailsProposalActivity;
 import edu.upc.pes.agora.R;
 
@@ -21,10 +21,10 @@ import edu.upc.pes.agora.R;
 
 public class ProposalAdapter extends BaseAdapter {
 
-    private List<Proposals> listProposals;
+    private List<Proposal> listProposals;
     private Context context;
 
-    public ProposalAdapter(List<Proposals> listProposals, Context context) {
+    public ProposalAdapter(List<Proposal> listProposals, Context context) {
         this.listProposals = listProposals;
         this.context = context;
     }
@@ -48,7 +48,7 @@ public class ProposalAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if(convertView == null) {
-            convertView = View.inflate(context, R.layout.proposals_item, null);
+            convertView = View.inflate(context, R.layout.card_proposals_item, null);
         }
 
         TextView titol = (TextView) convertView.findViewById(R.id.titolcard);
@@ -57,7 +57,7 @@ public class ProposalAdapter extends BaseAdapter {
         TextView moreinfo = (TextView) convertView.findViewById(R.id.btnLernMore);
         TextView categoria = (TextView) convertView.findViewById(R.id.categoriaproposal);
 
-        final Proposals proposal = listProposals.get(position);
+        final Proposal proposal = listProposals.get(position);
 
         titol.setText(proposal.getTitle());
         descripcio.setText(proposal.getDescription());

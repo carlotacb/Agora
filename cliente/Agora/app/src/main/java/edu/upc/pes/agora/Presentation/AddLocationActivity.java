@@ -68,11 +68,12 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
                 Intent i = new Intent();
                 if (getIntent().hasExtra("CallingActivity")) {
                     if (getIntent().getStringExtra("CallingActivity").equals("Create")) {
-                        i = new Intent(getApplicationContext(), ProposalsActivity.class);
+                        i = new Intent(getApplicationContext(), CreateProposalActivity.class);
                     }else{
                         i = new Intent(getApplicationContext(), EditProposalActivity.class);
                     }
                 }
+
                 if (getIntent().hasExtra("Title")){
                     i.putExtra("Title", getIntent().getStringExtra("Title"));
                 }
@@ -95,11 +96,12 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
                 Intent i = new Intent();
                 if (getIntent().hasExtra("CallingActivity")) {
                     if (getIntent().getStringExtra("CallingActivity").equals("Create")) {
-                        i = new Intent(getApplicationContext(), ProposalsActivity.class);
+                        i = new Intent(getApplicationContext(), CreateProposalActivity.class);
                     }else{
                         i = new Intent(getApplicationContext(), EditProposalActivity.class);
                     }
                 }
+
                 if (getIntent().hasExtra("Title")){
                     i.putExtra("Title", getIntent().getStringExtra("Title"));
                 }

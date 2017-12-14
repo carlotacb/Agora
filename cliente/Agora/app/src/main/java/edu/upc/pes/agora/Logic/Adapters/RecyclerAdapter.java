@@ -19,7 +19,7 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.upc.pes.agora.Logic.Models.Proposals;
+import edu.upc.pes.agora.Logic.Models.Proposal;
 import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
 import edu.upc.pes.agora.Presentation.EditProposalActivity;
 import edu.upc.pes.agora.R;
@@ -29,10 +29,10 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.RecyclerHolder> {
 
     private LayoutInflater inflater;
-    private List<Proposals> listProposals;
+    private List<Proposal> listProposals;
     private Context context;
 
-    public RecyclerAdapter(List<Proposals> listProposals, Context context){
+    public RecyclerAdapter(List<Proposal> listProposals, Context context){
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.listProposals = listProposals;
@@ -40,13 +40,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
     @Override
     public RecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.card_item,parent,false);
+        View view = inflater.inflate(R.layout.card_my_proposal_item,parent,false);
         return new RecyclerHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final RecyclerHolder holder, final int position) {
-        final Proposals proposal = listProposals.get(position);
+        final Proposal proposal = listProposals.get(position);
 
         final Resources res = context.getResources();
 

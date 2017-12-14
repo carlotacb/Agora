@@ -31,7 +31,7 @@ import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
 import edu.upc.pes.agora.Logic.Models.Profile;
 import edu.upc.pes.agora.R;
 
-public class ProfileActivity extends AppCompatActivity {
+public class MyProfileActivity extends AppCompatActivity {
 
     private Configuration config = new Configuration();
     private Locale locale;
@@ -48,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_my_profile);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navMenu);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -159,8 +159,8 @@ public class ProfileActivity extends AppCompatActivity {
         editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(ProfileActivity.this, EditProfileActivity.class);
-                myIntent.putExtra("cp", p.getCP());
+                Intent myIntent = new Intent(MyProfileActivity.this, EditProfileActivity.class);
+                myIntent.putExtra("cp", p.getCP()); 
                 myIntent.putExtra("barrio", p.getNeighborhood());
                 myIntent.putExtra("nombre", p.getName());
                 myIntent.putExtra("fecha", p.getBorn());
@@ -190,7 +190,7 @@ public class ProfileActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        Intent refresh = new Intent(this, ProfileActivity.class);
+        Intent refresh = new Intent(this, MyProfileActivity.class);
         refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         //noinspection SimplifiableIfStatement
