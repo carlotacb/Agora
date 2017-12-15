@@ -100,6 +100,8 @@ async function update({id, content, title, location}) {
         }
     }
 
+    Console.log(update.location.lat)
+    Console.log(update.location.long)
     return collection().findOneAndUpdate(query, update, options)
         .then(response => response.value)
 }
