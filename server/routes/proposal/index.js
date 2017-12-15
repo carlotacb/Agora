@@ -24,7 +24,7 @@ module.exports = app => {
         } else if (proposal.owner !== req.username) {
             return res.sendStatus(403)
         }
-
+        console.log(req.body)
         const {content, title, location} = req.body
         const newProposal = await proposalsModule.update({id: proposalId, content, title, location})
         res.send(newProposal)
