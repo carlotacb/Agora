@@ -16,8 +16,11 @@ module.exports = app => {
             res.sendStatus(400)
         }
 
+
         const proposalId = req.params.id
         const proposal = await proposalsModule.getProposalById({id: proposalId})
+
+        console.log('username', req.username, 'owner', proposal.owner, req.body)
 
         if (!proposal) {
             return res.sendStatus(404)
