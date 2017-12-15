@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,14 +16,14 @@ import edu.upc.pes.agora.Logic.Models.Proposal;
 import edu.upc.pes.agora.Presentation.DetailsProposalActivity;
 import edu.upc.pes.agora.R;
 
-/**
- * Created by carlo on 25/11/2017.
- */
 
 public class ProposalAdapter extends BaseAdapter {
 
     private List<Proposal> listProposals;
     private Context context;
+    private Boolean votado = false;
+    private Boolean unvote = false;
+    private Boolean favo = false;
 
     public ProposalAdapter(List<Proposal> listProposals, Context context) {
         this.listProposals = listProposals;
@@ -56,6 +57,9 @@ public class ProposalAdapter extends BaseAdapter {
         TextView owner = (TextView) convertView.findViewById(R.id.owner);
         TextView moreinfo = (TextView) convertView.findViewById(R.id.btnLernMore);
         TextView categoria = (TextView) convertView.findViewById(R.id.categoriaproposal);
+        final ImageView likeimagen = (ImageView) convertView.findViewById(R.id.like);
+        final ImageView dislikeimagen = (ImageView) convertView.findViewById(R.id.dislike);
+        final ImageView favorite = (ImageView) convertView.findViewById(R.id.fav);
 
         final Proposal proposal = listProposals.get(position);
 
@@ -64,14 +68,32 @@ public class ProposalAdapter extends BaseAdapter {
         owner.setText(proposal.getOwner());
         String c = proposal.getCategoria();
 
-        if (c.equals("C")) c = context.getString(R.string.cultura);
-        else if (c.equals("D")) c = context.getString(R.string.deportes);
-        else if (c.equals("O")) c = context.getString(R.string.ocio);
-        else if (c.equals("M")) c = context.getString(R.string.mantenimiento);
-        else if (c.equals("E")) c = context.getString(R.string.eventos);
-        else if (c.equals("T")) c = context.getString(R.string.turismo);
-        else if (c.equals("Q")) c = context.getString(R.string.quejas);
-        else if (c.equals("S")) c = context.getString(R.string.soporte);
+        switch (c) {
+            case "C":
+                c = context.getString(R.string.cultura);
+                break;
+            case "D":
+                c = context.getString(R.string.deportes);
+                break;
+            case "O":
+                c = context.getString(R.string.ocio);
+                break;
+            case "M":
+                c = context.getString(R.string.mantenimiento);
+                break;
+            case "E":
+                c = context.getString(R.string.eventos);
+                break;
+            case "T":
+                c = context.getString(R.string.turismo);
+                break;
+            case "Q":
+                c = context.getString(R.string.quejas);
+                break;
+            case "S":
+                c = context.getString(R.string.soporte);
+                break;
+        }
 
         categoria.setText(c);
 
@@ -95,6 +117,51 @@ public class ProposalAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Anirem al usuari " + proposal.getOwner(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        likeimagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(votado) {
+                    likeimagen.setImageResource(R.drawable.ic_like_24);
+                    votado = false;
+                }
+                else {
+                    likeimagen.setImageResource(R.drawable.ic_like_blue_24);
+                    votado = true;
+                }
+                Log.i("asd", "clica");
+
+            }
+
+        });
+
+        dislikeimagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (unvote){
+                    dislikeimagen.setImageResource(R.drawable.ic_dislike_24);
+                    unvote = false;
+                } else {
+                    dislikeimagen.setImageResource(R.drawable.ic_dislike_blue_24);
+                    unvote = true;
+                }
+            }
+        });
+
+        favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (favo){
+                    favorite.setImageResource(R.drawable.ic_favorite);
+                    favo = false;
+                } else {
+                    favorite.setImageResource(R.drawable.ic_favorite_red);
+                    favo = true;
+                }
+
             }
         });
 
