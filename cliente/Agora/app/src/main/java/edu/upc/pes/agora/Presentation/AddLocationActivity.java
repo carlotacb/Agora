@@ -332,14 +332,30 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
             sc.close();
 
             JSONObject obj = new JSONObject(data);
-            JSONArray coordinates = obj.getJSONArray("geometries").getJSONObject(0).getJSONArray("coordinates").getJSONArray(0).getJSONArray(0);
-            List<LatLng> coord = new ArrayList<>(coordinates.length());
-            for (int i = 0; i < coordinates.length(); i++) {
-                coord.add(new LatLng(coordinates.getJSONArray(i).getDouble(1),coordinates.getJSONArray(i).getDouble(0)));
+            if(zone != 4){
+                JSONArray coordinates = obj.getJSONArray("geometries").getJSONObject(0).getJSONArray("coordinates").getJSONArray(0).getJSONArray(0);
+                List<LatLng> coord = new ArrayList<>(coordinates.length());
+                for (int i = 0; i < coordinates.length(); i++) {
+                    coord.add(new LatLng(coordinates.getJSONArray(i).getDouble(1), coordinates.getJSONArray(i).getDouble(0)));
+                }
+                pol = mMap.addPolyline(new PolylineOptions()
+                        .addAll(coord)
+                        .width(2).color(Color.RED));
+
+            }else{
+                for (int j = 0; j < 3; j++){
+                    JSONArray coordinates = obj.getJSONArray("geometries").getJSONObject(0).getJSONArray("coordinates").getJSONArray(j).getJSONArray(0);
+                    List<LatLng> coord = new ArrayList<>(coordinates.length());
+                    for (int k = 0; k < coordinates.length(); k++) {
+                        coord.add(new LatLng(coordinates.getJSONArray(k).getDouble(1), coordinates.getJSONArray(k).getDouble(0)));
+                    }
+                    pol = mMap.addPolyline(new PolylineOptions()
+                            .addAll(coord)
+                            .width(2).color(Color.RED));
+                }
+
             }
-            pol = mMap.addPolyline(new PolylineOptions()
-                    .addAll(coord)
-                    .width(2).color(Color.RED));
+
 
         } catch (IOException e) {
             e.printStackTrace();
