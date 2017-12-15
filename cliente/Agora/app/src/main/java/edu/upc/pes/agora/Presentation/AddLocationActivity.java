@@ -83,6 +83,9 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
                 if (getIntent().hasExtra("Category")){
                     i.putExtra("Category", getIntent().getIntExtra("Category",0));
                 }
+                if (getIntent().hasExtra("id")){
+                    i.putExtra("id", getIntent().getIntExtra("id",0));
+                }
                 i.putExtra("lat", lat);
                 i.putExtra("lng", lng);
                 startActivity(i);
@@ -107,6 +110,9 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
                 }
                 if (getIntent().hasExtra("Description")){
                     i.putExtra("Description", getIntent().getStringExtra("Description"));
+                }
+                if (getIntent().hasExtra("id")){
+                    i.putExtra("id", getIntent().getIntExtra("id",0));
                 }
                 startActivity(i);
             }

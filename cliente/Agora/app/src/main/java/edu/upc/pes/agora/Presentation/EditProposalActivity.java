@@ -80,6 +80,7 @@ public class EditProposalActivity extends AppCompatActivity {
                 i.putExtra("Title", editTitle.getText().toString());
                 i.putExtra("Description", editDescription.getText().toString());
                 i.putExtra("CallingActivity", "Edit");
+                i.putExtra("id",id);
                 if (getIntent().hasExtra("lat") && getIntent().getDoubleExtra("lat",0) != 0){
                     i.putExtra("lat", getIntent().getDoubleExtra("lat",0));
                     i.putExtra("lng", getIntent().getDoubleExtra("lng",0));
@@ -117,6 +118,7 @@ public class EditProposalActivity extends AppCompatActivity {
                         if (prefs.contains("token")){
                             token = prefs.getString("token","");
                         }
+                        values.put("id",id);
                         values.put("title", newTitle);
                         values.put("content", newDescription);
                         location.put("lat", getIntent().getDoubleExtra("lat",0));
