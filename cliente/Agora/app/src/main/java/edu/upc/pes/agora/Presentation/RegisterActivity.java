@@ -19,9 +19,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
-import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.ServerConection.PostSesionAsyncTask;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -58,17 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         final Resources res = getResources();
 
-        switch (Constants.Idioma) {
-            case "ca":
-                canviidioma.setImageResource(R.drawable.rep);
-                break;
-            case "es":
-                canviidioma.setImageResource(R.drawable.spa);
-                break;
-            case "en":
-                canviidioma.setImageResource(R.drawable.ing);
-                break;
-        }
+        Helpers.changeFlag(canviidioma);
 
         Intent idioma = new Intent(RegisterActivity.this, RegisterActivity.class);
         Intent back = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -78,6 +68,11 @@ public class RegisterActivity extends AppCompatActivity {
         canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
 
         enrerre.setOnClickListener(new BackOnClickListener(back, getApplicationContext()));
+
+        username.getBackground().clearColorFilter();
+        identifier.getBackground().clearColorFilter();
+        password1.getBackground().clearColorFilter();
+        password2.getBackground().clearColorFilter();
 
         registro.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("StaticFieldLeak")

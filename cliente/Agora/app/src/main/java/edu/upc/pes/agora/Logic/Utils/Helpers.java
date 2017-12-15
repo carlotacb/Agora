@@ -2,10 +2,14 @@ package edu.upc.pes.agora.Logic.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.ImageView;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import edu.upc.pes.agora.R;
 
 public class Helpers {
 
@@ -39,6 +43,20 @@ public class Helpers {
         SharedPreferences.Editor editor = context.getSharedPreferences(Constants.SH_PREF_NAME, Context.MODE_PRIVATE).edit();
         editor.remove("token");
         editor.apply();
+    }
+
+    public static void changeFlag(ImageView canviidioma) {
+        switch (Constants.Idioma) {
+            case "ca":
+                canviidioma.setImageResource(R.drawable.rep);
+                break;
+            case "es":
+                canviidioma.setImageResource(R.drawable.spa);
+                break;
+            case "en":
+                canviidioma.setImageResource(R.drawable.ing);
+                break;
+        }
     }
 
 }
