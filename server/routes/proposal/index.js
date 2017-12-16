@@ -40,8 +40,10 @@ module.exports = app => {
             category: req.query.category,
             zone: user.zone
         }
-        if (req.query.favorites) {
-
+        if (req.query.favorite) {
+            if (user.favorites) {
+                query.favorites = user.favorites
+            }
         }
         const sort = {
             createdDateTime: 1

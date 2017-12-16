@@ -42,10 +42,14 @@ async function getAllBy(reqQuery, reqSort) {
         query.zone = parseInt(reqQuery.zone)
     }
 
+    if (reqQuery.favorites) {
+        query.id = parseInt(reqQuery.favorites)
+    }
+
     if (sort.createdDateTime) {
         sort.createdDateTime = reqSort.createdDateTime
     }
-
+    console.log(query)
     const cursor = collection().find(query)
 
     if (Object.keys(reqSort).length > 0) {
