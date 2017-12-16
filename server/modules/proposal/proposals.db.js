@@ -43,7 +43,7 @@ async function getAllBy(reqQuery, reqSort) {
     }
 
     if (reqQuery.favorites) {
-        query.id = parseInt(reqQuery.favorites)
+        query.id = {$in : reqQuery.favorites}
     }
 
     if (sort.createdDateTime) {
