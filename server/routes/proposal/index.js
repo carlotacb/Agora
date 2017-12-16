@@ -47,6 +47,12 @@ module.exports = app => {
             createdDateTime: 1
         }
         const proposals = await proposalsModule.getAllProposals(query, sort)
+        proposals.forEach(function(proposal){
+            if (user.favorites.includes(parseInt(proposal.id))){
+                proposal.favorited = true
+            }
+            else proposal.favorited = false
+        })
         res.send(proposals)
 
     }))
