@@ -59,7 +59,10 @@ module.exports = app => {
         if (!proposal) {
             return res.sendStatus(404)
         }
-
+        if (user.favorites.includes(parseInt(id))){
+            proposal.favorited = true
+        }
+        else proposal.favorited = false
         res.send(proposal)
     }))
 
