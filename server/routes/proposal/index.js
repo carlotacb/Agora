@@ -40,6 +40,9 @@ module.exports = app => {
             category: req.query.category,
             zone: user.zone
         }
+        if (req.query.favorites) {
+
+        }
         const sort = {
             createdDateTime: 1
         }
@@ -58,6 +61,32 @@ module.exports = app => {
         }
 
         res.send(proposal)
+    }))
+
+    app.post('/api/proposal/:id/favorite', isAuthenticated, f(async function (req, res) {
+        const id = req.params.id
+        const user = await userModule.get({username: req.username})
+        const proposal = await proposalsModule.getProposalById({id, zone: user.zone})
+        console.log(user.favorites)
+        console.log(proposal)
+        if (proposal) {
+            if (user.favorites === undefined) {
+                console.log("Use does not has any favorited proposal")
+                await userModule.setFavorite({id, user})
+                proposal.favorited = true
+            }
+            else if (user.favorites.includes(parseInt(id))){
+                console.log("Proposal allready in favorites -> proceeding to unfavorite")
+                await userModule.unsetFavorite({id, user})
+                proposal.favorited = false
+            }
+            else {
+                console.log("Proposal not favorited -> proceeding to favorite it")
+                await userModule.setFavorite({id, user})
+                proposal.favorited = true
+            }
+        }
+        return res.send(proposal)
     }))
 
     app.post('/api/proposal/:id/comment', isAuthenticated, f(async function (req, res) {

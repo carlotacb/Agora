@@ -80,4 +80,6 @@ module.exports = {
     updateProfile: db.updateProfile,
     updatePassword: updatePassword,
     getByZone: db.getByZone,
+    setFavorite: db.setFavorite,
+    unsetFavorite: db.unsetFavorite,
 }
