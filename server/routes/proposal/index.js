@@ -48,7 +48,7 @@ module.exports = app => {
         }
         const proposals = await proposalsModule.getAllProposals(query, sort)
         proposals.forEach(function(proposal){
-            if (user.favorites.includes(parseInt(proposal.id))){
+            if (user.favorites && user.favorites.includes(parseInt(proposal.id))){
                 proposal.favorited = true
             }
             else proposal.favorited = false
@@ -65,7 +65,7 @@ module.exports = app => {
         if (!proposal) {
             return res.sendStatus(404)
         }
-        if (user.favorites.includes(parseInt(id))){
+        if (user.favorites && user.favorites.includes(parseInt(id))){
             proposal.favorited = true
         }
         else proposal.favorited = false
@@ -79,18 +79,11 @@ module.exports = app => {
         console.log(user.favorites)
         console.log(proposal)
         if (proposal) {
-            if (user.favorites === undefined) {
-                console.log("Use does not has any favorited proposal")
-                await userModule.setFavorite({id, user})
-                proposal.favorited = true
-            }
-            else if (user.favorites.includes(parseInt(id))){
-                console.log("Proposal allready in favorites -> proceeding to unfavorite")
+            if (user.favorites && user.favorites.includes(parseInt(id))){
                 await userModule.unsetFavorite({id, user})
                 proposal.favorited = false
             }
             else {
-                console.log("Proposal not favorited -> proceeding to favorite it")
                 await userModule.setFavorite({id, user})
                 proposal.favorited = true
             }

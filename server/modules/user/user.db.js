@@ -87,7 +87,7 @@ async function setFavorite({id, user}){
         upsert: false,
         returnOriginal: false
     }
-    console.log(query, update)
+
     return collection().findOneAndUpdate(query, update, options)
         .then(response => response.value)
 }
