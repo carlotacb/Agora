@@ -2,10 +2,17 @@ package edu.upc.pes.agora.Logic.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Helpers {
 
@@ -39,6 +46,15 @@ public class Helpers {
         SharedPreferences.Editor editor = context.getSharedPreferences(Constants.SH_PREF_NAME, Context.MODE_PRIVATE).edit();
         editor.remove("token");
         editor.apply();
+    }
+
+    public static String showDate(String d) {
+        String[] res = d.split("T")[0].split("-");
+        if (res.length == 3) {
+            return "" + res[2] + "/" + res[1] + "/" + res[0];
+        }else{
+            return "dd/MM/yyyy";
+        }
     }
 
 }

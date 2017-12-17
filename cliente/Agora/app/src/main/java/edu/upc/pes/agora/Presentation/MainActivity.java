@@ -31,6 +31,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -40,6 +41,7 @@ import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
 import edu.upc.pes.agora.Logic.Adapters.ProposalAdapter;
 import edu.upc.pes.agora.Logic.Models.Proposal;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -266,8 +268,10 @@ public class MainActivity extends AppCompatActivity {
                                                         String description = jas.getString("content");
                                                         Integer id = jas.getInt("id");
                                                         String ca = jas.getString("categoria");
+                                                        String createDate = Helpers.showDate(jas.getString("createdDateTime"));
+                                                        String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
 
-                                                        Proposal aux = new Proposal(id, title, description, owner, ca);
+                                                        Proposal aux = new Proposal(id, title, description, owner, ca, createDate, updateDate);
 
                                                         propostes.add(aux);
                                                     }
@@ -275,6 +279,8 @@ public class MainActivity extends AppCompatActivity {
                                                 llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
                                             }
                                         } catch (JSONException e ) {
+                                            e.printStackTrace();
+                                        } catch (ParseException e) {
                                             e.printStackTrace();
                                         }
                                     }
@@ -476,8 +482,10 @@ public class MainActivity extends AppCompatActivity {
                                 String description = jas.getString("content");
                                 Integer id = jas.getInt("id");
                                 String ca = jas.getString("categoria");
+                                String createDate = Helpers.showDate(jas.getString("createdDateTime"));
+                                String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
 
-                                Proposal aux = new Proposal(id, title, description, owner, ca);
+                                Proposal aux = new Proposal(id, title, description, owner, ca, createDate, updateDate);
 
                                 propostes.add(aux);
                             }
@@ -485,6 +493,8 @@ public class MainActivity extends AppCompatActivity {
                         llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
                     }
                 } catch (JSONException e ) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
