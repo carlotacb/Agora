@@ -82,14 +82,17 @@ module.exports = app => {
         console.log(proposal)
         if (proposal) {
             if (user.favorites && user.favorites.includes(parseInt(id))){
+                console.log("set Favorite")
                 await userModule.unsetFavorite({id, user})
                 proposal.favorited = false
             }
             else {
                 await userModule.setFavorite({id, user})
+                console.log("unset Favorite")
                 proposal.favorited = true
             }
         }
+        console.log(proposal)
         return res.send(proposal)
     }))
 
