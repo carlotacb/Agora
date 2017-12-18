@@ -1,7 +1,9 @@
 package edu.upc.pes.agora.Logic.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +12,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import edu.upc.pes.agora.Logic.Models.Proposal;
+import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
+import edu.upc.pes.agora.Presentation.CreateProposalActivity;
 import edu.upc.pes.agora.Presentation.DetailsProposalActivity;
+import edu.upc.pes.agora.Presentation.MainActivity;
 import edu.upc.pes.agora.R;
 
 
@@ -23,7 +31,7 @@ public class ProposalAdapter extends BaseAdapter {
     private Context context;
     private Boolean votado = false;
     private Boolean unvote = false;
-    private Boolean favo = false;
+    private Boolean favo;
 
     public ProposalAdapter(List<Proposal> listProposals, Context context) {
         this.listProposals = listProposals;
@@ -57,15 +65,25 @@ public class ProposalAdapter extends BaseAdapter {
         TextView owner = (TextView) convertView.findViewById(R.id.owner);
         TextView moreinfo = (TextView) convertView.findViewById(R.id.btnLernMore);
         TextView categoria = (TextView) convertView.findViewById(R.id.categoriaproposal);
+        TextView numerocomentarios = (TextView) convertView.findViewById(R.id.numerocomentaris);
         final ImageView likeimagen = (ImageView) convertView.findViewById(R.id.like);
         final ImageView dislikeimagen = (ImageView) convertView.findViewById(R.id.dislike);
         final ImageView favorite = (ImageView) convertView.findViewById(R.id.fav);
 
         final Proposal proposal = listProposals.get(position);
 
+        favo = proposal.getFavorite();
+
+        if (favo){
+            favorite.setImageResource(R.drawable.ic_favorite_red);
+        } else {
+            favorite.setImageResource(R.drawable.ic_favorite);
+        }
+
         titol.setText(proposal.getTitle());
         descripcio.setText(proposal.getDescription());
         owner.setText(proposal.getOwner());
+        numerocomentarios.setText(String.valueOf(proposal.getNumerocomentarios()));
         String c = proposal.getCategoria();
 
         switch (c) {
@@ -152,16 +170,62 @@ public class ProposalAdapter extends BaseAdapter {
         });
 
         favorite.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View v) {
-                if (favo){
+
+                JSONObject values = new JSONObject();
+
+                if (proposal.getFavorite()){
                     favorite.setImageResource(R.drawable.ic_favorite);
-                    favo = false;
+                    try {
+                        values.put("favorited", false);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     favorite.setImageResource(R.drawable.ic_favorite_red);
-                    favo = true;
+                    try {
+                        values.put("favorited", true);
+                        //favorite.setImageResource(R.drawable.ic_favorite_red);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
+                new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + proposal.getId() + "/favorite", context) {
+                    @Override
+                    protected void onPostExecute(JSONObject resObject) {
+                        Boolean result = false;
+
+                        try {
+                            if (resObject.has("success")) {
+                                result = resObject.getBoolean("success");
+                            }
+
+                            if (!result && resObject.has("errorMessage")) {
+                                Log.i("asdCreacion", "Error");
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (result) {
+                            /*if (favo) {
+                                favorite.setImageResource(R.drawable.ic_favorite);
+                            } else {
+                                favorite.setImageResource(R.drawable.ic_favorite_red);
+                            }*/
+                            Log.i("asdCreacion", "OKEY");
+                        }
+
+                        else {
+                            Log.i("asdCreacion", "reset");
+                        }
+                    }
+                }.execute(values);
             }
         });
 

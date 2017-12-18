@@ -389,14 +389,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
         MenuItem bandera = menu.findItem(R.id.bandera);
-        if(Constants.Idioma.equals("es")){
-            bandera.setIcon(R.drawable.spa);
-        }
-        else if(Constants.Idioma.equals("en")){
-            bandera.setIcon(R.drawable.ing);
-        }
-        else if(Constants.Idioma.equals("ca")){
-            bandera.setIcon(R.drawable.rep);
+        switch (Constants.Idioma) {
+            case "es":
+                bandera.setIcon(R.drawable.spa);
+                break;
+            case "en":
+                bandera.setIcon(R.drawable.ing);
+                break;
+            case "ca":
+                bandera.setIcon(R.drawable.rep);
+                break;
         }
 
         super.onPrepareOptionsMenu(menu);
@@ -466,18 +468,22 @@ public class MainActivity extends AppCompatActivity {
                         propostes = new ArrayList<>();
 
                         if (ArrayProp != null) {
-                            for (int i=0; i < ArrayProp.length(); i++){
-
+                            for (int i = 0; i < ArrayProp.length(); i++){
                                 Log.i("asd123", (ArrayProp.get(i).toString()));
-
                                 JSONObject jas = ArrayProp.getJSONObject(i);
+                                JSONArray comentaris = jas.getJSONArray("comments");
+                                //Log.i("asd1234", String.valueOf(comentaris.length()));
                                 String title = jas.getString("title");
                                 String owner = jas.getString("owner");
                                 String description = jas.getString("content");
                                 Integer id = jas.getInt("id");
                                 String ca = jas.getString("categoria");
+                                Boolean fav = jas.getBoolean("favorited");
+                                Integer numcoments = comentaris.length();
 
                                 Proposal aux = new Proposal(id, title, description, owner, ca);
+                                aux.setNumerocomentarios(numcoments);
+                                aux.setFavorite(fav);
 
                                 propostes.add(aux);
                             }

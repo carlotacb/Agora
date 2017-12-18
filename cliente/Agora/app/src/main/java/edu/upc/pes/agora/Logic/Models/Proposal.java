@@ -12,8 +12,9 @@ public class Proposal {
     private String description;
     private String owner;
     private String categoria;
-    //private int token_creator;
     private LatLng position;
+    private Integer numerocomentarios;
+    private Boolean favorite;
 
     public Proposal(int id, String tit, String des, String ow, String ca) {
         this.id = id;
@@ -71,14 +72,22 @@ public class Proposal {
         this.position = position;
     }
 
-    /*public int getToken_creator() {
-            return token_creator;
-        }
+    public Boolean getFavorite() {
+        return favorite;
+    }
 
-        public void setToken_creator(int token_creator) {
-            this.token_creator = token_creator;
-        }
-    */
+    public void setFavorite(Boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public Integer getNumerocomentarios() {
+        return numerocomentarios;
+    }
+
+    public void setNumerocomentarios(Integer numerocomentarios) {
+        this.numerocomentarios = numerocomentarios;
+    }
+
     // Will be used by the ArrayAdapter in the ListView
     @Override
     public String toString() {
