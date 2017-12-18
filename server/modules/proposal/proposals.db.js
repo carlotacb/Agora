@@ -49,7 +49,7 @@ async function getAllBy(reqQuery, reqSort) {
     if (sort.createdDateTime) {
         sort.createdDateTime = reqSort.createdDateTime
     }
-    console.log(query)
+
     const cursor = collection().find(query)
 
     if (Object.keys(reqSort).length > 0) {
@@ -104,7 +104,6 @@ async function update({id, content, title, location}) {
         }
     }
 
-    console.log(update)
     return collection().findOneAndUpdate(query, update, options)
         .then(response => response.value)
 }
@@ -160,8 +159,6 @@ async function deleteComment({proposalId, author, commentId}) {
     const options = {
         multi: true
     }
-
-    console.log(options)
 
     return collection().update(query, update, options)
         .then(response => response.value)

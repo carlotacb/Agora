@@ -88,5 +88,6 @@ async function throwIfInvalidLocationForZone({zoneId, location}) {
 module.exports = {
     getZoneForSignupCode: getZoneForSignupCode,
     throwIfInvalidLocationForZone: throwIfInvalidLocationForZone,
-    zones: zones
+    zones: zones,
+    get: get,
 }

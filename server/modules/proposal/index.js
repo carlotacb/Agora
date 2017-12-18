@@ -42,19 +42,12 @@ async function deleteComment({proposalId, author, commentId}) {
         throw new Error('Proposal not found')
     }
 
-    console.log(proposalId)
-    console.log(commentId)
-    console.log(author)
-
     const user = await userModule.get({username: author})
 
     if (!user) {
         throw new Error('User not found')
     }
 
-    console.log(proposalId)
-    console.log(commentId)
-    console.log(author)
     return db.deleteComment({
         proposalId,
         author,
@@ -82,6 +75,10 @@ async function editComment({proposalId, author, comment, commentId}) {
     })
 }
 
+async function voteProposal({proposalId, vote, username}) {
+    console.log('Unimplemented method.');
+}
+
 module.exports = {
     createProposal: createProposal,
     getAllProposals: db.getAllBy,
@@ -91,4 +88,5 @@ module.exports = {
     addComment: addComment,
     editComment: editComment,
     deleteComment: deleteComment,
+    voteProposal: voteProposal,
 }
