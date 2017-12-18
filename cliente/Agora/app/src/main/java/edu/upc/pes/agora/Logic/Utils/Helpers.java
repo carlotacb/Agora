@@ -2,7 +2,6 @@ package edu.upc.pes.agora.Logic.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,5 +30,14 @@ public class Helpers {
         editor.apply();
     }
 
+
+    public static String showDate(String d) {
+        String[] res = d.split("T")[0].split("-");
+        if (res.length == 3) {
+            return "" + res[2] + "/" + res[1] + "/" + res[0];
+        }else{
+            return "dd/MM/yyyy";
+        }
+    }
 
 }

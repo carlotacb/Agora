@@ -45,6 +45,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
     private TextView descripcio;
     private TextView owner;
     private TextView categoria;
+    private TextView date;
 
     private ListView llista_comentaris;
     private String newComent;
@@ -68,6 +69,8 @@ public class DetailsProposalActivity extends AppCompatActivity {
         descripcio = (TextView) findViewById(R.id.descripcioproposta);
         categoria = (TextView) findViewById(R.id.categoriaproposta);
         owner = (TextView) findViewById(R.id.ownerproposal);
+        date = (TextView) findViewById(R.id.date);
+        date.setText(getIntent().getStringExtra("Creation"));
 
         llista_comentaris = (ListView) findViewById(R.id.listcommentaris);
 

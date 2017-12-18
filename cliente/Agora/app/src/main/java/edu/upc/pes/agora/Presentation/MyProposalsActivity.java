@@ -21,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -31,6 +32,7 @@ import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
 import edu.upc.pes.agora.Logic.Models.Proposal;
 import edu.upc.pes.agora.Logic.Adapters.RecyclerAdapter;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 public class MyProposalsActivity extends AppCompatActivity {
@@ -106,10 +108,12 @@ public class MyProposalsActivity extends AppCompatActivity {
                                 Integer id = jas.getInt("id");
                                 String creada = jas.getString("createdDateTime");
                                 String ca = jas.getString("categoria");
+                                String createDate = Helpers.showDate(jas.getString("createdDateTime"));
+                                String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
 
                                 Log.i("asdCreate", creada);
 
-                                Proposal aux = new Proposal(id, title, description, owner,ca);
+                                Proposal aux = new Proposal(id, title, description, owner,ca, createDate, updateDate);
 
                                 propostes.add(aux);
                             }
@@ -119,6 +123,8 @@ public class MyProposalsActivity extends AppCompatActivity {
                         myrecycler.setAdapter(radapter);
                     }
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }

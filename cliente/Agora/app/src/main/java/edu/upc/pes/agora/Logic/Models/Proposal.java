@@ -2,6 +2,13 @@ package edu.upc.pes.agora.Logic.Models;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import org.json.JSONException;
+
+import java.text.ParseException;
+import java.util.Date;
+
+import edu.upc.pes.agora.Logic.Utils.Helpers;
+
 public class Proposal {
 
     // Basic proposals data manipulation class
@@ -15,13 +22,17 @@ public class Proposal {
     private LatLng position;
     private Integer numerocomentarios;
     private Boolean favorite;
+    private String creation;
+    private String update;
 
-    public Proposal(int id, String tit, String des, String ow, String ca) {
+    public Proposal(int id, String tit, String des, String ow, String ca, String created, String updated) throws JSONException, ParseException {
         this.id = id;
         title = tit;
         description = des;
         owner = ow;
         categoria = ca;
+        creation = created;
+        update = updated;
     }
 
     public int getId() {
@@ -62,6 +73,22 @@ public class Proposal {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public String getCreation() {
+        return creation;
+    }
+
+    public void setCreation(String creation) {
+        this.creation = creation;
+    }
+
+    public String getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(String update) {
+        this.update = update;
     }
 
     public LatLng getPosition() {
