@@ -16,6 +16,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "express-mung": "^0.4.6",
     "jsonwebtoken": "^8.1.0",
     "mongodb": "^2.2.33",
     "morgan": "^1.9.0",

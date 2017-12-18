@@ -89,6 +89,9 @@ module.exports = app => {
     }))
 
     app.post('/api/proposal/:proposalId/comment', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
+        if (!req.body.comment) {
+            throw new TypeError('Missing body field: comment')
+        }
         const comment = req.body.comment.toString()
         const proposalId = req.params.proposalId
         const newComment = await proposalsModule.addComment({proposalId: proposalId, author: req.username, comment})

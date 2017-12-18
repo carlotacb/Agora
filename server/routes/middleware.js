@@ -25,7 +25,7 @@ async function isAuthenticated(req, res, next) {
         return next(new errors.invalidToken())
     }
 
-    req.username = session.username
+    req.username = session.username.toLowerCase()
     req.token = session.token
 
     logRequest(req)

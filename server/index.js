@@ -2,10 +2,24 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const db = require('./modules/db')
+const mung = require('express-mung');
 
 const config = require('./config')
 
 const BootstrapRouter = require('./routes')
+
+
+app.use(mung.headers((req, res) => {
+    if (res.statusCode === 200) {
+        if (req.method === 'POST' && req.path.includes('/api/proposal')) {
+            if (req.body.comment === 'achi') {
+                res.setHeader('X-New-Achievements', 'COM5')
+            } else if (req.body.comment === 'achis') {
+                res.setHeader('X-New-Achievements', 'COM5,OW,NED')
+            }
+        }
+    }
+}))
 
 BootstrapRouter(app)
 BootstrapServer(app)

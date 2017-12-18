@@ -40,4 +40,13 @@ module.exports = app => {
         const users = await userModule.getByZone({user})
         res.json(users)
     }))
+
+    app.get('/api/profile/achievements', isAuthenticated, f(async function (req, res) {
+        res.json({
+            achievements: [
+                'COM10',
+                'PROP100'
+            ]
+        })
+    }))
 }
