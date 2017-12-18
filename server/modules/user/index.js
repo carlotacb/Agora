@@ -9,6 +9,8 @@ async function createUser({username, password, signupCode}) {
         throw new TypeError('Missing arguments')
     }
 
+    username = username.toLowerCase()
+
     const existingUser = await db.get({username})
     if (existingUser) {
         throw new Error(`Username already used`)
@@ -39,6 +41,7 @@ async function createUser({username, password, signupCode}) {
 }
 
 async function login({username, password}) {
+    username = username.toLowerCase()
     const user = await db.get({username})
     if (!user) {
         throw new Error(`Username "${username}" not found`)

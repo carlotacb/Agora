@@ -43,10 +43,20 @@ function missingToken() {
     this.errorCode = 'E005';
 }
 
+function invalidCredentials() {
+    Error.captureStackTrace(this, this.constructor);
+
+    this.name = this.constructor.name;
+    this.message = 'Invalid username/password combination.';
+    this.status = 403
+    this.errorCode = 'E006';
+}
+
 module.exports = {
     locationOutsideAllowedZone: locationOutsideAllowedZone,
     proposalNotFound: proposalNotFound,
     proposalOutsideZone: proposalOutsideZone,
     invalidToken: invalidToken,
     missingToken: missingToken,
+    invalidCredentials: invalidCredentials,
 }
