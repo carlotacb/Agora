@@ -183,6 +183,55 @@ async function editComment({proposalId, author, commentId, comment}) {
         .then(response => response.value)
 }
 
+async function addImage({proposalId, images}) {
+    const query = {
+        id: parseInt(proposalId),
+    }
+
+    var updateVal = async function() {
+        images.forEach(async function(s) {
+            s.image = s
+            s.id = await generateNextId('image')
+        })
+    }
+
+    const update = {
+        $push: {
+            updateVal
+        }
+    }
+    console.log(updateVal)
+    const options = {
+        upsert: false,
+        returnOriginal: false
+    }
+
+    return collection().findOneAndUpdate(query, update, options)
+        .then(response => response.value)
+}
+
+async function deleteImage({proposalId, image}) {
+    const query = {
+        id: parseInt(proposalId),
+        "comments.id": parseInt(commentId),
+        "comments.author.username": author.toString()
+    }
+
+    const update = {
+        $pull: {
+            comments: {
+                id: parseInt(commentId),
+            }
+        }
+    }
+
+    const options = {
+        multi: true
+    }
+
+    return collection().update(query, update, options)
+        .then(response => response.value)
+}
 
 module.exports = {
     create: create,
@@ -194,4 +243,6 @@ module.exports = {
     editComment: editComment,
     deleteComment: deleteComment,
     delete: deleteProposal,
+    addImage: addImage,
+    deleteImage: deleteImage,
 }

@@ -79,6 +79,24 @@ async function voteProposal({proposalId, vote, username}) {
     console.log('Unimplemented method.');
 }
 
+async function addImage({proposalId, author, images}) {
+    const proposal = await db.getProposalById({id: proposalId})
+    if (!proposal) {
+        throw new Error('Proposal not found')
+    }
+
+    const user = await userModule.get({username: author})
+
+    if (!user) {
+        throw new Error('User not found')
+    }
+    else if (author !== proposal.owner) {
+        throw new Error('User is not the owner of the proposal')
+    }
+
+    return db.addImage({proposalId, images})
+}
+
 module.exports = {
     createProposal: createProposal,
     getAllProposals: db.getAllBy,
@@ -89,4 +107,5 @@ module.exports = {
     editComment: editComment,
     deleteComment: deleteComment,
     voteProposal: voteProposal,
+    addImage: addImage,
 }

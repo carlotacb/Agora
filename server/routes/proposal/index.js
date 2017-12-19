@@ -118,6 +118,23 @@ module.exports = app => {
         return res.sendStatus(200)
     }))
 
+    app.post('/api/proposal/:proposalId/image', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
+        if (!req.body.images) {
+            throw new TypeError('Missing body field: images')
+        }
+        const images = req.body.images.toString()
+        const proposalId = req.params.proposalId
+        const proposal = await proposalsModule.addImage({proposalId: proposalId, author: req.username,images})
+        return res.send(proposal)
+    }))
+
+    app.delete('/api/proposal/:proposalId/image/:imageId', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
+        const proposalId = req.params.proposalId
+        const commentId = req.params.idc
+        await proposalsModule.deleteComment({proposalId: proposalId, author: req.username, commentId: commentId})
+        return res.sendStatus(200)
+    }))
+
     app.delete('/api/proposal/:proposalId', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
         const id = req.params.proposalId
         const proposal = await proposalsModule.getProposalById({id})
