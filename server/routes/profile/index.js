@@ -62,7 +62,7 @@ module.exports = app => {
             sex: user.sex,
             description: user.description,
             image: user.image,
-            updatedDateTime: new Date(user.updatedDateTime)
+            updatedDateTime: new Date(user.updatedDateTime),
             zone: parseInt(user.zone),
         })
     }))
