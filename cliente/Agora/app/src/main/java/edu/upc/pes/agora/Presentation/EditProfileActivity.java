@@ -6,12 +6,14 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -28,6 +30,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -48,6 +52,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private ImageView image;
     private TextView button;
+    private String encoded;
 
     private final int SELECT_PICTURE=200;
 
@@ -277,6 +282,8 @@ public class EditProfileActivity extends AppCompatActivity {
                         values.put("neighborhood", barrio);
                         values.put("realname", nombre);
                         //values.put("description",descripcion);
+                        values.put("image", encoded);
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -337,8 +344,20 @@ public class EditProfileActivity extends AppCompatActivity {
         switch (requestCode) {
             case SELECT_PICTURE:
                 if(resultCode == RESULT_OK) {
-                    Uri path = data.getData();
-                    image.setImageURI(path);
+                    Bitmap bitmap =null;
+                    if (data != null) {
+                        try {
+                            bitmap  = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    image.setImageBitmap(bitmap);
+
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    byte[] byteArray = byteArrayOutputStream .toByteArray();
+                    encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 }
                 break;
         }
