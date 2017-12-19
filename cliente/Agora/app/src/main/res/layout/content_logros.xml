@@ -9,4 +9,15 @@
     tools:context="edu.upc.pes.agora.Presentation.LogrosActivity"
     tools:showIn="@layout/activity_logros">
 
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lista"
+        tools:context="edu.upc.pes.agora.Presentation.LogrosActivity"
+        >
+
+    </ListView>
+
+
 </android.support.constraint.ConstraintLayout>
