@@ -122,7 +122,10 @@ module.exports = app => {
         if (!req.body.images) {
             throw new TypeError('Missing body field: images')
         }
-        const images = req.body.images.toString()
+        const images = req.body.images
+        if (!Array.isArray(images)) {
+            throw new TypeError('Images must be an array of images')
+        }
         const proposalId = req.params.proposalId
         const proposal = await proposalsModule.addImage({proposalId: proposalId, author: req.username,images})
         return res.send(proposal)
@@ -130,8 +133,8 @@ module.exports = app => {
 
     app.delete('/api/proposal/:proposalId/image/:imageId', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
         const proposalId = req.params.proposalId
-        const commentId = req.params.idc
-        await proposalsModule.deleteComment({proposalId: proposalId, author: req.username, commentId: commentId})
+        const imageId = req.params.imageId
+        await proposalsModule.deleteImage({proposalId: proposalId, author: req.username, imageId: imageId})
         return res.sendStatus(200)
     }))
 

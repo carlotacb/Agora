@@ -97,6 +97,28 @@ async function addImage({proposalId, author, images}) {
     return db.addImage({proposalId, images})
 }
 
+async function deleteImage({proposalId, author, imageId}) {
+    const proposal = await db.getProposalById({id: proposalId})
+    if (!proposal) {
+        throw new Error('Proposal not found')
+    }
+
+    const user = await userModule.get({username: author})
+
+    if (!user) {
+        throw new Error('User not found')
+    }
+    else if (author !== proposal.owner) {
+        throw new Error('User is not the owner of the proposal')
+    }
+
+        return db.deleteImage({
+        proposalId,
+        author,
+        imageId,
+    })
+}
+
 module.exports = {
     createProposal: createProposal,
     getAllProposals: db.getAllBy,
@@ -108,4 +130,5 @@ module.exports = {
     deleteComment: deleteComment,
     voteProposal: voteProposal,
     addImage: addImage,
+    deleteImage: deleteImage,
 }

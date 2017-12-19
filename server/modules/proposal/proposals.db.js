@@ -188,19 +188,21 @@ async function addImage({proposalId, images}) {
         id: parseInt(proposalId),
     }
 
-    var updateVal = async function() {
-        images.forEach(async function(s) {
-            s.image = s
-            s.id = await generateNextId('image')
-        })
+    console.log('images', JSON.stringify(images, null, 4), typeof images)
+
+    for (let i = 0; i < images.length; ++i) {
+        images [i] = {
+            image: images[i],
+            id: await generateNextId('image')
+        }
     }
 
     const update = {
-        $push: {
-            updateVal
+        $pushAll: {
+            images
         }
     }
-    console.log(updateVal)
+    console.log(update)
     const options = {
         upsert: false,
         returnOriginal: false
@@ -210,20 +212,21 @@ async function addImage({proposalId, images}) {
         .then(response => response.value)
 }
 
-async function deleteImage({proposalId, image}) {
+async function deleteImage({proposalId, username,imageId}) {
     const query = {
         id: parseInt(proposalId),
-        "comments.id": parseInt(commentId),
-        "comments.author.username": author.toString()
+        "images.id": parseInt(imageId)
     }
 
     const update = {
         $pull: {
-            comments: {
-                id: parseInt(commentId),
+            images: {
+                id: parseInt(imageId)
             }
         }
     }
+
+    console.log('query', query, 'upd', update)
 
     const options = {
         multi: true
