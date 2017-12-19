@@ -357,7 +357,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                     byte[] byteArray = byteArrayOutputStream .toByteArray();
-                    String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                    encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
                 }
                 break;
         }
