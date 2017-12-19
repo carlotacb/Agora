@@ -1,47 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:padding="10dp"
+        android:id="@+id/image"
+        android:src="@drawable/ic_user_male32"/>
+
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/autorcomentari"
+        android:layout_alignStart="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="5dp"
+        android:text="NomAutor"
+        android:layout_marginStart="40sp"
+        android:textAllCaps="true"
+        android:textSize="17sp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/autorcomentari"
-              android:layout_width="match_parent"
+              android:id="@+id/dia"
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:gravity="center_vertical"
-              android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-              android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-              android:layout_marginTop="5dp"
+              android:layout_marginTop="8dp"
               android:layout_marginBottom="5dp"
-              android:text="NomAutor"
-              android:textAppearance="?android:attr/textAppearanceListItemSmall"
-              android:textColor="#000"
-              android:textStyle="bold" />
+              android:layout_marginStart="10dp"
+              android:text="DD/MM/YYYY"
+              android:textAllCaps="true"
+              android:textSize="12sp"
+              android:padding="4dp"
+              android:textColor="@color/gris"
+              android:layout_toRightOf="@+id/autorcomentari"/>
+
+    <TextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/descripciocomentari"
+        android:layout_width="320sp"
+        android:layout_height="wrap_content"
+        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+        android:layout_below="@+id/autorcomentari"
+        android:layout_marginStart="45sp"
+        android:layout_marginBottom="5dp"
+        android:text="comentari"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textColor="#434343" />
+
 
     <ImageView
         android:layout_width="30dp"
         android:layout_height="50dp"
         android:id="@+id/more"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="20dp"
-        android:layout_alignRight="@id/autorcomentari"
+        android:layout_centerInParent="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="10sp"
         android:src="@mipmap/ic_more"
         android:clickable="true"
         android:focusable="true"/>
 
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/descripciocomentari"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center_vertical"
-              android:layout_below="@+id/autorcomentari"
-              android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
-              android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-              android:layout_marginBottom="5dp"
-              android:text="comentari"
-              android:textAppearance="?android:attr/textAppearanceListItemSmall"
-              android:textColor="#434343" />
+
 
 
 </RelativeLayout>

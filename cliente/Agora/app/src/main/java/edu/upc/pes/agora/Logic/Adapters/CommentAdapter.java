@@ -64,7 +64,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         Autor.setText(comentaris.getAutor());
         Content.setText(comentaris.getComentario());
 
-        if (comentaris.getAutor().equals(Constants.Username)) {
+        if (comentaris.getAutor().equals(Constants.Username.toLowerCase())) {
             more.setVisibility(View.VISIBLE);
         }
 
