@@ -1,5 +1,6 @@
 package edu.upc.pes.agora.Logic.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -95,6 +96,7 @@ public class ProposalAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Anirem al usuari " + proposal.getOwner(), Toast.LENGTH_SHORT).show();
+                //TODO: user DetailsProposalActivity owner.onClick to show Profile
             }
         });
 

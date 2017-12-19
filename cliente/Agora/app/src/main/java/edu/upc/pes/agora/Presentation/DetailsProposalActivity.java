@@ -152,6 +152,15 @@ public class DetailsProposalActivity extends AppCompatActivity {
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+        owner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), OtherUserActivity.class);
+                i.putExtra("username", owner.getText());
+                startActivity(i);
+            }
+        });
+
         canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
 
         enrerre.setOnClickListener(new BackOnClickListener(back, getApplicationContext()));
