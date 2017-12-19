@@ -121,6 +121,12 @@
             android:layout_marginTop="10dp"
             android:fontFamily="serif"/>
 
+        <ImageView
+            android:id="@+id/setImage"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@mipmap/ic_person"/>
+
        <!-- <TextView
             android:id="@+id/txtPosAttached"
             android:textSize="16sp"

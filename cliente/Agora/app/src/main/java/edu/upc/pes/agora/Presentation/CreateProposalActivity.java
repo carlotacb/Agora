@@ -1,14 +1,19 @@
 package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.provider.MediaStore;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +30,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -57,6 +64,12 @@ public class CreateProposalActivity extends AppCompatActivity {
     private String strCategoria = "";
     private String[] categoriasGenericas = {"X", "C", "D", "O","M", "E", "T","Q", "S", "A"};
 
+    private ImageView image;
+    private ImageButton buttonImage;
+    private String encoded;
+
+    private final int SELECT_PICTURE=200;
+
     private double lat;
     private double lng;
 
@@ -72,6 +85,8 @@ public class CreateProposalActivity extends AppCompatActivity {
         Create = (Button) findViewById(R.id.createButton);
         addPos = (ImageButton) findViewById(R.id.btnAddPosition);
         deletePos = (ImageButton) findViewById(R.id.btnDeletePosition);
+        image = (ImageView) findViewById(R.id.setImage);
+        buttonImage = (ImageButton) findViewById(R.id.btnAddImage);
 
         ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
         ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
@@ -279,6 +294,28 @@ public class CreateProposalActivity extends AppCompatActivity {
             }
         });
 
+        buttonImage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                final CharSequence[] options = {"Galería", "Cancelar"};
+                final AlertDialog.Builder builder = new AlertDialog.Builder(CreateProposalActivity.this);
+                builder.setTitle("Escoge una opción");
+                builder.setItems(options, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int selection) {
+                        if(options[selection]=="Galería") {
+                            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            intent.setType("image/*");
+                            startActivityForResult(intent.createChooser(intent, "Selecciona app de imagen"), SELECT_PICTURE);
+                        }
+                        else if(options[selection]=="Cancelar"){
+                            dialog.dismiss();
+                        }
+                    }
+                });
+                builder.show();
+            }
+        });
 
         addPos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -327,6 +364,32 @@ public class CreateProposalActivity extends AppCompatActivity {
             lng = 0;
             deletePos.setVisibility(View.GONE);
             addPos.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case SELECT_PICTURE:
+                if(resultCode == RESULT_OK) {
+                    Bitmap bitmap =null;
+                    if (data != null) {
+                        try {
+                            bitmap  = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    image.setImageBitmap(bitmap);
+
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    byte[] byteArray = byteArrayOutputStream .toByteArray();
+                    encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                }
+                break;
         }
     }
 }
