@@ -171,15 +171,18 @@ public class ProposalAdapter extends BaseAdapter {
             }
         });
 
+
+        final JSONObject values = new JSONObject();
+
+
         favorite.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View v) {
 
-                JSONObject values = new JSONObject();
-
                 if (proposal.getFavorite()){
                     favorite.setImageResource(R.drawable.ic_favorite);
+                    proposal.setFavorite(false);
                     try {
                         values.put("favorited", false);
                     } catch (JSONException e) {
@@ -187,6 +190,7 @@ public class ProposalAdapter extends BaseAdapter {
                     }
                 } else {
                     favorite.setImageResource(R.drawable.ic_favorite_red);
+                    proposal.setFavorite(true);
                     try {
                         values.put("favorited", true);
                         //favorite.setImageResource(R.drawable.ic_favorite_red);
@@ -217,8 +221,10 @@ public class ProposalAdapter extends BaseAdapter {
                         if (result) {
                             /*if (favo) {
                                 favorite.setImageResource(R.drawable.ic_favorite);
+                                favo = false;
                             } else {
                                 favorite.setImageResource(R.drawable.ic_favorite_red);
+                                favo = true;
                             }*/
                             Log.i("asdCreacion", "OKEY");
                         }
