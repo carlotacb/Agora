@@ -72,15 +72,7 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
             }
             navDrawer.closeDrawers();
 
-        } else if (id == R.id.nav_perfilprinc) {
-            // Va a la Pagina principal del perfil
-            if (!context.getClass().equals(MyProfileActivity.class)) {
-                Intent myIntent = new Intent(context, MyProfileActivity.class);
-                context.startActivity(myIntent);
-            }
-            navDrawer.closeDrawers();
-
-        }  else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_logout) {
             // Es desasigna el token per sortir de l'aplicació
             JSONObject jObject = new JSONObject();
 
@@ -90,7 +82,7 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
                     try {
                         if(jsonObject.has("error")) {
                             String error = jsonObject.get("error").toString();
-                            Log.i("asd123", "Error");
+                            Log.i("asd123", error);
                         }
                         else {
                             Helpers.logout(context);
