@@ -6,7 +6,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.PopupMenu;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -87,15 +89,16 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 
                                 AlertDialog.Builder dialogoeditar = new AlertDialog.Builder(v.getRootView().getContext());
 
-                                dialogoeditar.setTitle(res.getString(R.string.importante));
-                                dialogoeditar.setMessage(res.getString(R.string.seguro));
+                                dialogoeditar.setTitle(res.getString(R.string.editarcomentario));
+                                dialogoeditar.setMessage(res.getString(R.string.mensajeditar));
                                 dialogoeditar.setCancelable(false);
                                 dialogoeditar.setIcon(R.drawable.logo);
                                 dialogoeditar.setCancelable(false);
 
+                                final TextInputLayout textInputLayout = new TextInputLayout(v.getRootView().getContext());
                                 final EditText input = new EditText(v.getRootView().getContext());
+                                input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
                                 input.setSingleLine();
-                                FrameLayout container = new FrameLayout(v.getRootView().getContext());
                                 FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                                 params.leftMargin = v.getRootView().getContext().getResources().getDimensionPixelSize(R.dimen.dialog_margin);
                                 input.setLayoutParams(params);
@@ -163,9 +166,11 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 
                             case R.id.item_delete:
 
+                                String com = comentaris.getComentario();
+
                                 final AlertDialog.Builder dialogoborrar = new AlertDialog.Builder(v.getRootView().getContext());
-                                dialogoborrar.setTitle(res.getString(R.string.importante));
-                                dialogoborrar.setMessage(res.getString(R.string.seguro));
+                                dialogoborrar.setTitle(res.getString(R.string.elimiarcomentario));
+                                dialogoborrar.setMessage(String.format(res.getString(R.string.mensajeliminar), com));
                                 dialogoborrar.setCancelable(false);
                                 dialogoborrar.setIcon(R.drawable.logo);
                                 dialogoborrar.setCancelable(false);
@@ -212,6 +217,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
                 popupMenu.show();
             }
         });
+
 
         // Return the completed view to render on screen
         return convertView;
