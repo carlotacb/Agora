@@ -49,4 +49,21 @@ module.exports = app => {
             ]
         })
     }))
+
+    app.get('/api/user/:username', isAuthenticated, f(async function (req, res) {
+        const user = await userModule.getProfile({username: req.params.username})
+
+        res.json({
+            username: user.username,
+            cpCode: user.cpCode,
+            realname: user.realname,
+            neighborhood: user.neighborhood,
+            bdate: new Date(user.bdate),
+            sex: user.sex,
+            description: user.description,
+            image: user.image,
+            updatedDateTime: new Date(user.updatedDateTime)
+            zone: parseInt(user.zone),
+        })
+    }))
 }
