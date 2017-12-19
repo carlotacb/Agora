@@ -112,6 +112,10 @@
     <string name="nou">Nuevo Comentario</string>
     <string name="mensajenc">Introducir el nuevo comentario para la propuesta %1$s</string>
     <string name="añadir">añadir</string>
+    <string name="mensajeliminar">¿Está seguro que desea eliminar el comentario "%1$s"?</string>
+    <string name="mensajeditar">Realiza los cambios pertinentes en el comentario</string>
+    <string name="elimiarcomentario">Eliminar Comentario</string>
+    <string name="editarcomentario">Editar Comentario</string>
 
     <!-- Strings related to edit profile -->
     <string name="M">Hombre</string>
