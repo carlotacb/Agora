@@ -27,6 +27,7 @@ public class EditProposalActivity extends AppCompatActivity {
     EditText editDescription;
     Button saveButton;
     Button cancelButton;
+    Button editPosButton;
 
     String newTitle;
     String newDescription;
@@ -46,13 +47,13 @@ public class EditProposalActivity extends AppCompatActivity {
         editDescription = (EditText) findViewById(R.id.editDescription);
         saveButton = (Button) findViewById(R.id.saveButton);
         cancelButton = (Button) findViewById(R.id.cancelButton);
+        editPosButton = (Button) findViewById(R.id.editPosButton);
         prog = (ProgressBar) findViewById(R.id.saveprogressbar);
 
         prefs = this.getSharedPreferences(SH_PREF_NAME, MODE_PRIVATE);
         edit = prefs.edit();
 
         Intent i = getIntent();
-
         if(i.hasExtra("Title")) {
             editTitle.setText(i.getStringExtra("Title"));
         }
@@ -69,6 +70,22 @@ public class EditProposalActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MyProposalsActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        editPosButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), AddLocationActivity.class);
+                i.putExtra("Title", editTitle.getText().toString());
+                i.putExtra("Description", editDescription.getText().toString());
+                i.putExtra("CallingActivity", "Edit");
+                i.putExtra("id",id);
+                if (getIntent().hasExtra("lat") && getIntent().getDoubleExtra("lat",0) != 0){
+                    i.putExtra("lat", getIntent().getDoubleExtra("lat",0));
+                    i.putExtra("lng", getIntent().getDoubleExtra("lng",0));
+                }
+                startActivityForResult(i,1);
             }
         });
 
@@ -93,14 +110,20 @@ public class EditProposalActivity extends AppCompatActivity {
                     prog.setVisibility(View.VISIBLE);
 
                     JSONObject values = new JSONObject();
+                    JSONObject location = new JSONObject();
+
                     try {
                         newTitle = editTitle.getText().toString();
                         newDescription = editDescription.getText().toString();
                         if (prefs.contains("token")){
                             token = prefs.getString("token","");
                         }
+                        values.put("id",id);
                         values.put("title", newTitle);
                         values.put("content", newDescription);
+                        location.put("lat", getIntent().getDoubleExtra("lat",0));
+                        location.put("long", getIntent().getDoubleExtra("lng",0));
+                        values.put("location", location);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -120,11 +143,14 @@ public class EditProposalActivity extends AppCompatActivity {
                                 if (resObject.has("success")) {
                                     result = resObject.getBoolean("success");
                                 }
-
                                 if (!result && resObject.has("errorMessage")) {
                                     error = resObject.getString("errorMessage");
                                     Log.i("asdCreacion", error);
-                                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                                    if(resObject.getString("errorMessage").equals("Selected location outside of allowed zone.")){
+                                        Toast.makeText(getApplicationContext(), res.getString(R.string.errorPosition), Toast.LENGTH_LONG).show();
+                                    }else {
+                                        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                                    }
                                 }
 
                             } catch (JSONException e) {

@@ -8,18 +8,16 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permissions.INTERNET" />
-    <uses-permission android:name="androidpermission.CAMERA"/>
-    <uses-permission android:name="androidpermission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="androidpermission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="androidpermission.CAMERA.MEDIA_MOUNTED"/>
+    <uses-permission android:name="androidpermission.CAMERA" />
+    <uses-permission android:name="androidpermission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="androidpermission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="androidpermission.CAMERA.MEDIA_MOUNTED" />
 
     <!-- Get GPS position -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-
-
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <application
         android:allowBackup="true"
@@ -31,7 +29,8 @@
             android:name=".Presentation.LoginActivity"
             android:label="Agora">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -40,33 +39,27 @@
         <activity
             android:name=".Presentation.MainActivity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme">
-        </activity>
-
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".Presentation.MyProposalsActivity"
             android:label="@string/title_activity_my_propuestas"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Presentation.MyProfileActivity"
             android:label="@string/title_activity_profile"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Presentation.EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Presentation.EditProposalActivity"
             android:label="@string/title_activity_edit_proposal"
-
-            android:theme="@style/AppTheme">
-        </activity>
-
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".Presentation.DetailsProposalActivity"
             android:label="@string/title_activity_details_proposal"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -77,11 +70,15 @@
         -->
         <activity
             android:name=".Presentation.AddLocationActivity"
-            android:label="@string/title_activity_add_location"></activity>
+            android:label="@string/title_activity_add_location" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC95I96hwPsV83M-y2Dp9OZgqjGuGkD0-Y"/>
+            android:value="AIzaSyC95I96hwPsV83M-y2Dp9OZgqjGuGkD0-Y" />
 
+        <activity
+            android:name=".Presentation.ShowLocationActivity"
+            android:label="@string/title_activity_show_location"></activity>
     </application>
 
 </manifest>
