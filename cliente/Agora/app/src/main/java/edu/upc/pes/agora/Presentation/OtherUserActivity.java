@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,26 +24,26 @@ public class OtherUserActivity extends AppCompatActivity {
     private Configuration config = new Configuration();
     private Locale locale;
 
-    TextView user;
-    TextView nameProfile;
-    TextView codiPostal;
-    TextView barrio;
-    TextView born;
-    TextView sexo;
-    TextView descript;
-    TextView verpropuestas;
+    private TextView user;
+    private TextView nameProfile;
+    private TextView codiPostal;
+    private TextView barrio;
+    private TextView born;
+    private TextView sexo;
+    private TextView descript;
+    private TextView verpropuestas;
 
-    JSONObject values;
+    private JSONObject values;
 
-    Profile p;
-    String nameJ;
-    String neighJ;
-    Integer cpJ;
-    String bornJ;
-    String sexJ;
-    String descriptJ;
+    private Profile p;
+    private String nameJ;
+    private String neighJ;
+    private Integer cpJ;
+    private String bornJ;
+    private String sexJ;
+    private String descriptJ;
 
-    String username;
+    private String username;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -149,6 +150,14 @@ public class OtherUserActivity extends AppCompatActivity {
             }.execute(values);
         }
 
+        verpropuestas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), OtherUserProposalsActivity.class);
+                i.putExtra("username", username);
+                startActivity(i);
+            }
+        });
     }
 
 }
