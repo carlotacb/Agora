@@ -133,7 +133,6 @@
     <string name="pwnueva">Password Nueva</string>
     <string name="pwnueva2">Confirmar password</string>
 
-
     <!-- Categorias -->
     <string name="categoria" translatable="false">Categoria</string>
     <string name="cultura">Cultura</string>

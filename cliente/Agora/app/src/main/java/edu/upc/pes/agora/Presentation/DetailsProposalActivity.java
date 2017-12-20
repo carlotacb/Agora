@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -130,16 +131,16 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
         llistarcomentaris();
 
-        if (Constants.Idioma.equals("ca")) {
-            canviidioma.setImageResource(R.drawable.rep);
-        }
-
-        else if (Constants.Idioma.equals("es")) {
-            canviidioma.setImageResource(R.drawable.spa);
-        }
-
-        else if (Constants.Idioma.equals("en")) {
-            canviidioma.setImageResource(R.drawable.ing);
+        switch (Constants.Idioma) {
+            case "ca":
+                canviidioma.setImageResource(R.drawable.rep);
+                break;
+            case "es":
+                canviidioma.setImageResource(R.drawable.spa);
+                break;
+            case "en":
+                canviidioma.setImageResource(R.drawable.ing);
+                break;
         }
 
         final Intent idioma = new Intent(DetailsProposalActivity.this, DetailsProposalActivity.class);
@@ -175,7 +176,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                 AlertDialog.Builder dialogoaddcoment = new AlertDialog.Builder(v.getRootView().getContext());
 
                 final EditText input = new EditText(v.getRootView().getContext());
-                input.setSingleLine();
+                //input.setSingleLine();
                 FrameLayout container = new FrameLayout(DetailsProposalActivity.this);
                 FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
@@ -183,6 +184,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                 input.setLayoutParams(params);
                 input.getBackground().clearColorFilter();
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
+                input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(200)});
                 container.addView(input);
                 dialogoaddcoment.setTitle(getString(R.string.nou));
                 String mensajeparaañadir = String.format(res.getString(R.string.mensajenc), mtit);
@@ -332,13 +334,16 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
                                 JSONObject jas = ArrayComments.getJSONObject(i);
                                 String id = jas.getString("id");
+                                String date = jas.getString("createdDateTime");
                                 String contentcoment = jas.getString("comment");
 
                                 JSONObject Usuario = jas.getJSONObject("author");
                                 Log.i("asd123", (Usuario.toString()));
                                 String owner = Usuario.getString("username");
 
+
                                 Comment aux = new Comment(owner, id, contentcoment);
+                                aux.setCreated(date);
                                 aux.setIdentificadorProp(idprop);
 
                                 comentarios.add(aux);

@@ -41,4 +41,13 @@ public class Helpers {
         editor.apply();
     }
 
+    public static String showDate(String d) {
+        String[] res = d.split("T")[0].split("-");
+        if (res.length == 3) {
+            return "" + res[2] + "/" + res[1] + "/" + res[0];
+        }else{
+            return "dd/MM/yyyy";
+        }
+    }
+
 }
