@@ -9,10 +9,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
 
 import edu.upc.pes.agora.Presentation.MainActivity;
 
@@ -21,6 +24,7 @@ import static edu.upc.pes.agora.Logic.Utils.Constants.SH_PREF_NAME;
 public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     private URL url;
     private Context context;
+ //   String newAchievement="";
 
 
     SharedPreferences prefs;
@@ -33,6 +37,10 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             Log.v("asd123", "entra1", e);
         }
     }
+/*
+    public String getNewAchievement(){
+        return newAchievement;
+    }*/
 
     protected JSONObject doInBackground(final JSONObject... params) {
         prefs = MainActivity.getContextOfApplication().getSharedPreferences(SH_PREF_NAME, Context.MODE_PRIVATE);
@@ -53,6 +61,10 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             client.setDoInput(true);
             client.setDoOutput(true);
 
+        //    newAchievement = client.getHeaderField("X-New-Achievements");
+           Map<String,List<String>> m = client.getHeaderFields();
+          // InputStream inputStream = client.getInputStream();
+
             Log.i("asdPostAsyncTask", "hola");
 
             OutputStreamWriter wr = new OutputStreamWriter(client.getOutputStream());
@@ -64,6 +76,7 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             client.connect();
             Log.i("asdPostAsyncTask", "hola2");
             JSONObject response = new JSONObject();
+
 
             //return success=true and token if connection is successful
             try {

@@ -17,6 +17,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -243,6 +244,36 @@ public class DetailsProposalActivity extends AppCompatActivity {
                                     input.setText("");
                                     input.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
                                 }
+
+                        //        String achievement = this.getNewAchievement();
+                         //       achievement="hola";
+                               /* if (achievement!=null && !achievement.equals("")){
+                                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(DetailsProposalActivity.this);
+                                    View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
+
+                                    TextView textView = (TextView)mView.findViewById(R.id.textView);
+                                    Button mAccept = (Button) mView.findViewById(R.id.etAccept);
+
+                                    ImageView imageView = (ImageView) mView.findViewById(R.id.image);
+                                    imageView.setImageResource(R.drawable.ic_trofeo_logro2);
+
+
+
+                                    mBuilder.setView(mView);
+
+                                    final AlertDialog dialog = mBuilder.create();
+                                    dialog.show();
+                                    mAccept.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                }*/
+
+
+
+
                             }
                         }.execute(values);
                     }

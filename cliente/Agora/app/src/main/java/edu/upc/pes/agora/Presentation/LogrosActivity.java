@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,8 +17,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,14 +32,17 @@ import java.util.List;
 
 import edu.upc.pes.agora.Logic.Listeners.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
+import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.R;
 
 public class LogrosActivity extends AppCompatActivity {
 
     private List<String> logros = new ArrayList<>();
+    private JSONObject Jason = new JSONObject();
 
-
+    private String[] logros2;
+    private String  itemLogro = "logro";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,19 +67,76 @@ public class LogrosActivity extends AppCompatActivity {
         toggle.syncState();
 
 
-        ListView listView = (ListView) findViewById(R.id.lista);
-        logros.add("Crear 1 propuesta");
-        logros.add("Crear 5 propuestas");
-        logros.add("Crear 10 propuestas");
-        logros.add("Compartir 1 propuesta en Twitter");
-        logros.add("Compartir 5 propuestas en Twitter");
-        logros.add("Compartir 10 propuestas en Twitter");
+
+        final ListView listView = (ListView) findViewById(R.id.lista);
+
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile/achievements", this) {
+
+
+            @Override
+            protected void onPostExecute(JSONObject jsonObject) {
+                try {
+                    if (jsonObject.has("error")) {
+                        String error = jsonObject.get("error").toString();
+                        Log.i("asdProfile", "Error");
+                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                    else {
+                        if(jsonObject.has("achievements")){
+
+                            JSONArray arrJson = jsonObject.getJSONArray("achievements");
+                            logros2 = new String[arrJson.length()];
+                            for(int i = 0; i < arrJson.length(); i++) {
+
+                                itemLogro = codificaLogro(arrJson.getString(i));
+                     //           logros.add(itemLogro);
+                                if(itemLogro!="Something went wrong"){
+                                 /*   if (i ==0)logros.set(i,itemLogro);
+                                    else*/ logros.add(itemLogro);
+
+                                }
+
+                            }
+                        }
+
+
+                    }
+
+
+                    ArrayAdapter<String> adaptador = new ArrayAdapter<String>(LogrosActivity.this, android.R.layout.simple_list_item_1, logros);
+                    listView.setAdapter(adaptador);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute(Jason);
+
+       /* try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+*/
+
+       /* logros.add("Crear 1 propuestaaaaaaaaaaa");
+        logros.add("Crear 5 propuestasssssssssssssssss");
+        logros.add("Crear 10 propuestasssssssssssssssssss");
+        logros.add("Compartir 1 propuesta en Twitterrrrrrrrrrrrrrrrrrrrrrrrrrr");
+        logros.add("Compartir 5 propuestas en Twitterrrrrrrrrrrrrrrrrrrr");
+        logros.add("Compartir 10 propuestas en Twitterrrrrrrrrrrrrrrrrrrrrrrr");*/
+        //logros.add(itemLogro);
+      //  logros.add("Logros conseguidos por el usuario");
+      //  logros.set(0,"cambiado");
+        listView.setBackgroundColor(Color.WHITE);
 
         final List<Boolean> list = new ArrayList<Boolean>(Arrays.asList(new Boolean[10]));
         Collections.fill(list, Boolean.FALSE);
 
-        ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, logros);
-        listView.setAdapter(adaptador);
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -89,12 +155,7 @@ public class LogrosActivity extends AppCompatActivity {
                 ImageView imageView = (ImageView) mView.findViewById(R.id.image);
                 imageView.setImageResource(R.drawable.ic_trofeo_logro2);
 
-             /*   if (i == 0){
-                    textView.setText("Comparte 1 propuesta en twitter");
-                }
-                else if ( i == 1){
-                    textView.setText("Logro generico");
-                }*/
+
 
                 mBuilder.setView(mView);
 
@@ -109,6 +170,20 @@ public class LogrosActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private String codificaLogro(String codigoLogro) {
+
+        String Logro ="";
+        switch(codigoLogro) {
+            case "COM10": Logro = "Comenta 10 veces en una propuesta";
+                    break;
+            case "PROP100": Logro = "Crea 100 propuestas";
+                break;
+            default: Logro = "Something went wrong";
+                    break;
+        }
+        return Logro;
     }
 
 }
