@@ -1,5 +1,6 @@
 package edu.upc.pes.agora.Presentation;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -12,13 +13,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -27,7 +33,9 @@ import edu.upc.pes.agora.Logic.Adapters.RecyclerAdapter;
 import edu.upc.pes.agora.Logic.Listeners.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
 import edu.upc.pes.agora.Logic.Models.Proposal;
+import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Utils.Constants;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 public class MyFavoritesActivity extends AppCompatActivity {
@@ -42,6 +50,7 @@ public class MyFavoritesActivity extends AppCompatActivity {
     private List<Proposal> listProposals;
     private JSONObject Jason = new JSONObject();
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +81,54 @@ public class MyFavoritesActivity extends AppCompatActivity {
 
         listProposals = new ArrayList<>();
 
-        // GetAsyncTask de totes les propostes
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal?proposal?favorite=true", this) {
+
+            @Override
+            protected void onPostExecute(JSONObject jsonObject) {
+                try {
+                    if (jsonObject.has("error")) {
+                        String error = jsonObject.get("error").toString();
+                        Log.i("asd123", "Error");
+
+                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                    else if (jsonObject != null){
+                        JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
+                        ArrayList<Proposal> propostes = new ArrayList<>();
+
+                        if (ArrayProp != null) {
+                            for (int i=0; i < ArrayProp.length(); i++){
+
+                                Log.i("asd123", (ArrayProp.get(i).toString()));
+
+                                JSONObject jas = ArrayProp.getJSONObject(i);
+                                String title = jas.getString("title");
+                                String owner = jas.getString("owner");
+                                String description = jas.getString("content");
+                                Integer id = jas.getInt("id");
+                                String creada = jas.getString("createdDateTime");
+                                String ca = jas.getString("categoria");
+                                String createDate = Helpers.showDate(jas.getString("createdDateTime"));
+                                String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
+
+                                Log.i("asdCreate", creada);
+
+                                Proposal aux = new Proposal(id, title, description, owner,ca, createDate, updateDate);
+
+                                propostes.add(aux);
+                            }
+                        }
+
+                        radapter = new RecyclerAdapter(propostes, getApplicationContext());
+                        myrecycler.setAdapter(radapter);
+                    }
+                } catch (JSONException | ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute(Jason);
 
     }
 
