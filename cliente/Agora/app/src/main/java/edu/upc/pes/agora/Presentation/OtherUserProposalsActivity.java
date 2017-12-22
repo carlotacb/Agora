@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import edu.upc.pes.agora.Logic.Adapters.ProposalAdapter;
+import edu.upc.pes.agora.Logic.Adapters.OtherProposalAdapter;
 import edu.upc.pes.agora.Logic.Adapters.RecyclerAdapter;
 import edu.upc.pes.agora.Logic.Models.Proposal;
 import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
@@ -69,7 +69,7 @@ public class OtherUserProposalsActivity extends AppCompatActivity {
                                 propostes.add(aux);
                             }
                         }
-                        propList.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
+                        propList.setAdapter(new OtherProposalAdapter(propostes, getApplicationContext()));
                     }
                 } catch (JSONException e ) {
                     e.printStackTrace();
