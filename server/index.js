@@ -12,10 +12,15 @@ const BootstrapRouter = require('./routes')
 app.use(mung.headers((req, res) => {
     if (res.statusCode === 200) {
         if (req.method === 'POST' && req.path.includes('/api/proposal')) {
+            const headerKey = 'X-New-Achievements'
             if (req.body.comment === 'achi') {
-                res.setHeader('X-New-Achievements', 'COM5')
+                res.setHeader(headerKey, 'COM5')
             } else if (req.body.comment === 'achis') {
-                res.setHeader('X-New-Achievements', 'COM5,OW,NED')
+                res.setHeader(headerKey, 'COM5,OW,NED')
+            } else if (req.body.title === 'achi') {
+                res.setHeader(headerKey, 'PROP10')
+            } else if (req.body.title === 'achis') {
+                res.setHeader(headerKey, 'PROP30,LOL')
             }
         }
     }
