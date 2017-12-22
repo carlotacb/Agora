@@ -244,6 +244,7 @@ public class CreateProposalActivity extends AppCompatActivity {
                         location.put("lat", getIntent().getDoubleExtra("lat",0));
                         location.put("long", getIntent().getDoubleExtra("lng",0));
                         values.put("location", location);
+                        values.put("image", encoded);
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
