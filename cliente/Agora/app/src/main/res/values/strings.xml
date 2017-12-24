@@ -174,11 +174,8 @@
     </string>
 
     <string name="title_activity_add_location" translatable="false">Map</string>
-<<<<<<< HEAD
     <string name="title_activity_logros">LogrosActivity</string>
-=======
     <string name="title_activity_show_location">Map</string>
->>>>>>> develop
 
 
 </resources>

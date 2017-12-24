@@ -1,6 +1,7 @@
 package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -62,6 +63,7 @@ public class CreateProposalActivity extends AppCompatActivity {
 
     private LayoutInflater mInflator;
     private boolean selected;
+    private boolean crearDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,9 @@ public class CreateProposalActivity extends AppCompatActivity {
         errordescripcion = (TextInputLayout) findViewById(R.id.descripcion_up);
 
         prog = (ProgressBar) findViewById(R.id.crproposalprogressbar);
+
+        crearDialog = false;
+
 
         final Resources res = this.getResources();
 
@@ -271,12 +276,66 @@ public class CreateProposalActivity extends AppCompatActivity {
                                 Create.setVisibility(View.VISIBLE);
                                 prog.setVisibility(View.GONE);
                             }
+
+
+
+                            String achievement = this.getNewAchievement();
+                            //       achievement="hola";
+                            if (achievement!=null && !achievement.equals("")){
+
+                                crear();
+                                crearDialog = true;
+                              /*  AlertDialog.Builder mBuilder = new AlertDialog.Builder(CreateProposalActivity.this);
+                                View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
+                                TextView textView = (TextView)mView.findViewById(R.id.textView);
+                                Button mAccept = (Button) mView.findViewById(R.id.etAccept);
+                                ImageView imageView = (ImageView) mView.findViewById(R.id.image);
+                                imageView.setImageResource(R.drawable.ic_twitter);
+                                mBuilder.setView(mView);
+                                final AlertDialog dialog = mBuilder.create();
+                                dialog.show();
+                                mAccept.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        dialog.dismiss();
+                                    }
+                                });*/
+                            }
+
+
                         }
                     }.execute(values);
                 }
             }
         });
 
+
+
+
+        Log.i("gd", "gfgf");
+      //  crearDialog = true;
+
+        crear();
+
+        if (crearDialog) {
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(CreateProposalActivity.this);
+            View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
+            TextView textView = (TextView)mView.findViewById(R.id.textView);
+            Button mAccept = (Button) mView.findViewById(R.id.etAccept);
+            ImageView imageView = (ImageView) mView.findViewById(R.id.image);
+            imageView.setImageResource(R.drawable.ic_twitter);
+            mBuilder.setView(mView);
+            final AlertDialog dialog = mBuilder.create();
+            dialog.show();
+            mAccept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+        }
+
+        Log.i("gd", "gfgf");
 
         addPos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -332,5 +391,23 @@ public class CreateProposalActivity extends AppCompatActivity {
             deletePos.setVisibility(View.GONE);
             addPos.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void crear() {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(CreateProposalActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
+        TextView textView = (TextView)mView.findViewById(R.id.textView);
+        Button mAccept = (Button) mView.findViewById(R.id.etAccept);
+        ImageView imageView = (ImageView) mView.findViewById(R.id.image);
+        imageView.setImageResource(R.drawable.ic_twitter);
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.show();
+        mAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
 }
