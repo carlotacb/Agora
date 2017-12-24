@@ -77,7 +77,7 @@ public class MyProposalsActivity extends AppCompatActivity {
 
         listProposals = new ArrayList<>();
 
-        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal?username=" + Constants.Username, this) {
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal?username=" + Constants.Username.toLowerCase(), this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
@@ -120,9 +120,7 @@ public class MyProposalsActivity extends AppCompatActivity {
                         radapter = new RecyclerAdapter(propostes, getApplicationContext());
                         myrecycler.setAdapter(radapter);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (ParseException e) {
+                } catch (JSONException | ParseException e) {
                     e.printStackTrace();
                 }
             }

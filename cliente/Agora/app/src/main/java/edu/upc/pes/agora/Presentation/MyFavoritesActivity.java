@@ -81,7 +81,7 @@ public class MyFavoritesActivity extends AppCompatActivity {
 
         listProposals = new ArrayList<>();
 
-        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal?proposal?favorite=true", this) {
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal?favorite=true", this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
