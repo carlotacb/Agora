@@ -73,6 +73,7 @@ async function create({username, password, zone}) {
 }
 
 async function setFavorite({id, user}){
+
     const query = {
         username: user.username,
     }
@@ -93,6 +94,7 @@ async function setFavorite({id, user}){
 }
 
 async function unsetFavorite({id, user}){
+    console.log('unsetFavorite')
     const query = {
         username: user.username,
     }

@@ -70,7 +70,7 @@ module.exports = app => {
     }))
 
     app.post('/api/proposal/:proposalId/favorite', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
-        const id = req.params.id
+        const id = req.params.proposalId
         const user = await userModule.get({username: req.username})
         const proposal = await proposalsModule.getProposalById({id, zone: user.zone})
 
