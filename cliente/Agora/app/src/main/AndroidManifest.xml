@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.upc.pes.agora">
+          package="edu.upc.pes.agora">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
+
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
@@ -19,6 +20,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -32,10 +34,11 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
-        <activity android:name=".Presentation.RegisterActivity" />
-        <activity android:name=".Presentation.CreateProposalActivity" />
+        <activity android:name=".Presentation.RegisterActivity"/>
+        <activity android:name=".Presentation.CreateProposalActivity"/>
         <activity
             android:name=".Presentation.MainActivity"
             android:label="@string/title_activity_main2"
@@ -56,6 +59,7 @@
             android:name=".Presentation.EditProposalActivity"
             android:label="@string/title_activity_edit_proposal"
             android:theme="@style/AppTheme"></activity>
+
         <activity
             android:name=".Presentation.DetailsProposalActivity"
             android:label="@string/title_activity_details_proposal"
@@ -70,15 +74,28 @@
         -->
         <activity
             android:name=".Presentation.AddLocationActivity"
+
             android:label="@string/title_activity_add_location" />
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC95I96hwPsV83M-y2Dp9OZgqjGuGkD0-Y" />
 
         <activity
+
             android:name=".Presentation.ShowLocationActivity"
-            android:label="@string/title_activity_show_location"></activity>
+            android:label="@string/title_activity_show_location">
+
+        </activity>
+
+        <activity
+            android:name=".Presentation.OtherUserActivity"
+            android:label="@string/title_activity_other_user"
+            android:theme="@style/AppTheme">
+
+        </activity>
+
     </application>
 
 </manifest>
