@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +53,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
     private ListView llista_comentaris;
     private String newComent;
     private ImageView canviidioma, enrerre, compartir;
+    private ImageView image;
 
     private String mtit, mdesc, mowner, mcategorias, c;
 
@@ -70,6 +74,8 @@ public class DetailsProposalActivity extends AppCompatActivity {
         categoria = (TextView) findViewById(R.id.categoriaproposta);
         owner = (TextView) findViewById(R.id.ownerproposal);
         date = (TextView) findViewById(R.id.date);
+        image = (ImageView) findViewById(R.id.showImage);
+
         date.setText(getIntent().getStringExtra("Creation"));
 
         llista_comentaris = (ListView) findViewById(R.id.listcommentaris);
@@ -349,6 +355,13 @@ public class DetailsProposalActivity extends AppCompatActivity {
                         }
                         llista_comentaris.setAdapter(new CommentAdapter(getApplicationContext(), comentarios));
 
+
+                        String imageJ = jsonObject.getString("image");
+
+                        byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+
+                        image.setImageBitmap(bitmap);
                     }
 
                 } catch (JSONException e) {
