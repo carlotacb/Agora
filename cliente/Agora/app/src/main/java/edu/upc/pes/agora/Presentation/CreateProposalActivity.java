@@ -2,6 +2,7 @@ package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -263,8 +264,12 @@ public class CreateProposalActivity extends AppCompatActivity {
                             }
 
                             String creacionok = String.format(res.getString(R.string.done), strTitulo);
+                            String achievement = this.getNewAchievement();
 
-                            if (result) {
+                            if (result && achievement!=null && !achievement.equals("")){
+                                crear();
+                            }
+                            else if (result) {
                                 Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
                             }
@@ -279,13 +284,13 @@ public class CreateProposalActivity extends AppCompatActivity {
 
 
 
-                            String achievement = this.getNewAchievement();
+                          //  String achievement = this.getNewAchievement();
                             //       achievement="hola";
-                            if (achievement!=null && !achievement.equals("")){
+                          /*  if (achievement!=null && !achievement.equals("")){
 
                                 crear();
                                 crearDialog = true;
-                              /*  AlertDialog.Builder mBuilder = new AlertDialog.Builder(CreateProposalActivity.this);
+                                AlertDialog.Builder mBuilder = new AlertDialog.Builder(CreateProposalActivity.this);
                                 View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
                                 TextView textView = (TextView)mView.findViewById(R.id.textView);
                                 Button mAccept = (Button) mView.findViewById(R.id.etAccept);
@@ -299,8 +304,8 @@ public class CreateProposalActivity extends AppCompatActivity {
                                     public void onClick(View view) {
                                         dialog.dismiss();
                                     }
-                                });*/
-                            }
+                                });
+                            }*/
 
 
                         }
@@ -315,7 +320,7 @@ public class CreateProposalActivity extends AppCompatActivity {
         Log.i("gd", "gfgf");
       //  crearDialog = true;
 
-        crear();
+       // crear();
 
         if (crearDialog) {
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(CreateProposalActivity.this);
@@ -401,12 +406,25 @@ public class CreateProposalActivity extends AppCompatActivity {
         ImageView imageView = (ImageView) mView.findViewById(R.id.image);
         imageView.setImageResource(R.drawable.ic_twitter);
         mBuilder.setView(mView);
+      //  mBuilder.setCancelable(false);
         final AlertDialog dialog = mBuilder.create();
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
+            }
+        });
         dialog.show();
+
         mAccept.setOnClickListener(new View.OnClickListener() {
+
+
+
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
+            //    startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
+
             }
         });
     }
