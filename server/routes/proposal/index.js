@@ -1,6 +1,6 @@
 const proposalsModule = require('../../modules/proposal')
 const userModule = require('../../modules/user')
-const {isAuthenticated} = require('../middleware')
+const {isAuthenticated, isProposalFromUserZone} = require('../middleware')
 const f = require('../util').wrapAsyncRouterFunction
 
 module.exports = app => {
@@ -11,12 +11,11 @@ module.exports = app => {
         res.send(proposal)
     }))
 
-    app.put('/api/proposal/:id', isAuthenticated, f(async function (req, res) {
-        if (!req.params.id) {
+    app.put('/api/proposal/:proposalId', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
+        if (!req.params.proposalId) {
             res.sendStatus(400)
         }
-
-        const proposalId = req.params.id
+        const proposalId = req.params.proposalId
         const proposal = await proposalsModule.getProposalById({id: proposalId})
 
         if (!proposal) {
@@ -37,16 +36,27 @@ module.exports = app => {
             category: req.query.category,
             zone: user.zone
         }
+        if (req.query.favorite) {
+            if (user.favorites) {
+                query.favorites = user.favorites
+            }
+        }
         const sort = {
             createdDateTime: 1
         }
         const proposals = await proposalsModule.getAllProposals(query, sort)
+        proposals.forEach(function(proposal){
+            if (user.favorites && user.favorites.includes(parseInt(proposal.id))){
+                proposal.favorited = true
+            }
+            else proposal.favorited = false
+        })
         res.send(proposals)
 
     }))
 
-    app.get('/api/proposal/:id', isAuthenticated, f(async function (req, res) {
-        const id = req.params.id
+    app.get('/api/proposal/:proposalId', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
+        const id = req.params.proposalId
         const user = await userModule.get({username: req.username})
         const proposal = await proposalsModule.getProposalById({id, zone: user.zone})
 
@@ -54,20 +64,44 @@ module.exports = app => {
             return res.sendStatus(404)
         }
 
+        proposal.favorited = user.favorites && user.favorites.includes(parseInt(id))
+
         res.send(proposal)
     }))
 
-    app.post('/api/proposal/:id/comment', isAuthenticated, f(async function (req, res) {
+    app.post('/api/proposal/:proposalId/favorite', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
+        const id = req.params.id
+        const user = await userModule.get({username: req.username})
+        const proposal = await proposalsModule.getProposalById({id, zone: user.zone})
+
+        if (proposal) {
+            if (user.favorites && user.favorites.includes(parseInt(id))){
+                await userModule.unsetFavorite({id, user})
+                proposal.favorited = false
+            }
+            else {
+                await userModule.setFavorite({id, user})
+                proposal.favorited = true
+            }
+        }
+
+        return res.send(proposal)
+    }))
+
+    app.post('/api/proposal/:proposalId/comment', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
+        if (!req.body.comment) {
+            throw new TypeError('Missing body field: comment')
+        }
         const comment = req.body.comment.toString()
-        const proposalId = req.params.id
+        const proposalId = req.params.proposalId
         const newComment = await proposalsModule.addComment({proposalId: proposalId, author: req.username, comment})
         return res.send(newComment)
     }))
 
-    app.put('/api/proposal/:id/comment/:idc', isAuthenticated, f(async function (req, res) {
+    app.put('/api/proposal/:proposalId/comment/:idc', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
         const comment = req.body.comment.toString()
         const commentId = req.params.idc
-        const proposalId = req.params.id
+        const proposalId = req.params.proposalId
         const updatedComment = await proposalsModule.editComment({
             proposalId: proposalId,
             author: req.username,
@@ -77,22 +111,55 @@ module.exports = app => {
         return res.send(updatedComment)
     }))
 
-    app.delete('/api/proposal/:id/comment/:idc', isAuthenticated, f(async function (req, res) {
-        const proposalId = req.params.id
+    app.delete('/api/proposal/:proposalId/comment/:idc', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
+        const proposalId = req.params.proposalId
         const commentId = req.params.idc
-        console.log(proposalId)
-        console.log(commentId)
         await proposalsModule.deleteComment({proposalId: proposalId, author: req.username, commentId: commentId})
         return res.sendStatus(200)
     }))
 
-    app.delete('/api/proposal/:id', isAuthenticated, f(async function (req, res) {
-        const id = req.params.id
+    app.post('/api/proposal/:proposalId/image', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
+        if (!req.body.images) {
+            throw new TypeError('Missing body field: images')
+        }
+        const images = req.body.images
+        if (!Array.isArray(images)) {
+            throw new TypeError('Images must be an array of images')
+        }
+        const proposalId = req.params.proposalId
+        const proposal = await proposalsModule.addImage({proposalId: proposalId, author: req.username,images})
+        return res.send(proposal)
+    }))
+
+    app.delete('/api/proposal/:proposalId/image/:imageId', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
+        const proposalId = req.params.proposalId
+        const imageId = req.params.imageId
+        await proposalsModule.deleteImage({proposalId: proposalId, author: req.username, imageId: imageId})
+        return res.sendStatus(200)
+    }))
+
+    app.delete('/api/proposal/:proposalId', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
+        const id = req.params.proposalId
         const proposal = await proposalsModule.getProposalById({id})
         if (proposal.owner !== req.username) {
             return res.sendStatus(403)
         }
         await proposalsModule.deleteProposal({id})
         res.sendStatus(200)
+    }))
+
+    app.post('/api/proposal/:proposalId/vote', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
+        const proposalId = req.params.proposalId
+        const vote = req.body.vote
+        const username = req.username
+
+        if (vote !== -1 || vote !== 1 || vote !== 0) {
+            throw new Error('Invalid Vote')
+        }
+
+        await proposalsModule.voteProposal({proposalId, vote, username})
+        const proposal = await proposalsModule.getProposalById({id: proposalId})
+
+        res.send(proposal)
     }))
 }

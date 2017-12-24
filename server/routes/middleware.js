@@ -1,24 +1,62 @@
 const sessionModule = require('../modules/session')
+const userModule = require('../modules/user')
+const proposalModule = require('../modules/proposal')
+const errors = require('../modules/error')
+
+function logRequest(req) {
+    console.log(`Request - ${JSON.stringify({
+        method: req.method,
+        username: req.username,
+        url: req.url,
+        body: req.body,
+    }, null, 4)}`);
+}
 
 async function isAuthenticated(req, res, next) {
     const authorizationToken = req.headers.authorization
 
     if (!authorizationToken) {
-        return res.status(403).json({error: 'Missing Authorization token'})
+        return next(new errors.missingToken())
     }
 
     const session = await sessionModule.get(authorizationToken)
 
     if (!session) {
-        return res.status(403).json({error: 'Invalid Authorization token'})
+        return next(new errors.invalidToken())
     }
 
-    req.username = session.username
+    req.username = session.username.toLowerCase()
     req.token = session.token
+
+    logRequest(req)
 
     return next()
 }
 
+async function isProposalFromUserZone(req, res, next) {
+    const username = req.username
+    const proposalId = req.params.proposalId
+
+    if (!username || !proposalId) {
+        next(new TypeError('Missing required parameters'))
+    }
+
+    const proposal = await proposalModule.getProposalById({id: proposalId})
+
+    if (!proposal) {
+        return next(new errors.proposalNotFound(proposalId))
+    }
+
+    const user = await userModule.get({username: username})
+
+    if (user.zone === proposal.zone) {
+        return next()
+    } else {
+        return next(new errors.proposalOutsideZone(user.zone, proposal.zone))
+    }
+}
+
 module.exports = {
-    isAuthenticated: isAuthenticated
+    isAuthenticated: isAuthenticated,
+    isProposalFromUserZone: isProposalFromUserZone,
 }

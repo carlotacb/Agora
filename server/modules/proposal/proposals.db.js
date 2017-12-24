@@ -42,6 +42,10 @@ async function getAllBy(reqQuery, reqSort) {
         query.zone = parseInt(reqQuery.zone)
     }
 
+    if (reqQuery.favorites) {
+        query.id = {$in : reqQuery.favorites}
+    }
+
     if (sort.createdDateTime) {
         sort.createdDateTime = reqSort.createdDateTime
     }
@@ -156,8 +160,6 @@ async function deleteComment({proposalId, author, commentId}) {
         multi: true
     }
 
-    console.log(options)
-
     return collection().update(query, update, options)
         .then(response => response.value)
 }
@@ -181,6 +183,58 @@ async function editComment({proposalId, author, commentId, comment}) {
         .then(response => response.value)
 }
 
+async function addImage({proposalId, images}) {
+    const query = {
+        id: parseInt(proposalId),
+    }
+
+    console.log('images', JSON.stringify(images, null, 4), typeof images)
+
+    for (let i = 0; i < images.length; ++i) {
+        images [i] = {
+            image: images[i],
+            id: await generateNextId('image')
+        }
+    }
+
+    const update = {
+        $pushAll: {
+            images
+        }
+    }
+    console.log(update)
+    const options = {
+        upsert: false,
+        returnOriginal: false
+    }
+
+    return collection().findOneAndUpdate(query, update, options)
+        .then(response => response.value)
+}
+
+async function deleteImage({proposalId, username,imageId}) {
+    const query = {
+        id: parseInt(proposalId),
+        "images.id": parseInt(imageId)
+    }
+
+    const update = {
+        $pull: {
+            images: {
+                id: parseInt(imageId)
+            }
+        }
+    }
+
+    console.log('query', query, 'upd', update)
+
+    const options = {
+        multi: true
+    }
+
+    return collection().update(query, update, options)
+        .then(response => response.value)
+}
 
 module.exports = {
     create: create,
@@ -192,4 +246,6 @@ module.exports = {
     editComment: editComment,
     deleteComment: deleteComment,
     delete: deleteProposal,
+    addImage: addImage,
+    deleteImage: deleteImage,
 }

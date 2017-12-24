@@ -46,6 +46,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
     private TextView descripcio;
     private TextView owner;
     private TextView categoria;
+    private Button showPos;
 
     private ListView llista_comentaris;
     private String newComent;
@@ -69,6 +70,13 @@ public class DetailsProposalActivity extends AppCompatActivity {
         descripcio = (TextView) findViewById(R.id.descripcioproposta);
         categoria = (TextView) findViewById(R.id.categoriaproposta);
         owner = (TextView) findViewById(R.id.ownerproposal);
+
+        showPos = (Button) findViewById(R.id.showPositionButton);
+        if(getIntent().getDoubleExtra("lat",0) != 0){
+            showPos.setVisibility(View.VISIBLE);
+        }else{
+            showPos.setVisibility(View.INVISIBLE);
+        }
 
         llista_comentaris = (ListView) findViewById(R.id.listcommentaris);
 
@@ -322,6 +330,18 @@ public class DetailsProposalActivity extends AppCompatActivity {
                     }
                 });
 
+            }
+        });
+
+        showPos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), ShowLocationActivity.class);
+                if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng")) {
+                    i.putExtra("lat", getIntent().getDoubleExtra("lat",0));
+                    i.putExtra("lng", getIntent().getDoubleExtra("lng",0));
+                    startActivity(i);
+                }
             }
         });
     }

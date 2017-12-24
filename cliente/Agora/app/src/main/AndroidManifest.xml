@@ -3,6 +3,7 @@
           package="edu.upc.pes.agora">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
+
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_PROFILE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
@@ -18,6 +19,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+
 
     <application
         android:allowBackup="true"
@@ -41,6 +43,7 @@
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme">
         </activity>
+
         <activity
             android:name=".Presentation.MyProposalsActivity"
             android:label="@string/title_activity_my_propuestas"
@@ -58,11 +61,11 @@
             android:label="@string/title_activity_edit_proposal"
             android:theme="@style/AppTheme">
         </activity>
+
         <activity
             android:name=".Presentation.DetailsProposalActivity"
             android:label="@string/title_activity_details_proposal"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -73,17 +76,27 @@
         -->
         <activity
             android:name=".Presentation.AddLocationActivity"
+
             android:label="@string/title_activity_add_location"/>
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC95I96hwPsV83M-y2Dp9OZgqjGuGkD0-Y"/>
+            android:value="AIzaSyC95I96hwPsV83M-y2Dp9OZgqjGuGkD0-Y" />
 
         <activity
             android:name=".Presentation.LogrosActivity"
             android:label="@string/title_activity_logros"
             android:theme="@style/AppTheme">
+
         </activity>
+
+        <activity
+            android:name=".Presentation.ShowLocationActivity"
+            android:label="@string/title_activity_show_location">
+            
+        </activity>
+
     </application>
 
 </manifest>
