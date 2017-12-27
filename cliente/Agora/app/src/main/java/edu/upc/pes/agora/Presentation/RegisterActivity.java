@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i("asdCreate", "entra al boton registro");
                 id = identifier.getText().toString();
-                user = username.getText().toString();
+                user = username.getText().toString(); 
                 pw1 = password1.getText().toString();
                 pw2 = password2.getText().toString();
 
@@ -215,12 +215,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 Log.i("asdBool", result.toString());
 
-                                String registreok = String.format(res.getString(R.string.Registrat), user);
+                                //String registreok = String.format(res.getString(R.string.Registrat), user);
 
                                 if (result){
                                     //access app
-                                    Toast.makeText(RegisterActivity.this, registreok, Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                    //Toast.makeText(RegisterActivity.this, registreok, Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(RegisterActivity.this, FillProfileActivity.class));
 
                                 } else {
                                     identifier.setText("");

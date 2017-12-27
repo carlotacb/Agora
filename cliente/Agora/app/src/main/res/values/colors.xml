@@ -10,6 +10,7 @@
     <color name="gris">#aab4b4b4</color>
     <color name="blue">#aa2626ca</color>
     <color name="white">#FFFF</color>
+    <color name="fonssemitransparent">#b7484848</color>
 
     <color name="red_500_primary">#F44336</color>
     <color name="red_100">#FFCDD2</color>

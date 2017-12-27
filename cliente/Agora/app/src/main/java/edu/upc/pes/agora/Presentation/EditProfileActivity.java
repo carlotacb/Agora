@@ -115,8 +115,8 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
         if (i.hasExtra("cp")) {
-            Integer p = i.getIntExtra("cp", 0);
-            CP.setText(p.toString());
+            Integer cp = i.getIntExtra("cp", 0);
+            CP.setText(cp.toString());
         }
         if (i.hasExtra("barrio")) {
             Barrio.setText(i.getStringExtra("barrio"));
