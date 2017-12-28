@@ -16,7 +16,9 @@ async function create({username, title, content, location, zone, categoria}) {
         location: {
             lat: null,
             long: null
-        }
+        },
+        upvotesUsernames: [],
+        downvotesUsernames: []
     }
     if (location && location.lat && location.long) {
         object.location.lat = location.lat
@@ -43,7 +45,7 @@ async function getAllBy(reqQuery, reqSort) {
     }
 
     if (reqQuery.favorites) {
-        query.id = {$in : reqQuery.favorites}
+        query.id = {$in: reqQuery.favorites}
     }
 
     if (sort.createdDateTime) {
@@ -212,7 +214,7 @@ async function addImage({proposalId, images}) {
         .then(response => response.value)
 }
 
-async function deleteImage({proposalId, username,imageId}) {
+async function deleteImage({proposalId, username, imageId}) {
     const query = {
         id: parseInt(proposalId),
         "images.id": parseInt(imageId)
@@ -236,6 +238,50 @@ async function deleteImage({proposalId, username,imageId}) {
         .then(response => response.value)
 }
 
+async function voteProposal({proposalId, username, vote}) {
+    const allowedVoteValues = [-1, 0, 1]
+
+    if (!allowedVoteValues.includes(vote)) {
+        throw new TypeError(`Not allowed to vote with value ${vote}`)
+    }
+
+    const query = {
+        id: parseInt(proposalId),
+    }
+
+    let update
+
+    if (vote === 1) {
+        update = {
+            $addToSet: {
+                upvotesUsernames: username
+            },
+            $pullAll: {
+                downvotesUsernames: [username]
+            }
+        }
+    } else if (vote === 0) {
+        update = {
+            $pullAll: {
+                downvotesUsernames: [username],
+                upvotesUsernames: [username],
+            }
+        }
+    } else if (vote === -1) {
+        update = {
+            $addToSet: {
+                downvotesUsernames: username
+            },
+            $pullAll: {
+                upvotesUsernames: [username]
+            }
+        }
+    }
+
+    return collection().update(query, update)
+        .then(response => response.value)
+}
+
 module.exports = {
     create: create,
     update: update,
@@ -244,6 +290,7 @@ module.exports = {
     getProposalById: getProposalById,
     addComment: addComment,
     editComment: editComment,
+    voteProposal: voteProposal,
     deleteComment: deleteComment,
     delete: deleteProposal,
     addImage: addImage,

@@ -2,13 +2,14 @@ const proposalsModule = require('../../modules/proposal')
 const userModule = require('../../modules/user')
 const {isAuthenticated, isProposalFromUserZone} = require('../middleware')
 const f = require('../util').wrapAsyncRouterFunction
+const {mapProposal, mapComment} = require('../mapper')
 
 module.exports = app => {
     app.post('/api/proposal', isAuthenticated, f(async function (req, res) {
         const username = req.username
         const {title, content, location, categoria} = req.body
         const proposal = await proposalsModule.createProposal({username, title, content, location, categoria})
-        res.send(proposal)
+        res.send(await mapProposal(proposal))
     }))
 
     app.put('/api/proposal/:proposalId', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
@@ -26,7 +27,7 @@ module.exports = app => {
 
         const {content, title, location} = req.body
         const newProposal = await proposalsModule.update({id: proposalId, content, title, location})
-        res.send(newProposal)
+        res.send(await mapProposal(newProposal))
     }))
 
     app.get('/api/proposal', isAuthenticated, f(async function (req, res) {
@@ -66,7 +67,7 @@ module.exports = app => {
 
         proposal.favorited = user.favorites && user.favorites.includes(parseInt(id))
 
-        res.send(proposal)
+        res.send(await mapProposal(proposal))
     }))
 
     app.post('/api/proposal/:proposalId/favorite', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
@@ -85,7 +86,7 @@ module.exports = app => {
             }
         }
 
-        return res.send(proposal)
+        return res.send(await mapProposal(proposal))
     }))
 
     app.post('/api/proposal/:proposalId/comment', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
@@ -95,7 +96,7 @@ module.exports = app => {
         const comment = req.body.comment.toString()
         const proposalId = req.params.proposalId
         const newComment = await proposalsModule.addComment({proposalId: proposalId, author: req.username, comment})
-        return res.send(newComment)
+        return res.send(await mapComment(newComment))
     }))
 
     app.put('/api/proposal/:proposalId/comment/:idc', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
@@ -108,7 +109,7 @@ module.exports = app => {
             commentId,
             comment
         })
-        return res.send(updatedComment)
+        return res.send(await mapComment(updatedComment))
     }))
 
     app.delete('/api/proposal/:proposalId/comment/:idc', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
@@ -128,7 +129,7 @@ module.exports = app => {
         }
         const proposalId = req.params.proposalId
         const proposal = await proposalsModule.addImage({proposalId: proposalId, author: req.username,images})
-        return res.send(proposal)
+        return res.send(await mapProposal(proposal))
     }))
 
     app.delete('/api/proposal/:proposalId/image/:imageId', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
@@ -150,16 +151,16 @@ module.exports = app => {
 
     app.post('/api/proposal/:proposalId/vote', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
         const proposalId = req.params.proposalId
-        const vote = req.body.vote
+        const vote = parseInt(req.body.vote)
         const username = req.username
 
-        if (vote !== -1 || vote !== 1 || vote !== 0) {
+        if (vote !== -1 && vote !== 1 && vote !== 0) {
             throw new Error('Invalid Vote')
         }
 
         await proposalsModule.voteProposal({proposalId, vote, username})
         const proposal = await proposalsModule.getProposalById({id: proposalId})
 
-        res.send(proposal)
+        res.send(await mapProposal(proposal))
     }))
 }

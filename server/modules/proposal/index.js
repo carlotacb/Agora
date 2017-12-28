@@ -76,7 +76,7 @@ async function editComment({proposalId, author, comment, commentId}) {
 }
 
 async function voteProposal({proposalId, vote, username}) {
-    console.log('Unimplemented method.');
+    return await db.voteProposal({proposalId, vote, username})
 }
 
 async function addImage({proposalId, author, images}) {
