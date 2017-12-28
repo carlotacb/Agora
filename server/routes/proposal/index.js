@@ -46,12 +46,6 @@ module.exports = app => {
             createdDateTime: 1
         }
         const proposals = await proposalsModule.getAllProposals(query, sort)
-        proposals.forEach(function(proposal){
-            if (user.favorites && user.favorites.includes(parseInt(proposal.id))){
-                proposal.favorited = true
-            }
-            else proposal.favorited = false
-        })
         res.send(await Promise.all(proposals.map(p => mapProposalForUsername(p, req.username))))
 
     }))
@@ -65,8 +59,6 @@ module.exports = app => {
             return res.sendStatus(404)
         }
 
-        proposal.favorited = user.favorites && user.favorites.includes(parseInt(id))
-
         res.send(await mapProposalForUsername(proposal, req.username))
     }))
 
@@ -76,13 +68,10 @@ module.exports = app => {
         const proposal = await proposalsModule.getProposalById({id, zone: user.zone})
 
         if (proposal) {
-            if (user.favorites && user.favorites.includes(parseInt(id))){
+            if (user.favorites && user.favorites.includes(parseInt(id))) {
                 await userModule.unsetFavorite({id, user})
-                proposal.favorited = false
-            }
-            else {
+            } else {
                 await userModule.setFavorite({id, user})
-                proposal.favorited = true
             }
         }
 
@@ -128,7 +117,7 @@ module.exports = app => {
             throw new TypeError('Images must be an array of images')
         }
         const proposalId = req.params.proposalId
-        const proposal = await proposalsModule.addImage({proposalId: proposalId, author: req.username,images})
+        const proposal = await proposalsModule.addImage({proposalId: proposalId, author: req.username, images})
         return res.send(await mapProposalForUsername(proposal, req.username))
     }))
 

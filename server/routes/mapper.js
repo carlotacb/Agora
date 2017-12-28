@@ -1,9 +1,9 @@
-const {getProfilePicture} = require('../modules/user')
+const userModule = require('../modules/user')
 
 async function mapComment(comment) {
     try {
         if (comment.author && comment.author.username) {
-            comment.author.image = await getProfilePicture(comment.author.username)
+            comment.author.image = await userModule.getProfilePicture(comment.author.username)
         }
 
         return comment
@@ -27,6 +27,10 @@ async function mapProposalForUsername(proposal, username) {
         delete proposal.downvotesUsernames
 
         proposal.comments = proposal.comments ? await Promise.all(proposal.comments.map(mapComment)) : []
+
+        const user = await userModule.get({username})
+
+        proposal.favorited = !!(user.favorites && user.favorites.includes(parseInt(proposal.id)))
 
         return proposal
     } catch (error) {
