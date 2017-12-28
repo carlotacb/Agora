@@ -13,7 +13,7 @@ async function mapComment(comment) {
     }
 }
 
-async function mapProposalForUsername(proposal, username) {
+async function mapProposalForUsername(proposal, username, options = {mapComments: true}) {
     try {
         delete proposal._id
 
@@ -26,7 +26,9 @@ async function mapProposalForUsername(proposal, username) {
         delete proposal.upvotesUsernames
         delete proposal.downvotesUsernames
 
-        proposal.comments = proposal.comments ? await Promise.all(proposal.comments.map(mapComment)) : []
+        if (options.mapComments) {
+            proposal.comments = proposal.comments ? await Promise.all(proposal.comments.map(mapComment)) : []
+        }
 
         const user = await userModule.get({username})
 

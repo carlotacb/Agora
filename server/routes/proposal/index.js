@@ -46,7 +46,7 @@ module.exports = app => {
             createdDateTime: 1
         }
         const proposals = await proposalsModule.getAllProposals(query, sort)
-        res.send(await Promise.all(proposals.map(p => mapProposalForUsername(p, req.username))))
+        res.send(await Promise.all(proposals.map(p => mapProposalForUsername(p, req.username, {mapComments: false}))))
 
     }))
 
