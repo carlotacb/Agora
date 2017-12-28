@@ -6,6 +6,7 @@ const errors = require('../modules/error')
 function logRequest(req) {
     console.log(`Request - ${JSON.stringify({
         method: req.method,
+        requestId: req.headers['x-request-id'],
         username: req.username,
         url: req.url,
         body: req.body,
