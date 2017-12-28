@@ -2,14 +2,14 @@ const proposalsModule = require('../../modules/proposal')
 const userModule = require('../../modules/user')
 const {isAuthenticated, isProposalFromUserZone} = require('../middleware')
 const f = require('../util').wrapAsyncRouterFunction
-const {mapProposal, mapComment} = require('../mapper')
+const {mapProposalForUsername, mapComment} = require('../mapper')
 
 module.exports = app => {
     app.post('/api/proposal', isAuthenticated, f(async function (req, res) {
         const username = req.username
         const {title, content, location, categoria} = req.body
         const proposal = await proposalsModule.createProposal({username, title, content, location, categoria})
-        res.send(await mapProposal(proposal))
+        res.send(await mapProposalForUsername(proposal, req.username))
     }))
 
     app.put('/api/proposal/:proposalId', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
@@ -27,7 +27,7 @@ module.exports = app => {
 
         const {content, title, location} = req.body
         const newProposal = await proposalsModule.update({id: proposalId, content, title, location})
-        res.send(await mapProposal(newProposal))
+        res.send(await mapProposalForUsername(newProposal))
     }))
 
     app.get('/api/proposal', isAuthenticated, f(async function (req, res) {
@@ -52,7 +52,7 @@ module.exports = app => {
             }
             else proposal.favorited = false
         })
-        res.send(proposals)
+        res.send(await Promise.all(proposals.map(p => mapProposalForUsername(p, req.username))))
 
     }))
 
@@ -67,7 +67,7 @@ module.exports = app => {
 
         proposal.favorited = user.favorites && user.favorites.includes(parseInt(id))
 
-        res.send(await mapProposal(proposal))
+        res.send(await mapProposalForUsername(proposal, req.username))
     }))
 
     app.post('/api/proposal/:proposalId/favorite', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
@@ -86,7 +86,7 @@ module.exports = app => {
             }
         }
 
-        return res.send(await mapProposal(proposal))
+        return res.send(await mapProposalForUsername(proposal, req.username))
     }))
 
     app.post('/api/proposal/:proposalId/comment', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
@@ -129,7 +129,7 @@ module.exports = app => {
         }
         const proposalId = req.params.proposalId
         const proposal = await proposalsModule.addImage({proposalId: proposalId, author: req.username,images})
-        return res.send(await mapProposal(proposal))
+        return res.send(await mapProposalForUsername(proposal, req.username))
     }))
 
     app.delete('/api/proposal/:proposalId/image/:imageId', isAuthenticated, isProposalFromUserZone, f(async function (req, res) {
@@ -161,6 +161,6 @@ module.exports = app => {
         await proposalsModule.voteProposal({proposalId, vote, username})
         const proposal = await proposalsModule.getProposalById({id: proposalId})
 
-        res.send(await mapProposal(proposal))
+        res.send(await mapProposalForUsername(proposal, req.username))
     }))
 }

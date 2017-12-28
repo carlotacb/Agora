@@ -113,6 +113,20 @@ async function unsetFavorite({id, user}){
             .then(response => response.value)
 }
 
+async function getProfilePicture(username) {
+    const query = {
+        username: username,
+    }
+
+    const projection = {
+        image: 1,
+        _id: 0
+    }
+
+    return collection().findOne(query, projection)
+        .then(user => user.image)
+}
+
 module.exports = {
     get: get,
     getProfile: getProfile,
@@ -122,4 +136,5 @@ module.exports = {
     getByZone: getByZone,
     setFavorite: setFavorite,
     unsetFavorite: unsetFavorite,
+    getProfilePicture: getProfilePicture,
 }

@@ -79,6 +79,7 @@ module.exports = {
     createUser: createUser,
     login: login,
     get: db.get,
+    getProfilePicture: db.getProfilePicture,
     getProfile: db.getProfile,
     updateProfile: db.updateProfile,
     updatePassword: updatePassword,

@@ -52,7 +52,11 @@ async function getAllBy(reqQuery, reqSort) {
         sort.createdDateTime = reqSort.createdDateTime
     }
 
-    const cursor = collection().find(query)
+    const projection = {
+        images: 0
+    }
+
+    const cursor = collection().find(query, projection)
 
     if (Object.keys(reqSort).length > 0) {
         return cursor.sort(sort).toArray()
@@ -190,8 +194,6 @@ async function addImage({proposalId, images}) {
         id: parseInt(proposalId),
     }
 
-    console.log('images', JSON.stringify(images, null, 4), typeof images)
-
     for (let i = 0; i < images.length; ++i) {
         images [i] = {
             image: images[i],
@@ -204,7 +206,7 @@ async function addImage({proposalId, images}) {
             images
         }
     }
-    console.log(update)
+
     const options = {
         upsert: false,
         returnOriginal: false
@@ -227,8 +229,6 @@ async function deleteImage({proposalId, username, imageId}) {
             }
         }
     }
-
-    console.log('query', query, 'upd', update)
 
     const options = {
         multi: true
