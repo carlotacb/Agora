@@ -8,7 +8,9 @@ const {isAuthenticated} = require('../middleware')
 
 module.exports = app => {
     app.post('/api/login', f(async function (req, res) {
-        const {username, password} = req.body
+        const password = req.body.password
+        const username = req.body.username.toLowerCase()
+
         try {
             const user = await userModule.login({username, password})
             const session = await sessionModule.generateSession({username})
@@ -24,7 +26,8 @@ module.exports = app => {
     }))
 
     app.post('/api/signup', f(async function (req, res) {
-        const {signupCode, username, password, confirmPassword} = req.body
+        const {signupCode, password, confirmPassword} = req.body
+        const username = req.body.username.toLowerCase()
         if (!signupCode || !username || !password || !confirmPassword) {
             throw new Error(`There is an invalid field`)
         }
