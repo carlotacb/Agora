@@ -194,6 +194,13 @@ public class FillProfileActivity extends AppCompatActivity {
             }
         };
 
+        okey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(FillProfileActivity.this, MainActivity.class));
+            }
+        });
+
     }
 
     @Override

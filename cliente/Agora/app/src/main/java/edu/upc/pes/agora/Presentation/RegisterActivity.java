@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.i("asdCreate", "entra al boton registro");
                 id = identifier.getText().toString();
-                user = username.getText().toString(); 
+                user = username.getText().toString();
                 pw1 = password1.getText().toString();
                 pw2 = password2.getText().toString();
 
