@@ -27,6 +27,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,6 +68,7 @@ public class CreateProposalActivity extends AppCompatActivity {
     private ImageView image;
     private ImageButton buttonImage;
     private String encoded;
+    //private JSONArray ArrayImages;
 
     private final int SELECT_PICTURE=200;
 
@@ -244,7 +246,8 @@ public class CreateProposalActivity extends AppCompatActivity {
                         location.put("lat", getIntent().getDoubleExtra("lat",0));
                         location.put("long", getIntent().getDoubleExtra("lng",0));
                         values.put("location", location);
-                        values.put("image", encoded);
+                        values.put("images", encoded);
+                        //values.put("images", ArrayImages);
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
@@ -389,6 +392,7 @@ public class CreateProposalActivity extends AppCompatActivity {
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                     byte[] byteArray = byteArrayOutputStream .toByteArray();
                     encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                    //ArrayImages.put(encoded);
                 }
                 break;
         }
