@@ -355,13 +355,22 @@ public class DetailsProposalActivity extends AppCompatActivity {
                         }
                         llista_comentaris.setAdapter(new CommentAdapter(getApplicationContext(), comentarios));
 
+                        JSONArray ArrayImages = jsonObject.getJSONArray("images");
 
-                        String imageJ = jsonObject.getString("image");
+                        if (ArrayImages != null) {
+                            for (int i=0; i < ArrayImages.length(); i++){
 
-                        byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                                JSONObject jas2 = ArrayImages.getJSONObject(i);
+                                String id = jas2.getString("id");
+                                String imageJ = jas2.getString("images");
 
-                        image.setImageBitmap(bitmap);
+                                byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+
+                                //image.setImageBitmap(bitmap);
+                            }
+                        }
+
                     }
 
                 } catch (JSONException e) {
