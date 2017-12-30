@@ -1,5 +1,6 @@
 package edu.upc.pes.agora.Presentation;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -27,6 +28,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -37,6 +42,8 @@ import java.util.List;
 
 import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
 import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
+import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
+import edu.upc.pes.agora.Logic.ServerConection.PutAsyncTask;
 import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.R;
 
@@ -44,6 +51,7 @@ public class FillProfileActivity extends AppCompatActivity {
 
     private TextInputLayout nombre, cp, fechanacimiento;
     private EditText enombre, ecp, efechanacimiento;
+    private TextView username, zona;
     private String name, codipost, fech;
     private ImageView profileimage;
     private Spinner sexo;
@@ -64,12 +72,20 @@ public class FillProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fill_profile);
 
+        Log.i("Username", Constants.Username);
+        Log.i("Extras", Integer.toString(Constants.zone));
+
+        username = (TextView) findViewById(R.id.usernameprofile);
+        username.setText(Constants.Username);
+        zona = (TextView) findViewById(R.id.barrio);
+        zona.setText(Integer.toString(Constants.zone));
+
         nombre = (TextInputLayout) findViewById(R.id.nombre_up);
         cp = (TextInputLayout) findViewById(R.id.codipostal_up);
         fechanacimiento = (TextInputLayout) findViewById(R.id.fechanaix_up);
 
         enombre = (EditText) findViewById(R.id.nombrecompleto);
-        ecp = (EditText) findViewById(R.id.codipostal);
+        ecp = (EditText) findViewById(R.id.cpostal);
         efechanacimiento = (EditText) findViewById(R.id.fecha);
 
         sexo = (Spinner) findViewById(R.id.sexo);
@@ -195,9 +211,73 @@ public class FillProfileActivity extends AppCompatActivity {
         };
 
         okey.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(FillProfileActivity.this, MainActivity.class));
+            public void onClick(View view) {
+                // implementar cambios de los atributos del usuario en el servidor
+                // Toast.makeText(getApplicationContext(),"aqui cambiaremos los valores al server", Toast.LENGTH_LONG).show();
+
+                okey.setVisibility(View.GONE);
+                progbar.setVisibility(View.VISIBLE);
+
+                JSONObject values = new JSONObject();
+                try {
+                    //  strTitulo = Titulo.getText().toString();
+                    //  strDescripcion = Descripcion.getText().toString();
+
+                    String nombre = enombre.getText().toString();
+                    String CPcode = ecp.getText().toString();
+                    String fecha = efechanacimiento.getText().toString();
+                    String sex = diferentesSexosGenerico[sexo.getSelectedItemPosition()];
+                    String username = Constants.Username;
+
+                    values.put("username", username);
+                    values.put("bdate", fecha);
+                    values.put("cpCode", CPcode);
+                    values.put("sex", sex);
+                    values.put("realname", nombre);
+                    values.put("image", encoded);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                // nou server : agora-pes.herokuapp.com/api/proposal
+                new PostAsyncTask("https://agora-pes.herokuapp.com/api/profile", FillProfileActivity.this) {
+                    @Override
+                    protected void onPostExecute(JSONObject resObject) {
+                        Boolean result = false;
+
+                        try {
+
+                            if (resObject.has("success")) {
+                                result = resObject.getBoolean("success");
+                            }
+
+                            if (!result && resObject.has("errorMessage")) {
+                                String error = res.getString(R.string.errorCreacion);
+                                Log.i("asdCreacion", error);
+                                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                            }
+                            //Toast.makeText(getApplicationContext(), "Result : " + result , Toast.LENGTH_LONG).show();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //Log.i("asdBool", result.toString());
+
+                        if (result) {
+                            //Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
+                            //     Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(FillProfileActivity.this, MainActivity.class));
+                        } else {
+                            Log.i("asdCreacion", "reset");
+                            okey.setVisibility(View.VISIBLE);
+                            progbar.setVisibility(View.GONE);
+                        }
+
+                    }
+                }.execute(values);
             }
         });
 

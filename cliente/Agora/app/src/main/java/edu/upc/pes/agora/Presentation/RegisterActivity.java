@@ -2,6 +2,7 @@ package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.support.design.widget.TextInputLayout;
@@ -18,11 +19,15 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
 import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.ServerConection.PostSesionAsyncTask;
 import edu.upc.pes.agora.R;
+
+import static edu.upc.pes.agora.Logic.Utils.Constants.SH_PREF_NAME;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -31,6 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
     private Button registro;
     private TextInputLayout codiup, userup, pas1up, pas2up;
     private ProgressBar progbar;
+
+    SharedPreferences prefs;
+    SharedPreferences.Editor edit;
 
     @SuppressLint("WrongViewCast")
     @Override
@@ -55,6 +63,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         registro = (Button) findViewById(R.id.btnRegistration);
         progbar = (ProgressBar) findViewById(R.id.registerprogressbar);
+
+        //Get SharedPreferences containing token
+        prefs = this.getSharedPreferences(SH_PREF_NAME, MODE_PRIVATE);
+        edit = prefs.edit();
 
         final Resources res = getResources();
 
@@ -220,7 +232,29 @@ public class RegisterActivity extends AppCompatActivity {
                                 if (result){
                                     //access app
                                     //Toast.makeText(RegisterActivity.this, registreok, Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(RegisterActivity.this, FillProfileActivity.class));
+
+                                    Constants.Username = user;
+                                    try {
+                                        if (resObject.has("token")) {
+                                            String t = resObject.getString("token");
+
+                                            if (!Objects.equals(prefs.getString("token", ""), t)) {
+                                                edit.putString("token", t);
+                                                edit.apply();
+                                            }
+
+                                            Log.i("SavedToken", prefs.getString("token", "none saved"));
+                                        }
+                                        if (resObject.has("zone")) {
+                                            Constants.zone = resObject.getInt("zone");
+                                            Log.i("Zone:", "" + resObject.getInt("zone"));
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    Intent fillProfile = new Intent(RegisterActivity.this, FillProfileActivity.class);
+                                    Log.i("Asd:", "launch intent");
+                                    startActivity(fillProfile);
 
                                 } else {
                                     identifier.setText("");
