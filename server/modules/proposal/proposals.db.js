@@ -25,7 +25,9 @@ async function create({username, title, content, location, zone, categoria}) {
         object.location.long = location.long
     }
 
-    return collection().insertOne(object)
+    await collection().insertOne(object)
+
+    return object
 }
 
 async function getAllBy(reqQuery, reqSort) {
