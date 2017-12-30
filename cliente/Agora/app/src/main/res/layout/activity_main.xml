@@ -76,6 +76,12 @@
                     android:layout_height="match_parent"
                     android:alpha="0.9" />
 
+                <AutoCompleteTextView
+                    android:id="@+id/searchUser"
+                    android:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
                 </LinearLayout>
 
         </android.support.design.widget.AppBarLayout>

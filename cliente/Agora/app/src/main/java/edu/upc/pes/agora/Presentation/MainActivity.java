@@ -15,13 +15,17 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -55,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     private List<String> categories = new ArrayList<>();
     private Spinner filterSpinner, searchSpinner;
     private TextView buscartext;
+    private AutoCompleteTextView searchUsers;
+    private  ArrayAdapter<String> adapter;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -115,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         filterSpinner = (Spinner) findViewById(R.id.filterSpinnerView);
         searchSpinner = (Spinner) findViewById(R.id.searchSpinnerView);
         buscartext = (TextView) findViewById(R.id.buscar);
+        searchUsers = (AutoCompleteTextView) findViewById(R.id.searchUser);
 
         final Resources res = this.getResources();
 
@@ -134,6 +141,66 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayAdapter<String> filterSpinnerAdapter = new ArrayAdapter<>(this, R.layout.spinner_filter_style, opcions);
         filterSpinnerAdapter.setDropDownViewResource(R.layout.spinner_filter_style);
+
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile/comunity", mainContext) {
+
+            @Override
+            protected void onPostExecute(JSONObject jsonObject) {
+                try {
+                    if (jsonObject.has("error")) {
+                        String error = jsonObject.get("error").toString();
+                        Log.i("asd123", "Error");
+
+                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                    else if (jsonObject != null){
+                        JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
+                        usuaris = new ArrayList<>();
+
+                        if (ArrayProp != null) {
+                            for (int i=0; i < ArrayProp.length(); i++){
+
+                                Log.i("asd123", (ArrayProp.get(i).toString()));
+
+                                JSONObject jas = ArrayProp.getJSONObject(i);
+
+
+                                String username = jas.getString("username");
+                                usuaris.add(username);
+
+                            }
+                        }
+                        adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_dropdown_item_1line,usuaris);
+                        adapter.setDropDownViewResource(R.layout.spinner_filter_style);
+                        searchUsers.setAdapter(adapter);
+                        searchUsers.setThreshold(1);
+                        searchUsers.setAdapter(adapter);
+
+                        ArrayAdapter<String> opcionsSpinnerAdapter2 = new ArrayAdapter<>(MainActivity.this, R.layout.spinner_filter_style, usuaris);
+                        opcionsSpinnerAdapter2.setDropDownViewResource(R.layout.spinner_filter_style);
+                        searchSpinner.setAdapter(opcionsSpinnerAdapter2);
+                        searchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                String selectedItem = searchSpinner.getSelectedItem().toString().toLowerCase();
+                                Log.i("asdse", selectedItem);
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+
+                    }
+                } catch (JSONException e ) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute(Jason);
+
         filterSpinner.setAdapter(filterSpinnerAdapter);
         filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -146,6 +213,7 @@ public class MainActivity extends AppCompatActivity {
 
                         buscartext.setVisibility(View.GONE);
                         searchSpinner.setVisibility(View.GONE);
+                        searchUsers.setVisibility(View.GONE);
 
                         break;
 
@@ -154,6 +222,7 @@ public class MainActivity extends AppCompatActivity {
 
                         buscartext.setVisibility(View.VISIBLE);
                         searchSpinner.setVisibility(View.VISIBLE);
+                        searchUsers.setVisibility(View.GONE);
 
                         ArrayAdapter<String> opcionsSpinnerAdapter = new ArrayAdapter<>(view.getContext(), R.layout.spinner_filter_style, categories);
                         opcionsSpinnerAdapter.setDropDownViewResource(R.layout.spinner_filter_style);
@@ -295,71 +364,44 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("asdse", selectedItem);
 
                         buscartext.setVisibility(View.VISIBLE);
-                        searchSpinner.setVisibility(View.VISIBLE);
-
-
-                        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile/comunity", mainContext) {
-
-                            @Override
-                            protected void onPostExecute(JSONObject jsonObject) {
-                                try {
-                                    if (jsonObject.has("error")) {
-                                        String error = jsonObject.get("error").toString();
-                                        Log.i("asd123", "Error");
-
-                                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
-                                        toast.show();
-                                    }
-
-                                    else if (jsonObject != null){
-                                        JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
-                                        usuaris = new ArrayList<>();
-
-                                        if (ArrayProp != null) {
-                                            for (int i=0; i < ArrayProp.length(); i++){
-
-                                                Log.i("asd123", (ArrayProp.get(i).toString()));
-
-                                                JSONObject jas = ArrayProp.getJSONObject(i);
-
-
-                                               String username = jas.getString("username");
-                                               usuaris.add(username);
-                                                Toast toast = Toast.makeText(getApplicationContext(), username, Toast.LENGTH_SHORT);
-                                                toast.show();
-
-                                            }
-                                        }
-
-                                        ArrayAdapter<String> opcionsSpinnerAdapter2 = new ArrayAdapter<>(V.getContext(), R.layout.spinner_filter_style, usuaris);
-                                        opcionsSpinnerAdapter2.setDropDownViewResource(R.layout.spinner_filter_style);
-                                        searchSpinner.setAdapter(opcionsSpinnerAdapter2);
-                                        searchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                            @Override
-                                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                                String selectedItem = searchSpinner.getSelectedItem().toString().toLowerCase();
-                                                Log.i("asdse", selectedItem);
-                                            }
-
-                                            @Override
-                                            public void onNothingSelected(AdapterView<?> parent) {
-
-                                            }
-                                        });
-
-                                    }
-                                } catch (JSONException e ) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }.execute(Jason);
-
+                        searchSpinner.setVisibility(View.GONE);
+                        searchUsers.setVisibility(View.VISIBLE);
                         break;
                 }
 
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        searchUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String user = searchUsers.getText().toString();
+                Toast toast = Toast.makeText(getApplicationContext(), user, Toast.LENGTH_SHORT);
+                toast.show();
+                ferGetAsyncTaskUser(user);
+            }
+        });
+
+        searchUsers.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String user = searchUsers.getText().toString();
+                Toast toast = Toast.makeText(getApplicationContext(), user, Toast.LENGTH_SHORT);
+                toast.show();
+                ferGetAsyncTaskUser(user);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
         });
@@ -449,6 +491,51 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     public void ferGetAsyncTask() {
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal", this) {
+
+            @Override
+            protected void onPostExecute(JSONObject jsonObject) {
+                try {
+                    if (jsonObject.has("error")) {
+                        String error = jsonObject.get("error").toString();
+                        Log.i("asd123", "Error");
+
+                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                    else if (jsonObject != null){
+                        JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
+                        propostes = new ArrayList<>();
+
+                        if (ArrayProp != null) {
+                            for (int i=0; i < ArrayProp.length(); i++){
+
+                                Log.i("asd123", (ArrayProp.get(i).toString()));
+
+                                JSONObject jas = ArrayProp.getJSONObject(i);
+                                String title = jas.getString("title");
+                                String owner = jas.getString("owner");
+                                String description = jas.getString("content");
+                                Integer id = jas.getInt("id");
+                                String ca = jas.getString("categoria");
+
+                                Proposal aux = new Proposal(id, title, description, owner, ca);
+
+                                propostes.add(aux);
+                            }
+                        }
+                        llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
+                    }
+                } catch (JSONException e ) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute(Jason);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public void ferGetAsyncTaskUser(String user) {
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal?username="+user, this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
