@@ -147,6 +147,7 @@ public class LoginActivity extends AppCompatActivity /*implements AdapterView.On
                                     //Saves token in SharedPreferences if it is not yet saved there
                                     if (resObject.has("token")) {
                                         String t = resObject.getString("token");
+                                        Constants.SH_PREF_NAME = t;
 
                                         if (!Objects.equals(prefs.getString("token", ""), t)) {
                                             edit.putString("token", t);

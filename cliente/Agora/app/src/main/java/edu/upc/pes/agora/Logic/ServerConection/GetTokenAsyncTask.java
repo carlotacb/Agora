@@ -16,6 +16,7 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.Presentation.MainActivity;
 
@@ -47,7 +48,7 @@ public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
         try {
             HttpsURLConnection client = (HttpsURLConnection) url.openConnection();
             client.setRequestMethod("GET");
-            client.setRequestProperty("Authorization", tokenToSend);
+            client.setRequestProperty("Authorization", Constants.SH_PREF_NAME);
             client.connect();
 
             JSONObject aux;

@@ -53,10 +53,12 @@ public class Helpers {
     }
 
     public static void logout(Context context) {
-
-        SharedPreferences.Editor editor = context.getSharedPreferences(Constants.SH_PREF_NAME, Context.MODE_PRIVATE).edit();
+        /*SharedPreferences.Editor editor = context.getSharedPreferences(Constants.SH_PREF_NAME, Context.MODE_PRIVATE).edit();
         editor.remove("token");
-        editor.apply();
+        editor.apply();*/
+
+        Constants.SH_PREF_NAME = "";
+
     }
 
     public static Bitmap getRoundedCornerBitmap(Bitmap bitmap) {

@@ -237,6 +237,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     try {
                                         if (resObject.has("token")) {
                                             String t = resObject.getString("token");
+                                            Constants.SH_PREF_NAME = t;
 
                                             if (!Objects.equals(prefs.getString("token", ""), t)) {
                                                 edit.putString("token", t);
