@@ -52,7 +52,7 @@ public class CreateProposalActivity extends AppCompatActivity {
     private Button Create;
     private ImageButton deletePos, addPos;
 
-    private TextView Titulo, Descripcion;/*txtPosAttached*/
+    private TextView Titulo, Descripcion, nimatges;/*txtPosAttached*/
 
     private TextInputLayout errortitulo, errordescripcion;
 
@@ -65,18 +65,24 @@ public class CreateProposalActivity extends AppCompatActivity {
     private String strCategoria = "";
     private String[] categoriasGenericas = {"X", "C", "D", "O","M", "E", "T","Q", "S", "A"};
 
-    private ImageView image;
+    //private ImageView image;
     private ImageButton buttonImage;
     private String encoded;
-    //private JSONArray ArrayImages;
+    private JSONArray ArrayImages = new JSONArray();
 
     private final int SELECT_PICTURE=200;
+
+    private int idProposta;
 
     private double lat;
     private double lng;
 
     private LayoutInflater mInflator;
     private boolean selected;
+
+    private Integer numimatges = 0;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +93,9 @@ public class CreateProposalActivity extends AppCompatActivity {
         Create = (Button) findViewById(R.id.createButton);
         addPos = (ImageButton) findViewById(R.id.btnAddPosition);
         deletePos = (ImageButton) findViewById(R.id.btnDeletePosition);
-        image = (ImageView) findViewById(R.id.setImage);
+        //image = (ImageView) findViewById(R.id.setImage);
         buttonImage = (ImageButton) findViewById(R.id.btnAddImage);
+
 
         ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
         ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
@@ -97,6 +104,7 @@ public class CreateProposalActivity extends AppCompatActivity {
 
         Titulo = (TextView) findViewById(R.id.titulo);
         Descripcion = (TextView) findViewById(R.id.descripcion);
+        nimatges = (TextView) findViewById(R.id.nimatges);
         //txtPosAttached = (TextView) findViewById(R.id.txtPosAttached);
 
         errortitulo = (TextInputLayout) findViewById(R.id.titulo_up);
@@ -234,11 +242,11 @@ public class CreateProposalActivity extends AppCompatActivity {
                     Descripcion.getBackground().clearColorFilter();
                     Titulo.getBackground().clearColorFilter();
 
-                    JSONObject values = new JSONObject();
+                    final JSONObject values = new JSONObject();
                     JSONObject location = new JSONObject();
 
-                    try {
 
+                    try {
 
                         values.put("title", strTitulo);
                         values.put("content", strDescripcion);
@@ -246,12 +254,13 @@ public class CreateProposalActivity extends AppCompatActivity {
                         location.put("lat", getIntent().getDoubleExtra("lat",0));
                         location.put("long", getIntent().getDoubleExtra("lng",0));
                         values.put("location", location);
-                        values.put("images", encoded);
                         //values.put("images", ArrayImages);
                     }
                     catch (JSONException e) {
                         e.printStackTrace();
                     }
+
+                    Log.i("asdTORNAR", values.toString());
 
                     new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal", CreateProposalActivity.this) {
                         @Override
@@ -259,8 +268,19 @@ public class CreateProposalActivity extends AppCompatActivity {
                             Boolean result = false;
                             try {
 
+                                Log.i("resposta", resObject.toString());
+
                                 if (resObject.has("success")) {
                                     result = resObject.getBoolean("success");
+                                }
+
+                                if (resObject.has("ArrayResponse")) {
+                                    JSONObject ArrayProp = resObject.getJSONObject("ArrayResponse");
+                                    Log.i("resposta2", ArrayProp.toString());
+
+                                    idProposta = ArrayProp.getInt("id");
+
+                                    Log.i("respostaid", String.valueOf(idProposta));
                                 }
 
                                 if (!result && resObject.has("errorMessage")) {
@@ -268,7 +288,7 @@ public class CreateProposalActivity extends AppCompatActivity {
                                     Log.i("asdCreacion", error);
                                     if(resObject.getString("errorMessage").equals("Selected location outside of allowed zone.")){
                                         Toast.makeText(getApplicationContext(), res.getString(R.string.errorPosition), Toast.LENGTH_LONG).show();
-                                    }else {
+                                    } else {
                                         Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                                     }
                                 }
@@ -281,19 +301,25 @@ public class CreateProposalActivity extends AppCompatActivity {
                             String creacionok = String.format(res.getString(R.string.done), strTitulo);
 
                             if (result) {
-                                Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
+
+                                if (numimatges > 0) {
+                                    afegirimatges();
+                                }
+
+                                else {
+                                    Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
+                                    startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
+                                }
                             }
 
                             else {
                                 Log.i("asdCreacion", "reset");
-                                //Titulo.setText("");
-                                //Descripcion.setText("");
                                 Create.setVisibility(View.VISIBLE);
                                 prog.setVisibility(View.GONE);
                             }
                         }
                     }.execute(values);
+
                 }
             }
         });
@@ -371,6 +397,59 @@ public class CreateProposalActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
+    private void afegirimatges(){
+
+        final Resources res = this.getResources();
+
+        JSONObject imatgesperpropostes = new JSONObject();
+
+        try {
+            imatgesperpropostes.put("images", ArrayImages);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + idProposta + "/image", CreateProposalActivity.this) {
+            @Override
+            protected void onPostExecute(JSONObject resObject) {
+                Boolean result = false;
+
+                Log.i("asdimatge", "entra aqui");
+
+                try {
+                    if (resObject.has("success")) {
+                        result = resObject.getBoolean("success");
+                    }
+
+                    if (!result && resObject.has("errorMessage")) {
+                        String error = res.getString(R.string.errorCreacion);
+                        Log.i("asdCreacion", error);
+                        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                String creacionok = String.format(res.getString(R.string.done), strTitulo);
+
+                if (result) {
+                    Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
+
+                    startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
+                }
+
+                else {
+                    Create.setVisibility(View.VISIBLE);
+                    prog.setVisibility(View.GONE);
+                }
+            }
+        }.execute(imatgesperpropostes);
+
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -386,13 +465,17 @@ public class CreateProposalActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                    image.setImageBitmap(bitmap);
+                    //image.setImageBitmap(bitmap);
+                    ++numimatges;
+                    //nimatges.setText(numimatges);
+                    Log.i("asd", String.valueOf(numimatges));
 
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                     byte[] byteArray = byteArrayOutputStream .toByteArray();
                     encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                    //ArrayImages.put(encoded);
+
+                    ArrayImages.put(encoded);
                 }
                 break;
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
+            xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp"
@@ -121,11 +121,11 @@
             android:layout_marginTop="10dp"
             android:fontFamily="serif"/>
 
-        <ImageView
+        <!-- <ImageView
             android:id="@+id/setImage"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@mipmap/ic_person"/>
+            android:src="@mipmap/ic_person"/> -->
 
        <!-- <TextView
             android:id="@+id/txtPosAttached"
@@ -157,21 +157,7 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:textSize="14sp"
-                android:src="@drawable/if_image_add_103590"
-                android:visibility="visible"/>
-
-            <ImageButton
-                android:id="@+id/btnDeleteImage"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/botonremove"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:textSize="14sp"
-                android:src="@drawable/if_image_remove_103594"
-                android:visibility="gone"/>
+                android:src="@drawable/if_image_add_103590"/>
 
         </RelativeLayout>
 
@@ -212,6 +198,19 @@
         </RelativeLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:id="@+id/nimatges"
+        android:text="Imatges: X"/>
+
+        <ListView android:id="@+id/llistaimatges"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:visibility="gone"
+                  tools:ignore="NestedScrolling"/>
 
         <LinearLayout android:layout_width="wrap_content"
                       android:layout_gravity="center"
@@ -284,7 +283,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
 
 </ScrollView>
 

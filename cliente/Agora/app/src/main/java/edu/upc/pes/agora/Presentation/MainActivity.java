@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
                                                 if (ArrayProp != null) {
                                                     for (int i=0; i < ArrayProp.length(); i++){
 
-                                                        Log.i("asd123", (ArrayProp.get(i).toString()));
+//                                                        Log.i("asd123", (ArrayProp.get(i).toString()));
 
                                                         JSONObject jas = ArrayProp.getJSONObject(i);
                                                         String title = jas.getString("title");
@@ -475,7 +475,7 @@ public class MainActivity extends AppCompatActivity {
 
                         if (ArrayProp != null) {
                             for (int i = 0; i < ArrayProp.length(); i++){
-                                Log.i("asd123", (ArrayProp.get(i).toString()));
+                                //Log.i("asd123", (ArrayProp.get(i).toString()));
                                 JSONObject jas = ArrayProp.getJSONObject(i);
                                 JSONArray comentaris = jas.getJSONArray("comments");
                                 //Log.i("asd1234", String.valueOf(comentaris.length()));
