@@ -68,7 +68,6 @@ public class OtherUserProposalsActivity extends AppCompatActivity {
                                 String ca = jas.getString("categoria");
                                 String createDate = Helpers.showDate(jas.getString("createdDateTime"));
                                 String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
-
                                 Proposal aux = new Proposal(id, title, description, owner, ca, createDate, updateDate);
 
                                 propostes.add(aux);
