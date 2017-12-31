@@ -350,7 +350,6 @@ public class MainActivity extends AppCompatActivity {
                         buscartext.setVisibility(View.VISIBLE);
                         searchSpinner.setVisibility(View.VISIBLE);
 
-
                         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile/comunity", mainContext) {
 
                             @Override
@@ -464,34 +463,18 @@ public class MainActivity extends AppCompatActivity {
         Intent refresh = new Intent(this, MainActivity.class);
         refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.men_castella) {
-            locale = new Locale("es");
-            config.locale = locale;
-            Constants.Idioma = "es";
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-        }
+        if (id == R.id.men_castella) Constants.Idioma = "es";
 
-        else if (id == R.id.men_catala){
-            locale = new Locale("ca");
-            config.locale = locale;
-            Constants.Idioma = "ca";
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
+        else if (id == R.id.men_catala) Constants.Idioma = "ca";
 
-        }
+        else if (id == R.id.men_angles) Constants.Idioma = "en";
 
-        else if (id == R.id.men_angles){
-            locale = new Locale("en");
-            config.locale = locale;
-            Constants.Idioma = "en";
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-        }
+        locale = new Locale(Constants.Idioma);
+        config.locale = locale;
+        getResources().updateConfiguration(config, null);
+        startActivity(refresh);
+        finish();
+
         return super.onOptionsItemSelected(item);
     }
 
