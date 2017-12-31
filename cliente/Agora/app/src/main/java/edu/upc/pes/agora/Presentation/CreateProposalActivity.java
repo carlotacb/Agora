@@ -10,18 +10,20 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,7 +40,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import edu.upc.pes.agora.Logic.Adapters.ImatgesAdapter;
 import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
+import edu.upc.pes.agora.Logic.Models.ImatgeItem;
 import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
@@ -50,38 +54,31 @@ public class CreateProposalActivity extends AppCompatActivity {
     private Locale locale;
 
     private Button Create;
-    private ImageButton deletePos, addPos;
-
-    private TextView Titulo, Descripcion, nimatges;/*txtPosAttached*/
-
+    private TextView Titulo, Descripcion, nimatges, txtPosAttached, deletePosition;
     private TextInputLayout errortitulo, errordescripcion;
-
     private ProgressBar prog;
-
     private Spinner spin;
+    private ListView limatges;
+    private FloatingActionButton addImage, addLocation, menuFloating;
+    private LinearLayout linearImage, linearLocation;
+
+    private ImageButton deletePos, addPos;
+    private ImageButton buttonImage;
 
     private String strTitulo = "";
     private String strDescripcion = "";
     private String strCategoria = "";
-    private String[] categoriasGenericas = {"X", "C", "D", "O","M", "E", "T","Q", "S", "A"};
-
-    //private ImageView image;
-    private ImageButton buttonImage;
     private String encoded;
-    private JSONArray ArrayImages = new JSONArray();
-
-    private final int SELECT_PICTURE=200;
-
-    private int idProposta;
-
+    private String[] categoriasGenericas = {"X", "C", "D", "O","M", "E", "T","Q", "S", "A"};
     private double lat;
     private double lng;
 
-    private LayoutInflater mInflator;
-    private boolean selected;
+    private JSONArray ArrayImages = new JSONArray();
+    private ArrayList<ImatgeItem> mImatgeItems = new ArrayList<> ();
 
-    private Integer numimatges = 0;
-
+    private final int SELECT_PICTURE=200;
+    private int idProposta;
+    private int numimatges = 0;
 
 
     @Override
@@ -91,26 +88,36 @@ public class CreateProposalActivity extends AppCompatActivity {
 
         Button reset = (Button) findViewById(R.id.resetButton);
         Create = (Button) findViewById(R.id.createButton);
-        addPos = (ImageButton) findViewById(R.id.btnAddPosition);
-        deletePos = (ImageButton) findViewById(R.id.btnDeletePosition);
-        //image = (ImageView) findViewById(R.id.setImage);
-        buttonImage = (ImageButton) findViewById(R.id.btnAddImage);
-
-
-        ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
-        ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
-
-        spin = (Spinner) findViewById(R.id.cate);
 
         Titulo = (TextView) findViewById(R.id.titulo);
         Descripcion = (TextView) findViewById(R.id.descripcion);
         nimatges = (TextView) findViewById(R.id.nimatges);
-        //txtPosAttached = (TextView) findViewById(R.id.txtPosAttached);
+        nimatges.setText(String.format(this.getResources().getString(R.string.numeroimatge), String.valueOf(mImatgeItems.size())));
+        txtPosAttached = (TextView) findViewById(R.id.positionatached);
+        deletePosition = (TextView) findViewById(R.id.deleteposition);
 
         errortitulo = (TextInputLayout) findViewById(R.id.titulo_up);
         errordescripcion = (TextInputLayout) findViewById(R.id.descripcion_up);
 
         prog = (ProgressBar) findViewById(R.id.crproposalprogressbar);
+
+        spin = (Spinner) findViewById(R.id.cate);
+
+        limatges = (ListView) findViewById(R.id.llistaimatges);
+
+        addImage = (FloatingActionButton) findViewById(R.id.fabimages);
+        addLocation = (FloatingActionButton) findViewById(R.id.fablocalization);
+        menuFloating = (FloatingActionButton) findViewById(R.id.faboptions);
+
+        linearLocation = (LinearLayout) findViewById(R.id.localizationLayout);
+        linearImage = (LinearLayout) findViewById(R.id.imagesLayout);
+
+        ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
+        ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
+
+        //addPos = (ImageButton) findViewById(R.id.btnAddPosition);
+        //deletePos = (ImageButton) findViewById(R.id.btnDeletePosition);
+        //buttonImage = (ImageButton) findViewById(R.id.btnAddImage);
 
         final Resources res = this.getResources();
 
@@ -324,9 +331,24 @@ public class CreateProposalActivity extends AppCompatActivity {
             }
         });
 
-        buttonImage.setOnClickListener(new View.OnClickListener(){
+        menuFloating.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+
+                if (linearLocation.getVisibility() == View.VISIBLE && linearImage.getVisibility() == View.VISIBLE) {
+                    linearLocation.setVisibility(View.GONE);
+                    linearImage.setVisibility(View.GONE);
+                }
+                else {
+                    linearLocation.setVisibility(View.VISIBLE);
+                    linearImage.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        addImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 final CharSequence[] options = {"Galería", "Cancelar"};
                 final AlertDialog.Builder builder = new AlertDialog.Builder(CreateProposalActivity.this);
                 builder.setTitle("Escoge una opción");
@@ -347,9 +369,9 @@ public class CreateProposalActivity extends AppCompatActivity {
             }
         });
 
-        addPos.setOnClickListener(new View.OnClickListener() {
+        addLocation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), AddLocationActivity.class);
                 i.putExtra("Title", Titulo.getText().toString());
                 i.putExtra("Description", Descripcion.getText().toString());
@@ -358,14 +380,13 @@ public class CreateProposalActivity extends AppCompatActivity {
             }
         });
 
-        deletePos.setOnClickListener(new View.OnClickListener() {
+        deletePosition.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 lat = 0;
                 lng = 0;
-                //txtPosAttached.setText("");
-                deletePos.setVisibility(View.GONE);
-                addPos.setVisibility(View.VISIBLE);
+                txtPosAttached.setVisibility(View.INVISIBLE);
+                deletePosition.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -384,16 +405,15 @@ public class CreateProposalActivity extends AppCompatActivity {
         if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng")){
             lat = getIntent().getDoubleExtra("lat",0);
             lng = getIntent().getDoubleExtra("lng",0);
-            //txtPosAttached.setText(R.string.posAttached);
-            deletePos.setVisibility(View.VISIBLE);
-            addPos.setVisibility(View.GONE);
+            txtPosAttached.setVisibility(View.VISIBLE);
+            deletePosition.setVisibility(View.VISIBLE);
         }
 
         else {
             lat = 0;
             lng = 0;
-            deletePos.setVisibility(View.GONE);
-            addPos.setVisibility(View.VISIBLE);
+            txtPosAttached.setVisibility(View.INVISIBLE);
+            deletePosition.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -453,7 +473,6 @@ public class CreateProposalActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         switch (requestCode) {
             case SELECT_PICTURE:
                 if(resultCode == RESULT_OK) {
@@ -465,10 +484,8 @@ public class CreateProposalActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                    //image.setImageBitmap(bitmap);
-                    ++numimatges;
-                    //nimatges.setText(numimatges);
-                    Log.i("asd", String.valueOf(numimatges));
+
+                    ImatgeItem i = new ImatgeItem();
 
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
@@ -476,8 +493,22 @@ public class CreateProposalActivity extends AppCompatActivity {
                     encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
                     ArrayImages.put(encoded);
+
+                    i.setImatge(encoded);
+                    i.setNumero(mImatgeItems.size()+1);
+
+                    afegirimatgellista(i);
                 }
                 break;
         }
+    }
+
+    private void afegirimatgellista(ImatgeItem im) {
+
+        mImatgeItems.add(im);
+
+        nimatges.setText(String.format(this.getResources().getString(R.string.numeroimatge), String.valueOf(mImatgeItems.size())));
+
+        limatges.setAdapter(new ImatgesAdapter(getApplicationContext(), mImatgeItems));
     }
 }

@@ -16,12 +16,11 @@
         android:layout_height="50dp"/>
 
     <TextView
-        android:id="@+id/descripciocomentari"
+        android:id="@+id/imatgenum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:layout_centerInParent="true"
-        android:paddingStart="15dp"
         android:layout_gravity="center_vertical"
         android:text="Imatge 1$1s"
         android:textSize="18dp"
@@ -33,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:id="@+id/borrarfoto"
         android:src="@drawable/if_image_remove_103594"/>
 
 </RelativeLayout>

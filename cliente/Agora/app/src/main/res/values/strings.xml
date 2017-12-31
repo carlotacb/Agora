@@ -81,6 +81,7 @@
     <string name="posAttached" translatable="false">Position attached</string>
     <string name="nuevapropuesta">Nueva Propuesta</string>
     <string name="spinnerhint">Seleccionar una Categoria...</string>
+    <string name="numeroimatge">%1$s imatges</string>
 
     <!-- Strings Edit Proposal -->
     <string name="editTitle">Title</string>
