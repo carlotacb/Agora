@@ -124,7 +124,7 @@ async function getProfilePicture(username) {
     }
 
     return collection().findOne(query, projection)
-        .then(user => user.image)
+        .then(user => user && user.image ? user.image : null)
 }
 
 module.exports = {

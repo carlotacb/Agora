@@ -35,7 +35,7 @@ async function getAllBy(reqQuery, reqSort) {
     const query = {}, sort = {}
 
     if (reqQuery.username) {
-        query.owner = reqQuery.username.toString()
+        query.owner = reqQuery.username.toString().toLowerCase()
     }
 
     if (reqQuery.category !== undefined) {
