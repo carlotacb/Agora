@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView buscartext;
     private AutoCompleteTextView searchUsers;
     private  ArrayAdapter<String> adapter;
-    private SearchView titleSearch;
 
     @SuppressLint("StaticFieldLeak")
     @Override
