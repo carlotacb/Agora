@@ -42,19 +42,12 @@ async function deleteComment({proposalId, author, commentId}) {
         throw new Error('Proposal not found')
     }
 
-    console.log(proposalId)
-    console.log(commentId)
-    console.log(author)
-
     const user = await userModule.get({username: author})
 
     if (!user) {
         throw new Error('User not found')
     }
 
-    console.log(proposalId)
-    console.log(commentId)
-    console.log(author)
     return db.deleteComment({
         proposalId,
         author,
@@ -82,6 +75,50 @@ async function editComment({proposalId, author, comment, commentId}) {
     })
 }
 
+async function voteProposal({proposalId, vote, username}) {
+    return await db.voteProposal({proposalId, vote, username})
+}
+
+async function addImage({proposalId, author, images}) {
+    const proposal = await db.getProposalById({id: proposalId})
+    if (!proposal) {
+        throw new Error('Proposal not found')
+    }
+
+    const user = await userModule.get({username: author})
+
+    if (!user) {
+        throw new Error('User not found')
+    }
+    else if (author !== proposal.owner) {
+        throw new Error('User is not the owner of the proposal')
+    }
+
+    return db.addImage({proposalId, images})
+}
+
+async function deleteImage({proposalId, author, imageId}) {
+    const proposal = await db.getProposalById({id: proposalId})
+    if (!proposal) {
+        throw new Error('Proposal not found')
+    }
+
+    const user = await userModule.get({username: author})
+
+    if (!user) {
+        throw new Error('User not found')
+    }
+    else if (author !== proposal.owner) {
+        throw new Error('User is not the owner of the proposal')
+    }
+
+        return db.deleteImage({
+        proposalId,
+        author,
+        imageId,
+    })
+}
+
 module.exports = {
     createProposal: createProposal,
     getAllProposals: db.getAllBy,
@@ -91,4 +128,7 @@ module.exports = {
     addComment: addComment,
     editComment: editComment,
     deleteComment: deleteComment,
+    voteProposal: voteProposal,
+    addImage: addImage,
+    deleteImage: deleteImage,
 }

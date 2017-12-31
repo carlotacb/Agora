@@ -16,14 +16,18 @@ async function create({username, title, content, location, zone, categoria}) {
         location: {
             lat: null,
             long: null
-        }
+        },
+        upvotesUsernames: [],
+        downvotesUsernames: []
     }
     if (location && location.lat && location.long) {
         object.location.lat = location.lat
         object.location.long = location.long
     }
 
-    return collection().insertOne(object)
+    await collection().insertOne(object)
+
+    return object
 }
 
 async function getAllBy(reqQuery, reqSort) {
@@ -31,7 +35,7 @@ async function getAllBy(reqQuery, reqSort) {
     const query = {}, sort = {}
 
     if (reqQuery.username) {
-        query.owner = reqQuery.username.toString()
+        query.owner = reqQuery.username.toString().toLowerCase()
     }
 
     if (reqQuery.category !== undefined) {
@@ -42,11 +46,19 @@ async function getAllBy(reqQuery, reqSort) {
         query.zone = parseInt(reqQuery.zone)
     }
 
+    if (reqQuery.favorites) {
+        query.id = {$in: reqQuery.favorites}
+    }
+
     if (sort.createdDateTime) {
         sort.createdDateTime = reqSort.createdDateTime
     }
 
-    const cursor = collection().find(query)
+    const projection = {
+        images: 0
+    }
+
+    const cursor = collection().find(query, projection)
 
     if (Object.keys(reqSort).length > 0) {
         return cursor.sort(sort).toArray()
@@ -156,8 +168,6 @@ async function deleteComment({proposalId, author, commentId}) {
         multi: true
     }
 
-    console.log(options)
-
     return collection().update(query, update, options)
         .then(response => response.value)
 }
@@ -181,6 +191,98 @@ async function editComment({proposalId, author, commentId, comment}) {
         .then(response => response.value)
 }
 
+async function addImage({proposalId, images}) {
+    const query = {
+        id: parseInt(proposalId),
+    }
+
+    for (let i = 0; i < images.length; ++i) {
+        images [i] = {
+            image: images[i],
+            id: await generateNextId('image')
+        }
+    }
+
+    const update = {
+        $pushAll: {
+            images
+        }
+    }
+
+    const options = {
+        upsert: false,
+        returnOriginal: false
+    }
+
+    return collection().findOneAndUpdate(query, update, options)
+        .then(response => response.value)
+}
+
+async function deleteImage({proposalId, username, imageId}) {
+    const query = {
+        id: parseInt(proposalId),
+        "images.id": parseInt(imageId)
+    }
+
+    const update = {
+        $pull: {
+            images: {
+                id: parseInt(imageId)
+            }
+        }
+    }
+
+    const options = {
+        multi: true
+    }
+
+    return collection().update(query, update, options)
+        .then(response => response.value)
+}
+
+async function voteProposal({proposalId, username, vote}) {
+    const allowedVoteValues = [-1, 0, 1]
+
+    if (!allowedVoteValues.includes(vote)) {
+        throw new TypeError(`Not allowed to vote with value ${vote}`)
+    }
+
+    const query = {
+        id: parseInt(proposalId),
+    }
+
+    let update
+
+    if (vote === 1) {
+        update = {
+            $addToSet: {
+                upvotesUsernames: username
+            },
+            $pullAll: {
+                downvotesUsernames: [username]
+            }
+        }
+    } else if (vote === 0) {
+        update = {
+            $pullAll: {
+                downvotesUsernames: [username],
+                upvotesUsernames: [username],
+            }
+        }
+    } else if (vote === -1) {
+        update = {
+            $addToSet: {
+                downvotesUsernames: username
+            },
+            $pullAll: {
+                upvotesUsernames: [username]
+            }
+        }
+    }
+
+    return collection().update(query, update)
+        .then(response => response.value)
+}
 
 module.exports = {
     create: create,
@@ -190,6 +292,9 @@ module.exports = {
     getProposalById: getProposalById,
     addComment: addComment,
     editComment: editComment,
+    voteProposal: voteProposal,
     deleteComment: deleteComment,
     delete: deleteProposal,
+    addImage: addImage,
+    deleteImage: deleteImage,
 }

@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import edu.upc.pes.agora.Presentation.MainActivity;
-import edu.upc.pes.agora.Presentation.ProposalsActivity;
+import edu.upc.pes.agora.Presentation.CreateProposalActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -27,8 +27,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 public class ProposalsScreenTest {
 
     @Rule
-    public ActivityTestRule<ProposalsActivity> mProposalsActivityTestRule =
-            new ActivityTestRule(ProposalsActivity.class);
+    public ActivityTestRule<CreateProposalActivity> mProposalsActivityTestRule =
+            new ActivityTestRule(CreateProposalActivity.class);
 
     @Test
     public void clickCreateButton_createsProposal() throws Exception {

@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -31,6 +33,7 @@ import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
 import edu.upc.pes.agora.Logic.Models.Proposal;
 import edu.upc.pes.agora.Logic.Adapters.RecyclerAdapter;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 public class MyProposalsActivity extends AppCompatActivity {
@@ -56,6 +59,8 @@ public class MyProposalsActivity extends AppCompatActivity {
 
         TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
         headerUserName.setText(Constants.Username);
+        ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
+        foto.setImageBitmap(Constants.fotoperfil);
 
         navigationView.getMenu().getItem(NavMenuListener.myproposals).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
@@ -73,11 +78,9 @@ public class MyProposalsActivity extends AppCompatActivity {
         myrecycler.setHasFixedSize(true); // cada item del RecyclerView te un Size en concret.
         myrecycler.setLayoutManager(new LinearLayoutManager(this));
 
-
         listProposals = new ArrayList<>();
 
-        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal?username=" + Constants.Username, this) {
-
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal?username=" + Constants.Username.toLowerCase(), this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
@@ -96,7 +99,7 @@ public class MyProposalsActivity extends AppCompatActivity {
 
                         if (ArrayProp != null) {
                             for (int i=0; i < ArrayProp.length(); i++){
-
+                                Proposal aux;
                                 Log.i("asd123", (ArrayProp.get(i).toString()));
 
                                 JSONObject jas = ArrayProp.getJSONObject(i);
@@ -106,11 +109,19 @@ public class MyProposalsActivity extends AppCompatActivity {
                                 Integer id = jas.getInt("id");
                                 String creada = jas.getString("createdDateTime");
                                 String ca = jas.getString("categoria");
+                                String createDate = Helpers.showDate(jas.getString("createdDateTime"));
+                                String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
+
+
+                                if(jas.has("location") && jas.getJSONObject("location").has("lat") && jas.getJSONObject("location").get("lat") != JSONObject.NULL ) {
+                                    Double lat = jas.getJSONObject("location").getDouble("lat");
+                                    Double lng = jas.getJSONObject("location").getDouble("long");
+                                    aux = new Proposal(id, title, description, owner, ca, lat, lng, createDate, updateDate);
+                                }else {
+                                    aux = new Proposal(id, title, description, owner, ca, createDate, updateDate);
+                                }
 
                                 Log.i("asdCreate", creada);
-
-                                Proposal aux = new Proposal(id, title, description, owner,ca);
-
                                 propostes.add(aux);
                             }
                         }
@@ -118,7 +129,7 @@ public class MyProposalsActivity extends AppCompatActivity {
                         radapter = new RecyclerAdapter(propostes, getApplicationContext());
                         myrecycler.setAdapter(radapter);
                     }
-                } catch (JSONException e) {
+                } catch (JSONException | ParseException e) {
                     e.printStackTrace();
                 }
             }

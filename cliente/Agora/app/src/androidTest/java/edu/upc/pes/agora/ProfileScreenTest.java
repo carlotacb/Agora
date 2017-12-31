@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import edu.upc.pes.agora.Presentation.EditProfileActivity;
-import edu.upc.pes.agora.Presentation.ProfileActivity;
+import edu.upc.pes.agora.Presentation.MyProfileActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -26,8 +26,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 public class ProfileScreenTest {
 
     @Rule
-    public ActivityTestRule<ProfileActivity> mProfileActivityTestRule =
-            new ActivityTestRule(ProfileActivity.class);
+    public ActivityTestRule<MyProfileActivity> mProfileActivityTestRule =
+            new ActivityTestRule(MyProfileActivity.class);
 
     @Test
     public void clickEditProfileButton_showsEditProfileActivity() throws Exception {

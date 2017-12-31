@@ -72,6 +72,61 @@ async function create({username, password, zone}) {
     return insertResult.ops[0]
 }
 
+async function setFavorite({id, user}){
+
+    const query = {
+        username: user.username,
+    }
+
+    const update = {
+        $push: {
+            favorites: parseInt(id)
+        }
+    }
+
+    const options = {
+        upsert: false,
+        returnOriginal: false
+    }
+
+    return collection().findOneAndUpdate(query, update, options)
+        .then(response => response.value)
+}
+
+async function unsetFavorite({id, user}){
+    console.log('unsetFavorite')
+    const query = {
+        username: user.username,
+    }
+
+    const update = {
+        $pull: {
+            favorites: parseInt(id)
+        }
+    }
+
+    const options = {
+        multi: true
+    }
+
+    return collection().update(query, update, options)
+            .then(response => response.value)
+}
+
+async function getProfilePicture(username) {
+    const query = {
+        username: username,
+    }
+
+    const projection = {
+        image: 1,
+        _id: 0
+    }
+
+    return collection().findOne(query, projection)
+        .then(user => user && user.image ? user.image : null)
+}
+
 module.exports = {
     get: get,
     getProfile: getProfile,
@@ -79,4 +134,7 @@ module.exports = {
     updatePassword: updatePassword,
     create: create,
     getByZone: getByZone,
+    setFavorite: setFavorite,
+    unsetFavorite: unsetFavorite,
+    getProfilePicture: getProfilePicture,
 }

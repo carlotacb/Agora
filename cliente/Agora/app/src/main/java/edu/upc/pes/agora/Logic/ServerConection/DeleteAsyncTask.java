@@ -16,6 +16,7 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Utils.Helpers;
 
 import static edu.upc.pes.agora.Logic.Utils.Constants.SH_PREF_NAME;
@@ -51,7 +52,7 @@ public class DeleteAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             client.setReadTimeout(35000);
             client.setRequestMethod("DELETE");
             client.setDoInput(true);
-            client.setRequestProperty("Authorization", tokenToSend);
+            client.setRequestProperty("Authorization", Constants.SH_PREF_NAME);
 
             JSONObject aux;
 

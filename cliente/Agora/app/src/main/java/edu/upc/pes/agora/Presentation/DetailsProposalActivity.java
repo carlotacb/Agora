@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,9 +17,11 @@ import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -46,10 +50,15 @@ public class DetailsProposalActivity extends AppCompatActivity {
     private TextView descripcio;
     private TextView owner;
     private TextView categoria;
+    private Button showPos;
+
+    private TextView date;
+
 
     private ListView llista_comentaris;
     private String newComent;
     private ImageView canviidioma, enrerre, compartir;
+    private ImageView image;
 
     private String mtit, mdesc, mowner, mcategorias, c;
 
@@ -69,6 +78,17 @@ public class DetailsProposalActivity extends AppCompatActivity {
         descripcio = (TextView) findViewById(R.id.descripcioproposta);
         categoria = (TextView) findViewById(R.id.categoriaproposta);
         owner = (TextView) findViewById(R.id.ownerproposal);
+        date = (TextView) findViewById(R.id.date);
+        image = (ImageView) findViewById(R.id.showImage);
+
+        date.setText(getIntent().getStringExtra("Creation"));
+
+        showPos = (Button) findViewById(R.id.showPositionButton);
+        if(getIntent().getDoubleExtra("lat",0) != 0){
+            showPos.setVisibility(View.VISIBLE);
+        }else{
+            showPos.setVisibility(View.INVISIBLE);
+        }
 
         llista_comentaris = (ListView) findViewById(R.id.listcommentaris);
 
@@ -144,7 +164,14 @@ public class DetailsProposalActivity extends AppCompatActivity {
         }
 
         final Intent idioma = new Intent(DetailsProposalActivity.this, DetailsProposalActivity.class);
-        Intent back = new Intent(DetailsProposalActivity.this, MainActivity.class);
+        Intent back = new Intent();
+        if (getIntent().hasExtra("otherUser") && getIntent().getBooleanExtra("otherUser", false) == true) {
+            back = new Intent(this, OtherUserProposalsActivity.class);
+            back.putExtra("username", getIntent().getStringExtra("Owner"));
+        } else {
+            back = new Intent(DetailsProposalActivity.this, MainActivity.class);
+        }
+
         idioma.putExtra("Title", mtit);
         idioma.putExtra("Description", mdesc);
         idioma.putExtra("id", idprop);
@@ -152,6 +179,15 @@ public class DetailsProposalActivity extends AppCompatActivity {
         idioma.putExtra("Categoria", c);
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        owner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), OtherUserActivity.class);
+                i.putExtra("username", owner.getText());
+                startActivity(i);
+            }
+        });
 
         canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
 
@@ -295,11 +331,29 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
             }
         });
+
+        showPos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), ShowLocationActivity.class);
+                if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng")) {
+                    i.putExtra("lat", getIntent().getDoubleExtra("lat",0));
+                    i.putExtra("lng", getIntent().getDoubleExtra("lng",0));
+                    startActivity(i);
+                }
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
-        Intent refresh = new Intent(this, MainActivity.class);
+        Intent refresh = new Intent();
+        if (getIntent().hasExtra("otherUser") && getIntent().getBooleanExtra("otherUser", false) == true){
+            refresh = new Intent(this, OtherUserProposalsActivity.class);
+            refresh.putExtra("username", getIntent().getStringExtra("Owner"));
+        }else {
+            refresh = new Intent(this, MainActivity.class);
+        }
         startActivity(refresh);
     }
 
@@ -350,6 +404,22 @@ public class DetailsProposalActivity extends AppCompatActivity {
                             }
                         }
                         llista_comentaris.setAdapter(new CommentAdapter(getApplicationContext(), comentarios));
+
+                        JSONArray ArrayImages = jsonObject.getJSONArray("images");
+
+                        if (ArrayImages != null) {
+                            for (int i=0; i < ArrayImages.length(); i++){
+
+                                JSONObject jas2 = ArrayImages.getJSONObject(i);
+                                String id = jas2.getString("id");
+                                String imageJ = jas2.getString("images");
+
+                                byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+
+                                //image.setImageBitmap(bitmap);
+                            }
+                        }
 
                     }
 

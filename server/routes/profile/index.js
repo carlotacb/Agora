@@ -5,7 +5,8 @@ const f = require('../util').wrapAsyncRouterFunction
 module.exports = app => {
 
     app.get('/api/profile', isAuthenticated, f(async function (req, res) {
-        const user = await userModule.getProfile({username: req.username})
+        const username = req.query.username ? req.query.username : req.username
+        const user = await userModule.getProfile({username: username})
         res.json(user)
     }))
 
@@ -39,5 +40,31 @@ module.exports = app => {
         const user = await userModule.getProfile({username: req.username})
         const users = await userModule.getByZone({user})
         res.json(users)
+    }))
+
+    app.get('/api/profile/achievements', isAuthenticated, f(async function (req, res) {
+        res.json({
+            achievements: [
+                'COM10',
+                'PROP100'
+            ]
+        })
+    }))
+
+    app.get('/api/user/:username', isAuthenticated, f(async function (req, res) {
+        const user = await userModule.getProfile({username: req.params.username})
+
+        res.json({
+            username: user.username,
+            cpCode: user.cpCode,
+            realname: user.realname,
+            neighborhood: user.neighborhood,
+            bdate: new Date(user.bdate),
+            sex: user.sex,
+            description: user.description,
+            image: user.image,
+            updatedDateTime: new Date(user.updatedDateTime),
+            zone: parseInt(user.zone),
+        })
     }))
 }

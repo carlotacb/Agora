@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +16,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -31,6 +34,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -40,9 +44,11 @@ import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
 import edu.upc.pes.agora.Logic.Adapters.ProposalAdapter;
 import edu.upc.pes.agora.Logic.Models.Proposal;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 public class MainActivity extends AppCompatActivity {
+
     private FloatingActionButton fab;
     private Configuration config = new Configuration();
     private Locale locale;
@@ -59,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -74,6 +81,44 @@ public class MainActivity extends AppCompatActivity {
 
         TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
         headerUserName.setText(Constants.Username);
+        ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
+
+        if (Constants.fotoperfil == null) {
+            JSONObject Jason = new JSONObject();
+            new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
+
+                @Override
+                protected void onPostExecute(JSONObject jsonObject) {
+                    try {
+                        if (jsonObject.has("error")) {
+                            String error = jsonObject.get("error").toString();
+                            Log.i("asdProfile", "Error");
+
+                            Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+
+                        else {
+
+                            Log.i("asdProfile", (jsonObject.toString()));
+
+                            if (jsonObject.has("image")) {
+                                String imageJ = jsonObject.getString("image");
+
+                                byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+
+                                Constants.fotoperfil = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.execute(Jason);
+        }
+
+        foto.setImageBitmap(Constants.fotoperfil);
 
         navigationView.getMenu().getItem(NavMenuListener.homneButton).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
@@ -84,6 +129,13 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        llista_propostes = (ListView) findViewById(R.id.list);
+        filterSpinner = (Spinner) findViewById(R.id.filterSpinnerView);
+        searchSpinner = (Spinner) findViewById(R.id.searchSpinnerView);
+        buscartext = (TextView) findViewById(R.id.buscar);
+
+        final Resources res = this.getResources();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,8 +143,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        llista_propostes = (ListView) findViewById(R.id.list);
 
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
@@ -111,12 +161,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ferGetAsyncTask();
-
-        filterSpinner = (Spinner) findViewById(R.id.filterSpinnerView);
-        searchSpinner = (Spinner) findViewById(R.id.searchSpinnerView);
-        buscartext = (TextView) findViewById(R.id.buscar);
-
-        final Resources res = this.getResources();
 
         opcions.add(res.getString(R.string.tot));
         opcions.add(res.getString(R.string.categ));
@@ -258,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
                                                 if (ArrayProp != null) {
                                                     for (int i=0; i < ArrayProp.length(); i++){
 
-                                                        Log.i("asd123", (ArrayProp.get(i).toString()));
+//                                                        Log.i("asd123", (ArrayProp.get(i).toString()));
 
                                                         JSONObject jas = ArrayProp.getJSONObject(i);
                                                         String title = jas.getString("title");
@@ -267,7 +311,14 @@ public class MainActivity extends AppCompatActivity {
                                                         Integer id = jas.getInt("id");
                                                         String ca = jas.getString("categoria");
 
-                                                        Proposal aux = new Proposal(id, title, description, owner, ca);
+                                                        Double lat = jas.getJSONObject("location").getDouble("lat");
+                                                        Double lng = jas.getJSONObject("location").getDouble("long");
+
+                                                        String createDate = Helpers.showDate(jas.getString("createdDateTime"));
+                                                        String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
+
+                                                        Proposal aux = new Proposal(id, title, description, owner, ca, lat, lng, createDate, updateDate);
+
 
                                                         propostes.add(aux);
                                                     }
@@ -275,6 +326,8 @@ public class MainActivity extends AppCompatActivity {
                                                 llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
                                             }
                                         } catch (JSONException e ) {
+                                            e.printStackTrace();
+                                        } catch (ParseException e) {
                                             e.printStackTrace();
                                         }
                                     }
@@ -296,7 +349,6 @@ public class MainActivity extends AppCompatActivity {
 
                         buscartext.setVisibility(View.VISIBLE);
                         searchSpinner.setVisibility(View.VISIBLE);
-
 
                         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile/comunity", mainContext) {
 
@@ -382,23 +434,23 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_search_menu, menu);
         inflater.inflate(R.menu.main, menu);
-
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
         MenuItem bandera = menu.findItem(R.id.bandera);
-        if(Constants.Idioma.equals("es")){
-            bandera.setIcon(R.drawable.spa);
+        switch (Constants.Idioma) {
+            case "es":
+                bandera.setIcon(R.drawable.spa);
+                break;
+            case "en":
+                bandera.setIcon(R.drawable.ing);
+                break;
+            case "ca":
+                bandera.setIcon(R.drawable.rep);
+                break;
         }
-        else if(Constants.Idioma.equals("en")){
-            bandera.setIcon(R.drawable.ing);
-        }
-        else if(Constants.Idioma.equals("ca")){
-            bandera.setIcon(R.drawable.rep);
-        }
-
         super.onPrepareOptionsMenu(menu);
         return true;
     }
@@ -411,34 +463,18 @@ public class MainActivity extends AppCompatActivity {
         Intent refresh = new Intent(this, MainActivity.class);
         refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.men_castella) {
-            locale = new Locale("es");
-            config.locale = locale;
-            Constants.Idioma = "es";
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-        }
+        if (id == R.id.men_castella) Constants.Idioma = "es";
 
-        else if (id == R.id.men_catala){
-            locale = new Locale("ca");
-            config.locale = locale;
-            Constants.Idioma = "ca";
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
+        else if (id == R.id.men_catala) Constants.Idioma = "ca";
 
-        }
+        else if (id == R.id.men_angles) Constants.Idioma = "en";
 
-        else if (id == R.id.men_angles){
-            locale = new Locale("en");
-            config.locale = locale;
-            Constants.Idioma = "en";
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-        }
+        locale = new Locale(Constants.Idioma);
+        config.locale = locale;
+        getResources().updateConfiguration(config, null);
+        startActivity(refresh);
+        finish();
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -466,25 +502,45 @@ public class MainActivity extends AppCompatActivity {
                         propostes = new ArrayList<>();
 
                         if (ArrayProp != null) {
-                            for (int i=0; i < ArrayProp.length(); i++){
+
+                            for (int i = 0; i < ArrayProp.length(); i++){
+                                Proposal aux;
 
                                 Log.i("asd123", (ArrayProp.get(i).toString()));
 
                                 JSONObject jas = ArrayProp.getJSONObject(i);
+                                JSONArray comentaris = jas.getJSONArray("comments");
+                                //Log.i("asd1234", String.valueOf(comentaris.length()));
                                 String title = jas.getString("title");
                                 String owner = jas.getString("owner");
                                 String description = jas.getString("content");
                                 Integer id = jas.getInt("id");
                                 String ca = jas.getString("categoria");
+                                String createDate = Helpers.showDate(jas.getString("createdDateTime"));
+                                String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
 
-                                Proposal aux = new Proposal(id, title, description, owner, ca);
+
+                                if(jas.has("location") && jas.getJSONObject("location").has("lat") && jas.getJSONObject("location").get("lat") != JSONObject.NULL ) {
+                                    Double lat = jas.getJSONObject("location").getDouble("lat");
+                                    Double lng = jas.getJSONObject("location").getDouble("long");
+                                    aux = new Proposal(id, title, description, owner, ca, lat, lng, createDate, updateDate);
+                                } else {
+                                     aux = new Proposal(id, title, description, owner, ca, createDate, updateDate);
+                                }
+
+                                Boolean fav = jas.getBoolean("favorited");
+                                Integer numcoments = comentaris.length();
+
+                                aux.setNumerocomentarios(numcoments);
+                                aux.setFavorite(fav);
+
 
                                 propostes.add(aux);
                             }
                         }
                         llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
                     }
-                } catch (JSONException e ) {
+                } catch (JSONException | ParseException e ) {
                     e.printStackTrace();
                 }
             }

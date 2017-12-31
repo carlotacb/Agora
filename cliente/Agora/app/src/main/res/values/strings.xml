@@ -34,6 +34,7 @@
     <string name="home">Home</string>
     <string name="novaproposta">Nova Proposta</string>
     <string name="lesmevespropostes">Les Meves Propostes</string>
+    <string name="favorites">Favorites</string>
     <string name="miperfil">About me</string>
     <string name="perfil">My Profile</string>
     <string name="editarp">Edit Profile</string>
@@ -55,10 +56,9 @@
     <!-- Página principal -->
     <string name="title_activity_main">Main Page</string>
     <string name="creadopor">"Creado por "</string>
-    <string name="mesinfo">MAS INFORMACION</string>
-    <string name="filtro">Filter by: </string>
-    <string name="buscar">Find: </string>
-
+    <string name="mesinfo">VER MAS</string>
+    <string name="filtro">Filter by:</string>
+    <string name="buscar">Find:</string>
     <string name="tot">Tot</string>
     <string name="user">Per Usuari</string>
     <string name="categ">Per Categories</string>
@@ -80,6 +80,7 @@
     <string name="posAttached" translatable="false">Position attached</string>
     <string name="nuevapropuesta">Nueva Propuesta</string>
     <string name="spinnerhint">Seleccionar una Categoria...</string>
+    <string name="numeroimatge">%1$s imatges</string>
 
     <!-- Strings Edit Proposal -->
     <string name="editTitle">Title</string>
@@ -89,6 +90,7 @@
     <string name="savedChanges">Saved changes to proposal</string>
     <string name="errorEdit">Error editing proposal</string>
     <string name="editar">Editar</string>
+    <string name="editPosition">Edit Position</string>
 
 
     <!-- Strings to Delete Proposal -->
@@ -108,10 +110,11 @@
     <string name="sexo2">Sexo:</string>
 
     <!-- Strings per Detalls de la proposta -->
-    <string name="determinant"> el </string>
+    <string name="determinant">el</string>
     <string name="nou">Nuevo Comentario</string>
     <string name="mensajenc">Introducir el nuevo comentario para la propuesta %1$s</string>
     <string name="añadir">añadir</string>
+    <string name="showPosition">Show Position</string>
     <string name="mensajeliminar">¿Está seguro que desea eliminar el comentario "%1$s"?</string>
     <string name="mensajeditar">Realiza los cambios pertinentes en el comentario</string>
     <string name="elimiarcomentario">Eliminar Comentario</string>
@@ -158,7 +161,6 @@
         <item>@string/str_ca</item>
     </string-array>
 
-
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <string name="title_activity_my_propuestas">MyPropuestasActivity</string>
@@ -166,9 +168,14 @@
     <string name="title_activity_edit_profile">EditProfileActivity</string>
     <string name="title_activity_edit_proposal">EditProposalActivity</string>
 
-    <string name="title_activity_details_proposal" translatable="false">DetailsProposalActivity</string>
+    <string name="title_activity_details_proposal" translatable="false">DetailsProposalActivity
+    </string>
 
     <string name="title_activity_add_location" translatable="false">Map</string>
+    <string name="title_activity_my_favorites">MyFavorites</string>
 
+    <string name="title_activity_show_location">Map</string>
+    <string name="title_activity_other_user">OtherUserActivity</string>
+    <string name="title_activity_fill_profile">FillProfileActivity</string>
 
 </resources>

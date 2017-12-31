@@ -3,17 +3,21 @@ package edu.upc.pes.agora.Presentation;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +33,7 @@ import edu.upc.pes.agora.Logic.Listeners.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
 import edu.upc.pes.agora.Logic.Models.Profile;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 public class MyProfileActivity extends AppCompatActivity {
@@ -39,9 +44,11 @@ public class MyProfileActivity extends AppCompatActivity {
     private ImageButton editar;
 
     private TextView username, name, CP, Born, neigh, sex;
+    private ImageView image;
     private Profile p = new Profile();
 
     private String usernameJ, neighJ, nameJ, BornJ, sexJ;
+    private String imageJ;
     private Integer CPJ;
 
     @SuppressLint("StaticFieldLeak")
@@ -58,6 +65,8 @@ public class MyProfileActivity extends AppCompatActivity {
 
         TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
         headerUserName.setText(Constants.Username);
+        ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
+        foto.setImageBitmap(Constants.fotoperfil);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_profile);
@@ -76,6 +85,7 @@ public class MyProfileActivity extends AppCompatActivity {
         CP = (TextView) findViewById(R.id.codipostal);
         Born = (TextView) findViewById(R.id.born);
         sex = (TextView) findViewById(R.id.sexo);
+        image = (ImageView) findViewById(R.id.setImage);
 
         @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         final String dateInString = "07/06/2013";
@@ -130,8 +140,8 @@ public class MyProfileActivity extends AppCompatActivity {
 
                         if(jsonObject.has("bdate")) {
                             BornJ = jsonObject.getString("bdate");
-                            Born.setText(BornJ);
-                            p.setBorn(BornJ);
+                            Born.setText(Helpers.showDate(BornJ));
+                            p.setBorn(Helpers.showDate(BornJ));
                         }
                         else {
                             Born.setText("");
@@ -147,6 +157,15 @@ public class MyProfileActivity extends AppCompatActivity {
                         }
                         else {
                             sex.setText("");
+                        }
+
+                        if (jsonObject.has("image")) {
+                            imageJ = jsonObject.getString("image");
+
+                            byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+
+                            image.setImageBitmap(bitmap);
                         }
                     }
 

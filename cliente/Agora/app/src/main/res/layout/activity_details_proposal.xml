@@ -125,10 +125,18 @@
             android:text="descripcio"/>
 
 
+
+
         <LinearLayout android:layout_width="wrap_content"
                       android:layout_alignParentRight="true"
                       android:layout_below="@+id/descripcioproposta"
                       android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/showPositionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/showPosition" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -159,6 +167,12 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_thumb_up"
                 android:id="@+id/unvote"/>
+
+            <ImageView
+                android:id="@+id/showImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@mipmap/ic_person"/>
 
         </LinearLayout>
 

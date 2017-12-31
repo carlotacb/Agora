@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,6 +15,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import edu.upc.pes.agora.Logic.Utils.Constants;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.Presentation.MainActivity;
 
 import static edu.upc.pes.agora.Logic.Utils.Constants.SH_PREF_NAME;
@@ -35,11 +38,12 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     }
 
     protected JSONObject doInBackground(final JSONObject... params) {
-        prefs = MainActivity.getContextOfApplication().getSharedPreferences(SH_PREF_NAME, Context.MODE_PRIVATE);
+
+        /*prefs = MainActivity.getContextOfApplication().getSharedPreferences(SH_PREF_NAME, Context.MODE_PRIVATE);
         String tokenToSend = "";
         if (prefs.contains("token")){
             tokenToSend = prefs.getString("token","");
-        }
+        }*/
 
         try {
             //Open connection to server
@@ -49,7 +53,7 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             client.setRequestMethod("POST");
             client.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
             client.setRequestProperty("Accept","application/json");
-            client.setRequestProperty("Authorization",tokenToSend);
+            client.setRequestProperty("Authorization", Constants.SH_PREF_NAME);
             client.setDoInput(true);
             client.setDoOutput(true);
 
@@ -68,10 +72,12 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             //return success=true and token if connection is successful
             try {
                 Log.i("asdPostAsyncTask", Integer.toString(client.getResponseCode()));
+                String reponsie = Helpers.iStreamToString(client.getInputStream());
+                Log.i("resposta", reponsie);
 
                 if (client.getResponseCode() == 200) {
                     response.put("success",true);
-                    //response.put("token", token);
+                    response.put("ArrayResponse", new JSONObject(reponsie));
                 }
                 else if(client.getResponseCode() == 400){
                     response.put("success", false);
@@ -90,7 +96,7 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
 
 
             client.disconnect();
-            Log.i("asdGetAsyncTask", response.toString());
+            Log.i("asdPostAsyncTask", response.toString());
             return response;
 
 
