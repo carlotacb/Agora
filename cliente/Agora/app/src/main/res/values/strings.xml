@@ -161,7 +161,6 @@
         <item>@string/str_ca</item>
     </string-array>
 
-
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <string name="title_activity_my_propuestas">MyPropuestasActivity</string>
@@ -176,6 +175,6 @@
 
     <string name="title_activity_show_location">Map</string>
     <string name="title_activity_other_user">OtherUserActivity</string>
-
+    <string name="title_activity_fill_profile">FillProfileActivity</string>
 
 </resources>

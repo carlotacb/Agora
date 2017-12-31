@@ -33,6 +33,7 @@ import edu.upc.pes.agora.Logic.Listeners.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
 import edu.upc.pes.agora.Logic.Models.Profile;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 public class MyProfileActivity extends AppCompatActivity {

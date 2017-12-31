@@ -42,7 +42,8 @@
         <activity
             android:name=".Presentation.MainActivity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"/>
+
         <activity
             android:name=".Presentation.MyProposalsActivity"
             android:label="@string/title_activity_my_propuestas"
@@ -58,12 +59,13 @@
         <activity
             android:name=".Presentation.EditProposalActivity"
             android:label="@string/title_activity_edit_proposal"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name=".Presentation.DetailsProposalActivity"
             android:label="@string/title_activity_details_proposal"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"/>
+
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -92,6 +94,11 @@
         <activity
             android:name=".Presentation.OtherUserActivity"
             android:label="@string/title_activity_other_user"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".Presentation.OtherUserProposalsActivity"/>
+        <activity
+            android:name=".Presentation.FillProfileActivity"
+            android:label="@string/title_activity_fill_profile"
             android:theme="@style/AppTheme">
 
         </activity>

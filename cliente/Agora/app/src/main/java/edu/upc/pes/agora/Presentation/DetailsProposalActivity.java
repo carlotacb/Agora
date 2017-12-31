@@ -152,7 +152,14 @@ public class DetailsProposalActivity extends AppCompatActivity {
         }
 
         final Intent idioma = new Intent(DetailsProposalActivity.this, DetailsProposalActivity.class);
-        Intent back = new Intent(DetailsProposalActivity.this, MainActivity.class);
+        Intent back = new Intent();
+        if (getIntent().hasExtra("otherUser") && getIntent().getBooleanExtra("otherUser", false) == true) {
+            back = new Intent(this, OtherUserProposalsActivity.class);
+            back.putExtra("username", getIntent().getStringExtra("Owner"));
+        }else {
+            back = new Intent(DetailsProposalActivity.this, MainActivity.class);
+        }
+
         idioma.putExtra("Title", mtit);
         idioma.putExtra("Description", mdesc);
         idioma.putExtra("id", idprop);
@@ -327,7 +334,13 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent refresh = new Intent(this, MainActivity.class);
+        Intent refresh = new Intent();
+        if (getIntent().hasExtra("otherUser") && getIntent().getBooleanExtra("otherUser", false) == true){
+            refresh = new Intent(this, OtherUserProposalsActivity.class);
+            refresh.putExtra("username", getIntent().getStringExtra("Owner"));
+        }else {
+            refresh = new Intent(this, MainActivity.class);
+        }
         startActivity(refresh);
     }
 

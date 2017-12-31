@@ -9,7 +9,6 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -28,16 +27,14 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
 import edu.upc.pes.agora.Logic.Models.Profile;
+import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.R;
 
 public class EditProfileActivity extends AppCompatActivity {
@@ -115,8 +112,8 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
         if (i.hasExtra("cp")) {
-            Integer p = i.getIntExtra("cp", 0);
-            CP.setText(p.toString());
+            Integer cp = i.getIntExtra("cp", 0);
+            CP.setText(cp.toString());
         }
         if (i.hasExtra("barrio")) {
             Barrio.setText(i.getStringExtra("barrio"));
@@ -353,6 +350,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         }
                     }
                     image.setImageBitmap(bitmap);
+                    Constants.fotoperfil = bitmap;
 
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
