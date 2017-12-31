@@ -1,29 +1,38 @@
 package edu.upc.pes.agora.Logic.Adapters;
 
 import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
 import edu.upc.pes.agora.Logic.Models.Proposal;
+import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
+import edu.upc.pes.agora.Presentation.CreateProposalActivity;
 import edu.upc.pes.agora.Presentation.DetailsProposalActivity;
+import edu.upc.pes.agora.Presentation.MainActivity;
 import edu.upc.pes.agora.R;
 
-/**
- * Created by carlo on 25/11/2017.
- */
 
 public class ProposalAdapter extends BaseAdapter {
 
     private List<Proposal> listProposals;
     private Context context;
+    private Boolean votado = false;
+    private Boolean unvote = false;
+    private Boolean favo;
 
     public ProposalAdapter(List<Proposal> listProposals, Context context) {
         this.listProposals = listProposals;
@@ -57,22 +66,53 @@ public class ProposalAdapter extends BaseAdapter {
         TextView owner = (TextView) convertView.findViewById(R.id.owner);
         TextView moreinfo = (TextView) convertView.findViewById(R.id.btnLernMore);
         TextView categoria = (TextView) convertView.findViewById(R.id.categoriaproposal);
+        TextView numerocomentarios = (TextView) convertView.findViewById(R.id.numerocomentaris);
+        final ImageView likeimagen = (ImageView) convertView.findViewById(R.id.like);
+        final ImageView dislikeimagen = (ImageView) convertView.findViewById(R.id.dislike);
+        final ImageView favorite = (ImageView) convertView.findViewById(R.id.fav);
 
         final Proposal proposal = listProposals.get(position);
+
+        favo = proposal.getFavorite();
+
+        if (favo){
+            favorite.setImageResource(R.drawable.ic_favorite_red);
+        } else {
+            favorite.setImageResource(R.drawable.ic_favorite);
+        }
 
         titol.setText(proposal.getTitle());
         descripcio.setText(proposal.getDescription());
         owner.setText(proposal.getOwner());
+        numerocomentarios.setText(String.valueOf(proposal.getNumerocomentarios()));
         String c = proposal.getCategoria();
 
-        if (c.equals("C")) c = context.getString(R.string.cultura);
-        else if (c.equals("D")) c = context.getString(R.string.deportes);
-        else if (c.equals("O")) c = context.getString(R.string.ocio);
-        else if (c.equals("M")) c = context.getString(R.string.mantenimiento);
-        else if (c.equals("E")) c = context.getString(R.string.eventos);
-        else if (c.equals("T")) c = context.getString(R.string.turismo);
-        else if (c.equals("Q")) c = context.getString(R.string.quejas);
-        else if (c.equals("S")) c = context.getString(R.string.soporte);
+        switch (c) {
+            case "C":
+                c = context.getString(R.string.cultura);
+                break;
+            case "D":
+                c = context.getString(R.string.deportes);
+                break;
+            case "O":
+                c = context.getString(R.string.ocio);
+                break;
+            case "M":
+                c = context.getString(R.string.mantenimiento);
+                break;
+            case "E":
+                c = context.getString(R.string.eventos);
+                break;
+            case "T":
+                c = context.getString(R.string.turismo);
+                break;
+            case "Q":
+                c = context.getString(R.string.quejas);
+                break;
+            case "S":
+                c = context.getString(R.string.soporte);
+                break;
+        }
 
         categoria.setText(c);
 
@@ -88,6 +128,9 @@ public class ProposalAdapter extends BaseAdapter {
                 myIntent.putExtra("Categoria", proposal.getCategoria());
                 myIntent.putExtra("lat", proposal.getLat());
                 myIntent.putExtra("lng", proposal.getLng());
+                myIntent.putExtra("Creation", proposal.getCreation());
+                myIntent.putExtra("Update", proposal.getUpdate());
+
                 v.getContext().startActivity(myIntent);
 
                 Log.i("asd", "clica");
@@ -99,6 +142,103 @@ public class ProposalAdapter extends BaseAdapter {
             public void onClick(View v) {
                 Toast.makeText(v.getContext(), "Anirem al usuari " + proposal.getOwner(), Toast.LENGTH_SHORT).show();
                 //TODO: user DetailsProposalActivity owner.onClick to show Profile
+            }
+        });
+
+        likeimagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(votado) {
+                    likeimagen.setImageResource(R.drawable.ic_like_24);
+                    votado = false;
+                }
+                else {
+                    likeimagen.setImageResource(R.drawable.ic_like_blue_24);
+                    votado = true;
+                }
+                Log.i("asd", "clica");
+
+            }
+
+        });
+
+        dislikeimagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (unvote){
+                    dislikeimagen.setImageResource(R.drawable.ic_dislike_24);
+                    unvote = false;
+                } else {
+                    dislikeimagen.setImageResource(R.drawable.ic_dislike_blue_24);
+                    unvote = true;
+                }
+            }
+        });
+
+
+        final JSONObject values = new JSONObject();
+
+
+        favorite.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StaticFieldLeak")
+            @Override
+            public void onClick(View v) {
+
+                if (proposal.getFavorite()){
+                    favorite.setImageResource(R.drawable.ic_favorite);
+                    proposal.setFavorite(false);
+                    try {
+                        values.put("favorited", false);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    favorite.setImageResource(R.drawable.ic_favorite_red);
+                    proposal.setFavorite(true);
+                    try {
+                        values.put("favorited", true);
+                        //favorite.setImageResource(R.drawable.ic_favorite_red);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + proposal.getId() + "/favorite", context) {
+                    @Override
+                    protected void onPostExecute(JSONObject resObject) {
+                        Boolean result = false;
+
+                        try {
+                            if (resObject.has("success")) {
+                                result = resObject.getBoolean("success");
+                            }
+
+                            if (!result && resObject.has("errorMessage")) {
+                                Log.i("asdCreacion", "Error");
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        if (result) {
+                            /*if (favo) {
+                                favorite.setImageResource(R.drawable.ic_favorite);
+                                favo = false;
+                            } else {
+                                favorite.setImageResource(R.drawable.ic_favorite_red);
+                                favo = true;
+                            }*/
+                            Log.i("asdCreacion", "OKEY");
+                        }
+
+                        else {
+                            Log.i("asdCreacion", "reset");
+                        }
+                    }
+                }.execute(values);
             }
         });
 

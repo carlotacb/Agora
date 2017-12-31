@@ -15,6 +15,7 @@ import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
 import edu.upc.pes.agora.Presentation.LoginActivity;
 import edu.upc.pes.agora.Presentation.MainActivity;
+import edu.upc.pes.agora.Presentation.MyFavoritesActivity;
 import edu.upc.pes.agora.Presentation.MyProposalsActivity;
 import edu.upc.pes.agora.Presentation.MyProfileActivity;
 import edu.upc.pes.agora.R;
@@ -26,7 +27,8 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
 
     public static final int homneButton = 0;
     public static final int myproposals = 1;
-    public static final int profile = 2;
+    public static final int favorite = 2;
+    public static final int profile = 3;
 
     public NavMenuListener(Context context, DrawerLayout navDrawer) {
         this.context = context;
@@ -60,6 +62,14 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
             // Va a la pantalla de MyProposals
             if (!context.getClass().equals(MyProposalsActivity.class)) {
                 Intent myIntent = new Intent(context, MyProposalsActivity.class);
+                context.startActivity(myIntent);
+            }
+            navDrawer.closeDrawers();
+
+        } else if (id == R.id.nav_favorites) {
+            // Va a la pantalla de Favorites
+            if (!context.getClass().equals(MyFavoritesActivity.class)) {
+                Intent myIntent = new Intent(context, MyFavoritesActivity.class);
                 context.startActivity(myIntent);
             }
             navDrawer.closeDrawers();

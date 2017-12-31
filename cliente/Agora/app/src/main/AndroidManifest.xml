@@ -20,7 +20,6 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -34,6 +33,7 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+
 
             </intent-filter>
         </activity>
@@ -76,9 +76,7 @@
         -->
         <activity
             android:name=".Presentation.AddLocationActivity"
-
             android:label="@string/title_activity_add_location" />
-
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -103,6 +101,11 @@
 
         </activity>
 
+        <activity
+            android:name=".Presentation.MyFavoritesActivity"
+            android:label="@string/title_activity_my_favorites"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

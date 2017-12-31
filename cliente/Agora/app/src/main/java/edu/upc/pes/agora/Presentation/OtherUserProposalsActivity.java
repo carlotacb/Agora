@@ -1,5 +1,6 @@
 package edu.upc.pes.agora.Presentation;
 
+import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import edu.upc.pes.agora.Logic.Adapters.RecyclerAdapter;
 import edu.upc.pes.agora.Logic.Models.Proposal;
 import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Utils.Constants;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 public class OtherUserProposalsActivity extends AppCompatActivity {
@@ -27,6 +29,7 @@ public class OtherUserProposalsActivity extends AppCompatActivity {
     private JSONObject Jason = new JSONObject();
     private ArrayList<Proposal> propostes;
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +66,10 @@ public class OtherUserProposalsActivity extends AppCompatActivity {
                                 String description = jas.getString("content");
                                 Integer id = jas.getInt("id");
                                 String ca = jas.getString("categoria");
+                                String createDate = Helpers.showDate(jas.getString("createdDateTime"));
+                                String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
 
-                                Proposal aux = new Proposal(id, title, description, owner, ca);
+                                Proposal aux = new Proposal(id, title, description, owner, ca, createDate, updateDate);
 
                                 propostes.add(aux);
                             }

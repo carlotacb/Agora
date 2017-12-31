@@ -138,8 +138,8 @@ public class MyProfileActivity extends AppCompatActivity {
 
                         if(jsonObject.has("bdate")) {
                             BornJ = jsonObject.getString("bdate");
-                            Born.setText(BornJ);
-                            p.setBorn(BornJ);
+                            Born.setText(Helpers.showDate(BornJ));
+                            p.setBorn(Helpers.showDate(BornJ));
                         }
                         else {
                             Born.setText("");

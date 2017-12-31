@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,9 +51,13 @@ public class DetailsProposalActivity extends AppCompatActivity {
     private TextView categoria;
     private Button showPos;
 
+    private TextView date;
+
+
     private ListView llista_comentaris;
     private String newComent;
     private ImageView canviidioma, enrerre, compartir;
+    private ImageView image;
 
     private String mtit, mdesc, mowner, mcategorias, c;
 
@@ -70,6 +77,10 @@ public class DetailsProposalActivity extends AppCompatActivity {
         descripcio = (TextView) findViewById(R.id.descripcioproposta);
         categoria = (TextView) findViewById(R.id.categoriaproposta);
         owner = (TextView) findViewById(R.id.ownerproposal);
+        date = (TextView) findViewById(R.id.date);
+        image = (ImageView) findViewById(R.id.showImage);
+
+        date.setText(getIntent().getStringExtra("Creation"));
 
         showPos = (Button) findViewById(R.id.showPositionButton);
         if(getIntent().getDoubleExtra("lat",0) != 0){
@@ -388,6 +399,22 @@ public class DetailsProposalActivity extends AppCompatActivity {
                             }
                         }
                         llista_comentaris.setAdapter(new CommentAdapter(getApplicationContext(), comentarios));
+
+                        JSONArray ArrayImages = jsonObject.getJSONArray("images");
+
+                        if (ArrayImages != null) {
+                            for (int i=0; i < ArrayImages.length(); i++){
+
+                                JSONObject jas2 = ArrayImages.getJSONObject(i);
+                                String id = jas2.getString("id");
+                                String imageJ = jas2.getString("images");
+
+                                byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+
+                                //image.setImageBitmap(bitmap);
+                            }
+                        }
 
                     }
 

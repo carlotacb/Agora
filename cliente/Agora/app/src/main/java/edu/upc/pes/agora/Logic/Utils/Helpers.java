@@ -30,16 +30,6 @@ import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 
 public class Helpers {
 
-    //private static final String SH_PREF_NAME = "SavedToken";
-
-    /*public static ArrayList<String> getPersonalData(Context context){
-        ArrayList<String> data = new ArrayList<>();
-        SharedPreferences prefs = context.getSharedPreferences(SH_PREF_NAME, Context.MODE_PRIVATE);
-        data.add(prefs.getString("name", null));
-        data.add(prefs.getString("password", null));
-        return data;
-    }*/
-
     public static String iStreamToString(InputStream is1) {
         BufferedReader rd = new BufferedReader(new InputStreamReader(is1), 4096);
         String line;
@@ -56,6 +46,7 @@ public class Helpers {
     }
 
     public static void logout(Context context) {
+
         /*SharedPreferences.Editor editor = context.getSharedPreferences(Constants.SH_PREF_NAME, Context.MODE_PRIVATE).edit();
         editor.remove("token");
         editor.apply();*/
@@ -89,6 +80,16 @@ public class Helpers {
     public static String showDate(JSONObject d){
         Log.i("date","");
         return "";
+    }
+
+
+    public static String showDate(String d) {
+        String[] res = d.split("T")[0].split("-");
+        if (res.length == 3) {
+            return "" + res[2] + "/" + res[1] + "/" + res[0];
+        }else{
+            return "dd/MM/yyyy";
+        }
     }
 
 }

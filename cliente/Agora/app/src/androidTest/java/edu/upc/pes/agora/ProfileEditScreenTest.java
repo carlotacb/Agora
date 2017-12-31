@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import edu.upc.pes.agora.Presentation.EditProfileActivity;
-import edu.upc.pes.agora.Presentation.ProfileActivity;
+import edu.upc.pes.agora.Presentation.MyProfileActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -62,7 +62,7 @@ public class ProfileEditScreenTest {
         onView(withId(R.id.barrio)).check(matches(withText("Centre")));
         //onView(withId(R.id.born)).check(matches(withText("19/04/1994")));
 
-        intended(hasComponent(ProfileActivity.class.getName()));
+        intended(hasComponent(MyProfileActivity.class.getName()));
 
         Intents.release();
     }
@@ -83,7 +83,7 @@ public class ProfileEditScreenTest {
         onView(withId(R.id.barrio)).check(matches(withText("Centre")));
         //onView(withId(R.id.born)).check(matches(withText("19/04/1994")));
 
-        intended(hasComponent(ProfileActivity.class.getName()));
+        intended(hasComponent(MyProfileActivity.class.getName()));
 
         Intents.release();
     }

@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,16 +29,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import edu.upc.pes.agora.Logic.Utils.Constants;
+import edu.upc.pes.agora.Logic.Adapters.RecyclerAdapter;
 import edu.upc.pes.agora.Logic.Listeners.DrawerToggleAdvanced;
-import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
 import edu.upc.pes.agora.Logic.Models.Proposal;
-import edu.upc.pes.agora.Logic.Adapters.RecyclerAdapter;
+import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
+import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
-public class MyProposalsActivity extends AppCompatActivity {
+public class MyFavoritesActivity extends AppCompatActivity {
 
     private Configuration config = new Configuration();
     private Locale locale;
@@ -59,12 +62,12 @@ public class MyProposalsActivity extends AppCompatActivity {
         TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
         headerUserName.setText(Constants.Username);
 
-        navigationView.getMenu().getItem(NavMenuListener.myproposals).setChecked(true);
+        navigationView.getMenu().getItem(NavMenuListener.favorite).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.title_activity_my_propuestas);
-        toolbar.setLogo(R.mipmap.ic_accountw);
+        toolbar.setTitle(R.string.favorites);
+        toolbar.setLogo(R.mipmap.ic_favoritew);
         setSupportActionBar(toolbar);
 
         DrawerToggleAdvanced toggle = new DrawerToggleAdvanced(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -75,9 +78,10 @@ public class MyProposalsActivity extends AppCompatActivity {
         myrecycler.setHasFixedSize(true); // cada item del RecyclerView te un Size en concret.
         myrecycler.setLayoutManager(new LinearLayoutManager(this));
 
+
         listProposals = new ArrayList<>();
 
-        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal?username=" + Constants.Username.toLowerCase(), this) {
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal?favorite=true", this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
@@ -96,7 +100,7 @@ public class MyProposalsActivity extends AppCompatActivity {
 
                         if (ArrayProp != null) {
                             for (int i=0; i < ArrayProp.length(); i++){
-                                Proposal aux;
+
                                 Log.i("asd123", (ArrayProp.get(i).toString()));
 
                                 JSONObject jas = ArrayProp.getJSONObject(i);
@@ -109,16 +113,10 @@ public class MyProposalsActivity extends AppCompatActivity {
                                 String createDate = Helpers.showDate(jas.getString("createdDateTime"));
                                 String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
 
-
-                                if(jas.has("location") && jas.getJSONObject("location").has("lat") && jas.getJSONObject("location").get("lat") != JSONObject.NULL ) {
-                                    Double lat = jas.getJSONObject("location").getDouble("lat");
-                                    Double lng = jas.getJSONObject("location").getDouble("long");
-                                    aux = new Proposal(id, title, description, owner, ca, lat, lng, createDate, updateDate);
-                                }else {
-                                    aux = new Proposal(id, title, description, owner, ca, createDate, updateDate);
-                                }
-
                                 Log.i("asdCreate", creada);
+
+                                Proposal aux = new Proposal(id, title, description, owner,ca, createDate, updateDate);
+
                                 propostes.add(aux);
                             }
                         }
@@ -126,11 +124,12 @@ public class MyProposalsActivity extends AppCompatActivity {
                         radapter = new RecyclerAdapter(propostes, getApplicationContext());
                         myrecycler.setAdapter(radapter);
                     }
-                } catch (JSONException | ParseException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         }.execute(Jason);
+
     }
 
     @Override

@@ -34,6 +34,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -302,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
                                                 if (ArrayProp != null) {
                                                     for (int i=0; i < ArrayProp.length(); i++){
 
-                                                        Log.i("asd123", (ArrayProp.get(i).toString()));
+//                                                        Log.i("asd123", (ArrayProp.get(i).toString()));
 
                                                         JSONObject jas = ArrayProp.getJSONObject(i);
                                                         String title = jas.getString("title");
@@ -310,10 +311,15 @@ public class MainActivity extends AppCompatActivity {
                                                         String description = jas.getString("content");
                                                         Integer id = jas.getInt("id");
                                                         String ca = jas.getString("categoria");
+
                                                         Double lat = jas.getJSONObject("location").getDouble("lat");
                                                         Double lng = jas.getJSONObject("location").getDouble("long");
 
-                                                        Proposal aux = new Proposal(id, title, description, owner, ca, lat, lng);
+                                                        String createDate = Helpers.showDate(jas.getString("createdDateTime"));
+                                                        String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
+
+                                                        Proposal aux = new Proposal(id, title, description, owner, ca, lat, lng, createDate, updateDate);
+
 
                                                         propostes.add(aux);
                                                     }
@@ -321,6 +327,8 @@ public class MainActivity extends AppCompatActivity {
                                                 llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
                                             }
                                         } catch (JSONException e ) {
+                                            e.printStackTrace();
+                                        } catch (ParseException e) {
                                             e.printStackTrace();
                                         }
                                     }
@@ -514,31 +522,45 @@ public class MainActivity extends AppCompatActivity {
                         propostes = new ArrayList<>();
 
                         if (ArrayProp != null) {
-                            for (int i=0; i < ArrayProp.length(); i++){
+
+                            for (int i = 0; i < ArrayProp.length(); i++){
                                 Proposal aux;
 
                                 Log.i("asd123", (ArrayProp.get(i).toString()));
 
                                 JSONObject jas = ArrayProp.getJSONObject(i);
+                                JSONArray comentaris = jas.getJSONArray("comments");
+                                //Log.i("asd1234", String.valueOf(comentaris.length()));
                                 String title = jas.getString("title");
                                 String owner = jas.getString("owner");
                                 String description = jas.getString("content");
                                 Integer id = jas.getInt("id");
                                 String ca = jas.getString("categoria");
+                                String createDate = Helpers.showDate(jas.getString("createdDateTime"));
+                                String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
+
+
                                 if(jas.has("location") && jas.getJSONObject("location").has("lat") && jas.getJSONObject("location").get("lat") != JSONObject.NULL ) {
                                     Double lat = jas.getJSONObject("location").getDouble("lat");
                                     Double lng = jas.getJSONObject("location").getDouble("long");
-                                    aux = new Proposal(id, title, description, owner, ca, lat, lng);
-                                }else {
-                                     aux = new Proposal(id, title, description, owner, ca);
+                                    aux = new Proposal(id, title, description, owner, ca, lat, lng, createDate, updateDate);
+                                } else {
+                                     aux = new Proposal(id, title, description, owner, ca, createDate, updateDate);
                                 }
+
+                                Boolean fav = jas.getBoolean("favorited");
+                                Integer numcoments = comentaris.length();
+
+                                aux.setNumerocomentarios(numcoments);
+                                aux.setFavorite(fav);
+
 
                                 propostes.add(aux);
                             }
                         }
                         llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
                     }
-                } catch (JSONException e ) {
+                } catch (JSONException | ParseException e ) {
                     e.printStackTrace();
                 }
             }

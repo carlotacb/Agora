@@ -34,6 +34,7 @@
     <string name="home">Home</string>
     <string name="novaproposta">Nova Proposta</string>
     <string name="lesmevespropostes">Les Meves Propostes</string>
+    <string name="favorites">Favorites</string>
     <string name="miperfil">About me</string>
     <string name="perfil">My Profile</string>
     <string name="editarp">Edit Profile</string>
@@ -55,10 +56,9 @@
     <!-- Página principal -->
     <string name="title_activity_main">Main Page</string>
     <string name="creadopor">"Creado por "</string>
-    <string name="mesinfo">MAS INFORMACION</string>
+    <string name="mesinfo">VER MAS</string>
     <string name="filtro">Filter by:</string>
     <string name="buscar">Find:</string>
-
     <string name="tot">Tot</string>
     <string name="user">Per Usuari</string>
     <string name="categ">Per Categories</string>
@@ -80,6 +80,7 @@
     <string name="posAttached" translatable="false">Position attached</string>
     <string name="nuevapropuesta">Nueva Propuesta</string>
     <string name="spinnerhint">Seleccionar una Categoria...</string>
+    <string name="numeroimatge">%1$s imatges</string>
 
     <!-- Strings Edit Proposal -->
     <string name="editTitle">Title</string>
@@ -172,6 +173,7 @@
     </string>
 
     <string name="title_activity_add_location" translatable="false">Map</string>
+    <string name="title_activity_my_favorites">MyFavorites</string>
 
     <string name="title_activity_show_location">Map</string>
     <string name="title_activity_other_user">OtherUserActivity</string>
