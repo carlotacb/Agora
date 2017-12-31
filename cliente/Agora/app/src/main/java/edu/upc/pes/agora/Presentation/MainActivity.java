@@ -16,6 +16,8 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -24,6 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -60,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     private List<String> categories = new ArrayList<>();
     private Spinner filterSpinner, searchSpinner;
     private TextView buscartext;
+    private AutoCompleteTextView searchUsers;
+    private  ArrayAdapter<String> adapter;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -131,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         filterSpinner = (Spinner) findViewById(R.id.filterSpinnerView);
         searchSpinner = (Spinner) findViewById(R.id.searchSpinnerView);
         buscartext = (TextView) findViewById(R.id.buscar);
+        searchUsers = (AutoCompleteTextView) findViewById(R.id.searchUser);
 
         final Resources res = this.getResources();
 
@@ -152,13 +158,13 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
-                        ferGetAsyncTask();
+                        ferGetAsyncTask("https://agora-pes.herokuapp.com/api/proposal");
                     }
                 },3000);
             }
         });
 
-        ferGetAsyncTask();
+        ferGetAsyncTask("https://agora-pes.herokuapp.com/api/proposal");
 
         opcions.add(res.getString(R.string.tot));
         opcions.add(res.getString(R.string.categ));
@@ -176,27 +182,84 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayAdapter<String> filterSpinnerAdapter = new ArrayAdapter<>(this, R.layout.spinner_filter_style, opcions);
         filterSpinnerAdapter.setDropDownViewResource(R.layout.spinner_filter_style);
+
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile/comunity", mainContext) {
+
+            @Override
+            protected void onPostExecute(JSONObject jsonObject) {
+                try {
+                    if (jsonObject.has("error")) {
+                        String error = jsonObject.get("error").toString();
+                        Log.i("asd123", "Error");
+
+                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                    else if (jsonObject != null){
+                        JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
+                        usuaris = new ArrayList<>();
+
+                        if (ArrayProp != null) {
+                            for (int i=0; i < ArrayProp.length(); i++){
+
+                                Log.i("asd123", (ArrayProp.get(i).toString()));
+
+                                JSONObject jas = ArrayProp.getJSONObject(i);
+
+
+                                String username = jas.getString("username");
+                                usuaris.add(username);
+
+                            }
+                        }
+                        adapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_dropdown_item_1line,usuaris);
+                        adapter.setDropDownViewResource(R.layout.spinner_filter_style);
+                        searchUsers.setAdapter(adapter);
+                        searchUsers.setThreshold(1);
+                        searchUsers.setAdapter(adapter);
+
+                        ArrayAdapter<String> opcionsSpinnerAdapter2 = new ArrayAdapter<>(MainActivity.this, R.layout.spinner_filter_style, usuaris);
+                        opcionsSpinnerAdapter2.setDropDownViewResource(R.layout.spinner_filter_style);
+                        searchSpinner.setAdapter(opcionsSpinnerAdapter2);
+                        searchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                String selectedItem = searchSpinner.getSelectedItem().toString().toLowerCase();
+                                Log.i("asdse", selectedItem);
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> parent) {
+
+                            }
+                        });
+
+                    }
+                } catch (JSONException e ) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute(Jason);
+
         filterSpinner.setAdapter(filterSpinnerAdapter);
         filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItem = filterSpinner.getSelectedItem().toString().toLowerCase();
-                final View V = view;
                 switch (position) {
                     case 0: // TOT
-                        ferGetAsyncTask();
-
+                        ferGetAsyncTask("https://agora-pes.herokuapp.com/api/proposal");
                         buscartext.setVisibility(View.GONE);
                         searchSpinner.setVisibility(View.GONE);
-
+                        searchUsers.setVisibility(View.GONE);
                         break;
 
                     case 1: // CATEGORIAS
                         Log.i("asdse", selectedItem);
-
                         buscartext.setVisibility(View.VISIBLE);
                         searchSpinner.setVisibility(View.VISIBLE);
-
+                        searchUsers.setVisibility(View.GONE);
                         ArrayAdapter<String> opcionsSpinnerAdapter = new ArrayAdapter<>(view.getContext(), R.layout.spinner_filter_style, categories);
                         opcionsSpinnerAdapter.setDropDownViewResource(R.layout.spinner_filter_style);
                         searchSpinner.setAdapter(opcionsSpinnerAdapter);
@@ -204,139 +267,41 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 String selectedItem = searchSpinner.getSelectedItem().toString().toLowerCase();
-                                String categoriaS;
-                                Toast toast;
+                                String categoriaS = "";
                                 String url = "https://agora-pes.herokuapp.com/api/proposal";
                                 switch (position) {
                                     case 0: //todas las categorias
-                                        Log.i("asdse", selectedItem);
                                         categoriaS = "A";
-                                         toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
-                                        toast.show();
-
                                         break;
                                     case 1: //cultura
-                                        Log.i("asdse", selectedItem);
                                         categoriaS = "C";
-                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
-                                        toast.show();
-                                        url += "?category="+categoriaS;
                                         break;
                                     case 2: //ocio
-                                        Log.i("asdse", selectedItem);
                                         categoriaS = "O";
-                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
-                                        toast.show();
-                                        url += "?category="+categoriaS;
-
                                         break;
                                     case 3: // mantenimiento
-                                        Log.i("asdse", selectedItem);
                                         categoriaS = "M";
-                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
-                                        toast.show();
-                                        url += "?category="+categoriaS;
-
                                         break;
                                     case 4: // eventos
-                                        Log.i("asdse", selectedItem);
                                         categoriaS = "E";
-                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
-                                        toast.show();
-                                        url += "?category="+categoriaS;
-
                                         break;
                                     case 5: // turismo
-                                        Log.i("asdse", selectedItem);
                                         categoriaS = "T";
-                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
-                                        toast.show();
-                                        url += "?category="+categoriaS;
-
                                         break;
                                     case 6: // deportes
-                                        Log.i("asdse", selectedItem);
                                         categoriaS = "D";
-                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
-                                        toast.show();
-                                        url += "?category="+categoriaS;
-
                                         break;
                                     case 7: // quejas
-                                        Log.i("asdse", selectedItem);
                                         categoriaS = "Q";
-                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
-                                        toast.show();
-                                        url += "?category="+categoriaS;
-
                                         break;
                                     case 8: // soporte
-                                        Log.i("asdse", selectedItem);
                                         categoriaS = "S";
-                                        toast = Toast.makeText(getApplicationContext(), categoriaS, Toast.LENGTH_SHORT);
-                                        toast.show();
-                                        url += "?category="+categoriaS;
-
                                         break;
                                 }
 
-                                new GetTokenAsyncTask(url, mainContext) {
-
-                                    @Override
-                                    protected void onPostExecute(JSONObject jsonObject) {
-                                        try {
-                                            if (jsonObject.has("error")) {
-                                                String error = jsonObject.get("error").toString();
-                                                Log.i("asd123", "Error");
-
-                                                Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
-                                                toast.show();
-                                            }
-
-                                            else if (jsonObject != null){
-                                                JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
-                                                propostes = new ArrayList<>();
-
-                                                if (ArrayProp != null) {
-                                                    for (int i=0; i < ArrayProp.length(); i++){
-
-                                                        JSONObject jas = ArrayProp.getJSONObject(i);
-                                                        JSONArray comentaris = jas.getJSONArray("comments");
-                                                        String title = jas.getString("title");
-                                                        String owner = jas.getString("owner");
-                                                        String description = jas.getString("content");
-                                                        Integer id = jas.getInt("id");
-                                                        String ca = jas.getString("categoria");
-                                                        Integer nvotes = jas.getInt("numberUpvotes");
-                                                        Integer nunvotes = jas.getInt("numberDownvotes");
-                                                        Integer vote = jas.getInt("userVoted");
-                                                        Boolean fav = jas.getBoolean("favorited");
-                                                        Integer numcoments = comentaris.length();
-                                                        Double lat = jas.getJSONObject("location").getDouble("lat");
-                                                        Double lng = jas.getJSONObject("location").getDouble("long");
-
-                                                        String createDate = Helpers.showDate(jas.getString("createdDateTime"));
-                                                        String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
-
-                                                        Proposal aux = new Proposal(id, title, description, owner, ca, lat, lng, createDate, updateDate);
-
-                                                        aux.setNumerocomentarios(numcoments);
-                                                        aux.setFavorite(fav);
-                                                        aux.setNumerounvotes(nunvotes);
-                                                        aux.setNumerovotes(nvotes);
-                                                        aux.setVotacion(vote);
-
-                                                        propostes.add(aux);
-                                                    }
-                                                }
-                                                llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
-                                            }
-                                        } catch (JSONException | ParseException e ) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }.execute(Jason);
-
+                                Log.i("asdse", selectedItem);
+                                url += "?category="+ categoriaS;
+                                ferGetAsyncTask(url);
                             }
 
                             @Override
@@ -347,69 +312,11 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
 
-
                     case 2: // USUARIOS
                         Log.i("asdse", selectedItem);
-
                         buscartext.setVisibility(View.VISIBLE);
-                        searchSpinner.setVisibility(View.VISIBLE);
-
-                        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile/comunity", mainContext) {
-
-                            @Override
-                            protected void onPostExecute(JSONObject jsonObject) {
-                                try {
-                                    if (jsonObject.has("error")) {
-                                        String error = jsonObject.get("error").toString();
-                                        Log.i("asd123", "Error");
-
-                                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
-                                        toast.show();
-                                    }
-
-                                    else if (jsonObject != null){
-                                        JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
-                                        usuaris = new ArrayList<>();
-
-                                        if (ArrayProp != null) {
-                                            for (int i=0; i < ArrayProp.length(); i++){
-
-                                                Log.i("asd123", (ArrayProp.get(i).toString()));
-
-                                                JSONObject jas = ArrayProp.getJSONObject(i);
-
-
-                                               String username = jas.getString("username");
-                                               usuaris.add(username);
-                                                Toast toast = Toast.makeText(getApplicationContext(), username, Toast.LENGTH_SHORT);
-                                                toast.show();
-
-                                            }
-                                        }
-
-                                        ArrayAdapter<String> opcionsSpinnerAdapter2 = new ArrayAdapter<>(V.getContext(), R.layout.spinner_filter_style, usuaris);
-                                        opcionsSpinnerAdapter2.setDropDownViewResource(R.layout.spinner_filter_style);
-                                        searchSpinner.setAdapter(opcionsSpinnerAdapter2);
-                                        searchSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                            @Override
-                                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                                String selectedItem = searchSpinner.getSelectedItem().toString().toLowerCase();
-                                                Log.i("asdse", selectedItem);
-                                            }
-
-                                            @Override
-                                            public void onNothingSelected(AdapterView<?> parent) {
-
-                                            }
-                                        });
-
-                                    }
-                                } catch (JSONException e ) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }.execute(Jason);
-
+                        searchSpinner.setVisibility(View.GONE);
+                        searchUsers.setVisibility(View.VISIBLE);
                         break;
                 }
 
@@ -419,6 +326,38 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        searchUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String user = searchUsers.getText().toString();
+                Toast toast = Toast.makeText(getApplicationContext(), user, Toast.LENGTH_SHORT);
+                toast.show();
+                ferGetAsyncTask("https://agora-pes.herokuapp.com/api/proposal?username=" + user);
+            }
+        });
+
+        searchUsers.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String user = searchUsers.getText().toString();
+                Toast toast = Toast.makeText(getApplicationContext(), user, Toast.LENGTH_SHORT);
+                toast.show();
+                ferGetAsyncTask("https://agora-pes.herokuapp.com/api/proposal?username=" + user);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
 
     }
 
@@ -486,8 +425,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("StaticFieldLeak")
-    public void ferGetAsyncTask() {
-        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal", this) {
+    public void ferGetAsyncTask(String url) {
+        new GetTokenAsyncTask(url, this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
@@ -531,7 +470,7 @@ public class MainActivity extends AppCompatActivity {
                                     Double lng = jas.getJSONObject("location").getDouble("long");
                                     aux = new Proposal(id, title, description, owner, ca, lat, lng, createDate, updateDate);
                                 } else {
-                                     aux = new Proposal(id, title, description, owner, ca, createDate, updateDate);
+                                    aux = new Proposal(id, title, description, owner, ca, createDate, updateDate);
                                 }
 
                                 aux.setNumerocomentarios(numcoments);
