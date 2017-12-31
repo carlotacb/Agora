@@ -219,7 +219,6 @@
     </LinearLayout>
 
 
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_marginTop="5dp"
@@ -259,7 +258,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_locationonb"
-                android:backgroundTint="@color/colorPrimary"
+                android:backgroundTint="@color/colorAccentLight"
                 app:fabSize="mini"/>
 
         </LinearLayout>
@@ -279,7 +278,7 @@
                 android:id="@+id/fabimages"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
+                android:backgroundTint="@color/colorAccentLight"
                 app:fabSize="mini"
                 android:src="@drawable/if_image_add_103590"/>
 
