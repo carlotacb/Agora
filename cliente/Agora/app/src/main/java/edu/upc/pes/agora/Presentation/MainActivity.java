@@ -49,12 +49,11 @@ import edu.upc.pes.agora.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FloatingActionButton fab;
     private Configuration config = new Configuration();
-    private Locale locale;
     private JSONObject Jason = new JSONObject();
     private ListView llista_propostes;
     private ArrayList<Proposal> propostes;
+    @SuppressLint("StaticFieldLeak")
     public static Context mainContext;
     private List<String> opcions = new ArrayList<>();
     private List<String> usuaris = new ArrayList<>();
@@ -125,10 +124,9 @@ public class MainActivity extends AppCompatActivity {
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
-        drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         llista_propostes = (ListView) findViewById(R.id.list);
         filterSpinner = (Spinner) findViewById(R.id.filterSpinnerView);
         searchSpinner = (Spinner) findViewById(R.id.searchSpinnerView);
@@ -206,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                                 String selectedItem = searchSpinner.getSelectedItem().toString().toLowerCase();
-                                String categoriaS = "";
+                                String categoriaS;
                                 Toast toast;
                                 String url = "https://agora-pes.herokuapp.com/api/proposal";
                                 switch (position) {
@@ -302,15 +300,18 @@ public class MainActivity extends AppCompatActivity {
                                                 if (ArrayProp != null) {
                                                     for (int i=0; i < ArrayProp.length(); i++){
 
-//                                                        Log.i("asd123", (ArrayProp.get(i).toString()));
-
                                                         JSONObject jas = ArrayProp.getJSONObject(i);
+                                                        JSONArray comentaris = jas.getJSONArray("comments");
                                                         String title = jas.getString("title");
                                                         String owner = jas.getString("owner");
                                                         String description = jas.getString("content");
                                                         Integer id = jas.getInt("id");
                                                         String ca = jas.getString("categoria");
-
+                                                        Integer nvotes = jas.getInt("numberUpvotes");
+                                                        Integer nunvotes = jas.getInt("numberDownvotes");
+                                                        Integer vote = jas.getInt("userVoted");
+                                                        Boolean fav = jas.getBoolean("favorited");
+                                                        Integer numcoments = comentaris.length();
                                                         Double lat = jas.getJSONObject("location").getDouble("lat");
                                                         Double lng = jas.getJSONObject("location").getDouble("long");
 
@@ -319,15 +320,18 @@ public class MainActivity extends AppCompatActivity {
 
                                                         Proposal aux = new Proposal(id, title, description, owner, ca, lat, lng, createDate, updateDate);
 
+                                                        aux.setNumerocomentarios(numcoments);
+                                                        aux.setFavorite(fav);
+                                                        aux.setNumerounvotes(nunvotes);
+                                                        aux.setNumerovotes(nvotes);
+                                                        aux.setVotacion(vote);
 
                                                         propostes.add(aux);
                                                     }
                                                 }
                                                 llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
                                             }
-                                        } catch (JSONException e ) {
-                                            e.printStackTrace();
-                                        } catch (ParseException e) {
+                                        } catch (JSONException | ParseException e ) {
                                             e.printStackTrace();
                                         }
                                     }
@@ -469,8 +473,7 @@ public class MainActivity extends AppCompatActivity {
 
         else if (id == R.id.men_angles) Constants.Idioma = "en";
 
-        locale = new Locale(Constants.Idioma);
-        config.locale = locale;
+        config.locale = new Locale(Constants.Idioma);
         getResources().updateConfiguration(config, null);
         startActivity(refresh);
         finish();
@@ -510,7 +513,6 @@ public class MainActivity extends AppCompatActivity {
 
                                 JSONObject jas = ArrayProp.getJSONObject(i);
                                 JSONArray comentaris = jas.getJSONArray("comments");
-                                //Log.i("asd1234", String.valueOf(comentaris.length()));
                                 String title = jas.getString("title");
                                 String owner = jas.getString("owner");
                                 String description = jas.getString("content");
@@ -518,7 +520,11 @@ public class MainActivity extends AppCompatActivity {
                                 String ca = jas.getString("categoria");
                                 String createDate = Helpers.showDate(jas.getString("createdDateTime"));
                                 String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
-
+                                Integer nvotes = jas.getInt("numberUpvotes");
+                                Integer nunvotes = jas.getInt("numberDownvotes");
+                                Integer vote = jas.getInt("userVoted");
+                                Boolean fav = jas.getBoolean("favorited");
+                                Integer numcoments = comentaris.length();
 
                                 if(jas.has("location") && jas.getJSONObject("location").has("lat") && jas.getJSONObject("location").get("lat") != JSONObject.NULL ) {
                                     Double lat = jas.getJSONObject("location").getDouble("lat");
@@ -528,12 +534,11 @@ public class MainActivity extends AppCompatActivity {
                                      aux = new Proposal(id, title, description, owner, ca, createDate, updateDate);
                                 }
 
-                                Boolean fav = jas.getBoolean("favorited");
-                                Integer numcoments = comentaris.length();
-
                                 aux.setNumerocomentarios(numcoments);
                                 aux.setFavorite(fav);
-
+                                aux.setNumerounvotes(nunvotes);
+                                aux.setNumerovotes(nvotes);
+                                aux.setVotacion(vote);
 
                                 propostes.add(aux);
                             }
