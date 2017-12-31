@@ -27,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView buscartext;
     private AutoCompleteTextView searchUsers;
     private  ArrayAdapter<String> adapter;
+    private SearchView titleSearch;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -425,6 +427,44 @@ public class MainActivity extends AppCompatActivity {
         inflater.inflate(R.menu.main_search_menu, menu);
         inflater.inflate(R.menu.main, menu);
 
+        // Get the SearchView and set the searchable configuration
+        final android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) menu.findItem(R.id.search_action_menu).getActionView();
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+        searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                if (query.length() != 0) {
+                    ArrayList<Proposal> propostesAux = new ArrayList<>();
+                    // handle search here
+                    for(Proposal p : propostes){
+                        if(p.getTitle() != null && p.getTitle().toLowerCase().contains(query.toLowerCase()))
+                            propostesAux.add(p);
+                    }
+                    llista_propostes.setAdapter(new ProposalAdapter(propostesAux, getApplicationContext()));
+                    return true;
+                }
+                else llista_propostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
+                return false;
+            }
+
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if (query.length() != 0) {
+                    ArrayList<Proposal> propostesAux = new ArrayList<>();
+                    // handle search here
+                    for(Proposal p : propostes){
+                        if(p.getTitle() != null && p.getTitle().toLowerCase().contains(query.toLowerCase()))
+                            propostesAux.add(p);
+                    }
+                    llista_propostes.setAdapter(new ProposalAdapter(propostesAux, getApplicationContext()));
+                    return true;
+                }
+                return false;
+            }
+        });
+
         return true;
     }
 
@@ -473,7 +513,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        else if (id == R.id.men_angles){
+        else if (id == R.id.men_angles) {
             locale = new Locale("en");
             config.locale = locale;
             Constants.Idioma = "en";
