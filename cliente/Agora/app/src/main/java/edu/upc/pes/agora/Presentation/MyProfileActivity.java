@@ -65,6 +65,8 @@ public class MyProfileActivity extends AppCompatActivity {
 
         TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
         headerUserName.setText(Constants.Username);
+        ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
+        foto.setImageBitmap(Constants.fotoperfil);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_profile);

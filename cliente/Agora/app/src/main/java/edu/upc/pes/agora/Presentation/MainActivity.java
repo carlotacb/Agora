@@ -48,6 +48,7 @@ import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 public class MainActivity extends AppCompatActivity {
+
     private FloatingActionButton fab;
     private Configuration config = new Configuration();
     private Locale locale;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -82,9 +84,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
 
         if (Constants.fotoperfil == null) {
-
             JSONObject Jason = new JSONObject();
-
             new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
 
                 @Override
@@ -129,6 +129,13 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        llista_propostes = (ListView) findViewById(R.id.list);
+        filterSpinner = (Spinner) findViewById(R.id.filterSpinnerView);
+        searchSpinner = (Spinner) findViewById(R.id.searchSpinnerView);
+        buscartext = (TextView) findViewById(R.id.buscar);
+
+        final Resources res = this.getResources();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,8 +143,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        llista_propostes = (ListView) findViewById(R.id.list);
 
         final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
@@ -156,12 +161,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ferGetAsyncTask();
-
-        filterSpinner = (Spinner) findViewById(R.id.filterSpinnerView);
-        searchSpinner = (Spinner) findViewById(R.id.searchSpinnerView);
-        buscartext = (TextView) findViewById(R.id.buscar);
-
-        final Resources res = this.getResources();
 
         opcions.add(res.getString(R.string.tot));
         opcions.add(res.getString(R.string.categ));
@@ -436,7 +435,6 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_search_menu, menu);
         inflater.inflate(R.menu.main, menu);
-
         return true;
     }
 
@@ -454,7 +452,6 @@ public class MainActivity extends AppCompatActivity {
                 bandera.setIcon(R.drawable.rep);
                 break;
         }
-
         super.onPrepareOptionsMenu(menu);
         return true;
     }

@@ -23,6 +23,7 @@ import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
 import edu.upc.pes.agora.Presentation.CreateProposalActivity;
 import edu.upc.pes.agora.Presentation.DetailsProposalActivity;
 import edu.upc.pes.agora.Presentation.MainActivity;
+import edu.upc.pes.agora.Presentation.OtherUserActivity;
 import edu.upc.pes.agora.R;
 
 
@@ -140,8 +141,9 @@ public class ProposalAdapter extends BaseAdapter {
         owner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Anirem al usuari " + proposal.getOwner(), Toast.LENGTH_SHORT).show();
-                //TODO: user DetailsProposalActivity owner.onClick to show Profile
+                Intent i = new Intent(context, OtherUserActivity.class);
+                i.putExtra("username", proposal.getOwner());
+                v.getContext().startActivity(i);
             }
         });
 

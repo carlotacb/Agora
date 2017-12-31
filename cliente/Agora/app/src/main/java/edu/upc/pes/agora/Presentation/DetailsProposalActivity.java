@@ -167,7 +167,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
         if (getIntent().hasExtra("otherUser") && getIntent().getBooleanExtra("otherUser", false) == true) {
             back = new Intent(this, OtherUserProposalsActivity.class);
             back.putExtra("username", getIntent().getStringExtra("Owner"));
-        }else {
+        } else {
             back = new Intent(DetailsProposalActivity.this, MainActivity.class);
         }
 

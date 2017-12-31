@@ -43,7 +43,6 @@ import java.util.List;
 import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
 import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
-import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTaskFill;
 import edu.upc.pes.agora.Logic.ServerConection.PutAsyncTask;
 import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.R;
@@ -243,7 +242,7 @@ public class FillProfileActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 // nou server : agora-pes.herokuapp.com/api/proposal
-                new PostAsyncTaskFill("https://agora-pes.herokuapp.com/api/profile", FillProfileActivity.this) {
+                new PostAsyncTask("https://agora-pes.herokuapp.com/api/profile", FillProfileActivity.this) {
                     @Override
                     protected void onPostExecute(JSONObject resObject) {
                         Boolean result = false;

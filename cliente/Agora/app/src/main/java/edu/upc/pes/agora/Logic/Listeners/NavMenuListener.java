@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
 import edu.upc.pes.agora.Presentation.LoginActivity;
@@ -95,7 +96,7 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
                             Log.i("asd123", error);
                         }
                         else {
-                            Helpers.logout(context);
+                            Constants.SH_PREF_NAME = "";
                             Intent myIntent = new Intent(context, LoginActivity.class);
                             context.startActivity(myIntent);
                         }
