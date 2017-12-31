@@ -3,11 +3,14 @@ package edu.upc.pes.agora.Logic.Utils;
 import android.util.Log;
 
 import org.json.JSONObject;
+import android.widget.ImageView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import edu.upc.pes.agora.R;
 
 public class Helpers {
 
@@ -37,6 +40,20 @@ public class Helpers {
             return "" + res[2] + "/" + res[1] + "/" + res[0];
         }else{
             return "dd/MM/yyyy";
+        }
+    }
+
+    public static void changeFlag(ImageView canviidioma) {
+        switch (Constants.Idioma) {
+            case "ca":
+                canviidioma.setImageResource(R.drawable.rep);
+                break;
+            case "es":
+                canviidioma.setImageResource(R.drawable.spa);
+                break;
+            case "en":
+                canviidioma.setImageResource(R.drawable.ing);
+                break;
         }
     }
 
