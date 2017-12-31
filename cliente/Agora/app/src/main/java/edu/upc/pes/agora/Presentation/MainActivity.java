@@ -445,17 +445,29 @@ public class MainActivity extends AppCompatActivity {
 
         Intent refresh = new Intent(this, MainActivity.class);
         refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Boolean change = false;
 
-        if (id == R.id.men_castella) Constants.Idioma = "es";
+        if (id == R.id.men_castella){
+            Constants.Idioma = "es";
+            change = true;
+        }
 
-        else if (id == R.id.men_catala) Constants.Idioma = "ca";
+        else if (id == R.id.men_catala){
+            Constants.Idioma = "ca";
+            change = true;
+        }
 
-        else if (id == R.id.men_angles) Constants.Idioma = "en";
+        else if (id == R.id.men_angles) {
+            Constants.Idioma = "en";
+            change = true;
+        }
 
-        config.locale = new Locale(Constants.Idioma);
-        getResources().updateConfiguration(config, null);
-        startActivity(refresh);
-        finish();
+        if (change) {
+            config.locale = new Locale(Constants.Idioma);
+            getResources().updateConfiguration(config, null);
+            startActivity(refresh);
+            finish();
+        }
 
         return super.onOptionsItemSelected(item);
     }
