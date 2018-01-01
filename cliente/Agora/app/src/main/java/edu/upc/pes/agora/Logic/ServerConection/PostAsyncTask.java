@@ -73,7 +73,7 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             try {
                 Log.i("asdPostAsyncTask", Integer.toString(client.getResponseCode()));
                 String reponsie = Helpers.iStreamToString(client.getInputStream());
-                Log.i("resposta", reponsie);
+                Log.i("asdresposta123", reponsie);
 
                 if (client.getResponseCode() == 200) {
                     response.put("success",true);
@@ -97,6 +97,7 @@ public class PostAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
 
             client.disconnect();
             Log.i("asdPostAsyncTask", response.toString());
+            Log.i("asdresposta123", Helpers.iStreamToString(client.getInputStream()));
             return response;
 
 

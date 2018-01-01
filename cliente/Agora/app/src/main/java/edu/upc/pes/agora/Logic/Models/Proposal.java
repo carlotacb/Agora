@@ -18,18 +18,21 @@ public class Proposal {
     // Basic proposals data manipulation class
     // Contains basic information of the proposals
 
-    private int id;
+    private Integer id;
+    private Integer numerocomentarios;
+    private Integer numerovotes;
+    private Integer numerounvotes;
+    private Integer votacion;
+    private Boolean favorite;
     private String title;
     private String description;
     private String owner;
     private String categoria;
-    private LatLng position;
-    private double lat;
-    private double lng;
-    private Integer numerocomentarios;
-    private Boolean favorite;
     private String creation;
     private String update;
+    private LatLng position;
+    private Double lat;
+    private Double lng;
 
     public Proposal(int id, String tit, String des, String ow, String ca, double lat, double lng, String created, String updated) throws JSONException, ParseException {
 
@@ -38,10 +41,8 @@ public class Proposal {
         description = des;
         owner = ow;
         categoria = ca;
-
         this.lat = lat;
         this.lng = lng;
-
         creation = created;
         update = updated;
 
@@ -52,8 +53,8 @@ public class Proposal {
         description = des;
         owner = ow;
         categoria = ca;
-        this.lat = 0;
-        this.lng = 0;
+        this.lat = 0.0;
+        this.lng = 0.0;
         creation = created;
         update = updated;
     }
@@ -82,13 +83,20 @@ public class Proposal {
     };
 
 
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Integer getVotacion() {
+        return votacion;
+    }
+
+    public void setVotacion(Integer votacion) {
+        this.votacion = votacion;
     }
 
     public String getTitle() {
@@ -147,7 +155,6 @@ public class Proposal {
         this.position = position;
     }
 
-
     public double getLat() {
         return lat;
     }
@@ -163,15 +170,6 @@ public class Proposal {
     public void setLng(double lng) {
         this.lng = lng;
     }
-
-    /*public int getToken_creator() {
-                return token_creator;
-            }
-
-            public void setToken_creator(int token_creator) {
-                this.token_creator = token_creator;
-            }
-        */
 
     public Boolean getFavorite() {
         return favorite;
@@ -189,28 +187,26 @@ public class Proposal {
         this.numerocomentarios = numerocomentarios;
     }
 
+    public Integer getNumerovotes() {
+        return numerovotes;
+    }
+
+    public void setNumerovotes(Integer numerovotes) {
+        this.numerovotes = numerovotes;
+    }
+
+    public Integer getNumerounvotes() {
+        return numerounvotes;
+    }
+
+    public void setNumerounvotes(Integer numerounvotes) {
+        this.numerounvotes = numerounvotes;
+    }
+
     // Will be used by the ArrayAdapter in the ListView
     @Override
     public String toString() {
         //return String.format("%s - %s", title, description);
         return String.format("%s", title);
     }
-
-
-    /*@Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeString(title);
-        parcel.writeString(description);
-        parcel.writeString(owner);
-        parcel.writeString(categoria);
-        parcel.writeParcelable(position, i);
-        parcel.writeDouble(lat);
-        parcel.writeDouble(lng);
-    }*/
 }

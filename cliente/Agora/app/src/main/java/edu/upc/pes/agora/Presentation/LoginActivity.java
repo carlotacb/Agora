@@ -31,6 +31,7 @@ import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.ServerConection.PostSesionAsyncTask;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 import static edu.upc.pes.agora.Logic.Utils.Constants.SH_PREF_NAME;
@@ -74,17 +75,7 @@ public class LoginActivity extends AppCompatActivity /*implements AdapterView.On
         etPassword.getBackground().clearColorFilter();
         etUsername.getBackground().clearColorFilter();
 
-        switch (Constants.Idioma) {
-            case "ca":
-                canviidioma.setImageResource(R.drawable.rep);
-                break;
-            case "es":
-                canviidioma.setImageResource(R.drawable.spa);
-                break;
-            case "en":
-                canviidioma.setImageResource(R.drawable.ing);
-                break;
-        }
+        Helpers.changeFlag(canviidioma);
 
         Intent idioma = new Intent(LoginActivity.this, LoginActivity.class);
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
