@@ -300,9 +300,13 @@ public class MainActivity extends AppCompatActivity {
                                         break;
                                 }
 
-                                Log.i("asdse", selectedItem);
-                                url += "?category="+ categoriaS;
-                                ferGetAsyncTask(url);
+                                if (!categoriaS.equals("A")) {
+                                    Log.i("asdse", selectedItem);
+                                    url += "?category="+ categoriaS;
+                                    ferGetAsyncTask(url);
+                                }
+
+
                             }
 
                             @Override
