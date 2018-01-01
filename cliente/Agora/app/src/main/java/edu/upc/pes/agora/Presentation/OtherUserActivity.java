@@ -33,7 +33,6 @@ public class OtherUserActivity extends AppCompatActivity {
     private Integer cpJ;
     private String bornJ;
     private String sexJ;
-
     private String username;
 
     @SuppressLint("StaticFieldLeak")
@@ -54,11 +53,17 @@ public class OtherUserActivity extends AppCompatActivity {
         verpropuestas.setClickable(true);
         JSONObject values = new JSONObject();
 
+
+        if (getIntent().hasExtra("username")) {
+            username = getIntent().getStringExtra("username");
+        }
+
         final Resources res = getResources();
 
         Helpers.changeFlag(canviidioma);
 
         Intent idioma = new Intent(OtherUserActivity.this, OtherUserActivity.class);
+        idioma.putExtra("username", username);
         Intent back = new Intent(OtherUserActivity.this, MainActivity.class);
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -67,86 +72,83 @@ public class OtherUserActivity extends AppCompatActivity {
 
         enrerre.setOnClickListener(new BackOnClickListener(back, getApplicationContext()));
 
+        user.setText(username);
 
-        if(getIntent().hasExtra("username")){
-            username = getIntent().getStringExtra("username");
-            user.setText(username);
+        String profileURL = "https://agora-pes.herokuapp.com/api/user/" + username.toLowerCase();
 
-            String profileURL = "https://agora-pes.herokuapp.com/api/user/" + username.toLowerCase();
+        new GetTokenAsyncTask(profileURL, this){
+            @Override
+            protected void onPostExecute(JSONObject jsonObject) {
+                try {
+                    if (jsonObject.has("error")) {
+                        String error = jsonObject.get("error").toString();
+                        Log.i("asdProfile", "Error");
 
-            new GetTokenAsyncTask(profileURL, this){
-                @Override
-                protected void onPostExecute(JSONObject jsonObject) {
-                    try {
-                        if (jsonObject.has("error")) {
-                            String error = jsonObject.get("error").toString();
-                            Log.i("asdProfile", "Error");
-
-                            Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-
-                        else {
-
-                            Log.i("asdProfile", (jsonObject.toString()));
-
-                            if(jsonObject.has("realname")) {
-                                nameJ = jsonObject.getString("realname");
-                                nameProfile.setText(nameJ);
-                            }
-                            else {
-                                nameProfile.setText("");
-                            }
-
-                            if(jsonObject.has("neighborhood")) {
-                                neighJ = jsonObject.getString("neighborhood");
-                                barrio.setText(neighJ);
-                            }
-
-                            if(jsonObject.has("cpCode")) {
-                                cpJ = jsonObject.getInt("cpCode");
-                                codiPostal.setText(String.valueOf(cpJ));
-                            }
-                            else {
-                                codiPostal.setText("");
-                            }
-
-                            if(jsonObject.has("bdate")) {
-                                bornJ = jsonObject.getString("bdate");
-
-                                String databona = Helpers.showDate(bornJ);
-
-                                born.setText(databona);
-                            }
-                            else {
-                                born.setText("");
-                            }
-
-                            if(jsonObject.has("sex")) {
-                                sexJ = jsonObject.getString("sex");
-                                switch (sexJ) {
-                                    case "I":
-                                        sexo.setText(R.string.I);
-                                        break;
-                                    case "M":
-                                        sexo.setText(R.string.M);
-                                        break;
-                                    case "F":
-                                        sexo.setText(R.string.F);
-                                        break;
-                                }
-                            }
-                            else {
-                                sexo.setText("");
-                            }
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                        toast.show();
                     }
+
+                    else {
+
+                        Log.i("asdProfile", (jsonObject.toString()));
+
+                        if(jsonObject.has("realname")) {
+                            nameJ = jsonObject.getString("realname");
+                            nameProfile.setText(nameJ);
+                        }
+                        else {
+                            nameProfile.setText("");
+                        }
+
+                        if(jsonObject.has("neighborhood")) {
+                            neighJ = jsonObject.getString("neighborhood");
+                            barrio.setText(neighJ);
+                        }
+
+                        if(jsonObject.has("cpCode")) {
+                            cpJ = jsonObject.getInt("cpCode");
+                            codiPostal.setText(String.valueOf(cpJ));
+                        }
+                        else {
+                            codiPostal.setText("");
+                        }
+
+                        if(jsonObject.has("bdate")) {
+                            bornJ = jsonObject.getString("bdate");
+
+                            String databona = Helpers.showDate(bornJ);
+
+                            born.setText(databona);
+                        }
+                        else {
+                            born.setText("");
+                        }
+
+                        if(jsonObject.has("sex")) {
+                            sexJ = jsonObject.getString("sex");
+                            switch (sexJ) {
+                                case "I":
+                                    sexo.setText(R.string.I);
+                                    break;
+                                case "M":
+                                    sexo.setText(R.string.M);
+                                    break;
+                                case "F":
+                                    sexo.setText(R.string.F);
+                                    break;
+                            }
+                        }
+                        else {
+                            sexo.setText("");
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }.execute(values);
-        }
+            }
+        }.execute(values);
+
 
         verpropuestas.setOnClickListener(new View.OnClickListener() {
             @Override
