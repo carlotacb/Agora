@@ -104,4 +104,9 @@
     <string name="mensajenc">Introduce el nuevo comentario para la propuesta \"%1$s\"</string>
     <string name="añadir">Añadir</string>
     <string name="mensajecompartir">Mira que propuesta he encontrado en Àgora!</string>
+    <string name="favorites">Favoritos</string>
+    <string name="errorPosition">Por favor, selecciona una posición en tu barrio!</string>
+    <string name="addPosition">Añadir posición</string>
+    <string name="savePosition">Guardar posición</string>
+    <string name="verpropuestas">Ver propuestas</string>
 </resources>

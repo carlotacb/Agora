@@ -3,20 +3,27 @@ package edu.upc.pes.agora.Presentation;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
 import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
+import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
@@ -27,6 +34,11 @@ public class OtherUserActivity extends AppCompatActivity {
     private TextView barrio;
     private TextView born;
     private TextView sexo;
+
+    private CircleImageView foto;
+
+    private LinearLayout tot;
+    private LinearLayout progres;
 
     private String nameJ;
     private String neighJ;
@@ -43,12 +55,15 @@ public class OtherUserActivity extends AppCompatActivity {
 
         ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
         ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
+        foto = (CircleImageView) findViewById(R.id.imatgeusuari);
         TextView user = (TextView) findViewById(R.id.user);
         nameProfile = (TextView) findViewById(R.id.nameprofile);
         codiPostal = (TextView) findViewById(R.id.codipostal);
         barrio = (TextView) findViewById(R.id.barrio);
         born = (TextView) findViewById(R.id.born);
         sexo = (TextView) findViewById(R.id.sexo);
+        tot = (LinearLayout) findViewById(R.id.layouttot);
+        progres = (LinearLayout) findViewById(R.id.progress);
         TextView verpropuestas = (TextView) findViewById(R.id.verpropuestas);
         verpropuestas.setClickable(true);
         JSONObject values = new JSONObject();
@@ -141,11 +156,27 @@ public class OtherUserActivity extends AppCompatActivity {
                         else {
                             sexo.setText("");
                         }
+
+                        if(jsonObject.has("image")) {
+                            String imageJ = jsonObject.getString("image");
+
+                            if (!imageJ.equals("null")) {
+                                byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+
+                                Bitmap imatgeperfil = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                                foto.setImageBitmap(imatgeperfil);
+
+                            }
+                        }
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                tot.setVisibility(View.VISIBLE);
+                progres.setVisibility(View.GONE);
+
             }
         }.execute(values);
 

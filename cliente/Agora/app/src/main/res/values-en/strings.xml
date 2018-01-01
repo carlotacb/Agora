@@ -104,4 +104,9 @@
     <string name="mensajenc">Introduce the new coment for the proposal \"%1$s\"</string>
     <string name="añadir">Add</string>
     <string name="mensajecompartir">Look at the proposal I found in Àgora!</string>
+    <string name="favorites">Favorites</string>
+    <string name="errorPosition">Please select a position in your neighbourhood!</string>
+    <string name="addPosition">Add position</string>
+    <string name="savePosition">Save position</string>
+    <string name="verpropuestas">View proposals</string>
 </resources>
