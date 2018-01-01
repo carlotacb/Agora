@@ -109,6 +109,8 @@
     <string name="fnaix2">Fecha Nacimiento:</string>
     <string name="sexo2">Sexo:</string>
     <string name="verpropuestas">Ver propuestas</string>
+    <string name="creadoel">Creada el %1$s</string>
+    <string name="propcreadapor">Propuestas de: %1$s</string>
 
     <!-- Strings per Detalls de la proposta -->
     <string name="determinant">el</string>

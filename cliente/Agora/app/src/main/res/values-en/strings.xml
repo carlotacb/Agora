@@ -109,4 +109,6 @@
     <string name="addPosition">Add position</string>
     <string name="savePosition">Save position</string>
     <string name="verpropuestas">View proposals</string>
+    <string name="creadoel">Created on %1$s</string>
+    <string name="propcreadapor">Proposals from: %1$s</string>
 </resources>

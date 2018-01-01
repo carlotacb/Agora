@@ -109,4 +109,6 @@
     <string name="addPosition">Añadir posición</string>
     <string name="savePosition">Guardar posición</string>
     <string name="verpropuestas">Ver propuestas</string>
+    <string name="creadoel">Creada el %1$s</string>
+    <string name="propcreadapor">Propuestas de: %1$s</string>
 </resources>

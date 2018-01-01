@@ -110,4 +110,6 @@
     <string name="savePosition">Guardar posició</string>
     <string name="deletePosition">Esborrar posició</string>
     <string name="verpropuestas">Veure propostes</string>
+    <string name="creadoel">Creada el %1$s</string>
+    <string name="propcreadapor">Propostes de: %1$s</string>
 </resources>
