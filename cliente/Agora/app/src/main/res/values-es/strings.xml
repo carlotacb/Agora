@@ -111,4 +111,5 @@
     <string name="verpropuestas">Ver propuestas</string>
     <string name="creadoel">Creada el %1$s</string>
     <string name="propcreadapor">Propuestas de: %1$s</string>
+    <string name="dia">" el: %1$s"</string>
 </resources>
