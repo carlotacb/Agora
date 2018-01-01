@@ -403,39 +403,13 @@ public class DetailsProposalActivity extends AppCompatActivity {
                         }
                         llista_comentaris.setAdapter(new CommentAdapter(getApplicationContext(), comentarios));
 
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.execute(Jason);
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    private void llistarimatges() {
-        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + idprop + "/image", this) {
-
-            @Override
-            protected void onPostExecute(JSONObject jsonObject) {
-                try {
-                    if (jsonObject.has("error")) {
-                        String error = jsonObject.get("error").toString();
-                        Log.i("asd123", "Error");
-
-                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-
-                    else if (jsonObject != null) {
-
                         JSONArray ArrayImages = jsonObject.getJSONArray("images");
                         ArrayList<ImatgeItem> imatges = new ArrayList<>();
 
                         if (ArrayImages != null) {
                             for (int i=0; i < ArrayImages.length(); i++){
 
-                                //Log.i("asd123", (ArrayImages.get(i).toString()));
+                                Log.i("asd123", (ArrayImages.get(i).toString()));
 
                                 JSONObject jas = ArrayImages.getJSONObject(i);
                                 String id = jas.getString("id");
