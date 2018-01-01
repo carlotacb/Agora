@@ -413,7 +413,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
                                 JSONObject jas = ArrayImages.getJSONObject(i);
                                 String id = jas.getString("id");
-                                String contentimage = jas.getString("images");
+                                String contentimage = jas.getString("image");
 
                                 ImatgeItem aux = new ImatgeItem();
                                 aux.setNumero(Integer.parseInt(id));
