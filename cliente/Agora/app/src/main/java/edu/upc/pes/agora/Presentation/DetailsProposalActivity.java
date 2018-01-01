@@ -34,9 +34,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import edu.upc.pes.agora.Logic.Adapters.ImatgesAdapter;
 import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
 import edu.upc.pes.agora.Logic.Models.Comment;
 import edu.upc.pes.agora.Logic.Adapters.CommentAdapter;
+import edu.upc.pes.agora.Logic.Models.ImatgeItem;
 import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
@@ -55,9 +57,9 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
 
     private ListView llista_comentaris;
+    private ListView llista_imatges;
     private String newComent;
     private ImageView canviidioma, enrerre, compartir;
-    private ImageView image;
 
     private String mtit, mdesc, mowner, mcategorias, c;
 
@@ -78,7 +80,6 @@ public class DetailsProposalActivity extends AppCompatActivity {
         categoria = (TextView) findViewById(R.id.categoriaproposta);
         owner = (TextView) findViewById(R.id.ownerproposal);
         date = (TextView) findViewById(R.id.date);
-        image = (ImageView) findViewById(R.id.showImage);
 
         date.setText(getIntent().getStringExtra("Creation"));
 
@@ -90,6 +91,8 @@ public class DetailsProposalActivity extends AppCompatActivity {
         }
 
         llista_comentaris = (ListView) findViewById(R.id.listcommentaris);
+
+        llista_imatges = (ListView) findViewById(R.id.listimatges);
 
         addcoment = (FloatingActionButton) findViewById(R.id.fabcoment);
 
@@ -400,21 +403,52 @@ public class DetailsProposalActivity extends AppCompatActivity {
                         }
                         llista_comentaris.setAdapter(new CommentAdapter(getApplicationContext(), comentarios));
 
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute(Jason);
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private void llistarimatges() {
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + idprop + "/image", this) {
+
+            @Override
+            protected void onPostExecute(JSONObject jsonObject) {
+                try {
+                    if (jsonObject.has("error")) {
+                        String error = jsonObject.get("error").toString();
+                        Log.i("asd123", "Error");
+
+                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                    else if (jsonObject != null) {
+
                         JSONArray ArrayImages = jsonObject.getJSONArray("images");
+                        ArrayList<ImatgeItem> imatges = new ArrayList<>();
 
                         if (ArrayImages != null) {
                             for (int i=0; i < ArrayImages.length(); i++){
 
-                                JSONObject jas2 = ArrayImages.getJSONObject(i);
-                                String id = jas2.getString("id");
-                                String imageJ = jas2.getString("images");
+                                //Log.i("asd123", (ArrayImages.get(i).toString()));
 
-                                byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
-                                Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                                JSONObject jas = ArrayImages.getJSONObject(i);
+                                String id = jas.getString("id");
+                                String contentimage = jas.getString("images");
 
-                                //image.setImageBitmap(bitmap);
+                                ImatgeItem aux = new ImatgeItem();
+                                aux.setNumero(Integer.parseInt(id));
+                                aux.setImatge(contentimage);
+
+                                imatges.add(aux);
                             }
                         }
+                        llista_imatges.setAdapter(new ImatgesAdapter(getApplicationContext(), imatges));
 
                     }
 

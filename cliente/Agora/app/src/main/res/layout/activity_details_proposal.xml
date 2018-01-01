@@ -168,15 +168,17 @@
                 android:src="@mipmap/ic_thumb_up"
                 android:id="@+id/unvote"/>
 
-            <ImageView
-                android:id="@+id/showImage"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@mipmap/ic_person"/>
-
         </LinearLayout>
 
     </RelativeLayout>
+
+    <ListView
+        android:id="@+id/listimatges"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:listSelector="@android:color/transparent"
+        tools:context="edu.upc.pes.agora.Presentation.DetailsProposalActivity"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <FrameLayout
         android:layout_width="match_parent"
