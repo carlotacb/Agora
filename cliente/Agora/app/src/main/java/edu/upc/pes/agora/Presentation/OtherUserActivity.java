@@ -2,46 +2,37 @@ package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Locale;
-
-import edu.upc.pes.agora.Logic.Models.Profile;
+import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
+import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 public class OtherUserActivity extends AppCompatActivity {
 
-    private Configuration config = new Configuration();
-    private Locale locale;
-
-    private TextView user;
     private TextView nameProfile;
     private TextView codiPostal;
     private TextView barrio;
     private TextView born;
     private TextView sexo;
-    private TextView descript;
-    private TextView verpropuestas;
 
-    private JSONObject values;
-
-    private Profile p;
     private String nameJ;
     private String neighJ;
     private Integer cpJ;
     private String bornJ;
     private String sexJ;
-    private String descriptJ;
 
     private String username;
 
@@ -51,23 +42,37 @@ public class OtherUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_user);
 
-        user = (TextView) findViewById(R.id.user);
+        ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
+        ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
+        TextView user = (TextView) findViewById(R.id.user);
         nameProfile = (TextView) findViewById(R.id.nameprofile);
         codiPostal = (TextView) findViewById(R.id.codipostal);
         barrio = (TextView) findViewById(R.id.barrio);
         born = (TextView) findViewById(R.id.born);
         sexo = (TextView) findViewById(R.id.sexo);
-        descript = (TextView) findViewById(R.id.descript);
-        verpropuestas = (TextView) findViewById(R.id.verpropuestas);
+        TextView verpropuestas = (TextView) findViewById(R.id.verpropuestas);
         verpropuestas.setClickable(true);
-        p = new Profile();
-        values = new JSONObject();
+        JSONObject values = new JSONObject();
+
+        final Resources res = getResources();
+
+        Helpers.changeFlag(canviidioma);
+
+        Intent idioma = new Intent(OtherUserActivity.this, OtherUserActivity.class);
+        Intent back = new Intent(OtherUserActivity.this, MainActivity.class);
+        idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+        canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
+
+        enrerre.setOnClickListener(new BackOnClickListener(back, getApplicationContext()));
+
 
         if(getIntent().hasExtra("username")){
             username = getIntent().getStringExtra("username");
             user.setText(username);
 
-            String profileURL = "https://agora-pes.herokuapp.com/api/user/"+username.toLowerCase();
+            String profileURL = "https://agora-pes.herokuapp.com/api/user/" + username.toLowerCase();
 
             new GetTokenAsyncTask(profileURL, this){
                 @Override
@@ -88,34 +93,30 @@ public class OtherUserActivity extends AppCompatActivity {
                             if(jsonObject.has("realname")) {
                                 nameJ = jsonObject.getString("realname");
                                 nameProfile.setText(nameJ);
-                                p.setName(nameJ);
                             }
                             else {
-                                user.setText("");
+                                nameProfile.setText("");
                             }
 
                             if(jsonObject.has("neighborhood")) {
                                 neighJ = jsonObject.getString("neighborhood");
                                 barrio.setText(neighJ);
-                                p.setNeighborhood(neighJ);
-                            }
-                            else {
-                                barrio.setText("");
                             }
 
                             if(jsonObject.has("cpCode")) {
                                 cpJ = jsonObject.getInt("cpCode");
-                                codiPostal.setText(cpJ.toString());
-                                p.setCP(cpJ);
+                                codiPostal.setText(String.valueOf(cpJ));
                             }
                             else {
                                 codiPostal.setText("");
                             }
 
                             if(jsonObject.has("bdate")) {
-                                bornJ = jsonObject.getString("bdate"); //TODO call showDate after merge
-                                born.setText(bornJ);
-                                p.setBorn(bornJ);
+                                bornJ = jsonObject.getString("bdate");
+
+                                String databona = Helpers.showDate(bornJ);
+
+                                born.setText(databona);
                             }
                             else {
                                 born.setText("");
@@ -123,23 +124,20 @@ public class OtherUserActivity extends AppCompatActivity {
 
                             if(jsonObject.has("sex")) {
                                 sexJ = jsonObject.getString("sex");
-                                if (sexJ.equals("I")) sexo.setText(R.string.I);
-                                else if (sexJ.equals("M")) sexo.setText(R.string.M);
-                                else if (sexJ.equals("F")) sexo.setText(R.string.F);
-
-                                p.setSex(sexJ);
+                                switch (sexJ) {
+                                    case "I":
+                                        sexo.setText(R.string.I);
+                                        break;
+                                    case "M":
+                                        sexo.setText(R.string.M);
+                                        break;
+                                    case "F":
+                                        sexo.setText(R.string.F);
+                                        break;
+                                }
                             }
                             else {
                                 sexo.setText("");
-                            }
-
-                            if(jsonObject.has("description")){
-                                descriptJ = jsonObject.getString("description");
-                                descript.setText(descriptJ);
-                                p.setDescription(descriptJ);
-                            }
-                            else{
-                                descript.setText("");
                             }
                         }
 

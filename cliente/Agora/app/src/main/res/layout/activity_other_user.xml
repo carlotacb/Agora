@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -18,9 +19,6 @@
                   android:layout_height="match_parent">
 
         <RelativeLayout android:layout_width="wrap_content"
-                        android:paddingLeft="@dimen/activity_horizontal_margin"
-                        android:paddingRight="@dimen/activity_horizontal_margin"
-                        android:paddingTop="@dimen/activity_vertical_margin"
                         android:layout_height="wrap_content">
             <ImageView
                 android:layout_width="wrap_content"
@@ -42,24 +40,50 @@
 
         </RelativeLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_user_male128"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imatgeusuari"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                app:civ_border_color="#FF000000"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_user_male128"/>
 
-        <TextView
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:id="@+id/user"
-            android:textSize="25sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="2dp"
-            android:text="@string/username"/>
+            <LinearLayout android:layout_width="match_parent"
+                          android:orientation="vertical"
+                          android:layout_gravity="center"
+                          android:layout_height="wrap_content">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    android:id="@+id/user"
+                    android:gravity="center_horizontal"
+                    android:textSize="25sp"
+                    android:textAllCaps="true"
+                    android:layout_marginBottom="2dp"
+                    android:text="@string/username"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textColor="#424242"
+                    android:textStyle="bold"
+                    android:id="@+id/barrio"
+                    android:textSize="25sp"
+                    android:text="Barrio"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_marginTop="20dp"
@@ -77,10 +101,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/nameprofile"
                 android:textSize="18dp"
-                android:textColorHint="#e89b9696"
+                android:textColor="#424242"
                 android:text="random"/>
 
         </LinearLayout>
@@ -101,34 +125,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/codipostal"
                 android:textSize="18dp"
-                android:textColorHint="#e89b9696"
-                android:text="random"/>
-
-        </LinearLayout>
-
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_marginTop="15dp"
-                      android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:layout_marginBottom="2dp"
-                android:text="@string/barrio2"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:id="@+id/barrio"
-                android:textSize="18dp"
-                android:textColorHint="#e89b9696"
+                android:textColor="#424242"
                 android:text="random"/>
 
         </LinearLayout>
@@ -149,10 +149,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/born"
                 android:textSize="18dp"
-                android:textColorHint="#e89b9696"
+                android:textColor="#424242"
                 android:text="random"/>
 
         </LinearLayout>
@@ -173,34 +173,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/sexo"
                 android:textSize="18dp"
-                android:textColorHint="#e89b9696"
-                android:text="random"/>
-
-        </LinearLayout>
-
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_marginTop="15dp"
-                      android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:layout_marginBottom="2dp"
-                android:text="@string/descrpicion"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:id="@+id/descript"
-                android:textSize="18dp"
-                android:textColorHint="#e89b9696"
+                android:textColor="#424242"
                 android:text="random"/>
 
         </LinearLayout>
@@ -208,9 +184,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:id="@+id/verpropuestas"
-            android:textSize="18dp"
+            android:textSize="25dp"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold"
             android:text="Ver sus propuestas"/>
