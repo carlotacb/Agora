@@ -273,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
                                 switch (position) {
                                     case 0: //todas las categorias
                                         categoriaS = "A";
-                                        break;
+                                        break; 
                                     case 1: //cultura
                                         categoriaS = "C";
                                         break;
