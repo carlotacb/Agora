@@ -31,6 +31,7 @@ import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Models.Comment;
 import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
 import edu.upc.pes.agora.Logic.ServerConection.PutAsyncTask;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 public class CommentAdapter extends ArrayAdapter<Comment> {
@@ -60,13 +61,15 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
         TextView Autor = (TextView) convertView.findViewById(R.id.autorcomentari);
         final TextView Content = (TextView) convertView.findViewById(R.id.descripciocomentari);
         final ImageView more = (ImageView) convertView.findViewById(R.id.more);
+        final TextView data = (TextView) convertView.findViewById(R.id.dia);
 
         // Populate the data into the template view using the data object
         assert comentaris != null;
         Autor.setText(comentaris.getAutor());
         Content.setText(comentaris.getComentario());
+        data.setText(Helpers.showDate(comentaris.getCreated()));
 
-        if (comentaris.getAutor().equals(Constants.Username)) {
+        if (comentaris.getAutor().equals(Constants.Username.toLowerCase())) {
             more.setVisibility(View.VISIBLE);
         }
 
@@ -217,6 +220,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
                 popupMenu.show();
             }
         });
+
 
         // Return the completed view to render on screen
         return convertView;

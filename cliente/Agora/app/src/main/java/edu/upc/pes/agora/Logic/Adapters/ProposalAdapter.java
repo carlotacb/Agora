@@ -3,6 +3,8 @@ package edu.upc.pes.agora.Logic.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.media.Image;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +18,9 @@ import java.util.List;
 
 import edu.upc.pes.agora.Logic.Models.Proposal;
 import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
+import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Presentation.DetailsProposalActivity;
+import edu.upc.pes.agora.Presentation.MyProfileActivity;
 import edu.upc.pes.agora.Presentation.OtherUserActivity;
 import edu.upc.pes.agora.R;
 
@@ -58,6 +62,9 @@ public class ProposalAdapter extends BaseAdapter {
         TextView moreinfo = (TextView) convertView.findViewById(R.id.btnLernMore);
         TextView categoria = (TextView) convertView.findViewById(R.id.categoriaproposal);
         TextView numerocomentarios = (TextView) convertView.findViewById(R.id.numerocomentaris);
+        TextView dia = (TextView) convertView.findViewById(R.id.data);
+        ImageView likeuser = (ImageView) convertView.findViewById(R.id.likeuser);
+        ImageView dislikeuser = (ImageView) convertView.findViewById(R.id.dislikeuser);
         final TextView numerolikes = (TextView) convertView.findViewById(R.id.numerovote);
         final TextView numerodislikes = (TextView) convertView.findViewById(R.id.numerounvote);
         final ImageView likeimagen = (ImageView) convertView.findViewById(R.id.like);
@@ -65,6 +72,40 @@ public class ProposalAdapter extends BaseAdapter {
         final ImageView favorite = (ImageView) convertView.findViewById(R.id.fav);
 
         final Proposal proposal = listProposals.get(position);
+        final Resources res = context.getResources();
+
+        if (Constants.Username.equals(proposal.getOwner())) {
+            likeuser.setVisibility(View.VISIBLE);
+            dislikeuser.setVisibility(View.VISIBLE);
+            likeimagen.setVisibility(View.GONE);
+            dislikeimagen.setVisibility(View.GONE);
+            favorite.setVisibility(View.GONE);
+
+            owner.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, MyProfileActivity.class);
+                    v.getContext().startActivity(i);
+                }
+            });
+        }
+        else {
+            likeuser.setVisibility(View.GONE);
+            dislikeuser.setVisibility(View.GONE);
+            likeimagen.setVisibility(View.VISIBLE);
+            dislikeimagen.setVisibility(View.VISIBLE);
+
+            owner.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, OtherUserActivity.class);
+                    i.putExtra("username", proposal.getOwner());
+                    v.getContext().startActivity(i);
+                }
+            });
+
+        }
+
 
         Boolean favo = proposal.getFavorite();
         Integer votacion = proposal.getVotacion();
@@ -91,6 +132,7 @@ public class ProposalAdapter extends BaseAdapter {
         titol.setText(proposal.getTitle());
         descripcio.setText(proposal.getDescription());
         owner.setText(proposal.getOwner());
+        dia.setText(String.format(res.getString(R.string.dia), proposal.getCreation()));
         numerocomentarios.setText(String.valueOf(proposal.getNumerocomentarios()));
         numerolikes.setText(String.valueOf(proposal.getNumerovotes()));
         numerodislikes.setText(String.valueOf(proposal.getNumerounvotes()));
@@ -143,15 +185,6 @@ public class ProposalAdapter extends BaseAdapter {
                 v.getContext().startActivity(myIntent);
 
                 Log.i("asd", "clica");
-            }
-        });
-
-        owner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, OtherUserActivity.class);
-                i.putExtra("username", proposal.getOwner());
-                v.getContext().startActivity(i);
             }
         });
 

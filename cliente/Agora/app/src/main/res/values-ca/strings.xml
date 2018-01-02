@@ -104,4 +104,13 @@
     <string name="mensajenc">Introdueix el nou comentari per la proposta \"%1$s\"</string>
     <string name="añadir">Afegir</string>
     <string name="mensajecompartir">Mira quina proposta he trobar a Àgora!</string>
+    <string name="favorites">Preferits</string>
+    <string name="errorPosition">Per favor, selecciona una posició dins el teu barri!</string>
+    <string name="addPosition">Afegir posició</string>
+    <string name="savePosition">Guardar posició</string>
+    <string name="deletePosition">Esborrar posició</string>
+    <string name="verpropuestas">Veure propostes</string>
+    <string name="creadoel">Creada el %1$s</string>
+    <string name="propcreadapor">Propostes de: %1$s</string>
+    <string name="dia">" el: %1$s"</string>
 </resources>

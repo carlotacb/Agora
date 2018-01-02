@@ -71,13 +71,13 @@
     <string name="errorPosition">Please select a position in your neighbourhood!</string>
     <string name="titulo">Titulo</string>
     <string name="descrpicion">Descripcion</string>
-    <string name="reset">Reset</string>
+    <string name="reset" translatable="false">Reset</string>
     <string name="create">Create</string>
     <string name="done">Propuesta "%1$s" creada correctamnete</string>
     <string name="addPosition">Add position</string>
     <string name="savePosition">Save position</string>
-    <string name="deletePosition" translatable="false">Delete position</string>
-    <string name="posAttached" translatable="false">Position attached</string>
+    <string name="deletePosition">Delete position</string>
+    <string name="posAttached">Position attached</string>
     <string name="nuevapropuesta">Nueva Propuesta</string>
     <string name="spinnerhint">Seleccionar una Categoria...</string>
     <string name="numeroimatge">%1$s imatges</string>
@@ -108,6 +108,10 @@
     <string name="barrio2">Barrio:</string>
     <string name="fnaix2">Fecha Nacimiento:</string>
     <string name="sexo2">Sexo:</string>
+    <string name="verpropuestas">Ver propuestas</string>
+    <string name="creadoel">Creada el %1$s</string>
+    <string name="propcreadapor">Propuestas de: %1$s</string>
+    <string name="dia"> el: %1$s</string>
 
     <!-- Strings per Detalls de la proposta -->
     <string name="determinant">el</string>
@@ -136,7 +140,6 @@
     <string name="pwnueva">Password Nueva</string>
     <string name="pwnueva2">Confirmar password</string>
 
-
     <!-- Categorias -->
     <string name="categoria" translatable="false">Categoria</string>
     <string name="cultura">Cultura</string>
@@ -151,6 +154,9 @@
 
     <!-- Strings para compartir -->
     <string name="mensajecompartir">Mira que propuesta he encontrado en Agora!</string>
+
+
+
 
 
     <string name="str_en" translatable="false">English</string>
