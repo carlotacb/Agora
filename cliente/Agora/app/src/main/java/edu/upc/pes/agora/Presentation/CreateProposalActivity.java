@@ -467,7 +467,6 @@ public class CreateProposalActivity extends AppCompatActivity {
             }
         }.execute(imatgesperpropostes);
 
-
     }
 
     @Override
@@ -493,6 +492,7 @@ public class CreateProposalActivity extends AppCompatActivity {
                     encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
                     ArrayImages.put(encoded);
+                    ++numimatges;
 
                     i.setImatge(encoded);
                     i.setNumero(mImatgeItems.size()+1);

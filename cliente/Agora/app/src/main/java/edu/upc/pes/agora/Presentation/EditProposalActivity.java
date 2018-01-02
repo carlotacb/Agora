@@ -16,17 +16,26 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import edu.upc.pes.agora.Logic.Adapters.CommentAdapter;
+import edu.upc.pes.agora.Logic.Adapters.ImatgesAdapter;
 import edu.upc.pes.agora.Logic.Adapters.RecyclerAdapter;
+import edu.upc.pes.agora.Logic.Models.Comment;
+import edu.upc.pes.agora.Logic.Models.ImatgeItem;
 import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
+import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
+import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
 import edu.upc.pes.agora.Logic.ServerConection.PutAsyncTask;
 import edu.upc.pes.agora.R;
 
@@ -46,12 +55,17 @@ public class EditProposalActivity extends AppCompatActivity {
     String newDescription;
     String token;
 
-    private ImageView image;
+    private ListView limatges;
     private String encoded;
     private ProgressBar prog;
     private final int SELECT_PICTURE=200;
 
+    private JSONArray ArrayImages = new JSONArray();
+    private ArrayList<ImatgeItem> mImatgeItems = new ArrayList<> ();
+
     private Integer idprop;
+    private int numimatges = 0;
+    private JSONObject Jason = new JSONObject();
 
     SharedPreferences prefs;
     SharedPreferences.Editor edit;
@@ -70,7 +84,7 @@ public class EditProposalActivity extends AppCompatActivity {
         editPosButton = (Button) findViewById(R.id.editPosButton);
         prog = (ProgressBar) findViewById(R.id.saveprogressbar);
 
-        image = (ImageView) findViewById(R.id.setImage);
+        limatges = (ListView) findViewById(R.id.llistaimatges);
 
         prefs = this.getSharedPreferences(SH_PREF_NAME, MODE_PRIVATE);
         edit = prefs.edit();
@@ -90,7 +104,9 @@ public class EditProposalActivity extends AppCompatActivity {
 
         final Resources res = this.getResources();
 
-        /*editButton.setOnClickListener(new View.OnClickListener(){
+        llistarimatges();
+
+        editButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 final CharSequence[] options = {"Galería", "Cancelar"};
@@ -111,7 +127,7 @@ public class EditProposalActivity extends AppCompatActivity {
                 });
                 builder.show();
             }
-        });*/
+        });
 
         /*deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -228,6 +244,27 @@ public class EditProposalActivity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+
+                            //String creacionok = String.format(res.getString(R.string.done), strTitulo);
+
+                            if (result) {
+
+                                if (numimatges > 0) {
+                                    afegirimatges();
+                                }
+
+                                else {
+                                    //Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
+                                    //startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
+                                }
+                            }
+
+                            else {
+                                Log.i("asdCreacion", "reset");
+                                //Create.setVisibility(View.VISIBLE);
+                                //prog.setVisibility(View.GONE);
+                            }
+
                         }
                     }.execute(values);
 
@@ -240,10 +277,61 @@ public class EditProposalActivity extends AppCompatActivity {
 
     }
 
-    /*@Override
+    @SuppressLint("StaticFieldLeak")
+    private void afegirimatges(){
+
+        final Resources res = this.getResources();
+
+        JSONObject imatgesperpropostes = new JSONObject();
+
+        try {
+            imatgesperpropostes.put("images", ArrayImages);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new PostAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + idprop + "/image", EditProposalActivity.this) {
+            @Override
+            protected void onPostExecute(JSONObject resObject) {
+                Boolean result = false;
+
+                Log.i("asdimatge", "entra aqui");
+
+                try {
+                    if (resObject.has("success")) {
+                        result = resObject.getBoolean("success");
+                    }
+
+                    if (!result && resObject.has("errorMessage")) {
+                        String error = res.getString(R.string.errorCreacion);
+                        Log.i("asdCreacion", error);
+                        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                /*String creacionok = String.format(res.getString(R.string.done), strTitulo);
+
+                if (result) {
+                    Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
+
+                    startActivity(new Intent(EditProposalActivity.this, MainActivity.class));
+                }
+
+                else {
+                    Create.setVisibility(View.VISIBLE);
+                    prog.setVisibility(View.GONE);
+                }*/
+            }
+        }.execute(imatgesperpropostes);
+
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         switch (requestCode) {
             case SELECT_PICTURE:
                 if(resultCode == RESULT_OK) {
@@ -255,16 +343,78 @@ public class EditProposalActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
                     }
-                    image.setImageBitmap(bitmap);
+
+                    ImatgeItem i = new ImatgeItem();
 
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                     byte[] byteArray = byteArrayOutputStream .toByteArray();
                     encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                    //ArrayImages.put(encoded);
+
+                    ArrayImages.put(encoded);
+
+                    ++numimatges;
+                    i.setImatge(encoded);
+                    i.setNumero(mImatgeItems.size()+1);
+
+                    afegirimatgellista(i);
                 }
                 break;
         }
-    }*/
+    }
+
+    private void afegirimatgellista(ImatgeItem im) {
+
+        mImatgeItems.add(im);
+
+        limatges.setAdapter(new ImatgesAdapter(getApplicationContext(), mImatgeItems));
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private void llistarimatges() {
+        new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + idprop, this) {
+
+            @Override
+            protected void onPostExecute(JSONObject jsonObject) {
+                try {
+                    if (jsonObject.has("error")) {
+                        String error = jsonObject.get("error").toString();
+                        Log.i("asd123", "Error");
+
+                        Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                    else if (jsonObject != null) {
+
+                        JSONArray ArrayImages = jsonObject.getJSONArray("images");
+                        ArrayList<ImatgeItem> imatges = new ArrayList<>();
+
+                        if (ArrayImages != null) {
+                            for (int i=0; i < ArrayImages.length(); i++){
+
+                                Log.i("asd123", (ArrayImages.get(i).toString()));
+
+                                JSONObject jas = ArrayImages.getJSONObject(i);
+                                String id = jas.getString("id");
+                                String contentimage = jas.getString("image");
+
+                                ImatgeItem aux = new ImatgeItem();
+                                aux.setNumero(Integer.parseInt(id));
+                                aux.setImatge(contentimage);
+
+                                mImatgeItems.add(aux);
+                            }
+                        }
+                        limatges.setAdapter(new ImatgesAdapter(getApplicationContext(), mImatgeItems));
+
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute(Jason);
+    }
 
 }
