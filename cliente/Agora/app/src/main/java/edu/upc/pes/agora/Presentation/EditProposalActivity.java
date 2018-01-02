@@ -132,16 +132,15 @@ public class EditProposalActivity extends AppCompatActivity {
         if(i.hasExtra("Categoria")) {
             String categoriaProposta = i.getStringExtra("Categoria");
 
-            if (categoriaProposta.equals("X")) selection = 1;
-            else if (categoriaProposta.equals("C")) selection = 2;
-            else if (categoriaProposta.equals("D")) selection = 3;
-            else if (categoriaProposta.equals("O")) selection = 4;
-            else if (categoriaProposta.equals("M")) selection = 5;
-            else if (categoriaProposta.equals("E")) selection = 6;
-            else if (categoriaProposta.equals("T")) selection = 7;
-            else if (categoriaProposta.equals("Q")) selection = 8;
-            else if (categoriaProposta.equals("S")) selection = 9;
-            else if (categoriaProposta.equals("A")) selection = 10;
+            if (categoriaProposta.equals("X")) selection = 0;
+            else if (categoriaProposta.equals("C")) selection = 1;
+            else if (categoriaProposta.equals("D")) selection = 2;
+            else if (categoriaProposta.equals("O")) selection = 3;
+            else if (categoriaProposta.equals("M")) selection = 4;
+            else if (categoriaProposta.equals("E")) selection = 5;
+            else if (categoriaProposta.equals("T")) selection = 6;
+            else if (categoriaProposta.equals("Q")) selection = 7;
+            else if (categoriaProposta.equals("S")) selection = 8;
 
         }
 
@@ -437,19 +436,6 @@ public class EditProposalActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-                /*String creacionok = String.format(res.getString(R.string.done), strTitulo);
-
-                if (result) {
-                    Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
-
-                    startActivity(new Intent(EditProposalActivity.this, MainActivity.class));
-                }
-
-                else {
-                    Create.setVisibility(View.VISIBLE);
-                    prog.setVisibility(View.GONE);
-                }*/
             }
         }.execute(imatgesperpropostes);
 
@@ -473,7 +459,9 @@ public class EditProposalActivity extends AppCompatActivity {
                     ImatgeItem i = new ImatgeItem();
 
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    if (bitmap != null) {
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    }
                     byte[] byteArray = byteArrayOutputStream .toByteArray();
                     encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 

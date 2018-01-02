@@ -73,6 +73,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
                                 myIntent.putExtra("lng", proposal.getLng());
                                 v.getRootView().getContext().startActivity(myIntent);
 
+                                Toast.makeText(context, "nose", Toast.LENGTH_SHORT).show();
+
                                 break;
 
                             case R.id.item_delete:
