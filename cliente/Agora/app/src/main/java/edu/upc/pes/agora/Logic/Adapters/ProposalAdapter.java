@@ -20,6 +20,7 @@ import edu.upc.pes.agora.Logic.Models.Proposal;
 import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
 import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Presentation.DetailsProposalActivity;
+import edu.upc.pes.agora.Presentation.MyProfileActivity;
 import edu.upc.pes.agora.Presentation.OtherUserActivity;
 import edu.upc.pes.agora.R;
 
@@ -80,7 +81,13 @@ public class ProposalAdapter extends BaseAdapter {
             dislikeimagen.setVisibility(View.GONE);
             favorite.setVisibility(View.GONE);
 
-            owner.setTextColor(res.getColor(R.color.colorAccentLight));
+            owner.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, MyProfileActivity.class);
+                    v.getContext().startActivity(i);
+                }
+            });
         }
         else {
             likeuser.setVisibility(View.GONE);
