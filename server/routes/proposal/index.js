@@ -27,7 +27,7 @@ module.exports = app => {
 
         const {content, title, location} = req.body
         const newProposal = await proposalsModule.update({id: proposalId, content, title, location})
-        res.send(await mapProposalForUsername(newProposal))
+        res.send(await mapProposalForUsername(newProposal, req.username))
     }))
 
     app.get('/api/proposal', isAuthenticated, f(async function (req, res) {
