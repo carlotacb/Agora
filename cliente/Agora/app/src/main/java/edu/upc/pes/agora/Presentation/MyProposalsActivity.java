@@ -1,6 +1,7 @@
 package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -103,6 +104,7 @@ public class MyProposalsActivity extends AppCompatActivity {
                                 Log.i("asd123", (ArrayProp.get(i).toString()));
 
                                 JSONObject jas = ArrayProp.getJSONObject(i);
+                                JSONArray comentaris = jas.getJSONArray("comments");
                                 String title = jas.getString("title");
                                 String owner = jas.getString("owner");
                                 String description = jas.getString("content");
@@ -111,7 +113,11 @@ public class MyProposalsActivity extends AppCompatActivity {
                                 String ca = jas.getString("categoria");
                                 String createDate = Helpers.showDate(jas.getString("createdDateTime"));
                                 String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
-
+                                Integer nvotes = jas.getInt("numberUpvotes");
+                                Integer nunvotes = jas.getInt("numberDownvotes");
+                                Integer vote = jas.getInt("userVoted");
+                                Boolean fav = jas.getBoolean("favorited");
+                                Integer numcoments = comentaris.length();
 
                                 if(jas.has("location") && jas.getJSONObject("location").has("lat") && jas.getJSONObject("location").get("lat") != JSONObject.NULL ) {
                                     Double lat = jas.getJSONObject("location").getDouble("lat");
@@ -122,6 +128,13 @@ public class MyProposalsActivity extends AppCompatActivity {
                                 }
 
                                 Log.i("asdCreate", creada);
+
+                                aux.setNumerocomentarios(numcoments);
+                                aux.setFavorite(fav);
+                                aux.setNumerounvotes(nunvotes);
+                                aux.setNumerovotes(nvotes);
+                                aux.setVotacion(vote);
+
                                 propostes.add(aux);
                             }
                         }
@@ -145,41 +158,52 @@ public class MyProposalsActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        MenuItem bandera = menu.findItem(R.id.bandera);
+        switch (Constants.Idioma) {
+            case "es":
+                bandera.setIcon(R.drawable.spa);
+                break;
+            case "en":
+                bandera.setIcon(R.drawable.ing);
+                break;
+            case "ca":
+                bandera.setIcon(R.drawable.rep);
+                break;
+        }
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        Intent refresh = new Intent(this, MyProposalsActivity.class);
+        Intent refresh = new Intent(this, MainActivity.class);
         refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Boolean change = false;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.men_castella) {
-            locale = new Locale("es");
-            config.locale = locale;
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
+        if (id == R.id.men_castella){
+            Constants.Idioma = "es";
+            change = true;
         }
 
         else if (id == R.id.men_catala){
-            locale = new Locale("ca");
-            config.locale = locale;
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-
+            Constants.Idioma = "ca";
+            change = true;
         }
 
-        else if (id == R.id.men_angles){
-            locale = new Locale("en");
-            config.locale = locale;
+        else if (id == R.id.men_angles) {
+            Constants.Idioma = "en";
+            change = true;
+        }
+
+        if (change) {
+            config.locale = new Locale(Constants.Idioma);
             getResources().updateConfiguration(config, null);
             startActivity(refresh);
             finish();
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -187,11 +211,10 @@ public class MyProposalsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            // TODO: el boto Back ha d'obrir el navigation drawer.
             drawer.openDrawer(GravityCompat.START);
         }
     }

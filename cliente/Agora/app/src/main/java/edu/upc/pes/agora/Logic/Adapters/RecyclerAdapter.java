@@ -53,6 +53,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         holder.title.setText(proposal.getTitle());
         final String tit = proposal.getTitle();
         holder.description.setText(proposal.getDescription());
+        holder.categoria.setText(proposal.getCategoria());
+        holder.numcomentaris.setText(String.valueOf(proposal.getNumerocomentarios()));
+        holder.numdislikes.setText(String.valueOf(proposal.getNumerounvotes()));
+        holder.numlikes.setText(String.valueOf(proposal.getNumerovotes()));
+        holder.created.setText(String.format(res.getString(R.string.creadoel), proposal.getCreation()));
+
         holder.more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -130,10 +136,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         return listProposals.size();
     }
 
-    class RecyclerHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener, PopupMenu.OnMenuItemClickListener*/{
+    class RecyclerHolder extends RecyclerView.ViewHolder {
 
         private TextView title;
         private TextView description;
+        private TextView categoria;
+        private TextView created;
+        private TextView numcomentaris;
+        private TextView numlikes;
+        private TextView numdislikes;
         private ImageView more;
 
         public RecyclerHolder(View itemView) {
@@ -141,7 +152,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
             title = (TextView) itemView.findViewById(R.id.textHead);
             description = (TextView) itemView.findViewById(R.id.textDescription);
+            categoria = (TextView) itemView.findViewById(R.id.categoriaproposal);
+            created = (TextView) itemView.findViewById(R.id.data);
+            numcomentaris = (TextView) itemView.findViewById(R.id.numerocomentaris);
+            numlikes = (TextView) itemView.findViewById(R.id.numerovote);
+            numdislikes = (TextView) itemView.findViewById(R.id.numerounvote);
             more = (ImageView) itemView.findViewById(R.id.more);
+
 
         }
     }
