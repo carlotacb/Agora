@@ -32,7 +32,7 @@ async function mapProposalForUsername(proposal, username, options = {mapComments
 
         const user = await userModule.get({username})
 
-        proposal.favorited = !!(user.favorites && user.favorites.includes(parseInt(proposal.id)))
+        proposal.favorited = !!(user && user.favorites && user.favorites.includes(parseInt(proposal.id)))
 
         return proposal
     } catch (error) {
