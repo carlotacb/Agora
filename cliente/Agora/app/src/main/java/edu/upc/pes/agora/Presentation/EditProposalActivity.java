@@ -33,7 +33,6 @@ import edu.upc.pes.agora.Logic.Adapters.ImatgesAdapter;
 import edu.upc.pes.agora.Logic.Adapters.RecyclerAdapter;
 import edu.upc.pes.agora.Logic.Models.Comment;
 import edu.upc.pes.agora.Logic.Models.ImatgeItem;
-import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
 import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
 import edu.upc.pes.agora.Logic.ServerConection.PutAsyncTask;
@@ -46,7 +45,6 @@ public class EditProposalActivity extends AppCompatActivity {
     EditText editTitle;
     EditText editDescription;
     Button editButton;
-    Button deleteButton;
     Button saveButton;
     Button cancelButton;
     Button editPosButton;
@@ -78,7 +76,6 @@ public class EditProposalActivity extends AppCompatActivity {
         editTitle = (EditText) findViewById(R.id.editTitle);
         editDescription = (EditText) findViewById(R.id.editDescription);
         editButton = (Button) findViewById(R.id.editButton);
-        deleteButton = (Button) findViewById(R.id.deleteButton);
         saveButton = (Button) findViewById(R.id.saveButton);
         cancelButton = (Button) findViewById(R.id.cancelButton);
         editPosButton = (Button) findViewById(R.id.editPosButton);
@@ -128,30 +125,6 @@ public class EditProposalActivity extends AppCompatActivity {
                 builder.show();
             }
         });
-
-        /*deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DeleteAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + idprop, this) {
-                    @Override
-                    protected void onPostExecute(JSONObject jsonObject) {
-                        if (!jsonObject.has("error")) {
-                            Toast toast = Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT);
-                            toast.show();
-                        }
-                        else {
-                            //try {
-                                JSONObject values = new JSONObject();
-                                values.remove("images");
-                            //} catch (JSONException e) {
-                                //e.printStackTrace();
-                            //}
-                        }
-                        super.onPostExecute(jsonObject);
-                    }
-                }.execute();
-            }
-        });*/
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
