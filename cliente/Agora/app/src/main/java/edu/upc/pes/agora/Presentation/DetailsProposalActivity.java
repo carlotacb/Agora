@@ -167,7 +167,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
         final Intent idioma = new Intent(DetailsProposalActivity.this, DetailsProposalActivity.class);
         Intent back = new Intent();
-        if (getIntent().hasExtra("otherUser") && getIntent().getBooleanExtra("otherUser", false) == true) {
+        if (getIntent().hasExtra("otherUser") && getIntent().getBooleanExtra("otherUser", false)) {
             back = new Intent(this, OtherUserProposalsActivity.class);
             back.putExtra("username", getIntent().getStringExtra("Owner"));
         } else {
@@ -348,8 +348,8 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent refresh = new Intent();
-        if (getIntent().hasExtra("otherUser") && getIntent().getBooleanExtra("otherUser", false) == true){
+        Intent refresh;
+        if (getIntent().hasExtra("otherUser") && getIntent().getBooleanExtra("otherUser", false)){
             refresh = new Intent(this, OtherUserProposalsActivity.class);
             refresh.putExtra("username", getIntent().getStringExtra("Owner"));
         }else {

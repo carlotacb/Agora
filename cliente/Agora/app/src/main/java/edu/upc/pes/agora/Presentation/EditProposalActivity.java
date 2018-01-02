@@ -7,17 +7,26 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -27,9 +36,12 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import edu.upc.pes.agora.Logic.Adapters.CommentAdapter;
 import edu.upc.pes.agora.Logic.Adapters.ImatgesAdapter;
+import edu.upc.pes.agora.Logic.Adapters.ImatgesEditAdapter;
 import edu.upc.pes.agora.Logic.Adapters.RecyclerAdapter;
 import edu.upc.pes.agora.Logic.Models.Comment;
 import edu.upc.pes.agora.Logic.Models.ImatgeItem;
@@ -48,10 +60,16 @@ public class EditProposalActivity extends AppCompatActivity {
     Button saveButton;
     Button cancelButton;
     Button editPosButton;
+    Spinner categories;
+    LinearLayout locallayout;
+    TextView esborrarlocalitzacio;
+    TextView veurelocalitzacio;
 
     String newTitle;
     String newDescription;
-    String token;
+
+    Double latitud, longitud;
+    Integer proposalID;
 
     private ListView limatges;
     private String encoded;
@@ -60,13 +78,13 @@ public class EditProposalActivity extends AppCompatActivity {
 
     private JSONArray ArrayImages = new JSONArray();
     private ArrayList<ImatgeItem> mImatgeItems = new ArrayList<> ();
+    private String[] categoriasGenericas = {"X", "C", "D", "O","M", "E", "T","Q", "S", "A"};
 
     private Integer idprop;
     private int numimatges = 0;
+    private FloatingActionButton addImage, addLocation, menuFloating;
+    private LinearLayout linearImage, linearLocation;
     private JSONObject Jason = new JSONObject();
-
-    SharedPreferences prefs;
-    SharedPreferences.Editor edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,16 +93,30 @@ public class EditProposalActivity extends AppCompatActivity {
 
         editTitle = (EditText) findViewById(R.id.editTitle);
         editDescription = (EditText) findViewById(R.id.editDescription);
-        editButton = (Button) findViewById(R.id.editButton);
+        categories = (Spinner) findViewById(R.id.editcategoria);
+        locallayout = (LinearLayout) findViewById(R.id.layoutlocalization);
+        esborrarlocalitzacio = (TextView) findViewById(R.id.deleteposition);
+        veurelocalitzacio = (TextView) findViewById(R.id.seeposition);
         saveButton = (Button) findViewById(R.id.saveButton);
         cancelButton = (Button) findViewById(R.id.cancelButton);
-        editPosButton = (Button) findViewById(R.id.editPosButton);
         prog = (ProgressBar) findViewById(R.id.saveprogressbar);
 
-        limatges = (ListView) findViewById(R.id.llistaimatges);
+        addImage = (FloatingActionButton) findViewById(R.id.fabimages);
+        addLocation = (FloatingActionButton) findViewById(R.id.fablocalization);
+        menuFloating = (FloatingActionButton) findViewById(R.id.faboptions);
 
-        prefs = this.getSharedPreferences(SH_PREF_NAME, MODE_PRIVATE);
-        edit = prefs.edit();
+        linearLocation = (LinearLayout) findViewById(R.id.localizationLayout);
+        linearImage = (LinearLayout) findViewById(R.id.imagesLayout);
+
+        //editButton = (Button) findViewById(R.id.editButton);
+        //editPosButton = (Button) findViewById(R.id.editPosButton);
+
+        final Animation showButton = AnimationUtils.loadAnimation(EditProposalActivity.this, R.anim.show_button);
+        final Animation hideButton = AnimationUtils.loadAnimation(EditProposalActivity.this, R.anim.hide_button);
+        final Animation showLayout = AnimationUtils.loadAnimation(EditProposalActivity.this, R.anim.show_layout);
+        final Animation hideLayout = AnimationUtils.loadAnimation(EditProposalActivity.this, R.anim.hide_layout);
+
+        limatges = (ListView) findViewById(R.id.llistaimatges);
 
         Intent i = getIntent();
 
@@ -96,16 +128,139 @@ public class EditProposalActivity extends AppCompatActivity {
         if(i.hasExtra("Description")) {
             editDescription.setText(i.getStringExtra("Description"));
         }
+        Integer selection = 0;
+        if(i.hasExtra("Categoria")) {
+            String categoriaProposta = i.getStringExtra("Categoria");
+
+            if (categoriaProposta.equals("X")) selection = 1;
+            else if (categoriaProposta.equals("C")) selection = 2;
+            else if (categoriaProposta.equals("D")) selection = 3;
+            else if (categoriaProposta.equals("O")) selection = 4;
+            else if (categoriaProposta.equals("M")) selection = 5;
+            else if (categoriaProposta.equals("E")) selection = 6;
+            else if (categoriaProposta.equals("T")) selection = 7;
+            else if (categoriaProposta.equals("Q")) selection = 8;
+            else if (categoriaProposta.equals("S")) selection = 9;
+            else if (categoriaProposta.equals("A")) selection = 10;
+
+        }
+
+        if (i.hasExtra("lat") && i.hasExtra("lng")) {
+
+            latitud = i.getDoubleExtra("lat",0.0);
+            longitud = i.getDoubleExtra("lng", 0.0);
+
+            if (latitud != 0.0 && longitud != 0) {
+                locallayout.setVisibility(View.VISIBLE);
+            }
+            else {
+                locallayout.setVisibility(View.INVISIBLE);
+            }
+
+        }
 
         final int id = i.getIntExtra("id",0);
+        proposalID = id;
 
         final Resources res = this.getResources();
 
+        // Lista de Categorias con los nombres buenos (cambia con el idioma).
+        final String[] categorias = new String[]{
+                getString(R.string.spinnerhint),
+                getString(R.string.cultura),
+                getString(R.string.deportes),
+                getString(R.string.ocio),
+                getString(R.string.mantenimiento),
+                getString(R.string.eventos),
+                getString(R.string.turismo),
+                getString(R.string.quejas),
+                getString(R.string.soporte)};
+
+        final List<String> categoriesList = new ArrayList<>(Arrays.asList(categorias));
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_categories_layout, categoriesList){
+            @Override
+            public boolean isEnabled(int position){
+                if(position == 0) {
+                    // Disable the first item from Spinner. The first item will be use for hint
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (categorias[position].equals(getString(R.string.spinnerhint))){
+                    // Set the hint text color gray
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_categories_layout);
+        categories.setAdapter(spinnerArrayAdapter);
+        categories.setSelection(selection);
+
         llistarimatges();
 
-        editButton.setOnClickListener(new View.OnClickListener(){
+        veurelocalitzacio.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ShowLocationActivity.class);
+                if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng")) {
+                    i.putExtra("lat", getIntent().getDoubleExtra("lat",0));
+                    i.putExtra("lng", getIntent().getDoubleExtra("lng",0));
+                    startActivity(i);
+                }
+            }
+        });
+
+        esborrarlocalitzacio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                latitud = 0.0;
+                longitud = 0.0;
+
+            }
+        });
+
+        menuFloating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (linearLocation.getVisibility() == View.VISIBLE && linearImage.getVisibility() == View.VISIBLE) {
+                    linearLocation.setVisibility(View.GONE);
+                    linearImage.setVisibility(View.GONE);
+                    linearLocation.startAnimation(hideLayout);
+                    linearImage.startAnimation(hideLayout);
+                    menuFloating.startAnimation(hideButton);
+
+                }
+                else {
+                    linearLocation.setVisibility(View.VISIBLE);
+                    linearImage.setVisibility(View.VISIBLE);
+                    linearLocation.startAnimation(showLayout);
+                    linearImage.startAnimation(showLayout);
+                    menuFloating.startAnimation(showButton);
+                }
+            }
+        });
+
+        addImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                linearLocation.setVisibility(View.GONE);
+                linearImage.setVisibility(View.GONE);
+                linearLocation.startAnimation(hideLayout);
+                linearImage.startAnimation(hideLayout);
+                menuFloating.startAnimation(hideButton);
                 final CharSequence[] options = {"Galería", "Cancelar"};
                 final AlertDialog.Builder builder = new AlertDialog.Builder(EditProposalActivity.this);
                 builder.setTitle("Escoge una opción");
@@ -126,27 +281,28 @@ public class EditProposalActivity extends AppCompatActivity {
             }
         });
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
+        addLocation.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MyProposalsActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        editPosButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                linearLocation.setVisibility(View.GONE);
+                linearImage.setVisibility(View.GONE);
+                linearLocation.startAnimation(hideLayout);
+                linearImage.startAnimation(hideLayout);
+                menuFloating.startAnimation(hideButton);
+                if (numimatges > 0) {
+                    Toast.makeText(v.getContext(), "Perdras les imatges afegides", Toast.LENGTH_SHORT).show();
+                }
                 Intent i = new Intent(getApplicationContext(), AddLocationActivity.class);
                 i.putExtra("Title", editTitle.getText().toString());
                 i.putExtra("Description", editDescription.getText().toString());
                 i.putExtra("CallingActivity", "Edit");
+                i.putExtra("Category",categories.getSelectedItemPosition());
                 i.putExtra("id",id);
                 if (getIntent().hasExtra("lat") && getIntent().getDoubleExtra("lat",0) != 0){
                     i.putExtra("lat", getIntent().getDoubleExtra("lat",0));
                     i.putExtra("lng", getIntent().getDoubleExtra("lng",0));
                 }
-                startActivityForResult(i,1);
+                startActivityForResult(i,1);;
             }
         });
 
@@ -163,7 +319,6 @@ public class EditProposalActivity extends AppCompatActivity {
                 else if (editDescription.getText().toString().equals("")){
                     String error = res.getString(R.string.errorDescripcion);
                     Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
-
                 }
                 else {
 
@@ -176,9 +331,6 @@ public class EditProposalActivity extends AppCompatActivity {
                     try {
                         newTitle = editTitle.getText().toString();
                         newDescription = editDescription.getText().toString();
-                        if (prefs.contains("token")){
-                            token = prefs.getString("token","");
-                        }
                         values.put("id",id);
                         values.put("title", newTitle);
                         values.put("content", newDescription);
@@ -218,24 +370,17 @@ public class EditProposalActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
-                            //String creacionok = String.format(res.getString(R.string.done), strTitulo);
-
                             if (result) {
 
                                 if (numimatges > 0) {
                                     afegirimatges();
                                 }
-
-                                else {
-                                    //Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
-                                    //startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
-                                }
                             }
 
                             else {
                                 Log.i("asdCreacion", "reset");
-                                //Create.setVisibility(View.VISIBLE);
-                                //prog.setVisibility(View.GONE);
+                                saveButton.setVisibility(View.VISIBLE);
+                                prog.setVisibility(View.GONE);
                             }
 
                         }
@@ -245,6 +390,14 @@ public class EditProposalActivity extends AppCompatActivity {
                     startActivity(myIntent);
 
                 }
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MyProposalsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -375,11 +528,12 @@ public class EditProposalActivity extends AppCompatActivity {
                                 ImatgeItem aux = new ImatgeItem();
                                 aux.setNumero(Integer.parseInt(id));
                                 aux.setImatge(contentimage);
+                                aux.setIdproposta(proposalID);
 
                                 mImatgeItems.add(aux);
                             }
                         }
-                        limatges.setAdapter(new ImatgesAdapter(getApplicationContext(), mImatgeItems));
+                        limatges.setAdapter(new ImatgesEditAdapter(getApplicationContext(), mImatgeItems));
 
                     }
 

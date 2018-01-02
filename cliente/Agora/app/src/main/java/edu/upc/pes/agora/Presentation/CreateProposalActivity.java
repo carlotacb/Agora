@@ -18,6 +18,8 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -50,11 +52,8 @@ import edu.upc.pes.agora.R;
 
 public class CreateProposalActivity extends AppCompatActivity {
 
-    private Configuration config = new Configuration();
-    private Locale locale;
-
     private Button Create;
-    private TextView Titulo, Descripcion, txtPosAttached, deletePosition;
+    private TextView Titulo, Descripcion, txtPosAttached, deletePosition, showPosition;
     private TextInputLayout errortitulo, errordescripcion;
     private ProgressBar prog;
     private Spinner spin;
@@ -91,6 +90,7 @@ public class CreateProposalActivity extends AppCompatActivity {
         Descripcion = (TextView) findViewById(R.id.descripcion);
         txtPosAttached = (TextView) findViewById(R.id.positionatached);
         deletePosition = (TextView) findViewById(R.id.deleteposition);
+        showPosition = (TextView) findViewById(R.id.seeposition);
 
         errortitulo = (TextInputLayout) findViewById(R.id.titulo_up);
         errordescripcion = (TextInputLayout) findViewById(R.id.descripcion_up);
@@ -111,14 +111,15 @@ public class CreateProposalActivity extends AppCompatActivity {
         ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
         ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
 
-        //addPos = (ImageButton) findViewById(R.id.btnAddPosition);
-        //deletePos = (ImageButton) findViewById(R.id.btnDeletePosition);
-        //buttonImage = (ImageButton) findViewById(R.id.btnAddImage);
-
         final Resources res = this.getResources();
 
         Titulo.getBackground().clearColorFilter();
         Descripcion.getBackground().clearColorFilter();
+
+        final Animation showButton = AnimationUtils.loadAnimation(CreateProposalActivity.this, R.anim.show_button);
+        final Animation hideButton = AnimationUtils.loadAnimation(CreateProposalActivity.this, R.anim.hide_button);
+        final Animation showLayout = AnimationUtils.loadAnimation(CreateProposalActivity.this, R.anim.show_layout);
+        final Animation hideLayout = AnimationUtils.loadAnimation(CreateProposalActivity.this, R.anim.hide_layout);
 
         // Lista de Categorias con los nombres buenos (cambia con el idioma).
         final String[] categorias = new String[]{
@@ -194,6 +195,7 @@ public class CreateProposalActivity extends AppCompatActivity {
                 Titulo.getBackground().clearColorFilter();
                 errordescripcion.setErrorEnabled(false);
                 Descripcion.getBackground().clearColorFilter();
+                mImatgeItems.clear();
                 spin.setSelection(0);
             }
         });
@@ -332,10 +334,17 @@ public class CreateProposalActivity extends AppCompatActivity {
                 if (linearLocation.getVisibility() == View.VISIBLE && linearImage.getVisibility() == View.VISIBLE) {
                     linearLocation.setVisibility(View.GONE);
                     linearImage.setVisibility(View.GONE);
+                    linearLocation.startAnimation(hideLayout);
+                    linearImage.startAnimation(hideLayout);
+                    menuFloating.startAnimation(hideButton);
+
                 }
                 else {
                     linearLocation.setVisibility(View.VISIBLE);
                     linearImage.setVisibility(View.VISIBLE);
+                    linearLocation.startAnimation(showLayout);
+                    linearImage.startAnimation(showLayout);
+                    menuFloating.startAnimation(showButton);
                 }
             }
         });
@@ -343,6 +352,11 @@ public class CreateProposalActivity extends AppCompatActivity {
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                linearLocation.setVisibility(View.GONE);
+                linearImage.setVisibility(View.GONE);
+                linearLocation.startAnimation(hideLayout);
+                linearImage.startAnimation(hideLayout);
+                menuFloating.startAnimation(hideButton);
                 final CharSequence[] options = {"Galería", "Cancelar"};
                 final AlertDialog.Builder builder = new AlertDialog.Builder(CreateProposalActivity.this);
                 builder.setTitle("Escoge una opción");
@@ -366,6 +380,14 @@ public class CreateProposalActivity extends AppCompatActivity {
         addLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                linearLocation.setVisibility(View.GONE);
+                linearImage.setVisibility(View.GONE);
+                linearLocation.startAnimation(hideLayout);
+                linearImage.startAnimation(hideLayout);
+                menuFloating.startAnimation(hideButton);
+                if (numimatges > 0) {
+                    Toast.makeText(v.getContext(), "Perdras les imatges afegides", Toast.LENGTH_SHORT).show();
+                }
                 Intent i = new Intent(getApplicationContext(), AddLocationActivity.class);
                 i.putExtra("Title", Titulo.getText().toString());
                 i.putExtra("Description", Descripcion.getText().toString());
@@ -387,6 +409,19 @@ public class CreateProposalActivity extends AppCompatActivity {
                 lng = 0;
                 txtPosAttached.setVisibility(View.INVISIBLE);
                 deletePosition.setVisibility(View.INVISIBLE);
+                showPosition.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        showPosition.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), ShowLocationActivity.class);
+                if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng")) {
+                    i.putExtra("lat", getIntent().getDoubleExtra("lat",0));
+                    i.putExtra("lng", getIntent().getDoubleExtra("lng",0));
+                    startActivity(i);
+                }
             }
         });
 
@@ -407,6 +442,7 @@ public class CreateProposalActivity extends AppCompatActivity {
             lng = getIntent().getDoubleExtra("lng",0);
             txtPosAttached.setVisibility(View.VISIBLE);
             deletePosition.setVisibility(View.VISIBLE);
+            showPosition.setVisibility(View.VISIBLE);
         }
 
         else {
@@ -414,6 +450,7 @@ public class CreateProposalActivity extends AppCompatActivity {
             lng = 0;
             txtPosAttached.setVisibility(View.INVISIBLE);
             deletePosition.setVisibility(View.INVISIBLE);
+            showPosition.setVisibility(View.INVISIBLE);
         }
     }
 

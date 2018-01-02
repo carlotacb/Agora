@@ -7,6 +7,15 @@ public class ImatgeItem {
 
     private String imatge;
     private int numero;
+    private int idproposta;
+
+    public int getIdproposta() {
+        return idproposta;
+    }
+
+    public void setIdproposta(int idproposta) {
+        this.idproposta = idproposta;
+    }
 
     public String getImatge() {
         return imatge;
