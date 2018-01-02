@@ -195,8 +195,14 @@ public class CreateProposalActivity extends AppCompatActivity {
                 Titulo.getBackground().clearColorFilter();
                 errordescripcion.setErrorEnabled(false);
                 Descripcion.getBackground().clearColorFilter();
-                mImatgeItems.clear();
                 spin.setSelection(0);
+                mImatgeItems.clear();
+                limatges.setAdapter(new ImatgesAdapter(getApplicationContext(), mImatgeItems));
+                lat = 0;
+                lng = 0;
+                txtPosAttached.setVisibility(View.INVISIBLE);
+                deletePosition.setVisibility(View.INVISIBLE);
+                showPosition.setVisibility(View.INVISIBLE);
             }
         });
 
