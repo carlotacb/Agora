@@ -1,6 +1,7 @@
 package edu.upc.pes.agora.Presentation;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -89,10 +90,11 @@ public class LogrosActivity extends AppCompatActivity {
                             JSONArray arrJson = jsonObject.getJSONArray("achievements");
                             logros2 = new String[arrJson.length()];
                             for(int i = 0; i < arrJson.length(); i++) {
-
-                                itemLogro = codificaLogro(arrJson.getString(i));
+                               JSONObject j = arrJson.getJSONObject(i);
+                               String item = j.getString("code");
+                                itemLogro = codificaLogro(item);
                      //           logros.add(itemLogro);
-                                if(itemLogro!="Something went wrong"){
+                                if(itemLogro!="Something went wrong" && itemLogro!=""){
                                  /*   if (i ==0)logros.set(i,itemLogro);
                                     else*/ logros.add(itemLogro);
 
@@ -176,10 +178,62 @@ public class LogrosActivity extends AppCompatActivity {
 
         String Logro ="";
         switch(codigoLogro) {
+            case "PROP1": Logro = getApplicationContext().getString(R.string.PROP1);
+                break;
+            case "PROP5": Logro = getApplicationContext().getString(R.string.PROP5);
+                break;
+            case "PROP10": Logro = getApplicationContext().getString(R.string.PROP10);
+                break;
+            case "PROP50": Logro = getApplicationContext().getString(R.string.PROP50);
+                break;
+            case "PROP100": Logro = getApplicationContext().getString(R.string.PROP100);
+                break;
+            case "FAV1": Logro = getApplicationContext().getString(R.string.FAV1);
+                break;
+            case "FAV10": Logro = getApplicationContext().getString(R.string.FAV10);
+                break;
+            case "UBI1": Logro = getApplicationContext().getString(R.string.UBI1);
+                break;
+            case "UBI10": Logro = getApplicationContext().getString(R.string.UBI10);
+                break;
+            case "PROPC": Logro = getApplicationContext().getString(R.string.PROPC);
+                break;
+            case "PROPD": Logro = getApplicationContext().getString(R.string.PROPD);
+                break;
+            case "PROPO": Logro = getApplicationContext().getString(R.string.PROPO);
+                break;
+            case "PROPM": Logro = getApplicationContext().getString(R.string.PROPM);
+                break;
+            case "PROPE": Logro = getApplicationContext().getString(R.string.PROPE);
+                break;
+            case "PROPT": Logro = getApplicationContext().getString(R.string.PROPT);
+                break;
+            case "PROPQ": Logro = getApplicationContext().getString(R.string.PROPQ);
+                break;
+            case "PROPS": Logro = getApplicationContext().getString(R.string.PROPS);
+                break;
+            case "TWIT1": Logro = getApplicationContext().getString(R.string.TWIT1);
+                break;
+            case "TWIT100": Logro = getApplicationContext().getString(R.string.TWIT100);
+                break;
+            case "GLIKE1": Logro = getApplicationContext().getString(R.string.GLIKE1);
+                break;
+            case "GLIKE10": Logro = getApplicationContext().getString(R.string.GLIKE10);
+                break;
+            case "GLIKE100": Logro = getApplicationContext().getString(R.string.GLIKE100);
+                break;
+            case "PLIKE1": Logro = getApplicationContext().getString(R.string.PLIKE1);
+                break;
+            case "PLIKE10": Logro = getApplicationContext().getString(R.string.PLIKE10);
+                break;
+            case "PLIKE100": Logro = getApplicationContext().getString(R.string.PLIKE100);
+                break;
+
+
+
+
             case "COM10": Logro = "Comenta 10 veces en una propuesta";
                     break;
-            case "PROP100": Logro = "Crea 100 propuestas";
-                break;
             default: Logro = "Something went wrong";
                     break;
         }
