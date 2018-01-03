@@ -284,6 +284,18 @@ async function voteProposal({proposalId, username, vote}) {
         .then(response => response.value)
 }
 
+async function countProposalsByUsername(username) {
+    if (!username) {
+        throw new TypeError('Missing parameter: username')
+    }
+
+    const query = {
+        owner: username.toString().toLowerCase()
+    }
+
+    return collection().count(query)
+}
+
 module.exports = {
     create: create,
     update: update,
@@ -297,4 +309,5 @@ module.exports = {
     delete: deleteProposal,
     addImage: addImage,
     deleteImage: deleteImage,
+    countProposalsByUsername: countProposalsByUsername,
 }

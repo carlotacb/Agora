@@ -1,6 +1,7 @@
 const userModule = require('../../modules/user')
 const {isAuthenticated} = require('../middleware')
 const f = require('../util').wrapAsyncRouterFunction
+const achievementModule = require('../../modules/achievement')
 
 module.exports = app => {
 
@@ -43,11 +44,11 @@ module.exports = app => {
     }))
 
     app.get('/api/profile/achievements', isAuthenticated, f(async function (req, res) {
+        const achievements = await achievementModule.getAndNotifyPersistentAchievements(req.username)
+        achievementModule.setAchievementsAsNotified(req.username)
+            .catch(console.error)
         res.json({
-            achievements: [
-                'COM10',
-                'PROP100'
-            ]
+            achievements
         })
     }))
 
