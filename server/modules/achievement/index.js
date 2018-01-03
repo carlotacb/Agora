@@ -8,7 +8,7 @@ async function getCalculatedAchievements(username) {
     const numberOfProposals = await proposalModule.countProposalsByUsername(username)
 
     const achievementsFromNumberOfProposals = Object.keys(achievementTypes.proposals.numberPublished)
-        .filter(number => numberOfProposals > number)
+        .filter(number => numberOfProposals >= number)
         .map(number => achievementTypes.proposals.numberPublished[number])
 
 
