@@ -45,10 +45,12 @@ module.exports = app => {
 
     app.get('/api/profile/achievements', isAuthenticated, f(async function (req, res) {
         const achievements = await achievementModule.getAndNotifyPersistentAchievements(req.username)
+        const missingAchievements = await achievementModule.getMissingAchievementsFromAchievements(achievements)
         achievementModule.setAchievementsAsNotified(req.username)
             .catch(console.error)
         res.json({
-            achievements
+            achievements,
+            missingAchievements,
         })
     }))
 

@@ -35,8 +35,30 @@ async function getNewAchievements(username) {
     return newAchievements
 }
 
+function getAllAchievementCodesFromObject(obj) {
+    const codes = []
+    for (let key in obj) {
+        if (typeof obj[key] === 'object') {
+            codes.push(...getAllAchievementCodesFromObject(obj[key]))
+        } else {
+            codes.push(obj[key])
+        }
+    }
+    return codes
+}
+
+async function getMissingAchievementsFromAchievements(achievements) {
+    const allAchievements = getAllAchievementCodesFromObject(achievementTypes)
+    const userAchievements = new Set(achievements.map(a => a.code))
+
+    return allAchievements.filter(achievement => !userAchievements.has(achievement))
+}
+
+
+
 module.exports = {
     getNewAchievements: getNewAchievements,
     getAndNotifyPersistentAchievements: db.getAchievements,
     setAchievementsAsNotified: db.setAchievementsAsNotified,
+    getMissingAchievementsFromAchievements: getMissingAchievementsFromAchievements,
 }
