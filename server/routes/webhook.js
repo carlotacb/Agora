@@ -5,7 +5,7 @@ const f = require('./util').wrapAsyncRouterFunction
 
 module.exports = app => {
 
-    app.post('/api/webhook/share/twitter', isAuthenticated, f(async function (req, res) {
+    app.post('/api/webhook/shared/twitter', isAuthenticated, f(async function (req, res) {
         const username = req.username
         const proposalId = req.body.proposalId
 
