@@ -11,20 +11,26 @@ const calculateAchievementsFromTypeAndNumber = (type, number) => Object
 async function calculateProposalsAchievements(user) {
     const proposals = await proposalModule.getAllProposals({zone: user.zone})
     const proposalsByUser = proposals.filter(p => p.owner === user.username)
+    const proposalsByOtherUsers = proposals.filter(p => p.owner !== user.username)
 
     const reduceProposalUpVotes = (total, p) => p && p.upvotesUsernames
-    && Array.isArray(p.upvotesUsernames) ? total + p.upvotesUsernames.length : 0
+        && Array.isArray(p.upvotesUsernames) ? total + p.upvotesUsernames.length : 0
+
+    const reduceProposalComments = commentsFilter => (total, p) => p && p.comments
+        && Array.isArray(p.comments) ? total + p.comments.filter(commentsFilter).length : 0
 
     const publishedProposals = proposalsByUser.length
     const numberOfUpvotesGot = proposalsByUser.reduce(reduceProposalUpVotes, 0)
-    const numberOfUpvotesGave = proposals
-        .filter(p => p.owner !== user.username)
-        .reduce(reduceProposalUpVotes, 0)
+    const numberOfUpvotesGave = proposalsByOtherUsers.reduce(reduceProposalUpVotes, 0)
+    const numberOfCommentsGot = proposalsByUser.reduce(reduceProposalComments(comment => comment.author.id !== user.id), 0)
+    const numberOfCommentsGave = proposalsByOtherUsers.reduce(reduceProposalComments(comment => comment.author.id === user.id), 0)
 
     return [
         ...calculateAchievementsFromTypeAndNumber(achievementTypes.proposals.publishedProposals, publishedProposals),
         ...calculateAchievementsFromTypeAndNumber(achievementTypes.upvotes.got, numberOfUpvotesGot),
-        ...calculateAchievementsFromTypeAndNumber(achievementTypes.upvotes.gave, numberOfUpvotesGave)
+        ...calculateAchievementsFromTypeAndNumber(achievementTypes.upvotes.gave, numberOfUpvotesGave),
+        ...calculateAchievementsFromTypeAndNumber(achievementTypes.comments.got, numberOfCommentsGot),
+        ...calculateAchievementsFromTypeAndNumber(achievementTypes.comments.gave, numberOfCommentsGave),
     ]
 }
 

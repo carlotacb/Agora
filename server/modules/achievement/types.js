@@ -28,7 +28,12 @@ module.exports = {
         }
     },
     comments: {
-        publishedComments: {
+        got: {
+            1: 'GCOM1',
+            10: 'GCOM10',
+            100: 'GCOM100'
+        },
+        gave: {
             1: 'COM1',
             5: 'COM5',
             25: 'COM25',
