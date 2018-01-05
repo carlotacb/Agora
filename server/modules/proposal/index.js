@@ -132,4 +132,5 @@ module.exports = {
     addImage: addImage,
     deleteImage: deleteImage,
     countProposalsByUsername: db.countProposalsByUsername,
+    getProposalsCommentedByUsername: db.getProposalsCommentedByUsername
 }

@@ -1,20 +1,34 @@
 const db = require('./achievement.db')
 const proposalModule = require('../proposal')
+const userModule = require('../user')
 const achievementTypes = require('./types.js')
 
-async function getCalculatedAchievements(username) {
-    let achievements = []
+const calculateAchievementsFromTypeAndNumber = (type, number) => Object
+    .keys(type)
+    .filter(n => number >= n)
+    .map(n => type[n])
 
+async function calculateProposalsAchievements(username) {
     const numberOfProposals = await proposalModule.countProposalsByUsername(username)
 
-    const achievementsFromNumberOfProposals = Object.keys(achievementTypes.proposals.numberPublished)
-        .filter(number => numberOfProposals >= number)
-        .map(number => achievementTypes.proposals.numberPublished[number])
+    return calculateAchievementsFromTypeAndNumber(achievementTypes.proposals.publishedProposals, numberOfProposals)
+}
+
+async function calculateUserAchievements(username) {
+    const user = await userModule.get({username})
+
+    const numberOfSharedProposals = user.sharedProposalIds && Array.isArray(user.sharedProposalIds) ?
+        user.sharedProposalIds.length : 0
+
+    return calculateAchievementsFromTypeAndNumber(achievementTypes.shared.proposalsSharedOnTwitter, numberOfSharedProposals)
+}
+
+async function getCalculatedAchievements(username) {
+    const proposalsAchievements = await calculateProposalsAchievements(username)
+    const userAchievements = await calculateUserAchievements(username)
 
 
-    achievements = achievements.concat(achievementsFromNumberOfProposals)
-
-    return achievements
+    return [...proposalsAchievements, ...userAchievements]
 }
 
 async function getNewAchievements(username) {
@@ -53,7 +67,6 @@ async function getMissingAchievementsFromAchievements(achievements) {
 
     return allAchievements.filter(achievement => !userAchievements.has(achievement))
 }
-
 
 
 module.exports = {
