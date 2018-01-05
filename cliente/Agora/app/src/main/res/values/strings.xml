@@ -154,6 +154,13 @@
 
 
     <!-- Strings Logros -->
+    <string name="conseguidos">Logros Conseguidos</string>
+    <string name="pendientes">Logros Pendientes</string>
+
+    <string name="pendiente">" (pendiente)"</string>
+    <string name="conseguido">" (conseguido)"</string>
+
+
     <string name="PROP1">Crea 1 propuesta</string>
     <string name="PROP5">Crea 5 propuestas</string>
     <string name="PROP10">Crea 10 propuestas</string>

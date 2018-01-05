@@ -27,8 +27,20 @@
 
         </android.support.design.widget.AppBarLayout>
 
+        <!--TextView
+            android:id="@+id/conseguidos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" /-->
+
         <include layout="@layout/content_logros" />
+
+
     </LinearLayout>
+
+
+
+
+
 
     <include layout="@layout/navigation_view"/>
 

@@ -168,6 +168,11 @@ public class DetailsProposalActivity extends AppCompatActivity {
         compartir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                new PostAsyncTask("https://agora-pes.herokuapp.com/api/webhook/shared/twitter",getApplicationContext()){
+                }.execute();
+
                 Log.i("asdCompartir", "true");
                 String intro = getString(R.string.mensajecompartir);
                 String tweetUrl = "https://twitter.com/intent/tweet?text=" + intro + "<br>" + "<br>" + mtit + "<br>"+ mdesc + "&url=";

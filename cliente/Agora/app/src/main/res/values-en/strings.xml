@@ -130,4 +130,8 @@
     <string name="PLIKE10">Give like to 10 proposals</string>
     <string name="PLIKE100">Give like to 100 proposals</string>
     <string name="TWIT10">Share 10 proposals on Twitter</string>
+    <string name="conseguidos">"Achieved Achievements "</string>
+    <string name="pendientes">Pendant Achievements</string>
+    <string name="conseguido">" (achieved)"</string>
+    <string name="pendiente">" (pendant)"</string>
 </resources>

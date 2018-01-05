@@ -130,4 +130,8 @@
     <string name="PLIKE10">Dar like a 10 propuestas</string>
     <string name="PLIKE100">Dar like a 100 propuestas</string>
     <string name="TWIT10">Compartir 10 propuestas en Twitter</string>
+    <string name="conseguidos">Logros Conseguidos</string>
+    <string name="pendientes">Logros Pendientes</string>
+    <string name="conseguido">" (conseguido)"</string>
+    <string name="pendiente">" (pendiente)"</string>
 </resources>

@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import edu.upc.pes.agora.Logic.Adapters.ArrayAdapterPersonalizado;
 import edu.upc.pes.agora.Logic.Listeners.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
 import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
@@ -45,6 +46,8 @@ public class LogrosActivity extends AppCompatActivity {
     private String[] logros2;
     private String  itemLogro = "logro";
 
+    private Integer size = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,13 @@ public class LogrosActivity extends AppCompatActivity {
 
         TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
         headerUserName.setText(Constants.Username);
+
+       // TextView conseguidos = (TextView) findViewById(R.id.conseguidos);
+      //  conseguidos.setText(R.string.conseguidos); //R.string.conseguidos
+
+     //   TextView pendientes = (TextView) findViewById(R.id.pendientes);
+     //   pendientes.setText(R.string.pendientes); //R.string.conseguidos
+
 
         navigationView.getMenu().getItem(NavMenuListener.logros).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
@@ -88,7 +98,7 @@ public class LogrosActivity extends AppCompatActivity {
                         if(jsonObject.has("achievements")){
 
                             JSONArray arrJson = jsonObject.getJSONArray("achievements");
-                            logros2 = new String[arrJson.length()];
+                         //   logros2 = new String[arrJson.length()];
                             for(int i = 0; i < arrJson.length(); i++) {
                                JSONObject j = arrJson.getJSONObject(i);
                                String item = j.getString("code");
@@ -101,14 +111,38 @@ public class LogrosActivity extends AppCompatActivity {
                                 }
 
                             }
+
+                            size = arrJson.length();
+                        }
+
+
+                        if(jsonObject.has("missingAchievements")){
+                            JSONArray arrJson = jsonObject.getJSONArray("missingAchievements");
+                            for(int i = 0; i < arrJson.length(); i++) {
+                                String item = arrJson.getString(i);
+                                itemLogro = codificaLogro(item);
+
+                                if(itemLogro!="Something went wrong" && itemLogro!=""){
+                                    logros.add(itemLogro);
+                                    // la lista no tiene q ser logros. tiene q ser una lista diferente
+                                }
+                            }
+
                         }
 
 
                     }
 
 
-                    ArrayAdapter<String> adaptador = new ArrayAdapter<String>(LogrosActivity.this, android.R.layout.simple_list_item_1, logros);
-                    listView.setAdapter(adaptador);
+               //     ArrayAdapter<String> adaptador = new ArrayAdapter<String>(LogrosActivity.this, android.R.layout.simple_list_item_1, logros);
+                    //   ArrayAdapterPersonalizado adaptador = new ArrayAdapter<String>(LogrosActivity.this, android.R.layout.simple_list_item_1, logros);
+                    ArrayAdapterPersonalizado cv = new ArrayAdapterPersonalizado(getApplicationContext(), logros,size);
+                    listView.setAdapter(cv);
+
+                 /*  int max = listView.getAdapter().getCount();
+                   for ( int i = 0; i < max ; i++){
+                       listView.get
+                   }*/
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -142,16 +176,21 @@ public class LogrosActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                view.setBackgroundColor(Color.CYAN);
-                Toast.makeText(getApplicationContext(), "Ha pulsado el item en posicion " + i, Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(), "Estado del boolean de la lista " + list.get(i), Toast.LENGTH_LONG).show();
+             //   view.setBackgroundColor(Color.CYAN);
+            //    Toast.makeText(getApplicationContext(), "Ha pulsado el item en posicion " + i, Toast.LENGTH_LONG).show();
+             //   Toast.makeText(getApplicationContext(), "Estado del boolean de la lista " + list.get(i), Toast.LENGTH_LONG).show();
            //     list.set(i,true);
            //     Toast.makeText(getApplicationContext(), "Estado del boolean de la lista version 2" + list.get(i), Toast.LENGTH_SHORT).show();
 
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(LogrosActivity.this);
                 View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
+                String estado = "";
+
+                if (i >= size) estado = getApplicationContext().getString(R.string.pendiente);
+                else estado = getApplicationContext().getString(R.string.conseguido);
 
                 TextView textView = (TextView)mView.findViewById(R.id.textView);
+                textView.setText(listView.getItemAtPosition(i).toString()+estado);
                 Button mAccept = (Button) mView.findViewById(R.id.etAccept);
 
                 ImageView imageView = (ImageView) mView.findViewById(R.id.image);

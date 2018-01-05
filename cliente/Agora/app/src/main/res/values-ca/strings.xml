@@ -130,4 +130,8 @@
     <string name="PLIKE10">Donar like a 10 propostes</string>
     <string name="PLIKE100">Donar like a 100 propostes</string>
     <string name="TWIT10">Compartir 10 propostes a Twitter</string>
+    <string name="conseguidos">Èxits Aconseguits</string>
+    <string name="pendientes">Èxits Pendents</string>
+    <string name="conseguido">" (aconseguit)"</string>
+    <string name="pendiente">" (pendent)"</string>
 </resources>
