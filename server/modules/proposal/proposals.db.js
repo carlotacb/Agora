@@ -30,7 +30,7 @@ async function create({username, title, content, location, zone, categoria}) {
     return object
 }
 
-async function getAllBy(reqQuery, reqSort) {
+async function getAllBy(reqQuery = {}, reqSort = {}) {
 
     const query = {}, sort = {}
 

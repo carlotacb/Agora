@@ -8,15 +8,27 @@ const calculateAchievementsFromTypeAndNumber = (type, number) => Object
     .filter(n => number >= n)
     .map(n => type[n])
 
-async function calculateProposalsAchievements(username) {
-    const numberOfProposals = await proposalModule.countProposalsByUsername(username)
+async function calculateProposalsAchievements(user) {
+    const proposals = await proposalModule.getAllProposals({zone: user.zone})
+    const proposalsByUser = proposals.filter(p => p.owner === user.username)
 
-    return calculateAchievementsFromTypeAndNumber(achievementTypes.proposals.publishedProposals, numberOfProposals)
+    const reduceProposalUpVotes = (total, p) => p && p.upvotesUsernames
+    && Array.isArray(p.upvotesUsernames) ? total + p.upvotesUsernames.length : 0
+
+    const publishedProposals = proposalsByUser.length
+    const numberOfUpvotesGot = proposalsByUser.reduce(reduceProposalUpVotes, 0)
+    const numberOfUpvotesGave = proposals
+        .filter(p => p.owner !== user.username)
+        .reduce(reduceProposalUpVotes, 0)
+
+    return [
+        ...calculateAchievementsFromTypeAndNumber(achievementTypes.proposals.publishedProposals, publishedProposals),
+        ...calculateAchievementsFromTypeAndNumber(achievementTypes.upvotes.got, numberOfUpvotesGot),
+        ...calculateAchievementsFromTypeAndNumber(achievementTypes.upvotes.gave, numberOfUpvotesGave)
+    ]
 }
 
-async function calculateUserAchievements(username) {
-    const user = await userModule.get({username})
-
+async function calculateUserAchievements(user) {
     const numberOfSharedProposals = user.sharedProposalIds && Array.isArray(user.sharedProposalIds) ?
         user.sharedProposalIds.length : 0
 
@@ -24,9 +36,10 @@ async function calculateUserAchievements(username) {
 }
 
 async function getCalculatedAchievements(username) {
-    const proposalsAchievements = await calculateProposalsAchievements(username)
-    const userAchievements = await calculateUserAchievements(username)
+    const user = await userModule.get({username})
 
+    const proposalsAchievements = await calculateProposalsAchievements(user)
+    const userAchievements = await calculateUserAchievements(user)
 
     return [...proposalsAchievements, ...userAchievements]
 }

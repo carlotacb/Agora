@@ -15,6 +15,18 @@ module.exports = {
             100: 'TWIT100',
         }
     },
+    upvotes: {
+        got: {
+            1: 'GLIKE1',
+            10: 'GLIKE10',
+            100: 'GLIKE100'
+        },
+        gave: {
+            1: 'PLIKE1',
+            10: 'PLIKE10',
+            100: 'PLIKE100'
+        }
+    },
     comments: {
         publishedComments: {
             1: 'COM1',

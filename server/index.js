@@ -11,12 +11,16 @@ const BootstrapRouter = require('./routes')
 
 
 app.use(mung.headersAsync(async function (req, res) {
-    if (res.statusCode === 200 && req.username) {
-        const headerKey = 'X-New-Achievements'
-        const newAchievements = await achievementModule.getNewAchievements(req.username)
-        if (newAchievements && Array.isArray(newAchievements) && newAchievements.length > 0) {
-            res.setHeader(headerKey, newAchievements.join(','))
+    try {
+        if (res.statusCode === 200 && req.username) {
+            const headerKey = 'X-New-Achievements'
+            const newAchievements = await achievementModule.getNewAchievements(req.username)
+            if (newAchievements && Array.isArray(newAchievements) && newAchievements.length > 0) {
+                res.setHeader(headerKey, newAchievements.join(','))
+            }
         }
+    } catch (error) {
+        console.error('Error getting achievements headers', error)
     }
 }))
 
@@ -32,7 +36,7 @@ function BootstrapServer(app) {
 
     app.use(function (err, req, res, next) {
         console.error(`Error on ${req.method} ${req.path} with request body ${JSON.stringify(req.body)}\n`, err)
-        res.status(err.status || 500).json({errorCode: err.errorCode, message: err.message})
+        return res.status(err.status || 500).json({errorCode: err.errorCode, message: err.message})
     });
 }
 
