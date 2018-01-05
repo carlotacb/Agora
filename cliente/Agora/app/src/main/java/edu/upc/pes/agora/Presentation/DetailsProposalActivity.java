@@ -169,9 +169,18 @@ public class DetailsProposalActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
+                JSONObject values = new JSONObject();
+                try {
+                    values.put("proposalId",idprop);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 new PostAsyncTask("https://agora-pes.herokuapp.com/api/webhook/shared/twitter",getApplicationContext()){
-                }.execute();
+                    @Override
+                    protected void onPostExecute(JSONObject jsonObject) {
+                        super.onPostExecute(jsonObject);
+                    }
+                }.execute(values);
 
                 Log.i("asdCompartir", "true");
                 String intro = getString(R.string.mensajecompartir);
