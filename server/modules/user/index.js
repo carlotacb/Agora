@@ -86,4 +86,5 @@ module.exports = {
     getByZone: db.getByZone,
     setFavorite: db.setFavorite,
     unsetFavorite: db.unsetFavorite,
+    logSharedProposal: db.logSharedProposal,
 }

@@ -127,6 +127,20 @@ async function getProfilePicture(username) {
         .then(user => user && user.image ? user.image : null)
 }
 
+async function logSharedProposal({proposalId, username}) {
+    const query = {
+        username: username.toString().toLowerCase()
+    }
+
+    const update = {
+        $addToSet: {
+            sharedProposalIds: proposalId
+        }
+    }
+
+    return collection().updateOne(query, update)
+}
+
 module.exports = {
     get: get,
     getProfile: getProfile,
@@ -137,4 +151,5 @@ module.exports = {
     setFavorite: setFavorite,
     unsetFavorite: unsetFavorite,
     getProfilePicture: getProfilePicture,
+    logSharedProposal: logSharedProposal,
 }
