@@ -4,16 +4,20 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +46,7 @@ public class MyFavoritesActivity extends AppCompatActivity {
     private ListView llistapropostes;
     private ArrayList<Proposal> propostes;
     private JSONObject Jason = new JSONObject();
+    private LinearLayout cargando;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -54,8 +59,49 @@ public class MyFavoritesActivity extends AppCompatActivity {
 
         TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
         headerUserName.setText(Constants.Username);
-        ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
-        foto.setImageBitmap(Constants.fotoperfil);
+        final ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
+
+        if (Constants.fotoperfil == null) {
+            JSONObject Jason = new JSONObject();
+            new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
+
+                @Override
+                protected void onPostExecute(JSONObject jsonObject) {
+                    try {
+                        if (jsonObject.has("error")) {
+                            String error = jsonObject.get("error").toString();
+                            Log.i("asdProfile", "Error");
+
+                            Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+
+                        else {
+
+                            Log.i("asdProfile", (jsonObject.toString()));
+
+                            if (jsonObject.has("image")) {
+                                String imageJ = jsonObject.getString("image");
+
+                                if (!imageJ.equals("null")) {
+                                    byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+                                    Constants.fotoperfil = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                                    foto.setImageBitmap(Constants.fotoperfil);
+                                }
+
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.execute(Jason);
+        }
+
+        else {
+            foto.setImageBitmap(Constants.fotoperfil);
+        }
 
         navigationView.getMenu().getItem(NavMenuListener.favorite).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
@@ -69,11 +115,16 @@ public class MyFavoritesActivity extends AppCompatActivity {
         toggle.syncState();
 
         llistapropostes = (ListView) findViewById(R.id.llistacomentaris);
+        cargando = (LinearLayout) findViewById(R.id.pantallacargandofav);
 
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal?favorite=true", this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
+
+                llistapropostes.setVisibility(View.GONE);
+                cargando.setVisibility(View.VISIBLE);
+
                 try {
                     if (jsonObject.has("error")) {
                         String error = jsonObject.get("error").toString();
@@ -132,6 +183,9 @@ public class MyFavoritesActivity extends AppCompatActivity {
                 } catch (JSONException | ParseException e) {
                     e.printStackTrace();
                 }
+
+                llistapropostes.setVisibility(View.VISIBLE);
+                cargando.setVisibility(View.GONE);
             }
         }.execute(Jason);
 
@@ -168,7 +222,7 @@ public class MyFavoritesActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        Intent refresh = new Intent(this, MainActivity.class);
+        Intent refresh = new Intent(this, MyFavoritesActivity.class);
         refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Boolean change = false;
 

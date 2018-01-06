@@ -108,6 +108,7 @@
     <string name="barrio2">Barrio:</string>
     <string name="fnaix2">Fecha Nacimiento:</string>
     <string name="sexo2">Sexo:</string>
+    <string name="descripcion2">Descripcion:</string>
     <string name="verpropuestas">Ver propuestas</string>
     <string name="creadoel">Creada el %1$s</string>
     <string name="propcreadapor">Propuestas de: %1$s</string>
@@ -156,7 +157,8 @@
     <string name="mensajecompartir">Mira que propuesta he encontrado en Agora!</string>
 
 
-
+    <string name="cargandoprop">CARGANDO PROPUESTAS...</string>
+    <string name="cargandoperfil">CARGANDO PERFIL...</string>
 
 
     <string name="str_en" translatable="false">English</string>
