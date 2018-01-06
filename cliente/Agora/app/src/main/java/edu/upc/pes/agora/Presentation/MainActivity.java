@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -88,6 +91,8 @@ public class MainActivity extends AppCompatActivity {
         headerUserName.setText(Constants.Username);
         ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
 
+        final Resources res = this.getResources();
+
         if (Constants.fotoperfil == null) {
             JSONObject Jason = new JSONObject();
             new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
@@ -110,9 +115,17 @@ public class MainActivity extends AppCompatActivity {
                             if (jsonObject.has("image")) {
                                 String imageJ = jsonObject.getString("image");
 
-                                byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
 
-                                Constants.fotoperfil = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                                if (!imageJ.equals("null")) {
+                                    byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+
+                                    Constants.fotoperfil = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+
+                                }
+                                /*else {
+
+                                    Constants.fotoperfil = BitmapFactory.decodeResource(getResources(),R.drawable.ic_user_male);
+                                }*/
                             }
                         }
 
@@ -139,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
         buscartext = (TextView) findViewById(R.id.buscar);
         searchUsers = (AutoCompleteTextView) findViewById(R.id.searchUser);
 
-        final Resources res = this.getResources();
+
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -495,7 +508,7 @@ public class MainActivity extends AppCompatActivity {
                         toast.show();
                     }
 
-                    else if (jsonObject != null){
+                    else if (jsonObject != null) {
                         JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
                         propostes = new ArrayList<>();
 
