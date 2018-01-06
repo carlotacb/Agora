@@ -24,6 +24,11 @@ async function calculateProposalsAchievements(user) {
     const numberOfUpvotesGave = proposalsByOtherUsers.reduce(reduceProposalUpVotes, 0)
     const numberOfCommentsGot = proposalsByUser.reduce(reduceProposalComments(comment => comment.author.id !== user.id), 0)
     const numberOfCommentsGave = proposalsByOtherUsers.reduce(reduceProposalComments(comment => comment.author.id === user.id), 0)
+    const numberOfProposalsWithLocation = proposalsByUser.filter(p => p.location.lat && p.location.long).length
+
+    const categoryAchievements = Object.keys(achievementTypes.proposals.category)
+        .filter(category => proposalsByUser.some(p => p.categoria === category))
+        .map(category => achievementTypes.proposals.category[category])
 
     return [
         ...calculateAchievementsFromTypeAndNumber(achievementTypes.proposals.publishedProposals, publishedProposals),
@@ -31,6 +36,8 @@ async function calculateProposalsAchievements(user) {
         ...calculateAchievementsFromTypeAndNumber(achievementTypes.upvotes.gave, numberOfUpvotesGave),
         ...calculateAchievementsFromTypeAndNumber(achievementTypes.comments.got, numberOfCommentsGot),
         ...calculateAchievementsFromTypeAndNumber(achievementTypes.comments.gave, numberOfCommentsGave),
+        ...calculateAchievementsFromTypeAndNumber(achievementTypes.proposals.location, numberOfProposalsWithLocation),
+        ...categoryAchievements
     ]
 }
 
@@ -38,16 +45,25 @@ async function calculateUserAchievements(user) {
     const numberOfSharedProposals = user.sharedProposalIds && Array.isArray(user.sharedProposalIds) ?
         user.sharedProposalIds.length : 0
 
-    return calculateAchievementsFromTypeAndNumber(achievementTypes.shared.proposalsSharedOnTwitter, numberOfSharedProposals)
+    const proposalsFavorited = user.favorites && Array.isArray(user.favorites) ? user.favorites.length : 0
+    const userCompletedProfile = user => user.description && user.cpCode && user.realname && user.neighborhood && user.bdate && user.sex && user.image
+
+    return [
+        ...calculateAchievementsFromTypeAndNumber(achievementTypes.user.sharedProposals, numberOfSharedProposals),
+        ...calculateAchievementsFromTypeAndNumber(achievementTypes.user.favoritedProposals, proposalsFavorited),
+        ...user.image ? [achievementTypes.user.imageChanged] : [],
+        ...userCompletedProfile(user) ? [achievementTypes.user.completedInformationProfile] : []
+    ]
 }
 
 async function getCalculatedAchievements(username) {
     const user = await userModule.get({username})
+    const achievements = await db.getAchievements(user.username)
 
     const proposalsAchievements = await calculateProposalsAchievements(user)
     const userAchievements = await calculateUserAchievements(user)
 
-    return [...proposalsAchievements, ...userAchievements]
+    return [...proposalsAchievements, ...userAchievements, ...calculateAchievementsFromTypeAndNumber(achievementTypes.achievements, achievements.length)]
 }
 
 async function getNewAchievements(username) {

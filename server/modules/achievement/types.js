@@ -6,14 +6,39 @@ module.exports = {
             10: 'PROP10',
             50: 'PROP50',
             100: 'PROP100'
-        }
+        },
+        location: {
+            1: 'UBI1',
+            10: 'UBI10',
+        },
+        category: {
+            C: 'PROPC',
+            D: 'PROPD',
+            O: 'PROPO',
+            M: 'PROPM',
+            E: 'PROPE',
+            T: 'PROPT',
+            Q: 'PROPQ',
+            S: 'PROPS',
+        },
     },
-    shared: {
-        proposalsSharedOnTwitter: {
+    user: {
+        imageChanged: 'IMGP',
+        completedInformationProfile: 'INFP',
+        sharedProposals: {
             1: 'TWIT1',
             10: 'TWIT10',
             100: 'TWIT100',
-        }
+        },
+        favoritedProposals: {
+            1: 'FAV1',
+            10: 'FAV10'
+        },
+    },
+    achievements: {
+        1: 'LOGRO1',
+        10: 'LOGRO10',
+        100: 'LOGRO100',
     },
     upvotes: {
         got: {
