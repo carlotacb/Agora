@@ -312,18 +312,16 @@ public class CreateProposalActivity extends AppCompatActivity {
                             String achievement = this.getNewAchievement();
 
 
-                            if (result) {
-
+                            if (result && achievement != null && !achievement.equals("")) {
+                                crear(achievement);
+                            }
+                            else if (result) {
                                 if (numimatges > 0) {
                                     afegirimatges();
                                 } else {
                                     Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
                                     startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
                                 }
-                            }
-
-                            else if (result && achievement != null && !achievement.equals("")) {
-                                crear();
                             }
 
                             else {
@@ -359,7 +357,7 @@ public class CreateProposalActivity extends AppCompatActivity {
                 }
             }
         });
-
+/*
         if (crearDialog) {
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(CreateProposalActivity.this);
             View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
@@ -376,7 +374,7 @@ public class CreateProposalActivity extends AppCompatActivity {
                     dialog.dismiss();
                 }
             });
-        }
+        }*/
 
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -576,13 +574,14 @@ public class CreateProposalActivity extends AppCompatActivity {
         limatges.setAdapter(new ImatgesAdapter(getApplicationContext(), mImatgeItems));
     }
 
-    public void crear() {
+    public void crear(String achievement) {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(CreateProposalActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
         TextView textView = (TextView)mView.findViewById(R.id.textView);
+        textView.setText(codificaLogro(achievement));
         Button mAccept = (Button) mView.findViewById(R.id.etAccept);
         ImageView imageView = (ImageView) mView.findViewById(R.id.image);
-        imageView.setImageResource(R.drawable.ic_twitter);
+        imageView.setImageResource(R.drawable.ic_trofeo_logro2);
         mBuilder.setView(mView);
         //  mBuilder.setCancelable(false);
         final AlertDialog dialog = mBuilder.create();
@@ -606,4 +605,71 @@ public class CreateProposalActivity extends AppCompatActivity {
             }
         });
     }
+
+    private String codificaLogro(String codigoLogro) {
+
+        String Logro ="";
+        switch(codigoLogro) {
+            case "PROP1": Logro = getApplicationContext().getString(R.string.PROP1);
+                break;
+            case "PROP5": Logro = getApplicationContext().getString(R.string.PROP5);
+                break;
+            case "PROP10": Logro = getApplicationContext().getString(R.string.PROP10);
+                break;
+            case "PROP50": Logro = getApplicationContext().getString(R.string.PROP50);
+                break;
+            case "PROP100": Logro = getApplicationContext().getString(R.string.PROP100);
+                break;
+            case "FAV1": Logro = getApplicationContext().getString(R.string.FAV1);
+                break;
+            case "FAV10": Logro = getApplicationContext().getString(R.string.FAV10);
+                break;
+            case "UBI1": Logro = getApplicationContext().getString(R.string.UBI1);
+                break;
+            case "UBI10": Logro = getApplicationContext().getString(R.string.UBI10);
+                break;
+            case "PROPC": Logro = getApplicationContext().getString(R.string.PROPC);
+                break;
+            case "PROPD": Logro = getApplicationContext().getString(R.string.PROPD);
+                break;
+            case "PROPO": Logro = getApplicationContext().getString(R.string.PROPO);
+                break;
+            case "PROPM": Logro = getApplicationContext().getString(R.string.PROPM);
+                break;
+            case "PROPE": Logro = getApplicationContext().getString(R.string.PROPE);
+                break;
+            case "PROPT": Logro = getApplicationContext().getString(R.string.PROPT);
+                break;
+            case "PROPQ": Logro = getApplicationContext().getString(R.string.PROPQ);
+                break;
+            case "PROPS": Logro = getApplicationContext().getString(R.string.PROPS);
+                break;
+            case "TWIT1": Logro = getApplicationContext().getString(R.string.TWIT1);
+                break;
+            case "TWIT100": Logro = getApplicationContext().getString(R.string.TWIT100);
+                break;
+            case "GLIKE1": Logro = getApplicationContext().getString(R.string.GLIKE1);
+                break;
+            case "GLIKE10": Logro = getApplicationContext().getString(R.string.GLIKE10);
+                break;
+            case "GLIKE100": Logro = getApplicationContext().getString(R.string.GLIKE100);
+                break;
+            case "PLIKE1": Logro = getApplicationContext().getString(R.string.PLIKE1);
+                break;
+            case "PLIKE10": Logro = getApplicationContext().getString(R.string.PLIKE10);
+                break;
+            case "PLIKE100": Logro = getApplicationContext().getString(R.string.PLIKE100);
+                break;
+
+
+
+
+            case "COM10": Logro = "Comenta 10 veces en una propuesta";
+                break;
+            default: Logro = "Something went wrong";
+                break;
+        }
+        return Logro;
+    }
+
 }
