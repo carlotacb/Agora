@@ -4,17 +4,6 @@
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
 
-<<<<<<< HEAD
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permissions.INTERNET" />
-    <uses-permission android:name="androidpermission.CAMERA" />
-    <uses-permission android:name="androidpermission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="androidpermission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="androidpermission.CAMERA.MEDIA_MOUNTED" />
-=======
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_PROFILE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
@@ -24,7 +13,6 @@
     <uses-permission android:name="androidpermission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="androidpermission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="androidpermission.CAMERA.MEDIA_MOUNTED"/>
->>>>>>> gami
 
     <!-- Get GPS position -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -44,14 +32,8 @@
             android:label="Agora">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
-<<<<<<< HEAD
                 <category android:name="android.intent.category.LAUNCHER" />
 
-
-=======
-                <category android:name="android.intent.category.LAUNCHER"/>
->>>>>>> gami
             </intent-filter>
         </activity>
         <activity android:name=".Presentation.RegisterActivity"/>
@@ -59,13 +41,8 @@
         <activity
             android:name=".Presentation.MainActivity"
             android:label="@string/title_activity_main2"
-<<<<<<< HEAD
-            android:theme="@style/AppTheme"/>
-=======
-            android:theme="@style/AppTheme">
-        </activity>
->>>>>>> gami
 
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".Presentation.MyProposalsActivity"
             android:label="@string/title_activity_my_propuestas"
@@ -81,12 +58,8 @@
         <activity
             android:name=".Presentation.EditProposalActivity"
             android:label="@string/title_activity_edit_proposal"
-<<<<<<< HEAD
             android:theme="@style/AppTheme"/>
-=======
-            android:theme="@style/AppTheme">
-        </activity>
->>>>>>> gami
+
 
         <activity
             android:name=".Presentation.DetailsProposalActivity"
@@ -112,8 +85,6 @@
             android:value="AIzaSyC95I96hwPsV83M-y2Dp9OZgqjGuGkD0-Y" />
 
         <activity
-<<<<<<< HEAD
-
             android:name=".Presentation.ShowLocationActivity"
             android:label="@string/title_activity_show_location">
 
@@ -134,22 +105,12 @@
         <activity
             android:name=".Presentation.MyFavoritesActivity"
             android:label="@string/title_activity_my_favorites"
-            android:theme="@style/AppTheme">
-        </activity>
-=======
-            android:name=".Presentation.LogrosActivity"
-            android:label="@string/title_activity_logros"
-            android:theme="@style/AppTheme">
-
-        </activity>
+            android:theme="@style/AppTheme"/>
 
         <activity
-            android:name=".Presentation.ShowLocationActivity"
-            android:label="@string/title_activity_show_location">
-            
-        </activity>
-
->>>>>>> gami
+            android:name=".Presentation.LogrosActivity"
+            android:label="@string/title_activity_logros"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>
