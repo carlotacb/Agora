@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,7 +42,7 @@ public class MyProfileActivity extends AppCompatActivity {
     private Configuration config = new Configuration();
     private Locale locale;
     private JSONObject Jason = new JSONObject();
-    private ImageButton editar;
+    private Button editar;
 
     private TextView username, name, CP, Born, neigh, sex;
     private ImageView image;
@@ -77,8 +78,6 @@ public class MyProfileActivity extends AppCompatActivity {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        editar = (ImageButton) findViewById(R.id.editarperfil);
-
         username = (TextView) findViewById(R.id.user);
         name = (TextView) findViewById(R.id.nameprofile);
         neigh = (TextView) findViewById(R.id.barrio);
@@ -86,6 +85,7 @@ public class MyProfileActivity extends AppCompatActivity {
         Born = (TextView) findViewById(R.id.born);
         sex = (TextView) findViewById(R.id.sexo);
         image = (ImageView) findViewById(R.id.setImage);
+        editar = (Button) findViewById(R.id.editarperfil);
 
         @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         final String dateInString = "07/06/2013";

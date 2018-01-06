@@ -16,24 +16,38 @@
         <LinearLayout
             android:orientation="vertical"
             android:gravity="center"
-            android:id="@+id/progress"
-            android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
+            android:id="@+id/pantallacargando"
             android:layout_width="match_parent"
+            android:visibility="invisible"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="CARGANDO PERFIL..."
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:padding="10dp"
+                android:textColor="@color/colorPrimaryDark"/>
+
             <ProgressBar
-                android:layout_width="50dp"
-                android:layout_height="50dp"/>
+                android:layout_width="70dp"
+                android:layout_height="70dp"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:id="@+id/layouttot"
+            android:id="@+id/pantallaperfil"
             android:paddingBottom="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
@@ -87,7 +101,8 @@
             </LinearLayout>
 
             <LinearLayout android:layout_width="match_parent"
-                          android:layout_marginTop="20dp"
+                          android:layout_marginTop="30dp"
+                          android:layout_marginLeft="5dp"
                           android:layout_height="wrap_content">
 
                 <TextView
@@ -112,6 +127,7 @@
 
             <LinearLayout android:layout_width="match_parent"
                           android:layout_marginTop="15dp"
+                          android:layout_marginLeft="5dp"
                           android:layout_height="wrap_content">
 
                 <TextView
@@ -136,6 +152,7 @@
 
             <LinearLayout android:layout_width="match_parent"
                           android:layout_marginTop="15dp"
+                          android:layout_marginLeft="5dp"
                           android:layout_height="wrap_content">
 
                 <TextView
@@ -160,6 +177,7 @@
 
             <LinearLayout android:layout_width="match_parent"
                           android:layout_marginTop="15dp"
+                          android:layout_marginLeft="5dp"
                           android:layout_height="wrap_content">
 
                 <TextView
@@ -182,14 +200,21 @@
  
             </LinearLayout>
 
-            <ImageButton
-                android:layout_width="50dp"
+            <Button
                 android:id="@+id/editarperfil"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:src="@mipmap/ic_edit"
-                android:background="@drawable/botonedit"
-                android:layout_gravity="center"/>
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginTop="30dp"
+                android:text="EDITAR"
+                android:background="@drawable/botonlogin"
+                android:fontFamily="sans-serif-medium"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:textSize="14sp"/>
 
         </LinearLayout>
 
