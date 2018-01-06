@@ -15,6 +15,7 @@ import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
 import edu.upc.pes.agora.Presentation.LoginActivity;
+import edu.upc.pes.agora.Presentation.LogrosActivity;
 import edu.upc.pes.agora.Presentation.MainActivity;
 import edu.upc.pes.agora.Presentation.MyFavoritesActivity;
 import edu.upc.pes.agora.Presentation.MyProposalsActivity;
@@ -30,6 +31,8 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
     public static final int myproposals = 1;
     public static final int favorite = 2;
     public static final int profile = 3;
+    public static final int logros = 4;
+
 
     public NavMenuListener(Context context, DrawerLayout navDrawer) {
         this.context = context;
@@ -79,6 +82,14 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
             // Va a la Pagina principal del perfil
             if (!context.getClass().equals(MyProfileActivity.class)) {
                 Intent myIntent = new Intent(context, MyProfileActivity.class);
+                context.startActivity(myIntent);
+            }
+            navDrawer.closeDrawers();
+
+        } else if (id == R.id.nav_logros) {
+            // Va a la Pagina principal del perfil
+            if (!context.getClass().equals(LogrosActivity.class)) {
+                Intent myIntent = new Intent(context, LogrosActivity.class);
                 context.startActivity(myIntent);
             }
             navDrawer.closeDrawers();

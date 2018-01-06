@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -77,6 +78,10 @@ public class CreateProposalActivity extends AppCompatActivity {
     private int idProposta;
     private int numimatges = 0;
 
+    private LayoutInflater mInflator;
+    private boolean selected;
+    private boolean crearDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +115,8 @@ public class CreateProposalActivity extends AppCompatActivity {
 
         ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
         ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
+
+        crearDialog = false;
 
         final Resources res = this.getResources();
 
@@ -302,17 +309,21 @@ public class CreateProposalActivity extends AppCompatActivity {
                             }
 
                             String creacionok = String.format(res.getString(R.string.done), strTitulo);
+                            String achievement = this.getNewAchievement();
+
 
                             if (result) {
 
                                 if (numimatges > 0) {
                                     afegirimatges();
-                                }
-
-                                else {
+                                } else {
                                     Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
                                     startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
                                 }
+                            }
+
+                            else if (result && achievement != null && !achievement.equals("")) {
+                                crear();
                             }
 
                             else {
@@ -348,6 +359,24 @@ public class CreateProposalActivity extends AppCompatActivity {
                 }
             }
         });
+
+        if (crearDialog) {
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(CreateProposalActivity.this);
+            View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
+            TextView textView = (TextView)mView.findViewById(R.id.textView);
+            Button mAccept = (Button) mView.findViewById(R.id.etAccept);
+            ImageView imageView = (ImageView) mView.findViewById(R.id.image);
+            imageView.setImageResource(R.drawable.ic_twitter);
+            mBuilder.setView(mView);
+            final AlertDialog dialog = mBuilder.create();
+            dialog.show();
+            mAccept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+        }
 
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -545,5 +574,36 @@ public class CreateProposalActivity extends AppCompatActivity {
         mImatgeItems.add(im);
 
         limatges.setAdapter(new ImatgesAdapter(getApplicationContext(), mImatgeItems));
+    }
+
+    public void crear() {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(CreateProposalActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
+        TextView textView = (TextView)mView.findViewById(R.id.textView);
+        Button mAccept = (Button) mView.findViewById(R.id.etAccept);
+        ImageView imageView = (ImageView) mView.findViewById(R.id.image);
+        imageView.setImageResource(R.drawable.ic_twitter);
+        mBuilder.setView(mView);
+        //  mBuilder.setCancelable(false);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
+            }
+        });
+        dialog.show();
+
+        mAccept.setOnClickListener(new View.OnClickListener() {
+
+
+
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                //    startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
+
+            }
+        });
     }
 }

@@ -41,6 +41,7 @@
     <string name="serchuser">Search User</string>
     <string name="help">Help</string>
     <string name="about">About</string>
+    <string name="logros">Logros</string>
     <string name="surt">Sortir</string>
 
     <!-- Multiidioma -->
@@ -56,9 +57,11 @@
     <!-- Página principal -->
     <string name="title_activity_main">Main Page</string>
     <string name="creadopor">"Creado por "</string>
+
     <string name="mesinfo">VER MAS</string>
     <string name="filtro">Filter by:</string>
     <string name="buscar">Find:</string>
+
     <string name="tot">Tot</string>
     <string name="user">Per Usuari</string>
     <string name="categ">Per Categories</string>
@@ -158,6 +161,45 @@
 
 
 
+    <!-- Strings Logros -->
+    <string name="conseguidos">Logros Conseguidos</string>
+    <string name="pendientes">Logros Pendientes</string>
+
+    <string name="pendiente">" (pendiente)"</string>
+    <string name="conseguido">" (conseguido)"</string>
+
+
+    <string name="PROP1">Crea 1 propuesta</string>
+    <string name="PROP5">Crea 5 propuestas</string>
+    <string name="PROP10">Crea 10 propuestas</string>
+    <string name="PROP50">Crea 50 propuestas</string>
+    <string name="PROP100">Crea 100 propuestas</string>
+    <string name="FAV1">Añadir 1 propuesta a favoritos</string>
+    <string name="FAV10">Añadir 10 propuestas a favoritos</string>
+    <string name="UBI1">Crear 1 propuesta con ubicación</string>
+    <string name="UBI10">Crear 10 propuestas con ubicación</string>
+    <string name="PROPC">Crear una propuesta de la categoria Cultura</string>
+    <string name="PROPD">Crear una propuesta de la categoria Deportes</string>
+    <string name="PROPO">Crear una propuesta de la categoria Ocio</string>
+    <string name="PROPM">Crear una propuesta de la categoria Mantenimiento</string>
+    <string name="PROPE">Crear una propuesta de la categoria Eventos</string>
+    <string name="PROPT">Crear una propuesta de la categoria Turismo</string>
+    <string name="PROPQ">Crear una propuesta de la categoria Quejas</string>
+    <string name="PROPS">Crear una propuesta de la categoria Soporte</string>
+    <string name="TWIT1">Compartir 1 propuesta en Twitter</string>
+    <string name="TWIT10">Compartir 10 propuestas en Twitter</string>
+    <string name="TWIT100">Compartir 100 propuestas en Twitter</string>
+    <string name="GLIKE1">Conseguir 1 like en 1 propuesta</string>
+    <string name="GLIKE10">Conseguir 10 likes en 1 propuesta</string>
+    <string name="GLIKE100">Conseguir 100 likes en 1 propuesta</string>
+    <string name="PLIKE1">Dar like a 1 propuesta</string>
+    <string name="PLIKE10">Dar like a 10 propuestas</string>
+    <string name="PLIKE100">Dar like a 100 propuestas</string>
+
+
+
+
+
 
     <string name="str_en" translatable="false">English</string>
     <string name="str_es" translatable="false">Spanish</string>
@@ -179,8 +221,10 @@
     </string>
 
     <string name="title_activity_add_location" translatable="false">Map</string>
+
     <string name="title_activity_my_favorites">MyFavorites</string>
 
+    <string name="title_activity_logros">LogrosActivity</string>
     <string name="title_activity_show_location">Map</string>
     <string name="title_activity_other_user">OtherUserActivity</string>
     <string name="title_activity_fill_profile">FillProfileActivity</string>

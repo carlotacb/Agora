@@ -29,6 +29,9 @@ public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
 
     SharedPreferences prefs;
 
+
+
+
     public GetTokenAsyncTask(String url2, Context coming_context) {
         try {
             url = new URL(url2);
@@ -50,9 +53,9 @@ public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             client.setRequestMethod("GET");
             client.setRequestProperty("Authorization", Constants.SH_PREF_NAME);
             client.connect();
-
             JSONObject aux;
             String response = Helpers.iStreamToString(client.getInputStream());
+
 
             if (client.getResponseCode() >= 400){
                 Log.i("asdGetTokenAsyncTask", "entra al 400");
@@ -95,6 +98,7 @@ public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             Log.e("error", e.getMessage());
             e.printStackTrace();
             return null;
+
         }
     }
 }
