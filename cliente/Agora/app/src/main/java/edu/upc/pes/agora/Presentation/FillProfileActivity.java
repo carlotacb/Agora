@@ -100,7 +100,6 @@ public class FillProfileActivity extends AppCompatActivity {
         profileimage = (ImageView) findViewById(R.id.profileimage);
 
         ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
-        ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
 
         final Resources res = getResources();
 
@@ -117,13 +116,9 @@ public class FillProfileActivity extends AppCompatActivity {
         }
 
         Intent idioma = new Intent(FillProfileActivity.this, FillProfileActivity.class);
-        Intent back = new Intent(FillProfileActivity.this, RegisterActivity.class);
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
-
-        enrerre.setOnClickListener(new BackOnClickListener(back, getApplicationContext()));
 
         profileimage.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -148,17 +143,17 @@ public class FillProfileActivity extends AppCompatActivity {
             }
         });
 
-        final String[] categorias = new String[]{
-                "Selecciona un Sexo",
-                "Hombre",
-                "Mujer",
-                "Indefinido"};
+        final String[] sexos = new String[]{
+                getString(R.string.spinnerhintsexo),
+                getString(R.string.hombre),
+                getString(R.string.mujer),
+                getString(R.string.indefinido)};
 
-        final List<String> categoriesList = new ArrayList<>(Arrays.asList(categorias));
-        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_categories_layout, categoriesList){
+        final List<String> sexosList = new ArrayList<>(Arrays.asList(sexos));
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_categories_layout, sexosList){
             @Override
             public boolean isEnabled(int position){
-                if(position == 0) {
+                if(sexos[position].equals(getString(R.string.spinnerhintsexo))) {
                     // Disable the first item from Spinner. The first item will be use for hint
                     return false;
                 }
@@ -171,7 +166,7 @@ public class FillProfileActivity extends AppCompatActivity {
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                if (categorias[position].equals(getString(R.string.spinnerhint))){
+                if (sexos[position].equals(getString(R.string.spinnerhintsexo))){
                     // Set the hint text color gray
                     tv.setTextColor(Color.GRAY);
                 }
@@ -376,6 +371,13 @@ public class FillProfileActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+
+        // super.onBackPressed(); // Comment this super call to avoid calling finish() or fragmentmanager's backstack pop operation.
     }
 
 }

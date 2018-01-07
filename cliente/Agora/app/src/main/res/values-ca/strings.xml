@@ -45,7 +45,7 @@
     <string name="title_activity_my_propuestas">Les Meves Propostes</string>
     <string name="title_activity_profile">El Meu Perfil</string>
     <string name="title_activity_edit_profile">Editor de Perfil</string>
-    <string name="nomusuario">Nom Complert:</string>
+    <string name="nomusuario">Nom Complert</string>
     <string name="done">Proposta: \"%1$s\" creada correctament</string>
     <string name="title_activity_edit_proposal">Editar Proposta</string>
     <string name="M">Home</string>
@@ -113,4 +113,22 @@
     <string name="creadoel">Creada el %1$s</string>
     <string name="propcreadapor">Propostes de: %1$s</string>
     <string name="dia">" el: %1$s"</string>
+    <string name="posAttached">Posició afegida</string>
+    <string name="editPosition">Editar posición</string>
+    <string name="descripcion2">Descripció:</string>
+    <string name="showPosition">Veure posició</string>
+    <string name="mensajeliminar">Està segur de que vol eliminar el comentari \"%1$s\"?</string>
+    <string name="elimiarcomentario">Eliminar comentari</string>
+    <string name="editarcomentario">Editar comentari</string>
+    <string name="mensajeditar">Realitza els canvis pertinents al comentari</string>
+    <string name="categoria" translatable="false">Categoria</string>
+    <string name="cargandoprop">CARREGANT PROPOSTES...</string>
+    <string name="cargandoperfil">CARREGANT PERFIL...</string>
+    <string name="start">Començar</string>
+    <string name="completarperfil">Completa el teu perfil</string>
+    <string name="cambio_imagen">Canviar imatge</string>
+    <string name="spinnerhintsexo">Selecciona un sexe</string>
+    <string name="hombre">Home</string>
+    <string name="mujer">Dona</string>
+    <string name="indefinido">Indefinit</string>
 </resources>

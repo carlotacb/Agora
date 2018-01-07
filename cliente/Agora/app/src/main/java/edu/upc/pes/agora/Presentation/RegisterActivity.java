@@ -49,8 +49,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         Log.i("asdCreate", "creando usuario");
 
-        ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
-        ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
+        final ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
+        final ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
 
         identifier = (EditText) findViewById(R.id.identifier);
         username = (EditText) findViewById(R.id.username);
@@ -73,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         Helpers.changeFlag(canviidioma);
 
-        Intent idioma = new Intent(RegisterActivity.this, RegisterActivity.class);
+        final Intent idioma = new Intent(RegisterActivity.this, RegisterActivity.class);
         Intent back = new Intent(RegisterActivity.this, LoginActivity.class);
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -182,6 +182,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         registro.setVisibility(View.GONE);
                         progbar.setVisibility(View.VISIBLE);
+                        enrerre.setVisibility(View.INVISIBLE);
 
                         JSONObject data = new JSONObject();
 
@@ -260,6 +261,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     password2.setText("");
                                     registro.setVisibility(View.VISIBLE);
                                     progbar.setVisibility(View.GONE);
+                                    enrerre.setVisibility(View.VISIBLE);
                                 }
 
                             }

@@ -80,7 +80,7 @@
     <string name="posAttached">Position attached</string>
     <string name="nuevapropuesta">Nueva Propuesta</string>
     <string name="spinnerhint">Seleccionar una Categoria...</string>
-    <string name="numeroimatge">%1$s imatges</string>
+    <string name="numeroimatge" translatable="false">%1$s imatges</string>
 
     <!-- Strings Edit Proposal -->
     <string name="editTitle">Title</string>
@@ -142,7 +142,7 @@
     <string name="pwnueva2">Confirmar password</string>
 
     <!-- Categorias -->
-    <string name="categoria" translatable="false">Categoria</string>
+    <string name="categoria">Categoria</string>
     <string name="cultura">Cultura</string>
     <string name="deportes">Deportes</string>
     <string name="ocio">Ocio</string>
@@ -160,6 +160,12 @@
     <string name="cargandoprop">CARGANDO PROPUESTAS...</string>
     <string name="cargandoperfil">CARGANDO PERFIL...</string>
     <string name="start">Empezar</string>
+    <string name="completarperfil">Completa tu perfil</string>
+    <string name="cambio_imagen">Change Image</string>
+    <string name="spinnerhintsexo">Selecciona un sexo</string>
+    <string name="hombre">Hombre</string>
+    <string name="mujer">Mujer</string>
+    <string name="indefinido">Indefinido</string>
 
 
     <string name="str_en" translatable="false">English</string>
@@ -182,10 +188,10 @@
     </string>
 
     <string name="title_activity_add_location" translatable="false">Map</string>
-    <string name="title_activity_my_favorites">MyFavorites</string>
+    <string name="title_activity_my_favorites" translatable="false">MyFavorites</string>
 
-    <string name="title_activity_show_location">Map</string>
-    <string name="title_activity_other_user">OtherUserActivity</string>
-    <string name="title_activity_fill_profile">FillProfileActivity</string>
+    <string name="title_activity_show_location" translatable="false">Map</string>
+    <string name="title_activity_other_user" translatable="false">OtherUserActivity</string>
+    <string name="title_activity_fill_profile" translatable="false">FillProfileActivity</string>
 
 </resources>

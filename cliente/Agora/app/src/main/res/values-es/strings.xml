@@ -45,7 +45,7 @@
     <string name="title_activity_my_propuestas">Mis Propuestas</string>
     <string name="title_activity_profile">Mi Perfil</string>
     <string name="title_activity_edit_profile">Editor de Perfil</string>
-    <string name="nomusuario">Nombre Completo:</string>
+    <string name="nomusuario">Nombre Completo</string>
     <string name="done">Propuesta: \"%1$s\" creada correctamente</string>
     <string name="title_activity_edit_proposal">Editar Propuesta</string>
     <string name="M">Hombre</string>
@@ -64,7 +64,7 @@
     <string name="Borrado">Propuesta \"%1$s\" borrada</string>
     <string name="editar">Editar</string>
     <string name="delete">Borrar</string>
-    <string name="nomusuario2">Nombre Completo</string>
+    <string name="nomusuario2">Nombre Completo:</string>
     <string name="codigopostal2">Código Postal:</string>
     <string name="barrio2">Barrio:</string>
     <string name="fnaix2">Fecha de Nacimiento:</string>
@@ -112,4 +112,23 @@
     <string name="creadoel">Creada el %1$s</string>
     <string name="propcreadapor">Propuestas de: %1$s</string>
     <string name="dia">" el: %1$s"</string>
+    <string name="posAttached">Posición añadida</string>
+    <string name="editPosition">Editar posición</string>
+    <string name="descripcion2">Descripción:</string>
+    <string name="showPosition">Ver posición</string>
+    <string name="mensajeliminar">¿Está seguro que desea eliminar el comentario \"%1$s\"?</string>
+    <string name="elimiarcomentario">Eliminar comentario</string>
+    <string name="mensajeditar">Realiza los cambios pertinentes en el comentario</string>
+    <string name="editarcomentario">Editar comentario</string>
+    <string name="categoria">Categoría</string>
+    <string name="cargandoprop">CARGANDO PROPUESTAS...</string>
+    <string name="cargandoperfil">CARGANDO PERFIL...</string>
+    <string name="start">Empezar</string>
+    <string name="completarperfil">Completa tu perfil</string>
+    <string name="cambio_imagen">Cambiar imagen</string>
+    <string name="spinnerhintsexo">Selecciona un sexo</string>
+    <string name="hombre">Hombre</string>
+    <string name="indefinido">Indefinido</string>
+    <string name="mujer">Mujer</string>
+    <string name="deletePosition">Borrar posición</string>
 </resources>
