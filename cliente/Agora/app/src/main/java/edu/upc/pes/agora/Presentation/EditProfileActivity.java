@@ -34,6 +34,7 @@ import java.util.Calendar;
 
 import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
 import edu.upc.pes.agora.Logic.Models.Profile;
+import edu.upc.pes.agora.Logic.ServerConection.PutAsyncTask;
 import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.R;
 
@@ -73,6 +74,9 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
+
+        //final Resources res = this.getResources();
+
 
         diferentesSexos = new String[]{getString(R.string.I), getString(R.string.F), getString(R.string.M)};
 
@@ -211,12 +215,12 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View view) {
                             //implementar la obtencion del password del usuario
-                            if (!mOldPass.getText().toString().equals("123") | mOldPass.equals("")) {
+                            if (!mOldPass.getText().toString().equals("") & (mOldPass.getText().toString().equals(mNewPass1.getText().toString()) | mOldPass.getText().toString().equals(mNewPass2.getText().toString()))) {
                                 mOldPass.setText("");
                                 mNewPass1.setText("");
                                 mNewPass2.setText("");
 
-                                Toast.makeText(getApplicationContext(), "Password introducido incorrecto", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "El nuevo Password tiene que ser diferente", Toast.LENGTH_LONG).show();
 
                             } else if (!mNewPass1.getText().toString().equals(mNewPass2.getText().toString())) {
                                 mOldPass.setText("");
@@ -230,6 +234,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Rellena todos los campos", Toast.LENGTH_LONG).show();
                             } else {
                                 //implementar el cambio de password del usuario
+                                cambiarPassword(mOldPass,mNewPass1,mNewPass2,res);
                                 Toast.makeText(getApplicationContext(), "Password actualizado correctamente", Toast.LENGTH_LONG).show();
                                 dialog.dismiss();
                             }
@@ -332,6 +337,57 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void cambiarPassword(EditText mOldPass, EditText mNewPass1, EditText mNewPass2, final Resources res) {
+
+        final JSONObject values = new JSONObject();
+        try {
+            values.put("oldpassword",mOldPass.getText().toString());
+            values.put("password",mNewPass1.getText().toString());
+            values.put("confirmpassword",mNewPass2.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        new PutAsyncTask("https://agora-pes.herokuapp.com/api/profile/", EditProfileActivity.this) {
+            @Override
+            protected void onPostExecute(JSONObject resObject) {
+                Boolean result = false;
+                String error = res.getString(R.string.errorCreacion);
+
+                try {
+                    if (resObject.has("success")) {
+                        result = resObject.getBoolean("success");
+                    }
+
+                    if (!result && resObject.has("errorMessage")) {
+                        Log.i("asdCreacion", error);
+                        //Toast.makeText(getApplicationContext(), error , Toast.LENGTH_LONG).show();
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if (result) {
+
+                    Toast.makeText(getApplicationContext(), "Password Cambiado correctamente", Toast.LENGTH_LONG).show();
+
+                }
+
+                else {
+                    Log.i("asdCreacion", "reset");
+
+                }
+
+
+
+
+            }
+        }.execute(values);
+
     }
 
     @Override
