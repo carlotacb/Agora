@@ -24,14 +24,8 @@ public class Profile {
         this.imatge = imatge;
     }
 
-    public int getSex() {
-        int sexo = 0;
-        if(sex==null)return sexo;
-        if(sex.equals("I")) sexo = 0;
-        if(sex.equals("M")) sexo = 2;
-        if(sex.equals("F")) sexo = 1;
-
-        return sexo;
+    public String getSex() {
+        return sex;
     }
 
     public void setSex(String sex) {

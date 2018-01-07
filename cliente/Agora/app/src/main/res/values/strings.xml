@@ -166,6 +166,8 @@
     <string name="hombre">Hombre</string>
     <string name="mujer">Mujer</string>
     <string name="indefinido">Indefinido</string>
+    <string name="cambio_password">Introduce tu password antiguo en el primer campo y el nuevo en los dos siguientes</string>
+    <string name="diferente">El nuevo Password tiene que ser diferente</string>
 
 
     <string name="str_en" translatable="false">English</string>

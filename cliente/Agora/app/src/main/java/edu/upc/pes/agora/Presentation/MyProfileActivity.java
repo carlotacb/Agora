@@ -209,6 +209,8 @@ public class MyProfileActivity extends AppCompatActivity {
                             }
 
                             p.setSex(sexJ);
+                            Log.i("asd123", sexJ);
+
                         }
                         else {
                             sex.setText("");
@@ -256,7 +258,8 @@ public class MyProfileActivity extends AppCompatActivity {
                 myIntent.putExtra("barrio", p.getNeighborhood());
                 myIntent.putExtra("nombre", p.getName());
                 myIntent.putExtra("fecha", p.getBorn());
-                myIntent.putExtra("sex", p.getSex());
+                myIntent.putExtra("sexof", p.getSex());
+                myIntent.putExtra("descripcion", p.getDescription());
                 myIntent.putExtra("image", p.getImatge());
 
                 startActivity(myIntent);
