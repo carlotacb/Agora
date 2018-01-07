@@ -57,4 +57,44 @@ public class Helpers {
         }
     }
 
+    public static String getBarrio(Integer zona) {
+
+        String barrio = "";
+
+        switch (zona) {
+            case 0:
+                barrio = "Ciutat Vella";
+                break;
+            case 1:
+                barrio = "Eixample";
+                break;
+            case 2:
+                barrio = "Sants-Motjuic";
+                break;
+            case 3:
+                barrio = "Les Corts";
+                break;
+            case 4:
+                barrio = "Sarrià-Sant Gervasi";
+                break;
+            case 5:
+                barrio = "Gràcia";
+                break;
+            case 6:
+                barrio = "Horta-Guinardó";
+                break;
+            case 7:
+                barrio = "Nou Barris";
+                break;
+            case 8:
+                barrio = "San Andreu";
+                break;
+            case 9:
+                barrio = "San Martí";
+                break;
+        }
+
+        return barrio;
+    }
+
 }

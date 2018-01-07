@@ -52,7 +52,7 @@ public class OtherUserProposalsActivity extends AppCompatActivity {
 
         propList = (ListView) findViewById(R.id.propList);
         tot = (LinearLayout) findViewById(R.id.layouttot);
-        progres = (LinearLayout) findViewById(R.id.progress);
+        progres = (LinearLayout) findViewById(R.id.pantallacargandoop);
         titol = (TextView) findViewById(R.id.propcreadaper);
         String user = getIntent().getStringExtra("username");
 
@@ -70,12 +70,16 @@ public class OtherUserProposalsActivity extends AppCompatActivity {
         canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
         enrerre.setOnClickListener(new BackOnClickListener(back, getApplicationContext()));
 
-        titol.setText(String.format(res.getString(R.string.propcreadapor), user));
+        titol.setText(String.format(res.getString(R.string.propcreadapor), user.toUpperCase()));
 
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal?username=" + user, this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
+
+                tot.setVisibility(View.GONE);
+                progres.setVisibility(View.VISIBLE);
+
                 try {
                     if (jsonObject.has("error")) {
                         String error = jsonObject.get("error").toString();

@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -45,27 +46,28 @@ import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
 import edu.upc.pes.agora.Logic.ServerConection.PutAsyncTask;
 import edu.upc.pes.agora.Logic.Utils.Constants;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 public class FillProfileActivity extends AppCompatActivity {
 
     private TextInputLayout nombre, cp, fechanacimiento;
-    private EditText enombre, ecp, efechanacimiento;
+    private EditText enombre, ecp, efechanacimiento, edescription;
     private TextView username, zona;
-    private String name, codipost, fech;
     private ImageView profileimage;
     private Spinner sexo;
     private Button okey;
     private ProgressBar progbar;
+    private String barrio;
 
     private String encoded;
 
-    private final int SELECT_PICTURE=200;
+    private final int SELECT_PICTURE = 200;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     String[] diferentesSexos; //{getString(R.string.M), getString(R.string.F), getString(R.string.I)};
-    String[] diferentesSexosGenerico = {"I", "F", "M"};
+    String[] diferentesSexosGenerico = {"X", "I", "F", "M"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +80,8 @@ public class FillProfileActivity extends AppCompatActivity {
         username = (TextView) findViewById(R.id.usernameprofile);
         username.setText(Constants.Username);
         zona = (TextView) findViewById(R.id.barrio);
-        zona.setText(Integer.toString(Constants.zone));
+        zona.setText(Helpers.getBarrio(Constants.zone));
+        barrio = Helpers.getBarrio(Constants.zone);
 
         nombre = (TextInputLayout) findViewById(R.id.nombre_up);
         cp = (TextInputLayout) findViewById(R.id.codipostal_up);
@@ -87,6 +90,7 @@ public class FillProfileActivity extends AppCompatActivity {
         enombre = (EditText) findViewById(R.id.nombrecompleto);
         ecp = (EditText) findViewById(R.id.cpostal);
         efechanacimiento = (EditText) findViewById(R.id.fecha);
+        edescription = (EditText) findViewById(R.id.descriptionc);
 
         sexo = (Spinner) findViewById(R.id.sexo);
 
@@ -214,70 +218,135 @@ public class FillProfileActivity extends AppCompatActivity {
             @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View view) {
-                // implementar cambios de los atributos del usuario en el servidor
-                // Toast.makeText(getApplicationContext(),"aqui cambiaremos los valores al server", Toast.LENGTH_LONG).show();
 
-                okey.setVisibility(View.GONE);
-                progbar.setVisibility(View.VISIBLE);
+                String nameS = enombre.getText().toString();
+                String CPcodeS = ecp.getText().toString();
+                String fechaS = efechanacimiento.getText().toString();
+                String sexS = diferentesSexosGenerico[sexo.getSelectedItemPosition()];
+                String descripcioS = edescription.getText().toString();
+                String username = Constants.Username;
 
-                JSONObject values = new JSONObject();
-                try {
-                    //  strTitulo = Titulo.getText().toString();
-                    //  strDescripcion = Descripcion.getText().toString();
+                String camponecesario = res.getString(R.string.fieldnecesary);
 
-                    String nombre = enombre.getText().toString();
-                    String CPcode = ecp.getText().toString();
-                    String fecha = efechanacimiento.getText().toString();
-                    String sex = diferentesSexosGenerico[sexo.getSelectedItemPosition()];
-                    String username = Constants.Username;
-
-                    values.put("username", username);
-                    values.put("bdate", fecha);
-                    values.put("cpCode", CPcode);
-                    values.put("sex", sex);
-                    values.put("realname", nombre);
-                    values.put("image", encoded);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                // nou server : agora-pes.herokuapp.com/api/proposal
-                new PostAsyncTask("https://agora-pes.herokuapp.com/api/profile", FillProfileActivity.this) {
-                    @Override
-                    protected void onPostExecute(JSONObject resObject) {
-                        Boolean result = false;
-
-                        try {
-
-                            if (resObject.has("success")) {
-                                result = resObject.getBoolean("success");
-                            }
-
-                            if (!result && resObject.has("errorMessage")) {
-                                String error = res.getString(R.string.errorCreacion);
-                                Log.i("asdCreacion", error);
-                                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
-                            }
-                            //Toast.makeText(getApplicationContext(), "Result : " + result , Toast.LENGTH_LONG).show();
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        //Log.i("asdBool", result.toString());
-
-                        if (result) {
-                            //Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
-                            //     Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(FillProfileActivity.this, MainActivity.class));
-                        } else {
-                            Log.i("asdCreacion", "reset");
-                            okey.setVisibility(View.VISIBLE);
-                            progbar.setVisibility(View.GONE);
-                        }
-
+                if (nameS.length() == 0) {
+                    nombre.setErrorEnabled(true);
+                    nombre.setError(camponecesario);
+                    enombre.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                    if (CPcodeS.length() != 0) {
+                        cp.setErrorEnabled(false);
+                        ecp.getBackground().clearColorFilter();
                     }
-                }.execute(values);
+                    if (fechaS.length() != 0) {
+                        fechanacimiento.setErrorEnabled(false);
+                        efechanacimiento.getBackground().clearColorFilter();
+                    }
+                }
+
+                if (CPcodeS.length() == 0) {
+                    cp.setErrorEnabled(true);
+                    cp.setError(camponecesario);
+                    ecp.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                    if (nameS.length() != 0) {
+                        nombre.setErrorEnabled(false);
+                        enombre.getBackground().clearColorFilter();
+                    }
+                    if (fechaS.length() != 0) {
+                        fechanacimiento.setErrorEnabled(false);
+                        efechanacimiento.getBackground().clearColorFilter();
+                    }
+                }
+
+                if (fechaS.length() == 0) {
+                    fechanacimiento.setErrorEnabled(true);
+                    fechanacimiento.setError(camponecesario);
+                    efechanacimiento.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                    if (nameS.length() != 0) {
+                        nombre.setErrorEnabled(false);
+                        enombre.getBackground().clearColorFilter();
+                    }
+                    if (CPcodeS.length() != 0) {
+                        cp.setErrorEnabled(false);
+                        ecp.getBackground().clearColorFilter();
+                    }
+                }
+
+                if (sexS.equals("X")) {
+                    TextView errorText = (TextView)sexo.getSelectedView();
+                    errorText.setTextColor(Color.RED);//just to highlight that this is an error
+
+                    if (nameS.length() != 0) {
+                        nombre.setErrorEnabled(false);
+                        enombre.getBackground().clearColorFilter();
+                    }
+                    if (CPcodeS.length() != 0) {
+                        cp.setErrorEnabled(false);
+                        ecp.getBackground().clearColorFilter();
+                    }
+                    if (fechaS.length() != 0) {
+                        fechanacimiento.setErrorEnabled(false);
+                        efechanacimiento.getBackground().clearColorFilter();
+                    }
+                }
+
+                else {
+                    okey.setVisibility(View.GONE);
+                    progbar.setVisibility(View.VISIBLE);
+
+                    JSONObject values = new JSONObject();
+                    try {
+                        values.put("username", username);
+                        values.put("bdate", fechaS);
+                        values.put("cpCode", CPcodeS);
+                        values.put("sex", sexS);
+                        values.put("realname", nameS);
+                        values.put("description", descripcioS);
+                        values.put("neighborhood", barrio);
+                        values.put("image", encoded);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/profile", FillProfileActivity.this) {
+                        @Override
+                        protected void onPostExecute(JSONObject resObject) {
+                            Boolean result = false;
+
+                            try {
+
+                                if (resObject.has("success")) {
+                                    result = resObject.getBoolean("success");
+                                }
+
+                                if (!result && resObject.has("errorMessage")) {
+                                    String error = res.getString(R.string.errorCreacion);
+                                    Log.i("asdCreacion", error);
+                                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                                }
+                                //Toast.makeText(getApplicationContext(), "Result : " + result , Toast.LENGTH_LONG).show();
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            //Log.i("asdBool", result.toString());
+
+                            if (result) {
+                                //Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
+                                //     Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(FillProfileActivity.this, MainActivity.class));
+                            } else {
+                                Log.i("asdCreacion", "reset");
+                                okey.setVisibility(View.VISIBLE);
+                                progbar.setVisibility(View.GONE);
+                            }
+
+                        }
+                    }.execute(values);
+                }
+
+
+
             }
         });
 

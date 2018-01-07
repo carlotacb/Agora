@@ -318,6 +318,9 @@ public class MainActivity extends AppCompatActivity {
                                     url += "?category="+ categoriaS;
                                     ferGetAsyncTask(url);
                                 }
+                                else {
+                                    ferGetAsyncTask("https://agora-pes.herokuapp.com/api/proposal");
+                                }
 
 
                             }

@@ -30,6 +30,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import edu.upc.pes.agora.Logic.Adapters.FavoriteAdapter;
 import edu.upc.pes.agora.Logic.Adapters.ProposalAdapter;
 import edu.upc.pes.agora.Logic.Listeners.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
@@ -178,7 +179,7 @@ public class MyFavoritesActivity extends AppCompatActivity {
                             }
                         }
 
-                        llistapropostes.setAdapter(new ProposalAdapter(propostes, getApplicationContext()));
+                        llistapropostes.setAdapter(new FavoriteAdapter(propostes, getApplicationContext()));
                     }
                 } catch (JSONException | ParseException e) {
                     e.printStackTrace();
@@ -253,11 +254,10 @@ public class MyFavoritesActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            // TODO: el boto Back ha d'obrir el navigation drawer.
             drawer.openDrawer(GravityCompat.START);
         }
     }

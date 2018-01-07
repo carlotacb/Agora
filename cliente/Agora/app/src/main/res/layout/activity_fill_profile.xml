@@ -4,10 +4,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp"
-            android:background="#f2f1ef"
             android:fillViewport="false">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
                   xmlns:tools="http://schemas.android.com/tools"
                   android:orientation="vertical"
                   android:gravity="center_horizontal"
@@ -60,10 +60,12 @@
             <RelativeLayout android:layout_width="wrap_content"
                             android:layout_height="match_parent">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profileimage"
                     android:layout_width="128dp"
                     android:layout_height="128dp"
+                    app:civ_border_color="#FF000000"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/ic_user_male128"/>
 
                 <TextView
@@ -92,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/usernameprofile"
-                    android:textColor="#000"
+                    android:textColor="@color/colorAccent"
                     android:textStyle="bold"
                     android:textSize="25sp"
                     android:layout_marginTop="5dp"
@@ -102,11 +104,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:id="@+id/barrio"
-                    android:textColor="#000"
+                    android:textColor="#424242"
                     android:textStyle="bold"
-                    android:textSize="18sp"
+                    android:id="@+id/barrio"
+                    android:textSize="25sp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="2dp"
                     android:text="@string/barrio"/>
@@ -204,15 +205,45 @@
 
         </android.support.design.widget.TextInputLayout>
 
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="320dp"
+            android:id="@+id/descriptionc_up"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/descriptionc"
+                android:hint="@string/descrpicion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:inputType="textMultiLine"
+                android:textColorHint="#e89b9696"
+                android:paddingTop="8dp"
+                android:fontFamily="sans-serif"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_margin="2sp"
+                android:textCursorDrawable="@null"
+                android:textColor="#000"
+                android:textStyle="italic"/>
+
+        </android.support.design.widget.TextInputLayout>
+
         <Spinner
             android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:id="@+id/sexo"
             android:padding="8dp"
             android:textSize="16sp"
-            android:layout_marginBottom="20dp"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="15dp"
             android:fontFamily="serif"/>
+
 
         <RelativeLayout
             android:layout_width="180dp"
@@ -227,7 +258,7 @@
                 android:id="@+id/CompletedReg"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
-                android:text="@string/action_Registration"
+                android:text="@string/start"
                 android:background="@drawable/botonlogin"
                 android:fontFamily="sans-serif-medium"
                 android:paddingLeft="16dp"

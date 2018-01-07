@@ -53,7 +53,37 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         holder.title.setText(proposal.getTitle());
         final String tit = proposal.getTitle();
         holder.description.setText(proposal.getDescription());
-        holder.categoria.setText(proposal.getCategoria());
+
+        String c = proposal.getCategoria();
+
+        switch (c) {
+            case "C":
+                c = context.getString(R.string.cultura);
+                break;
+            case "D":
+                c = context.getString(R.string.deportes);
+                break;
+            case "O":
+                c = context.getString(R.string.ocio);
+                break;
+            case "M":
+                c = context.getString(R.string.mantenimiento);
+                break;
+            case "E":
+                c = context.getString(R.string.eventos);
+                break;
+            case "T":
+                c = context.getString(R.string.turismo);
+                break;
+            case "Q":
+                c = context.getString(R.string.quejas);
+                break;
+            case "S":
+                c = context.getString(R.string.soporte);
+                break;
+        }
+
+        holder.categoria.setText(c);
         holder.numcomentaris.setText(String.valueOf(proposal.getNumerocomentarios()));
         holder.numdislikes.setText(String.valueOf(proposal.getNumerounvotes()));
         holder.numlikes.setText(String.valueOf(proposal.getNumerovotes()));
@@ -75,12 +105,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
                                 myIntent.putExtra("id", proposal.getId());
                                 myIntent.putExtra("Categoria", proposal.getCategoria());
                                 myIntent.putExtra("lat", proposal.getLat());
-
                                 myIntent.putExtra("lng", proposal.getLng());
                                 v.getRootView().getContext().startActivity(myIntent);
-
-                                Toast.makeText(context, "nose", Toast.LENGTH_SHORT).show();
-
                                 break;
 
                             case R.id.item_delete:

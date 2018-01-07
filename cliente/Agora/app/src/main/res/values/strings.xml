@@ -159,6 +159,7 @@
 
     <string name="cargandoprop">CARGANDO PROPUESTAS...</string>
     <string name="cargandoperfil">CARGANDO PERFIL...</string>
+    <string name="start">Empezar</string>
 
 
     <string name="str_en" translatable="false">English</string>

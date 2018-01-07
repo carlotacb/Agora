@@ -34,6 +34,7 @@ public class OtherUserActivity extends AppCompatActivity {
     private TextView barrio;
     private TextView born;
     private TextView sexo;
+    private TextView descripcion;
 
     private CircleImageView foto;
 
@@ -46,6 +47,7 @@ public class OtherUserActivity extends AppCompatActivity {
     private String bornJ;
     private String sexJ;
     private String username;
+    private String descripcionJ;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -62,6 +64,7 @@ public class OtherUserActivity extends AppCompatActivity {
         barrio = (TextView) findViewById(R.id.barrio);
         born = (TextView) findViewById(R.id.born);
         sexo = (TextView) findViewById(R.id.sexo);
+        descripcion = (TextView) findViewById(R.id.descripcion);
         tot = (LinearLayout) findViewById(R.id.layouttot);
         progres = (LinearLayout) findViewById(R.id.progress);
         TextView verpropuestas = (TextView) findViewById(R.id.verpropuestas);
@@ -79,7 +82,13 @@ public class OtherUserActivity extends AppCompatActivity {
 
         Intent idioma = new Intent(OtherUserActivity.this, OtherUserActivity.class);
         idioma.putExtra("username", username);
-        Intent back = new Intent(OtherUserActivity.this, MainActivity.class);
+
+        Intent back;
+        if (getIntent().hasExtra("favorite") && getIntent().getBooleanExtra("favorite", false)) {
+            back = new Intent(OtherUserActivity.this, MyFavoritesActivity.class);
+        } else {
+            back = new Intent(OtherUserActivity.this, MainActivity.class);
+        }
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -130,13 +139,21 @@ public class OtherUserActivity extends AppCompatActivity {
 
                         if(jsonObject.has("bdate")) {
                             bornJ = jsonObject.getString("bdate");
-
                             String databona = Helpers.showDate(bornJ);
-
                             born.setText(databona);
                         }
                         else {
                             born.setText("");
+                        }
+
+                        if(jsonObject.has("description")) {
+                            descripcionJ = jsonObject.getString("description");
+                            if (descripcionJ.equals("null")) {
+                                descripcion.setText("");
+                            }
+                            else {
+                                descripcion.setText(descripcionJ);
+                            }
                         }
 
                         if(jsonObject.has("sex")) {

@@ -67,8 +67,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
     Profile p ;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

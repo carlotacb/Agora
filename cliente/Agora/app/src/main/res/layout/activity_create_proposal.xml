@@ -19,8 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -208,7 +209,7 @@
             android:visibility="invisible"
             android:text="@string/posAttached"/>
 
-        <TextView
+        <!-- <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textColor="@color/colorPrimary"
@@ -216,7 +217,7 @@
             android:visibility="invisible"
             android:layout_marginRight="10dp"
             android:id="@+id/seeposition"
-            android:text="Ver Posición"/>
+            android:text="Ver Posición"/> -->
 
         <TextView
             android:layout_width="wrap_content"
