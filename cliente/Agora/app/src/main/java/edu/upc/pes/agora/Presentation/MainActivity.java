@@ -5,7 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -28,6 +31,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Spinner;
@@ -63,9 +67,11 @@ public class MainActivity extends AppCompatActivity {
     private List<String> usuaris = new ArrayList<>();
     private List<String> categories = new ArrayList<>();
     private Spinner filterSpinner, searchSpinner;
+    private LinearLayout cargando;
     private TextView buscartext;
     private AutoCompleteTextView searchUsers;
     private  ArrayAdapter<String> adapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -86,7 +92,9 @@ public class MainActivity extends AppCompatActivity {
 
         TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
         headerUserName.setText(Constants.Username);
-        ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
+        final ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
+
+        final Resources res = this.getResources();
 
         if (Constants.fotoperfil == null) {
             JSONObject Jason = new JSONObject();
@@ -110,9 +118,12 @@ public class MainActivity extends AppCompatActivity {
                             if (jsonObject.has("image")) {
                                 String imageJ = jsonObject.getString("image");
 
-                                byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+                                if (!imageJ.equals("null")) {
+                                    byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+                                    Constants.fotoperfil = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                                    foto.setImageBitmap(Constants.fotoperfil);
+                                }
 
-                                Constants.fotoperfil = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
                             }
                         }
 
@@ -123,7 +134,9 @@ public class MainActivity extends AppCompatActivity {
             }.execute(Jason);
         }
 
-        foto.setImageBitmap(Constants.fotoperfil);
+        else {
+            foto.setImageBitmap(Constants.fotoperfil);
+        }
 
         navigationView.getMenu().getItem(NavMenuListener.homneButton).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
@@ -138,8 +151,9 @@ public class MainActivity extends AppCompatActivity {
         searchSpinner = (Spinner) findViewById(R.id.searchSpinnerView);
         buscartext = (TextView) findViewById(R.id.buscar);
         searchUsers = (AutoCompleteTextView) findViewById(R.id.searchUser);
+        cargando = (LinearLayout) findViewById(R.id.pantallacargando);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
 
-        final Resources res = this.getResources();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipelayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.refresh,R.color.refresh1,R.color.refresh2);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -304,6 +317,9 @@ public class MainActivity extends AppCompatActivity {
                                     Log.i("asdse", selectedItem);
                                     url += "?category="+ categoriaS;
                                     ferGetAsyncTask(url);
+                                }
+                                else {
+                                    ferGetAsyncTask("https://agora-pes.herokuapp.com/api/proposal");
                                 }
 
 
@@ -486,6 +502,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
+
+                cargando.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setVisibility(View.GONE);
+
                 try {
                     if (jsonObject.has("error")) {
                         String error = jsonObject.get("error").toString();
@@ -495,7 +515,7 @@ public class MainActivity extends AppCompatActivity {
                         toast.show();
                     }
 
-                    else if (jsonObject != null){
+                    else if (jsonObject != null) {
                         JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
                         propostes = new ArrayList<>();
 
@@ -543,6 +563,8 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException | ParseException e ) {
                     e.printStackTrace();
                 }
+                cargando.setVisibility(View.GONE);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
             }
         }.execute(Jason);
     }

@@ -81,6 +81,7 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
                     i.putExtra("Description", getIntent().getStringExtra("Description"));
                 }
                 if (getIntent().hasExtra("Category")){
+                    Log.i("asdaasd", "entraaqui");
                     i.putExtra("Category", getIntent().getIntExtra("Category",0));
                 }
                 if (getIntent().hasExtra("id")){
@@ -110,6 +111,10 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
                 }
                 if (getIntent().hasExtra("Description")){
                     i.putExtra("Description", getIntent().getStringExtra("Description"));
+                }
+                if (getIntent().hasExtra("Category")){
+                    Log.i("asdaasd", "entraaqui");
+                    i.putExtra("Category", getIntent().getIntExtra("Category",0));
                 }
                 if (getIntent().hasExtra("id")){
                     i.putExtra("id", getIntent().getIntExtra("id",0));

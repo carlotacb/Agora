@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -23,7 +22,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -41,7 +39,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import edu.upc.pes.agora.Logic.Adapters.ImatgesAdapter;
 import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
@@ -54,7 +51,7 @@ import edu.upc.pes.agora.R;
 public class CreateProposalActivity extends AppCompatActivity {
 
     private Button Create;
-    private TextView Titulo, Descripcion, txtPosAttached, deletePosition, showPosition;
+    private TextView Titulo, Descripcion, txtPosAttached, deletePosition;
     private TextInputLayout errortitulo, errordescripcion;
     private ProgressBar prog;
     private Spinner spin;
@@ -95,7 +92,7 @@ public class CreateProposalActivity extends AppCompatActivity {
         Descripcion = (TextView) findViewById(R.id.descripcion);
         txtPosAttached = (TextView) findViewById(R.id.positionatached);
         deletePosition = (TextView) findViewById(R.id.deleteposition);
-        showPosition = (TextView) findViewById(R.id.seeposition);
+        //showPosition = (TextView) findViewById(R.id.seeposition);
 
         errortitulo = (TextInputLayout) findViewById(R.id.titulo_up);
         errordescripcion = (TextInputLayout) findViewById(R.id.descripcion_up);
@@ -185,13 +182,41 @@ public class CreateProposalActivity extends AppCompatActivity {
         }
 
         Intent idioma = new Intent(CreateProposalActivity.this, CreateProposalActivity.class);
-        Intent back = new Intent(CreateProposalActivity.this, MainActivity.class);
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
         canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
 
+        Intent back = new Intent(CreateProposalActivity.this, MainActivity.class);
+        back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         enrerre.setOnClickListener(new BackOnClickListener(back, getApplicationContext()));
+
+        Log.i("asdProva", "psas por aqui");
+        if (getIntent().hasExtra("Category")){
+            spin.setSelection(getIntent().getIntExtra("Category",0));
+        }
+
+        if (getIntent().hasExtra("Title")){
+            Titulo.setText(getIntent().getStringExtra("Title"));
+        }
+
+        if (getIntent().hasExtra("Description")){
+            Descripcion.setText(getIntent().getStringExtra("Description"));
+        }
+
+        if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng")){
+            lat = getIntent().getDoubleExtra("lat",0);
+            lng = getIntent().getDoubleExtra("lng",0);
+            txtPosAttached.setVisibility(View.VISIBLE);
+            deletePosition.setVisibility(View.VISIBLE);
+            //showPosition.setVisibility(View.VISIBLE);
+        }
+        else {
+            lat = 0;
+            lng = 0;
+            txtPosAttached.setVisibility(View.INVISIBLE);
+            deletePosition.setVisibility(View.INVISIBLE);
+            //showPosition.setVisibility(View.INVISIBLE);
+        }
+
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,8 +227,14 @@ public class CreateProposalActivity extends AppCompatActivity {
                 Titulo.getBackground().clearColorFilter();
                 errordescripcion.setErrorEnabled(false);
                 Descripcion.getBackground().clearColorFilter();
-                mImatgeItems.clear();
                 spin.setSelection(0);
+                mImatgeItems.clear();
+                limatges.setAdapter(new ImatgesAdapter(getApplicationContext(), mImatgeItems));
+                lat = 0;
+                lng = 0;
+                txtPosAttached.setVisibility(View.INVISIBLE);
+                deletePosition.setVisibility(View.INVISIBLE);
+                //showPosition.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -436,11 +467,11 @@ public class CreateProposalActivity extends AppCompatActivity {
                 lng = 0;
                 txtPosAttached.setVisibility(View.INVISIBLE);
                 deletePosition.setVisibility(View.INVISIBLE);
-                showPosition.setVisibility(View.INVISIBLE);
+                //showPosition.setVisibility(View.INVISIBLE);
             }
         });
 
-        showPosition.setOnClickListener(new View.OnClickListener() {
+        /*showPosition.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), ShowLocationActivity.class);
@@ -450,35 +481,7 @@ public class CreateProposalActivity extends AppCompatActivity {
                     startActivity(i);
                 }
             }
-        });
-
-        if (getIntent().hasExtra("Category")){
-            spin.setSelection(getIntent().getIntExtra("Category",0));
-        }
-
-        if (getIntent().hasExtra("Title")){
-            Titulo.setText(getIntent().getStringExtra("Title"));
-        }
-
-        if (getIntent().hasExtra("Description")){
-            Descripcion.setText(getIntent().getStringExtra("Description"));
-        }
-
-        if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng")){
-            lat = getIntent().getDoubleExtra("lat",0);
-            lng = getIntent().getDoubleExtra("lng",0);
-            txtPosAttached.setVisibility(View.VISIBLE);
-            deletePosition.setVisibility(View.VISIBLE);
-            showPosition.setVisibility(View.VISIBLE);
-        }
-
-        else {
-            lat = 0;
-            lng = 0;
-            txtPosAttached.setVisibility(View.INVISIBLE);
-            deletePosition.setVisibility(View.INVISIBLE);
-            showPosition.setVisibility(View.INVISIBLE);
-        }
+        });*/
     }
 
     @SuppressLint("StaticFieldLeak")

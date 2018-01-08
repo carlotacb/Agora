@@ -1,199 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp"
-    android:fillViewport="false">
+    android:fillViewport="true">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout android:layout_width="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/setImage"
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:id="@+id/pantallacargando"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/cargandoperfil"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:padding="10dp"
+                android:textColor="@color/colorPrimaryDark"/>
+
+            <ProgressBar
                 android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@mipmap/ic_person"/>
+                android:layout_height="70dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:id="@+id/pantallaperfil"
+            android:visibility="gone"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/setImage"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    app:civ_border_color="#FF000000"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_user_male128"/>
+
+                <LinearLayout android:layout_width="match_parent"
+                              android:orientation="vertical"
+                              android:layout_gravity="center"
+                              android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/colorAccent"
+                        android:textStyle="bold"
+                        android:id="@+id/user"
+                        android:gravity="center_horizontal"
+                        android:textSize="25sp"
+                        android:textAllCaps="true"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/username"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:textColor="#424242"
+                        android:textStyle="bold"
+                        android:id="@+id/barrio"
+                        android:textSize="25sp"
+                        android:text="Barrio"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_marginTop="30dp"
+                          android:layout_marginLeft="5dp"
+                          android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="@string/nomusuario2"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/nameprofile"
+                    android:textSize="18dp"
+                    android:textColor="#424242"
+                    android:text="random"/>
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_marginTop="15dp"
+                          android:layout_marginLeft="5dp"
+                          android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="@string/codigopostal2"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/codipostal"
+                    android:textSize="18dp"
+                    android:textColor="#424242"
+                    android:text="random"/>
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_marginTop="15dp"
+                          android:layout_marginLeft="5dp"
+                          android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="@string/fnaix2"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/born"
+                    android:textSize="18dp"
+                    android:textColor="#424242"
+                    android:text="random"/>
+
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent"
+                          android:layout_marginTop="15dp"
+                          android:layout_marginLeft="5dp"
+                          android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:textSize="18dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="@string/sexo2"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/sexo"
+                    android:textSize="18dp"
+                    android:textColor="#424242"
+                    android:text="random"/>
+ 
+            </LinearLayout>
+
 
             <TextView
-                android:layout_width="200dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:textColor="#000"
                 android:textStyle="bold"
-                android:id="@+id/user"
-                android:textSize="19sp"
-                android:layout_marginTop="5dp"
+                android:textSize="18dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginBottom="2dp"
-                android:text="@string/username"/>
+                android:text="@string/descripcion2"/>
 
-            <ImageButton
-                android:layout_width="50dp"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/description"
+                android:textSize="18dp"
+                android:textColor="#424242"
+                android:text="random"/>
+
+
+
+            <Button
                 android:id="@+id/editarperfil"
-                android:layout_height="50dp"
-                android:src="@mipmap/ic_edit"
-                android:background="@drawable/botonedit"
-                android:layout_gravity="center|right"/>
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginTop="30dp"
+                android:text="EDITAR"
+                android:background="@drawable/botonlogin"
+                android:fontFamily="sans-serif-medium"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:textSize="14sp"/>
 
         </LinearLayout>
 
+    </RelativeLayout>
 
-        <LinearLayout android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:layout_marginBottom="2dp"
-                android:text="@string/nomusuario2"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:id="@+id/nameprofile"
-                android:textSize="18dp"
-                android:textColorHint="#e89b9696"
-                android:text="random"/>
-
-        </LinearLayout>
-
-        <LinearLayout android:layout_width="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:layout_marginBottom="2dp"
-                android:text="@string/codigopostal2"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:id="@+id/codipostal"
-                android:textSize="18dp"
-                android:textColorHint="#e89b9696"
-                android:text="random"/>
-
-        </LinearLayout>
-
-        <LinearLayout android:layout_width="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:layout_marginBottom="2dp"
-                android:text="@string/barrio2"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:id="@+id/barrio"
-                android:textSize="18dp"
-                android:textColorHint="#e89b9696"
-                android:text="random"/>
-
-        </LinearLayout>
-
-        <LinearLayout android:layout_width="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:layout_marginBottom="2dp"
-                android:text="@string/fnaix2"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:id="@+id/born"
-                android:textSize="18dp"
-                android:textColorHint="#e89b9696"
-                android:text="random"/>
-
-        </LinearLayout>
-
-        <LinearLayout android:layout_width="match_parent"
-            android:layout_marginTop="15dp"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:layout_marginBottom="2dp"
-                android:text="@string/sexo2"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:id="@+id/sexo"
-                android:textSize="18dp"
-                android:textColorHint="#e89b9696"
-                />
-
-        </LinearLayout>
-
-        <!-- <LinearLayout android:layout_width="match_parent"
-                      android:layout_marginTop="15dp"
-                      android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#000"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:layout_marginBottom="2dp"
-                android:text="@string/fnaix2"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:id="@+id/descript"
-                android:textSize="18dp"
-                android:textColorHint="#e89b9696"
-                android:text="random"/>
-
-        </LinearLayout> -->
-
-
-    </LinearLayout>
 </ScrollView>

@@ -161,7 +161,7 @@ public class LoginActivity extends AppCompatActivity /*implements AdapterView.On
 
                             if (result) {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                Constants.Username = username;
+                                Constants.Username = username.toLowerCase();
                             } else {
                                 Log.i("asd", "gfgffgfgf");
                                 etUsername.setText("");

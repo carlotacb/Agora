@@ -83,7 +83,7 @@
     <string name="posAttached">Position attached</string>
     <string name="nuevapropuesta">Nueva Propuesta</string>
     <string name="spinnerhint">Seleccionar una Categoria...</string>
-    <string name="numeroimatge">%1$s imatges</string>
+    <string name="numeroimatge" translatable="false">%1$s imatges</string>
 
     <!-- Strings Edit Proposal -->
     <string name="editTitle">Title</string>
@@ -111,6 +111,7 @@
     <string name="barrio2">Barrio:</string>
     <string name="fnaix2">Fecha Nacimiento:</string>
     <string name="sexo2">Sexo:</string>
+    <string name="descripcion2">Descripcion:</string>
     <string name="verpropuestas">Ver propuestas</string>
     <string name="creadoel">Creada el %1$s</string>
     <string name="propcreadapor">Propuestas de: %1$s</string>
@@ -144,7 +145,7 @@
     <string name="pwnueva2">Confirmar password</string>
 
     <!-- Categorias -->
-    <string name="categoria" translatable="false">Categoria</string>
+    <string name="categoria">Categoria</string>
     <string name="cultura">Cultura</string>
     <string name="deportes">Deportes</string>
     <string name="ocio">Ocio</string>
@@ -159,7 +160,17 @@
     <string name="mensajecompartir">Mira que propuesta he encontrado en Agora!</string>
 
 
-
+    <string name="cargandoprop">CARGANDO PROPUESTAS...</string>
+    <string name="cargandoperfil">CARGANDO PERFIL...</string>
+    <string name="start">Empezar</string>
+    <string name="completarperfil">Completa tu perfil</string>
+    <string name="cambio_imagen">Change Image</string>
+    <string name="spinnerhintsexo">Selecciona un sexo</string>
+    <string name="hombre">Hombre</string>
+    <string name="mujer">Mujer</string>
+    <string name="indefinido">Indefinido</string>
+    <string name="cambio_password">Introduce tu password antiguo en el primer campo y el nuevo en los dos siguientes</string>
+    <string name="diferente">El nuevo Password tiene que ser diferente</string>
 
     <!-- Strings Logros -->
     <string name="conseguidos">Logros Conseguidos</string>
@@ -221,7 +232,6 @@
     </string>
 
     <string name="title_activity_add_location" translatable="false">Map</string>
-
     <string name="title_activity_my_favorites">MyFavorites</string>
 
     <string name="title_activity_logros">LogrosActivity</string>
