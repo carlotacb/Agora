@@ -207,7 +207,6 @@ public class MyProfileActivity extends AppCompatActivity {
                                     sex.setText(R.string.F);
                                     break;
                             }
-
                             p.setSex(sexJ);
                             Log.i("asd123", sexJ);
 
