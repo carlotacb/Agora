@@ -34,12 +34,14 @@
     <string name="home">Home</string>
     <string name="novaproposta">Nova Proposta</string>
     <string name="lesmevespropostes">Les Meves Propostes</string>
+    <string name="favorites">Favorites</string>
     <string name="miperfil">About me</string>
     <string name="perfil">My Profile</string>
     <string name="editarp">Edit Profile</string>
     <string name="serchuser">Search User</string>
     <string name="help">Help</string>
     <string name="about">About</string>
+    <string name="logros">Logros</string>
     <string name="surt">Sortir</string>
 
     <!-- Multiidioma -->
@@ -55,9 +57,10 @@
     <!-- Página principal -->
     <string name="title_activity_main">Main Page</string>
     <string name="creadopor">"Creado por "</string>
-    <string name="mesinfo">MAS INFORMACION</string>
-    <string name="filtro">Filter by: </string>
-    <string name="buscar">Find: </string>
+
+    <string name="mesinfo">VER MAS</string>
+    <string name="filtro">Filter by:</string>
+    <string name="buscar">Find:</string>
 
     <string name="tot">Tot</string>
     <string name="user">Per Usuari</string>
@@ -71,15 +74,16 @@
     <string name="errorPosition">Please select a position in your neighbourhood!</string>
     <string name="titulo">Titulo</string>
     <string name="descrpicion">Descripcion</string>
-    <string name="reset">Reset</string>
+    <string name="reset" translatable="false">Reset</string>
     <string name="create">Create</string>
     <string name="done">Propuesta "%1$s" creada correctamnete</string>
     <string name="addPosition">Add position</string>
     <string name="savePosition">Save position</string>
-    <string name="deletePosition" translatable="false">Delete position</string>
-    <string name="posAttached" translatable="false">Position attached</string>
+    <string name="deletePosition">Delete position</string>
+    <string name="posAttached">Position attached</string>
     <string name="nuevapropuesta">Nueva Propuesta</string>
     <string name="spinnerhint">Seleccionar una Categoria...</string>
+    <string name="numeroimatge" translatable="false">%1$s imatges</string>
 
     <!-- Strings Edit Proposal -->
     <string name="editTitle">Title</string>
@@ -89,6 +93,7 @@
     <string name="savedChanges">Saved changes to proposal</string>
     <string name="errorEdit">Error editing proposal</string>
     <string name="editar">Editar</string>
+    <string name="editPosition">Edit Position</string>
 
 
     <!-- Strings to Delete Proposal -->
@@ -106,12 +111,22 @@
     <string name="barrio2">Barrio:</string>
     <string name="fnaix2">Fecha Nacimiento:</string>
     <string name="sexo2">Sexo:</string>
+    <string name="descripcion2">Descripcion:</string>
+    <string name="verpropuestas">Ver propuestas</string>
+    <string name="creadoel">Creada el %1$s</string>
+    <string name="propcreadapor">Propuestas de: %1$s</string>
+    <string name="dia"> el: %1$s</string>
 
     <!-- Strings per Detalls de la proposta -->
-    <string name="determinant"> el </string>
+    <string name="determinant">el</string>
     <string name="nou">Nuevo Comentario</string>
     <string name="mensajenc">Introducir el nuevo comentario para la propuesta %1$s</string>
     <string name="añadir">añadir</string>
+    <string name="showPosition">Show Position</string>
+    <string name="mensajeliminar">¿Está seguro que desea eliminar el comentario "%1$s"?</string>
+    <string name="mensajeditar">Realiza los cambios pertinentes en el comentario</string>
+    <string name="elimiarcomentario">Eliminar Comentario</string>
+    <string name="editarcomentario">Editar Comentario</string>
 
     <!-- Strings related to edit profile -->
     <string name="M">Hombre</string>
@@ -129,9 +144,8 @@
     <string name="pwnueva">Password Nueva</string>
     <string name="pwnueva2">Confirmar password</string>
 
-
     <!-- Categorias -->
-    <string name="categoria" translatable="false">Categoria</string>
+    <string name="categoria">Categoria</string>
     <string name="cultura">Cultura</string>
     <string name="deportes">Deportes</string>
     <string name="ocio">Ocio</string>
@@ -146,6 +160,58 @@
     <string name="mensajecompartir">Mira que propuesta he encontrado en Agora!</string>
 
 
+    <string name="cargandoprop">CARGANDO PROPUESTAS...</string>
+    <string name="cargandoperfil">CARGANDO PERFIL...</string>
+    <string name="start">Empezar</string>
+    <string name="completarperfil">Completa tu perfil</string>
+    <string name="cambio_imagen">Change Image</string>
+    <string name="spinnerhintsexo">Selecciona un sexo</string>
+    <string name="hombre">Hombre</string>
+    <string name="mujer">Mujer</string>
+    <string name="indefinido">Indefinido</string>
+    <string name="cambio_password">Introduce tu password antiguo en el primer campo y el nuevo en los dos siguientes</string>
+    <string name="diferente">El nuevo Password tiene que ser diferente</string>
+
+    <!-- Strings Logros -->
+    <string name="conseguidos">Logros Conseguidos</string>
+    <string name="pendientes">Logros Pendientes</string>
+
+    <string name="pendiente">" (pendiente)"</string>
+    <string name="conseguido">" (conseguido)"</string>
+
+
+    <string name="PROP1">Crea 1 propuesta</string>
+    <string name="PROP5">Crea 5 propuestas</string>
+    <string name="PROP10">Crea 10 propuestas</string>
+    <string name="PROP50">Crea 50 propuestas</string>
+    <string name="PROP100">Crea 100 propuestas</string>
+    <string name="FAV1">Añadir 1 propuesta a favoritos</string>
+    <string name="FAV10">Añadir 10 propuestas a favoritos</string>
+    <string name="UBI1">Crear 1 propuesta con ubicación</string>
+    <string name="UBI10">Crear 10 propuestas con ubicación</string>
+    <string name="PROPC">Crear una propuesta de la categoria Cultura</string>
+    <string name="PROPD">Crear una propuesta de la categoria Deportes</string>
+    <string name="PROPO">Crear una propuesta de la categoria Ocio</string>
+    <string name="PROPM">Crear una propuesta de la categoria Mantenimiento</string>
+    <string name="PROPE">Crear una propuesta de la categoria Eventos</string>
+    <string name="PROPT">Crear una propuesta de la categoria Turismo</string>
+    <string name="PROPQ">Crear una propuesta de la categoria Quejas</string>
+    <string name="PROPS">Crear una propuesta de la categoria Soporte</string>
+    <string name="TWIT1">Compartir 1 propuesta en Twitter</string>
+    <string name="TWIT10">Compartir 10 propuestas en Twitter</string>
+    <string name="TWIT100">Compartir 100 propuestas en Twitter</string>
+    <string name="GLIKE1">Conseguir 1 like en 1 propuesta</string>
+    <string name="GLIKE10">Conseguir 10 likes en 1 propuesta</string>
+    <string name="GLIKE100">Conseguir 100 likes en 1 propuesta</string>
+    <string name="PLIKE1">Dar like a 1 propuesta</string>
+    <string name="PLIKE10">Dar like a 10 propuestas</string>
+    <string name="PLIKE100">Dar like a 100 propuestas</string>
+
+
+
+
+
+
     <string name="str_en" translatable="false">English</string>
     <string name="str_es" translatable="false">Spanish</string>
     <string name="str_ca" translatable="false">Catalan</string>
@@ -155,7 +221,6 @@
         <item>@string/str_ca</item>
     </string-array>
 
-
     <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
     <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
     <string name="title_activity_my_propuestas">MyPropuestasActivity</string>
@@ -163,9 +228,15 @@
     <string name="title_activity_edit_profile">EditProfileActivity</string>
     <string name="title_activity_edit_proposal">EditProposalActivity</string>
 
-    <string name="title_activity_details_proposal" translatable="false">DetailsProposalActivity</string>
+    <string name="title_activity_details_proposal" translatable="false">DetailsProposalActivity
+    </string>
 
     <string name="title_activity_add_location" translatable="false">Map</string>
+    <string name="title_activity_my_favorites">MyFavorites</string>
 
+    <string name="title_activity_logros">LogrosActivity</string>
+    <string name="title_activity_show_location">Map</string>
+    <string name="title_activity_other_user">OtherUserActivity</string>
+    <string name="title_activity_fill_profile">FillProfileActivity</string>
 
 </resources>

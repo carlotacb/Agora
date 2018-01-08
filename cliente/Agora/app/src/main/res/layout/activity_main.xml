@@ -30,65 +30,104 @@
                 android:background="?attr/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/colorPrimary"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:orientation="horizontal"
-                    android:paddingBottom="3dp"
-                    android:paddingLeft="8dp"
-                    android:paddingRight="4dp"
-                    android:paddingTop="4dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="?attr/colorPrimary"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:orientation="horizontal"
+                        android:paddingBottom="3dp"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="4dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.9"
-                    android:background="@null"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:text="@string/filtro"
-                    android:textColor="#FFF"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.9"
+                        android:background="@null"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:text="@string/filtro"
+                        android:textColor="#FFF"
+                        android:textStyle="bold" />
 
-                <Spinner
-                    android:id="@+id/filterSpinnerView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.9" />
+                    <Spinner
+                        android:id="@+id/filterSpinnerView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.9" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.9"
-                    android:id="@+id/buscar"
-                    android:visibility="visible"
-                    android:background="@null"
-                    android:text="@string/buscar"
-                    android:textColor="#FFF"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.9"
+                        android:id="@+id/buscar"
+                        android:visibility="visible"
+                        android:background="@null"
+                        android:text="@string/buscar"
+                        android:textColor="#FFF"
+                        android:textStyle="bold" />
 
-                <Spinner
-                    android:id="@+id/searchSpinnerView"
-                    android:visibility="visible"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:alpha="0.9" />
+                    <RelativeLayout android:layout_width="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:layout_height="match_parent">
+                        <Spinner
+                            android:id="@+id/searchSpinnerView"
+                            android:visibility="visible"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:alpha="0.9" />
+
+                        <AutoCompleteTextView
+                            android:id="@+id/searchUser"
+                            android:visibility="visible"
+                            android:layout_width="match_parent"
+                            android:alpha="0.9"
+                            android:textSize="14dp"
+                            android:layout_height="match_parent" />
+
+                    </RelativeLayout>
+
 
                 </LinearLayout>
 
         </android.support.design.widget.AppBarLayout>
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="90dp"
+            android:id="@+id/pantallacargando"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/cargandoprop"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:padding="10dp"
+                android:textColor="@color/colorPrimaryDark"/>
+
+            <ProgressBar
+                android:layout_width="70dp"
+                android:layout_height="70dp"/>
+
+        </LinearLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/swipelayout"
             android:layout_width="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             tools:layout_editor_absoluteY="0dp"
+            android:visibility="gone"
             tools:layout_editor_absoluteX="8dp"
             android:layout_height="match_parent">
 
@@ -103,6 +142,7 @@
 
 
         </android.support.v4.widget.SwipeRefreshLayout>
+
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"

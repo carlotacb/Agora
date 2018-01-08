@@ -125,10 +125,18 @@
             android:text="descripcio"/>
 
 
+
+
         <LinearLayout android:layout_width="wrap_content"
                       android:layout_alignParentRight="true"
                       android:layout_below="@+id/descripcioproposta"
                       android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/showPositionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/showPosition" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -163,6 +171,14 @@
         </LinearLayout>
 
     </RelativeLayout>
+
+    <ListView
+        android:id="@+id/listimatges"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:listSelector="@android:color/transparent"
+        tools:context="edu.upc.pes.agora.Presentation.DetailsProposalActivity"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <FrameLayout
         android:layout_width="match_parent"

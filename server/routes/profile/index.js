@@ -1,11 +1,13 @@
 const userModule = require('../../modules/user')
 const {isAuthenticated} = require('../middleware')
 const f = require('../util').wrapAsyncRouterFunction
+const achievementModule = require('../../modules/achievement')
 
 module.exports = app => {
 
     app.get('/api/profile', isAuthenticated, f(async function (req, res) {
-        const user = await userModule.getProfile({username: req.username})
+        const username = req.query.username ? req.query.username : req.username
+        const user = await userModule.getProfile({username: username})
         res.json(user)
     }))
 
@@ -39,5 +41,33 @@ module.exports = app => {
         const user = await userModule.getProfile({username: req.username})
         const users = await userModule.getByZone({user})
         res.json(users)
+    }))
+
+    app.get('/api/profile/achievements', isAuthenticated, f(async function (req, res) {
+        const achievements = await achievementModule.getAndNotifyPersistentAchievements(req.username)
+        const missingAchievements = await achievementModule.getMissingAchievementsFromAchievements(achievements)
+        achievementModule.setAchievementsAsNotified(req.username)
+            .catch(console.error)
+        res.json({
+            achievements,
+            missingAchievements,
+        })
+    }))
+
+    app.get('/api/user/:username', isAuthenticated, f(async function (req, res) {
+        const user = await userModule.getProfile({username: req.params.username})
+
+        res.json({
+            username: user.username,
+            cpCode: user.cpCode,
+            realname: user.realname,
+            neighborhood: user.neighborhood,
+            bdate: new Date(user.bdate),
+            sex: user.sex,
+            description: user.description,
+            image: user.image,
+            updatedDateTime: new Date(user.updatedDateTime),
+            zone: parseInt(user.zone),
+        })
     }))
 }

@@ -2,6 +2,7 @@ package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.PorterDuff;
 import android.support.design.widget.TextInputLayout;
@@ -18,11 +19,16 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Objects;
+
 import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
-import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.ServerConection.PostSesionAsyncTask;
+import edu.upc.pes.agora.Logic.Utils.Constants;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
+
+import static edu.upc.pes.agora.Logic.Utils.Constants.SH_PREF_NAME;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -32,6 +38,9 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout codiup, userup, pas1up, pas2up;
     private ProgressBar progbar;
 
+    SharedPreferences prefs;
+    SharedPreferences.Editor edit;
+
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +49,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         Log.i("asdCreate", "creando usuario");
 
-        ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
-        ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
+        final ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
+        final ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
 
         identifier = (EditText) findViewById(R.id.identifier);
         username = (EditText) findViewById(R.id.username);
@@ -56,21 +65,15 @@ public class RegisterActivity extends AppCompatActivity {
         registro = (Button) findViewById(R.id.btnRegistration);
         progbar = (ProgressBar) findViewById(R.id.registerprogressbar);
 
+        //Get SharedPreferences containing token
+        prefs = this.getSharedPreferences(SH_PREF_NAME, MODE_PRIVATE);
+        edit = prefs.edit();
+
         final Resources res = getResources();
 
-        switch (Constants.Idioma) {
-            case "ca":
-                canviidioma.setImageResource(R.drawable.rep);
-                break;
-            case "es":
-                canviidioma.setImageResource(R.drawable.spa);
-                break;
-            case "en":
-                canviidioma.setImageResource(R.drawable.ing);
-                break;
-        }
+        Helpers.changeFlag(canviidioma);
 
-        Intent idioma = new Intent(RegisterActivity.this, RegisterActivity.class);
+        final Intent idioma = new Intent(RegisterActivity.this, RegisterActivity.class);
         Intent back = new Intent(RegisterActivity.this, LoginActivity.class);
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -78,6 +81,11 @@ public class RegisterActivity extends AppCompatActivity {
         canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
 
         enrerre.setOnClickListener(new BackOnClickListener(back, getApplicationContext()));
+
+        username.getBackground().clearColorFilter();
+        identifier.getBackground().clearColorFilter();
+        password1.getBackground().clearColorFilter();
+        password2.getBackground().clearColorFilter();
 
         registro.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("StaticFieldLeak")
@@ -174,6 +182,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         registro.setVisibility(View.GONE);
                         progbar.setVisibility(View.VISIBLE);
+                        enrerre.setVisibility(View.INVISIBLE);
 
                         JSONObject data = new JSONObject();
 
@@ -215,12 +224,35 @@ public class RegisterActivity extends AppCompatActivity {
 
                                 Log.i("asdBool", result.toString());
 
-                                String registreok = String.format(res.getString(R.string.Registrat), user);
+                                //String registreok = String.format(res.getString(R.string.Registrat), user);
 
                                 if (result){
                                     //access app
-                                    Toast.makeText(RegisterActivity.this, registreok, Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                                    //Toast.makeText(RegisterActivity.this, registreok, Toast.LENGTH_SHORT).show();
+
+                                    Constants.Username = user;
+                                    try {
+                                        if (resObject.has("token")) {
+                                            String t = resObject.getString("token");
+                                            Constants.SH_PREF_NAME = t;
+
+                                            if (!Objects.equals(prefs.getString("token", ""), t)) {
+                                                edit.putString("token", t);
+                                                edit.apply();
+                                            }
+
+                                            Log.i("SavedToken", prefs.getString("token", "none saved"));
+                                        }
+                                        if (resObject.has("zone")) {
+                                            Constants.zone = resObject.getInt("zone");
+                                            Log.i("Zone:", "" + resObject.getInt("zone"));
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    Intent fillProfile = new Intent(RegisterActivity.this, FillProfileActivity.class);
+                                    Log.i("Asd:", "launch intent");
+                                    startActivity(fillProfile);
 
                                 } else {
                                     identifier.setText("");
@@ -229,6 +261,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     password2.setText("");
                                     registro.setVisibility(View.VISIBLE);
                                     progbar.setVisibility(View.GONE);
+                                    enrerre.setVisibility(View.VISIBLE);
                                 }
 
                             }

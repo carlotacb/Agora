@@ -2,10 +2,27 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const db = require('./modules/db')
+const mung = require('express-mung');
+const achievementModule = require('./modules/achievement')
 
 const config = require('./config')
 
 const BootstrapRouter = require('./routes')
+
+
+app.use(mung.headersAsync(async function (req, res) {
+    try {
+        if (res.statusCode === 200 && req.username) {
+            const headerKey = 'X-New-Achievements'
+            const newAchievements = await achievementModule.getNewAchievements(req.username)
+            if (newAchievements && Array.isArray(newAchievements) && newAchievements.length > 0) {
+                res.setHeader(headerKey, newAchievements.join(','))
+            }
+        }
+    } catch (error) {
+        console.error('Error getting achievements headers', error)
+    }
+}))
 
 BootstrapRouter(app)
 BootstrapServer(app)
@@ -18,8 +35,8 @@ function BootstrapServer(app) {
     }
 
     app.use(function (err, req, res, next) {
-        console.error(`Error on ${req.method} ${req.path} with request body ${JSON.stringify(req.body)}`, err)
-        res.status(err.status || 500).json({errorCode: err.errorCode, message: err.message})
+        console.error(`Error on ${req.method} ${req.path} with request body ${JSON.stringify(req.body)}\n`, err)
+        return res.status(err.status || 500).json({errorCode: err.errorCode, message: err.message})
     });
 }
 

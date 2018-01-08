@@ -1,284 +1,357 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp"
-            android:fillViewport="false">
+            android:fillViewport="true"> -->
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <RelativeLayout android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/backbutton"
-                android:layout_alignParentStart="true"
-                android:clickable="true"
-                android:src="@mipmap/ic_arrow"
-                android:focusable="true"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/multiidiomareg"
-                android:layout_alignParentEnd="true"
-                android:clickable="true"
-                android:src="@mipmap/ic_language"
-                android:focusable="true" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:text="@string/nuevapropuesta"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:padding="10dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/colorPrimaryDark"/>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="320dp"
-            android:id="@+id/titulo_up"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/titulo"
-                android:hint="@string/titulo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:inputType="textPersonName"
-                android:textColorHint="#e89b9696"
-                android:paddingTop="8dp"
-                android:fontFamily="sans-serif"
-                android:paddingBottom="10dp"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:layout_margin="2sp"
-                android:textCursorDrawable="@null"
-                android:textColor="#000"
-                android:textStyle="italic"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="320dp"
-            android:id="@+id/descripcion_up"
-            android:layout_marginLeft="10sp"
-            android:layout_marginRight="10sp"
-            android:paddingTop="16dp"
-            android:paddingBottom="10dp"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/descripcion"
-                android:hint="@string/descrpicion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:inputType="textCapSentences"
-                android:textColorHint="#e89b9696"
-                android:paddingTop="8dp"
-                android:fontFamily="sans-serif"
-                android:paddingBottom="10dp"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:layout_margin="2sp"
-                android:textCursorDrawable="@null"
-                android:textColor="#000"
-                android:textStyle="italic"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-        <Spinner
-            android:layout_width="320dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/cate"
-            android:padding="8dp"
-            android:textSize="16sp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="serif"/>
-
-       <!-- <TextView
-            android:id="@+id/txtPosAttached"
-            android:textSize="16sp"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:id="@+id/tutto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/> -->
-
-
-    <LinearLayout android:layout_width="wrap_content"
-                  android:orientation="horizontal"
-                  android:layout_gravity="center"
-                  android:layout_height="match_parent">
-
-        <RelativeLayout android:layout_width="match_parent"
-                        android:gravity="center"
-                        android:layout_height="36dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp">
-
-            <ImageButton
-                android:id="@+id/btnAddImage"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/botonadd"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:textSize="14sp"
-                android:src="@drawable/if_image_add_103590"
-                android:visibility="visible"/>
-
-            <ImageButton
-                android:id="@+id/btnDeleteImage"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/botonremove"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:textSize="14sp"
-                android:src="@drawable/if_image_remove_103594"
-                android:visibility="gone"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout android:layout_width="match_parent"
-                        android:gravity="center"
-                        android:layout_height="36dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp">
-
-            <ImageButton
-                android:id="@+id/btnAddPosition"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/botonadd"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:textSize="14sp"
-                android:src="@mipmap/ic_locationonb"
-                android:visibility="visible"/>
-
-            <ImageButton
-                android:id="@+id/btnDeletePosition"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:background="@drawable/botonremove"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:textSize="14sp"
-                android:src="@mipmap/ic_locationoff"
-                android:visibility="gone"/>
-
-        </RelativeLayout>
-
-    </LinearLayout>
-
-        <LinearLayout android:layout_width="wrap_content"
-                      android:layout_gravity="center"
-                      android:layout_marginTop="20dp"
-                      android:layout_marginBottom="20dp"
-                      android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="46dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp">
+                android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/createButton"
+                <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:text="@string/create"
-                    android:background="@drawable/botonlogin"
-                    android:fontFamily="sans-serif-medium"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:textColor="#fff"
-                    android:textStyle="bold"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:textSize="14sp"
-                    android:visibility="visible"/>
+                    android:layout_height="wrap_content"
+                    android:id="@+id/backbutton"
+                    android:layout_alignParentStart="true"
+                    android:clickable="true"
+                    android:src="@mipmap/ic_arrow"
+                    android:focusable="true"/>
 
-                <ProgressBar
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/multiidiomareg"
+                    android:layout_alignParentEnd="true"
+                    android:clickable="true"
+                    android:src="@mipmap/ic_language"
+                    android:focusable="true" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/nuevapropuesta"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="@color/colorPrimaryDark"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="320dp"
+                android:id="@+id/titulo_up"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/titulo"
+                    android:hint="@string/titulo"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/crproposalprogressbar"
-                    android:layout_centerInParent="true"
-                    style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
-                    android:indeterminateDrawable="@drawable/progress_bar_circular_style"
-                    android:visibility="gone"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="46dp"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp">
-
-                <Button
-                    android:id="@+id/resetButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:text="@string/reset"
-                    android:background="@drawable/botoncancel"
-                    android:fontFamily="sans-serif-medium"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="textPersonName"
+                    android:textColorHint="#e89b9696"
+                    android:paddingTop="8dp"
+                    android:fontFamily="sans-serif"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_margin="2sp"
+                    android:textCursorDrawable="@null"
                     android:textColor="#000"
-                    android:textStyle="bold"
-                    android:textSize="14sp"
-                    android:visibility="visible"/>
+                    android:textStyle="italic"/>
 
-            </RelativeLayout>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="320dp"
+                android:id="@+id/descripcion_up"
+                android:layout_marginLeft="10sp"
+                android:layout_marginRight="10sp"
+                android:paddingTop="16dp"
+                android:paddingBottom="10dp"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/descripcion"
+                    android:hint="@string/descrpicion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:inputType="textCapSentences|textMultiLine"
+                    android:textColorHint="#e89b9696"
+                    android:paddingTop="8dp"
+                    android:fontFamily="sans-serif"
+                    android:paddingBottom="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:layout_margin="2sp"
+                    android:textCursorDrawable="@null"
+                    android:textColor="#000"
+                    android:textStyle="italic"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Spinner
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/cate"
+                android:padding="8dp"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="serif"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/poscions"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/positionatached"
+                    android:textColor="#000"
+                    android:visibility="invisible"
+                    android:text="@string/posAttached"/>
+
+                <!-- <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/seeposition"
+                    android:text="@string/showposition"/> -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    android:id="@+id/deleteposition"
+                    android:text="@string/deletePosition"/>
+
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/llistaimatges"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:listSelector="@android:color/transparent"/>
+
+
+            <LinearLayout android:layout_width="wrap_content"
+                          android:layout_gravity="center"
+                          android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp">
+
+                    <Button
+                        android:id="@+id/createButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="@string/create"
+                        android:background="@drawable/botonlogin"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:textColor="#fff"
+                        android:textStyle="bold"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:textSize="14sp"
+                        android:visibility="visible"/>
+
+                    <ProgressBar
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/crproposalprogressbar"
+                        android:layout_centerInParent="true"
+                        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+                        android:indeterminateDrawable="@drawable/progress_bar_circular_style"
+                        android:visibility="gone"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp">
+
+                    <Button
+                        android:id="@+id/resetButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:text="@string/reset"
+                        android:background="@drawable/botoncancel"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:textColor="#000"
+                        android:textStyle="bold"
+                        android:textSize="14sp"
+                        android:visibility="visible"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <!-- <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/poscions"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/positionatached"
+                    android:textColor="#000"
+                    android:visibility="invisible"
+                    android:text="@string/posAttached"/> -->
+
+                <!-- <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    android:layout_marginRight="10dp"
+                    android:id="@+id/seeposition"
+                    android:text="@string/showposition"/> -->
+
+             <!--    <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold"
+                    android:visibility="invisible"
+                    android:id="@+id/deleteposition"
+                    android:text="@string/deletePosition"/>
+
+            </LinearLayout> -->
+
+            <!-- <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_below="@+id/poscions"
+                android:layout_height="match_parent">
+
+                <ListView
+                    android:id="@+id/llistaimatges"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:listSelector="@android:color/transparent"
+                    tools:context="edu.upc.pes.agora.Presentation.DetailsProposalActivity"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+            </FrameLayout> -->
+
         </LinearLayout>
 
+    </ScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/faboptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_gravity="bottom|end"
+        android:src="@mipmap/ic_faddwhite"/>
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:id="@+id/localizationLayout"
+                  android:orientation="horizontal"
+                  android:visibility="gone"
+                  android:layout_gravity="bottom|end"
+                  android:layout_margin="@dimen/fab_margin"
+                  android:layout_height="wrap_content">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fablocalization"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_locationonb"
+            android:layout_marginRight="70dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/colorAccentLight"
+            app:fabSize="mini"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/imagesLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone"
+        android:layout_margin="@dimen/fab_margin"
+        android:orientation="horizontal">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabimages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorAccentLight"
+            android:layout_marginRight="120dp"
+            android:layout_marginBottom="8dp"
+            app:fabSize="mini"
+            android:src="@drawable/if_image_add_103590"/>
+
     </LinearLayout>
 
 
-</ScrollView>
-
+</android.support.design.widget.CoordinatorLayout>

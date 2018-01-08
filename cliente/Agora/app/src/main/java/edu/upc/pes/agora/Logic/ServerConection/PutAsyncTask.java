@@ -14,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Presentation.MainActivity;
 
 import static edu.upc.pes.agora.Logic.Utils.Constants.SH_PREF_NAME;
@@ -47,7 +48,7 @@ public class PutAsyncTask extends AsyncTask<JSONObject, Void, JSONObject>{
             con.setRequestMethod("PUT");
             con.setRequestProperty("Content-Type", "application/json;charset=UTF-8");
             con.setRequestProperty("Accept","application/json");
-            con.setRequestProperty("Authorization",tokenToSend);
+            con.setRequestProperty("Authorization", Constants.SH_PREF_NAME);
             con.setDoInput(true);
             con.setDoOutput(true);
 
@@ -64,6 +65,10 @@ public class PutAsyncTask extends AsyncTask<JSONObject, Void, JSONObject>{
             try {
                 if (con.getResponseCode() == 200) {
                     response.put("success",true);
+                }
+                else if(con.getResponseCode() == 400){
+                    response.put("success", false);
+                    response.put("errorMessage","Selected location outside of allowed zone.");
                 }
                 else  {
                     Log.i("asdTAG","response code: "+con.getResponseCode());

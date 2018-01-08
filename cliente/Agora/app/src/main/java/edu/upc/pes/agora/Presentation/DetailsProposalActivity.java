@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,11 +14,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.Html;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -30,9 +35,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import edu.upc.pes.agora.Logic.Adapters.ImatgesAdapter;
 import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
 import edu.upc.pes.agora.Logic.Models.Comment;
 import edu.upc.pes.agora.Logic.Adapters.CommentAdapter;
+import edu.upc.pes.agora.Logic.Models.ImatgeItem;
 import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
@@ -45,8 +52,13 @@ public class DetailsProposalActivity extends AppCompatActivity {
     private TextView descripcio;
     private TextView owner;
     private TextView categoria;
+    private Button showPos;
+
+    private TextView date;
+
 
     private ListView llista_comentaris;
+    private ListView llista_imatges;
     private String newComent;
     private ImageView canviidioma, enrerre, compartir;
 
@@ -68,8 +80,20 @@ public class DetailsProposalActivity extends AppCompatActivity {
         descripcio = (TextView) findViewById(R.id.descripcioproposta);
         categoria = (TextView) findViewById(R.id.categoriaproposta);
         owner = (TextView) findViewById(R.id.ownerproposal);
+        date = (TextView) findViewById(R.id.date);
+
+        date.setText(getIntent().getStringExtra("Creation"));
+
+        showPos = (Button) findViewById(R.id.showPositionButton);
+        if(getIntent().getDoubleExtra("lat",0) != 0){
+            showPos.setVisibility(View.VISIBLE);
+        }else{
+            showPos.setVisibility(View.INVISIBLE);
+        }
 
         llista_comentaris = (ListView) findViewById(R.id.listcommentaris);
+
+        llista_imatges = (ListView) findViewById(R.id.listimatges);
 
         addcoment = (FloatingActionButton) findViewById(R.id.fabcoment);
 
@@ -130,20 +154,27 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
         llistarcomentaris();
 
-        if (Constants.Idioma.equals("ca")) {
-            canviidioma.setImageResource(R.drawable.rep);
-        }
-
-        else if (Constants.Idioma.equals("es")) {
-            canviidioma.setImageResource(R.drawable.spa);
-        }
-
-        else if (Constants.Idioma.equals("en")) {
-            canviidioma.setImageResource(R.drawable.ing);
+        switch (Constants.Idioma) {
+            case "ca":
+                canviidioma.setImageResource(R.drawable.rep);
+                break;
+            case "es":
+                canviidioma.setImageResource(R.drawable.spa);
+                break;
+            case "en":
+                canviidioma.setImageResource(R.drawable.ing);
+                break;
         }
 
         final Intent idioma = new Intent(DetailsProposalActivity.this, DetailsProposalActivity.class);
-        Intent back = new Intent(DetailsProposalActivity.this, MainActivity.class);
+        Intent back = new Intent();
+        if (getIntent().hasExtra("otherUser") && getIntent().getBooleanExtra("otherUser", false)) {
+            back = new Intent(this, OtherUserProposalsActivity.class);
+            back.putExtra("username", getIntent().getStringExtra("Owner"));
+        } else {
+            back = new Intent(DetailsProposalActivity.this, MainActivity.class);
+        }
+
         idioma.putExtra("Title", mtit);
         idioma.putExtra("Description", mdesc);
         idioma.putExtra("id", idprop);
@@ -152,6 +183,15 @@ public class DetailsProposalActivity extends AppCompatActivity {
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
+        owner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), OtherUserActivity.class);
+                i.putExtra("username", owner.getText());
+                startActivity(i);
+            }
+        });
+
         canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
 
         enrerre.setOnClickListener(new BackOnClickListener(back, getApplicationContext()));
@@ -159,6 +199,20 @@ public class DetailsProposalActivity extends AppCompatActivity {
         compartir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                JSONObject values = new JSONObject();
+                try {
+                    values.put("proposalId",idprop);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                new PostAsyncTask("https://agora-pes.herokuapp.com/api/webhook/shared/twitter",getApplicationContext()){
+                    @Override
+                    protected void onPostExecute(JSONObject jsonObject) {
+                        super.onPostExecute(jsonObject);
+                    }
+                }.execute(values);
+
                 Log.i("asdCompartir", "true");
                 String intro = getString(R.string.mensajecompartir);
                 String tweetUrl = "https://twitter.com/intent/tweet?text=" + intro + "<br>" + "<br>" + mtit + "<br>"+ mdesc + "&url=";
@@ -175,7 +229,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                 AlertDialog.Builder dialogoaddcoment = new AlertDialog.Builder(v.getRootView().getContext());
 
                 final EditText input = new EditText(v.getRootView().getContext());
-                input.setSingleLine();
+                //input.setSingleLine();
                 FrameLayout container = new FrameLayout(DetailsProposalActivity.this);
                 FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
@@ -183,6 +237,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                 input.setLayoutParams(params);
                 input.getBackground().clearColorFilter();
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
+                input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(200)});
                 container.addView(input);
                 dialogoaddcoment.setTitle(getString(R.string.nou));
                 String mensajeparaañadir = String.format(res.getString(R.string.mensajenc), mtit);
@@ -243,6 +298,36 @@ public class DetailsProposalActivity extends AppCompatActivity {
                                     input.setText("");
                                     input.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
                                 }
+
+                        //        String achievement = this.getNewAchievement();
+                         //       achievement="hola";
+                               /* if (achievement!=null && !achievement.equals("")){
+                                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(DetailsProposalActivity.this);
+                                    View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
+
+                                    TextView textView = (TextView)mView.findViewById(R.id.textView);
+                                    Button mAccept = (Button) mView.findViewById(R.id.etAccept);
+
+                                    ImageView imageView = (ImageView) mView.findViewById(R.id.image);
+                                    imageView.setImageResource(R.drawable.ic_trofeo_logro2);
+
+
+
+                                    mBuilder.setView(mView);
+
+                                    final AlertDialog dialog = mBuilder.create();
+                                    dialog.show();
+                                    mAccept.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                }*/
+
+
+
+
                             }
                         }.execute(values);
                     }
@@ -293,11 +378,29 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
             }
         });
+
+        showPos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), ShowLocationActivity.class);
+                if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng")) {
+                    i.putExtra("lat", getIntent().getDoubleExtra("lat",0));
+                    i.putExtra("lng", getIntent().getDoubleExtra("lng",0));
+                    startActivity(i);
+                }
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
-        Intent refresh = new Intent(this, MainActivity.class);
+        Intent refresh;
+        if (getIntent().hasExtra("otherUser") && getIntent().getBooleanExtra("otherUser", false)){
+            refresh = new Intent(this, OtherUserProposalsActivity.class);
+            refresh.putExtra("username", getIntent().getStringExtra("Owner"));
+        }else {
+            refresh = new Intent(this, MainActivity.class);
+        }
         startActivity(refresh);
     }
 
@@ -332,19 +435,43 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
                                 JSONObject jas = ArrayComments.getJSONObject(i);
                                 String id = jas.getString("id");
+                                String date = jas.getString("createdDateTime");
                                 String contentcoment = jas.getString("comment");
 
                                 JSONObject Usuario = jas.getJSONObject("author");
                                 Log.i("asd123", (Usuario.toString()));
                                 String owner = Usuario.getString("username");
 
+
                                 Comment aux = new Comment(owner, id, contentcoment);
+                                aux.setCreated(date);
                                 aux.setIdentificadorProp(idprop);
 
                                 comentarios.add(aux);
                             }
                         }
                         llista_comentaris.setAdapter(new CommentAdapter(getApplicationContext(), comentarios));
+
+                        JSONArray ArrayImages = jsonObject.getJSONArray("images");
+                        ArrayList<ImatgeItem> imatges = new ArrayList<>();
+
+                        if (ArrayImages != null) {
+                            for (int i=0; i < ArrayImages.length(); i++){
+
+                                Log.i("asd123", (ArrayImages.get(i).toString()));
+
+                                JSONObject jas = ArrayImages.getJSONObject(i);
+                                String id = jas.getString("id");
+                                String contentimage = jas.getString("image");
+
+                                ImatgeItem aux = new ImatgeItem();
+                                aux.setNumero(Integer.parseInt(id));
+                                aux.setImatge(contentimage);
+
+                                imatges.add(aux);
+                            }
+                        }
+                        llista_imatges.setAdapter(new ImatgesAdapter(getApplicationContext(), imatges));
 
                     }
 

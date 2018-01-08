@@ -53,6 +53,42 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         holder.title.setText(proposal.getTitle());
         final String tit = proposal.getTitle();
         holder.description.setText(proposal.getDescription());
+
+        String c = proposal.getCategoria();
+
+        switch (c) {
+            case "C":
+                c = context.getString(R.string.cultura);
+                break;
+            case "D":
+                c = context.getString(R.string.deportes);
+                break;
+            case "O":
+                c = context.getString(R.string.ocio);
+                break;
+            case "M":
+                c = context.getString(R.string.mantenimiento);
+                break;
+            case "E":
+                c = context.getString(R.string.eventos);
+                break;
+            case "T":
+                c = context.getString(R.string.turismo);
+                break;
+            case "Q":
+                c = context.getString(R.string.quejas);
+                break;
+            case "S":
+                c = context.getString(R.string.soporte);
+                break;
+        }
+
+        holder.categoria.setText(c);
+        holder.numcomentaris.setText(String.valueOf(proposal.getNumerocomentarios()));
+        holder.numdislikes.setText(String.valueOf(proposal.getNumerounvotes()));
+        holder.numlikes.setText(String.valueOf(proposal.getNumerovotes()));
+        holder.created.setText(String.format(res.getString(R.string.creadoel), proposal.getCreation()));
+
         holder.more.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
@@ -67,8 +103,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
                                 myIntent.putExtra("Title", proposal.getTitle());
                                 myIntent.putExtra("Description", proposal.getDescription());
                                 myIntent.putExtra("id", proposal.getId());
+                                myIntent.putExtra("Categoria", proposal.getCategoria());
+                                myIntent.putExtra("lat", proposal.getLat());
+                                myIntent.putExtra("lng", proposal.getLng());
                                 v.getRootView().getContext().startActivity(myIntent);
-
                                 break;
 
                             case R.id.item_delete:
@@ -128,10 +166,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         return listProposals.size();
     }
 
-    class RecyclerHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener, PopupMenu.OnMenuItemClickListener*/{
+    class RecyclerHolder extends RecyclerView.ViewHolder {
 
         private TextView title;
         private TextView description;
+        private TextView categoria;
+        private TextView created;
+        private TextView numcomentaris;
+        private TextView numlikes;
+        private TextView numdislikes;
         private ImageView more;
 
         public RecyclerHolder(View itemView) {
@@ -139,7 +182,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
 
             title = (TextView) itemView.findViewById(R.id.textHead);
             description = (TextView) itemView.findViewById(R.id.textDescription);
+            categoria = (TextView) itemView.findViewById(R.id.categoriaproposal);
+            created = (TextView) itemView.findViewById(R.id.data);
+            numcomentaris = (TextView) itemView.findViewById(R.id.numerocomentaris);
+            numlikes = (TextView) itemView.findViewById(R.id.numerovote);
+            numdislikes = (TextView) itemView.findViewById(R.id.numerounvote);
             more = (ImageView) itemView.findViewById(R.id.more);
+
 
         }
     }

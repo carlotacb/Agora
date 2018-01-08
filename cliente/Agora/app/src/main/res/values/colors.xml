@@ -8,8 +8,10 @@
     <color name="fondo">#E8EAF6</color> <!-- 50 -->
 
     <color name="gris">#aab4b4b4</color>
+    <color name="grisfosc">#5a5a5a</color>
     <color name="blue">#aa2626ca</color>
     <color name="white">#FFFF</color>
+    <color name="fonssemitransparent">#b7484848</color>
 
     <color name="red_500_primary">#F44336</color>
     <color name="red_100">#FFCDD2</color>

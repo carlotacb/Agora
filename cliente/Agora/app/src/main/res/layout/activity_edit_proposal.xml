@@ -1,94 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp"
-            android:background="#f2f1ef"
-            android:fillViewport="false">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:fillViewport="true">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:tools="http://schemas.android.com/tools"
-                  android:orientation="vertical"
-                  android:gravity="center_horizontal"
-                  android:paddingBottom="@dimen/activity_vertical_margin"
-                  android:paddingLeft="@dimen/activity_horizontal_margin"
-                  android:paddingRight="@dimen/activity_horizontal_margin"
-                  android:paddingTop="@dimen/activity_vertical_margin"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="match_parent"
+        <RelativeLayout android:layout_width="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/backbutton"
+                android:layout_alignParentStart="true"
+                android:clickable="true"
+                android:src="@mipmap/ic_arrow"
+                android:focusable="true"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/multiidiomareg"
+                android:layout_alignParentEnd="true"
+                android:clickable="true"
+                android:src="@mipmap/ic_language"
+                android:focusable="true" />
+
+        </RelativeLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="320dp"
+            android:id="@+id/edittitulo_up"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editTitle"
+                android:hint="@string/titulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:inputType="textPersonName"
+                android:textColorHint="#e89b9696"
+                android:paddingTop="8dp"
+                android:fontFamily="sans-serif"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_margin="2sp"
+                android:textCursorDrawable="@null"
+                android:textColor="#000"
+                android:textStyle="italic"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="320dp"
+            android:id="@+id/editdescripcion_up"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="10dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/editDescription"
+                android:hint="@string/descrpicion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:inputType="textCapSentences|textMultiLine"
+                android:textColorHint="#e89b9696"
+                android:paddingTop="8dp"
+                android:fontFamily="sans-serif"
+                android:paddingBottom="10dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:layout_margin="2sp"
+                android:textCursorDrawable="@null"
+                android:textColor="#000"
+                android:textStyle="italic"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Spinner
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:layout_marginBottom="5dp"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:text="@string/titulo"/>
-
-        <EditText
-            android:id="@+id/editTitle"
-            android:hint="@string/editTitle"
-            android:inputType="text"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:textColorHint="#e89b9696"
-            android:padding="10dp"
-            android:layout_marginBottom="30dp"
-            android:fontFamily="serif"
-            android:background="@drawable/edittext_bg"
-            android:textCursorDrawable="@null"
-            android:textColor="#000"
-            android:textStyle="italic"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:layout_marginBottom="5dp"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            android:text="@string/descrpicion"/>
-
-        <EditText
-            android:id="@+id/editDescription"
-            android:hint="@string/editDescription"
-            android:inputType="textMultiLine"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:textColorHint="#e89b9696"
-            android:padding="10dp"
-            android:layout_marginBottom="40dp"
-            android:fontFamily="serif"
-            android:background="@drawable/edittext_bg"
-            android:textCursorDrawable="@null"
-            android:textColor="#000"
-            android:textStyle="italic"/>
-
+            android:id="@+id/editcategoria"
+            android:padding="8dp"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="serif"/>
 
         <LinearLayout android:layout_width="wrap_content"
-                      android:layout_gravity="right"
-                      android:layout_marginBottom="20dp"
+                      android:layout_gravity="center"
                       android:layout_height="match_parent">
 
-            <RelativeLayout android:layout_width="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp">
 
                 <Button
                     android:id="@+id/saveButton"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/botonok"
-                    android:textColor="#FFF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="@string/saveButton"
+                    android:background="@drawable/botonlogin"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:textColor="#fff"
                     android:textStyle="bold"
-                    android:textSize="17dp"
-                    android:text="@string/saveButton" />
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:textSize="14sp"
+                    android:visibility="visible"/>
 
                 <ProgressBar
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:id="@+id/saveprogressbar"
                     android:layout_centerInParent="true"
                     style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
@@ -97,17 +149,135 @@
 
             </RelativeLayout>
 
-            <Button
-                android:id="@+id/cancelButton"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:background="@drawable/botoncancel"
-                android:fontFamily="serif"
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp">
+
+                <Button
+                    android:id="@+id/cancelButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="@string/cancelButton"
+                    android:background="@drawable/botoncancel"
+                    android:fontFamily="sans-serif-medium"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:visibility="visible"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:id="@+id/layoutlocalization"
+            android:visibility="invisible"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:id="@+id/positionatached"
+                android:textColor="#000"
+                android:text="@string/posAttached"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
-                android:textSize="17dp"
-                android:text="@string/cancelButton" />
+                android:layout_marginRight="10dp"
+                android:id="@+id/seeposition"
+                android:text="Ver Posición"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:id="@+id/deleteposition"
+                android:text="Delete"/>
 
         </LinearLayout>
 
     </LinearLayout>
-</ScrollView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/llistaimatges"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:listSelector="@android:color/transparent"
+            tools:context="edu.upc.pes.agora.Presentation.DetailsProposalActivity"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/faboptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:src="@mipmap/ic_faddwhite"
+            android:layout_margin="@dimen/fab_margin"/>
+
+        <LinearLayout android:layout_width="wrap_content"
+                      android:id="@+id/localizationLayout"
+                      android:orientation="horizontal"
+                      android:layout_gravity="bottom|end"
+                      android:layout_margin="@dimen/fab_margin"
+                      android:visibility="gone"
+                      android:layout_height="wrap_content">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fablocalization"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_locationonb"
+                android:layout_marginRight="70dp"
+                android:layout_marginBottom="8dp"
+                android:backgroundTint="@color/colorAccentLight"
+                app:fabSize="mini"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/imagesLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabimages"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorAccentLight"
+                android:layout_marginRight="120dp"
+                android:layout_marginBottom="8dp"
+                app:fabSize="mini"
+                android:src="@drawable/if_image_add_103590"/>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

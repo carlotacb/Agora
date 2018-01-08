@@ -1,5 +1,7 @@
 package edu.upc.pes.agora.Logic.Models;
 
+import android.graphics.Bitmap;
+
 public class Profile {
 
     // Basic proposals data manipulation class
@@ -12,15 +14,18 @@ public class Profile {
     private String born;
     private String description;
     private String sex;
+    private Bitmap imatge;
 
-    public int getSex() {
-        int sexo = 3;
+    public Bitmap getImatge() {
+        return imatge;
+    }
 
-        if(sex.equals("I")) sexo = 0;
-        if(sex.equals("M")) sexo = 2;
-        if(sex.equals("F")) sexo = 1;
+    public void setImatge(Bitmap imatge) {
+        this.imatge = imatge;
+    }
 
-        return sexo;
+    public String getSex() {
+        return sex;
     }
 
     public void setSex(String sex) {

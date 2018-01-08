@@ -25,9 +25,14 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;*/
 
+<<<<<<< HEAD:cliente/Agora/app/src/androidTest/java/edu/upc/pes/agora/ZEditProfile.java
 /**
  * Created by Jaume on 31/12/2017.
  */
+=======
+@RunWith(AndroidJUnit4.class)
+public class ProfileEditScreenTest {
+>>>>>>> develop:cliente/Agora/app/src/androidTest/java/edu/upc/pes/agora/ProfileEditScreenTest.java
 
 /*@RunWith(AndroidJUnit4.class)
 public class HEditScreenProfile {*/
@@ -65,7 +70,11 @@ public class HEditScreenProfile {*/
         //onView(withId(R.id.barrio)).check(matches(withText("Centre")));
         //onView(withId(R.id.born)).check(matches(withText("19/04/1994")));
 
+<<<<<<< HEAD:cliente/Agora/app/src/androidTest/java/edu/upc/pes/agora/ZEditProfile.java
         //intended(hasComponent(MyProfileActivity.class.getName()));
+=======
+        intended(hasComponent(MyProfileActivity.class.getName()));
+>>>>>>> develop:cliente/Agora/app/src/androidTest/java/edu/upc/pes/agora/ProfileEditScreenTest.java
 
         //Intents.release();
     //}

@@ -4,11 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,15 +20,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
 
+import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.ServerConection.PostSesionAsyncTask;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 import static edu.upc.pes.agora.Logic.Utils.Constants.SH_PREF_NAME;
@@ -69,17 +75,7 @@ public class LoginActivity extends AppCompatActivity /*implements AdapterView.On
         etPassword.getBackground().clearColorFilter();
         etUsername.getBackground().clearColorFilter();
 
-        switch (Constants.Idioma) {
-            case "ca":
-                canviidioma.setImageResource(R.drawable.rep);
-                break;
-            case "es":
-                canviidioma.setImageResource(R.drawable.spa);
-                break;
-            case "en":
-                canviidioma.setImageResource(R.drawable.ing);
-                break;
-        }
+        Helpers.changeFlag(canviidioma);
 
         Intent idioma = new Intent(LoginActivity.this, LoginActivity.class);
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -142,6 +138,7 @@ public class LoginActivity extends AppCompatActivity /*implements AdapterView.On
                                     //Saves token in SharedPreferences if it is not yet saved there
                                     if (resObject.has("token")) {
                                         String t = resObject.getString("token");
+                                        Constants.SH_PREF_NAME = t;
 
                                         if (!Objects.equals(prefs.getString("token", ""), t)) {
                                             edit.putString("token", t);
@@ -164,7 +161,7 @@ public class LoginActivity extends AppCompatActivity /*implements AdapterView.On
 
                             if (result) {
                                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                Constants.Username = username;
+                                Constants.Username = username.toLowerCase();
                             } else {
                                 Log.i("asd", "gfgffgfgf");
                                 etUsername.setText("");
@@ -198,4 +195,6 @@ public class LoginActivity extends AppCompatActivity /*implements AdapterView.On
         // Close Aplication
         finish();
     }
+
+
 }

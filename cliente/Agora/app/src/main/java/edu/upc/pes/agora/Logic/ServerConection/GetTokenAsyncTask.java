@@ -16,6 +16,7 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.Presentation.MainActivity;
 
@@ -27,6 +28,9 @@ public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     private Context context;
 
     SharedPreferences prefs;
+
+
+
 
     public GetTokenAsyncTask(String url2, Context coming_context) {
         try {
@@ -47,11 +51,11 @@ public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
         try {
             HttpsURLConnection client = (HttpsURLConnection) url.openConnection();
             client.setRequestMethod("GET");
-            client.setRequestProperty("Authorization", tokenToSend);
+            client.setRequestProperty("Authorization", Constants.SH_PREF_NAME);
             client.connect();
-
             JSONObject aux;
             String response = Helpers.iStreamToString(client.getInputStream());
+
 
             if (client.getResponseCode() >= 400){
                 Log.i("asdGetTokenAsyncTask", "entra al 400");
@@ -94,6 +98,7 @@ public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             Log.e("error", e.getMessage());
             e.printStackTrace();
             return null;
+
         }
     }
 }

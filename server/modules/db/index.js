@@ -10,6 +10,7 @@ const collectionNames = {
     tokens: 'tokens',
     proposals: 'proposals',
     idSequence: 'id_counter',
+    achievements: 'achievements',
 }
 
 const connect = () => MongoClient.connect(config.mongoDbUri)

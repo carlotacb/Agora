@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="25dp">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:text="Logro X"
+        android:textSize="18sp"
+        android:textColor="#000"
+        android:textStyle="bold"/>
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:id="@+id/image"
+        />
+
+            <Button
+                android:id="@+id/etAccept"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@drawable/botonok"
+                android:textColor="#FFF"
+                android:textStyle="bold"
+                android:textSize="17dp"
+                android:text="@string/Aceptar"
+                android:layout_gravity="center"/>
+
+
+
+</LinearLayout>

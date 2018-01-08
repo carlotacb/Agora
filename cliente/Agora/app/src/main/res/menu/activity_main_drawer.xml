@@ -14,9 +14,18 @@
             android:title="@string/lesmevespropostes"/>
 
         <item
+            android:id="@+id/nav_favorites"
+            android:icon="@mipmap/ic_favorite"
+            android:title="@string/favorites"/>
+
+        <item
             android:id="@+id/nav_perfilprinc"
             android:icon="@mipmap/ic_person"
             android:title="@string/perfil"/>
+
+        <item
+            android:id="@+id/nav_logros"
+            android:title="@string/logros"/>
 
         <!-- <item
             android:id="@+id/nav_buscarusuarios"

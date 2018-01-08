@@ -1,5 +1,6 @@
 package edu.upc.pes.agora.Presentation;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.location.LocationManager;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -63,7 +65,15 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
         savePos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), CreateProposalActivity.class);
+                Intent i = new Intent();
+                if (getIntent().hasExtra("CallingActivity")) {
+                    if (getIntent().getStringExtra("CallingActivity").equals("Create")) {
+                        i = new Intent(getApplicationContext(), CreateProposalActivity.class);
+                    }else{
+                        i = new Intent(getApplicationContext(), EditProposalActivity.class);
+                    }
+                }
+
                 if (getIntent().hasExtra("Title")){
                     i.putExtra("Title", getIntent().getStringExtra("Title"));
                 }
@@ -71,23 +81,43 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
                     i.putExtra("Description", getIntent().getStringExtra("Description"));
                 }
                 if (getIntent().hasExtra("Category")){
+                    Log.i("asdaasd", "entraaqui");
                     i.putExtra("Category", getIntent().getIntExtra("Category",0));
+                }
+                if (getIntent().hasExtra("id")){
+                    i.putExtra("id", getIntent().getIntExtra("id",0));
                 }
                 i.putExtra("lat", lat);
                 i.putExtra("lng", lng);
                 startActivity(i);
+
             }
         });
 
         cancelPos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), CreateProposalActivity.class);
+                Intent i = new Intent();
+                if (getIntent().hasExtra("CallingActivity")) {
+                    if (getIntent().getStringExtra("CallingActivity").equals("Create")) {
+                        i = new Intent(getApplicationContext(), CreateProposalActivity.class);
+                    }else{
+                        i = new Intent(getApplicationContext(), EditProposalActivity.class);
+                    }
+                }
+
                 if (getIntent().hasExtra("Title")){
                     i.putExtra("Title", getIntent().getStringExtra("Title"));
                 }
                 if (getIntent().hasExtra("Description")){
                     i.putExtra("Description", getIntent().getStringExtra("Description"));
+                }
+                if (getIntent().hasExtra("Category")){
+                    Log.i("asdaasd", "entraaqui");
+                    i.putExtra("Category", getIntent().getIntExtra("Category",0));
+                }
+                if (getIntent().hasExtra("id")){
+                    i.putExtra("id", getIntent().getIntExtra("id",0));
                 }
                 startActivity(i);
             }
@@ -116,103 +146,113 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
             }
         }
 
-        if (gpsAvailable()) {
-            //If current location is available show in map
-            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-            LatLng currentLoc = new LatLng(lat, lng);
-            if (lat ==0 && lng == 0){
-                lat = 41.3828939;
-                lng = 2.1774322;
-                LatLng defaultPos = new LatLng(lat, lng);
-                marker = mMap.addMarker(new MarkerOptions().position(defaultPos).title("Barcelona"));
-                moveCamera(defaultPos);
-            }
-        }else {
-            LatLng center;
+        if(!(getIntent().hasExtra("lat") && getIntent().hasExtra("lng"))) {
+            if (gpsAvailable()) {
+                //If current location is available show in map
+                LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
 
-            switch(zone){
-                case 0:
-                    lat = 41.37496195;
-                    lng = 2.17326530371345;
-                    center = new LatLng(lat, lng);
-                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Ciutat Vella"));
-                    moveCamera(center);
-                    break;
-                case 1:
-                    lat = 41.393351;
-                    lng = 2.16597050963639;
-                    center = new LatLng(lat, lng);
-                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Eixample"));
-                    moveCamera(center);
-                    break;
-                case 2:
-                    lat = 41.35098635;
-                    lng = 2.15256063238678;
-                    center = new LatLng(lat, lng);
-                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Sants-Montjuic"));
-                    moveCamera(center);
-                    break;
-                case 3:
-                    lat = 41.3884524;
-                    lng = 2.12171825426451;
-                    center = new LatLng(lat, lng);
-                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Les Corts"));
-                    moveCamera(center);
-                    break;
-                case 4:
-                    lat = 41.393351;
-                    lng = 2.16597050963639;
-                    center = new LatLng(lat, lng);
-                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Sarrià-Sant Gervasi"));
-                    moveCamera(center);
-                    break;
-                case 5:
-                    lat = 41.4101737;
-                    lng = 2.15514217010802;
-                    center = new LatLng(lat, lng);
-                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Gracia"));
-                    moveCamera(center);
-                    break;
-                case 6:
-                    lat = 	41.42853965;
-                    lng = 2.14359654810671;
-                    center = new LatLng(lat, lng);
-                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Horta-Guinardó"));
-                    moveCamera(center);
-                    break;
-                case 7:
-                    lat = 41.44689075;
-                    lng = 2.17256689935991;
-                    center = new LatLng(lat, lng);
-                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Nou Barris"));
-                    moveCamera(center);
-                    break;
-                case 8:
-                    lat = 41.43743905;
-                    lng = 2.19685944900109;
-                    center = new LatLng(lat, lng);
-                    marker = mMap.addMarker(new MarkerOptions().position(center).title("San Andreu"));
-                    moveCamera(center);
-                    break;
-                case 9:
-                    lat = 41.4067585;
-                    lng = 2.20368795208359;
-                    center = new LatLng(lat, lng);
-                    marker = mMap.addMarker(new MarkerOptions().position(center).title("San Martí"));
-                    moveCamera(center);
-                    break;
-                default:
+                //Else show default marker in Barcelona
+                if (lat == 0 && lng == 0) {
                     lat = 41.3828939;
                     lng = 2.1774322;
-                    center = new LatLng(lat, lng);
-                    marker = mMap.addMarker(new MarkerOptions().position(center).title("Barcelona"));
-                    moveCamera(center);
-                    break;
+                    LatLng defaultPos = new LatLng(lat, lng);
+                    marker = mMap.addMarker(new MarkerOptions().position(defaultPos).title("Barcelona"));
+                    moveCamera(defaultPos);
+                }
+            } else {
+                //If GPS unavailable show neighbourhood center
+                LatLng center;
+
+                switch (zone) {
+                    case 0:
+                        lat = 41.37496195;
+                        lng = 2.17326530371345;
+                        center = new LatLng(lat, lng);
+                        marker = mMap.addMarker(new MarkerOptions().position(center).title("Ciutat Vella"));
+                        moveCamera(center);
+                        break;
+                    case 1:
+                        lat = 41.393351;
+                        lng = 2.16597050963639;
+                        center = new LatLng(lat, lng);
+                        marker = mMap.addMarker(new MarkerOptions().position(center).title("Eixample"));
+                        moveCamera(center);
+                        break;
+                    case 2:
+                        lat = 41.35098635;
+                        lng = 2.15256063238678;
+                        center = new LatLng(lat, lng);
+                        marker = mMap.addMarker(new MarkerOptions().position(center).title("Sants-Montjuic"));
+                        moveCamera(center);
+                        break;
+                    case 3:
+                        lat = 41.3884524;
+                        lng = 2.12171825426451;
+                        center = new LatLng(lat, lng);
+                        marker = mMap.addMarker(new MarkerOptions().position(center).title("Les Corts"));
+                        moveCamera(center);
+                        break;
+                    case 4:
+                        lat = 41.393351;
+                        lng = 2.16597050963639;
+                        center = new LatLng(lat, lng);
+                        marker = mMap.addMarker(new MarkerOptions().position(center).title("Sarrià-Sant Gervasi"));
+                        moveCamera(center);
+                        break;
+                    case 5:
+                        lat = 41.4101737;
+                        lng = 2.15514217010802;
+                        center = new LatLng(lat, lng);
+                        marker = mMap.addMarker(new MarkerOptions().position(center).title("Gracia"));
+                        moveCamera(center);
+                        break;
+                    case 6:
+                        lat = 41.42853965;
+                        lng = 2.14359654810671;
+                        center = new LatLng(lat, lng);
+                        marker = mMap.addMarker(new MarkerOptions().position(center).title("Horta-Guinardó"));
+                        moveCamera(center);
+                        break;
+                    case 7:
+                        lat = 41.44689075;
+                        lng = 2.17256689935991;
+                        center = new LatLng(lat, lng);
+                        marker = mMap.addMarker(new MarkerOptions().position(center).title("Nou Barris"));
+                        moveCamera(center);
+                        break;
+                    case 8:
+                        lat = 41.43743905;
+                        lng = 2.19685944900109;
+                        center = new LatLng(lat, lng);
+                        marker = mMap.addMarker(new MarkerOptions().position(center).title("San Andreu"));
+                        moveCamera(center);
+                        break;
+                    case 9:
+                        lat = 41.4067585;
+                        lng = 2.20368795208359;
+                        center = new LatLng(lat, lng);
+                        marker = mMap.addMarker(new MarkerOptions().position(center).title("San Martí"));
+                        moveCamera(center);
+                        break;
+                    default:
+                        lat = 41.3828939;
+                        lng = 2.1774322;
+                        center = new LatLng(lat, lng);
+                        marker = mMap.addMarker(new MarkerOptions().position(center).title("Barcelona"));
+                        moveCamera(center);
+                        break;
+
+                }
 
             }
-
+        }else{
+            lat = getIntent().getDoubleExtra("lat",0);
+            lng = getIntent().getDoubleExtra("lng",0);
+            LatLng savedPos = new LatLng(lat,lng);
+            marker = mMap.addMarker(new MarkerOptions().position(savedPos).title("Proposal's place"));
+            moveCamera(savedPos);
         }
 
 
@@ -303,14 +343,30 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
             sc.close();
 
             JSONObject obj = new JSONObject(data);
-            JSONArray coordinates = obj.getJSONArray("geometries").getJSONObject(0).getJSONArray("coordinates").getJSONArray(0).getJSONArray(0);
-            List<LatLng> coord = new ArrayList<>(coordinates.length());
-            for (int i = 0; i < coordinates.length(); i++) {
-                coord.add(new LatLng(coordinates.getJSONArray(i).getDouble(1),coordinates.getJSONArray(i).getDouble(0)));
+            if(zone != 4){
+                JSONArray coordinates = obj.getJSONArray("geometries").getJSONObject(0).getJSONArray("coordinates").getJSONArray(0).getJSONArray(0);
+                List<LatLng> coord = new ArrayList<>(coordinates.length());
+                for (int i = 0; i < coordinates.length(); i++) {
+                    coord.add(new LatLng(coordinates.getJSONArray(i).getDouble(1), coordinates.getJSONArray(i).getDouble(0)));
+                }
+                pol = mMap.addPolyline(new PolylineOptions()
+                        .addAll(coord)
+                        .width(2).color(Color.RED));
+
+            }else{
+                for (int j = 0; j < 3; j++){
+                    JSONArray coordinates = obj.getJSONArray("geometries").getJSONObject(0).getJSONArray("coordinates").getJSONArray(j).getJSONArray(0);
+                    List<LatLng> coord = new ArrayList<>(coordinates.length());
+                    for (int k = 0; k < coordinates.length(); k++) {
+                        coord.add(new LatLng(coordinates.getJSONArray(k).getDouble(1), coordinates.getJSONArray(k).getDouble(0)));
+                    }
+                    pol = mMap.addPolyline(new PolylineOptions()
+                            .addAll(coord)
+                            .width(2).color(Color.RED));
+                }
+
             }
-            pol = mMap.addPolyline(new PolylineOptions()
-                    .addAll(coord)
-                    .width(2).color(Color.RED));
+
 
         } catch (IOException e) {
             e.printStackTrace();

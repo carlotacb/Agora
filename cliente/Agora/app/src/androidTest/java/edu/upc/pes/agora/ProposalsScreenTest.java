@@ -13,6 +13,10 @@ import org.junit.runner.RunWith;
 import edu.upc.pes.agora.Presentation.CreateProposalActivity;
 import edu.upc.pes.agora.Presentation.DetailsProposalActivity;
 import edu.upc.pes.agora.Presentation.MainActivity;
+<<<<<<< HEAD
+=======
+import edu.upc.pes.agora.Presentation.CreateProposalActivity;
+>>>>>>> develop
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.onData;
