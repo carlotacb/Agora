@@ -17,7 +17,7 @@ async function calculateProposalsAchievements(user) {
         && Array.isArray(p.upvotesUsernames) ? p.upvotesUsernames.length : 0
 
     const reduceProposalUpVotesGave = (total, p) => total + p && p.upvotesUsernames
-        && Array.isArray(p.upvotesUsernames) && p.upvotesUsernames.find(user.username) ? 1 : 0
+        && Array.isArray(p.upvotesUsernames) && p.upvotesUsernames.find(u => u === user.username) ? 1 : 0
 
     const reduceProposalComments = commentsFilter => (total, p) => total + p && p.comments
         && Array.isArray(p.comments) ? p.comments.filter(commentsFilter).length : 0
