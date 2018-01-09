@@ -13,11 +13,11 @@ async function calculateProposalsAchievements(user) {
     const proposalsByUser = proposals.filter(p => p.owner === user.username)
     const proposalsByOtherUsers = proposals.filter(p => p.owner !== user.username)
 
-    const reduceProposalUpVotes = (total, p) => p && p.upvotesUsernames
-        && Array.isArray(p.upvotesUsernames) ? total + p.upvotesUsernames.length : 0
+    const reduceProposalUpVotes = (total, p) => total + p && p.upvotesUsernames
+        && Array.isArray(p.upvotesUsernames) ? p.upvotesUsernames.length : 0
 
-    const reduceProposalComments = commentsFilter => (total, p) => p && p.comments
-        && Array.isArray(p.comments) ? total + p.comments.filter(commentsFilter).length : 0
+    const reduceProposalComments = commentsFilter => (total, p) => total + p && p.comments
+        && Array.isArray(p.comments) ? p.comments.filter(commentsFilter).length : 0
 
     const publishedProposals = proposalsByUser.length
     const numberOfUpvotesGot = proposalsByUser.reduce(reduceProposalUpVotes, 0)
