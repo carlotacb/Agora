@@ -62,12 +62,16 @@ public class FillProfileActivity extends AppCompatActivity {
 
     private String encoded;
 
+    private Integer selection = 0;
+
     private final int SELECT_PICTURE = 200;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     String[] diferentesSexos; //{getString(R.string.M), getString(R.string.F), getString(R.string.I)};
-    String[] diferentesSexosGenerico = {"X", "I", "F", "M"};
+    String[] diferentesSexosGenerico = {"X", "M", "F", "I"};
+
+    String nom, pocode, birthdate, desc, seex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +95,11 @@ public class FillProfileActivity extends AppCompatActivity {
         ecp = (EditText) findViewById(R.id.cpostal);
         efechanacimiento = (EditText) findViewById(R.id.fecha);
         edescription = (EditText) findViewById(R.id.descriptionc);
+
+        efechanacimiento.getBackground().clearColorFilter();
+        enombre.getBackground().clearColorFilter();
+        ecp.getBackground().clearColorFilter();
+        edescription.getBackground().clearColorFilter();
 
         sexo = (Spinner) findViewById(R.id.sexo);
 
@@ -116,9 +125,54 @@ public class FillProfileActivity extends AppCompatActivity {
         }
 
         Intent idioma = new Intent(FillProfileActivity.this, FillProfileActivity.class);
+        nom = enombre.getText().toString();
+        idioma.putExtra("nombrecompleto", enombre.getText().toString());
+        pocode = ecp.getText().toString();
+        idioma.putExtra("codipostal", pocode);
+        birthdate = efechanacimiento.getText().toString();
+        idioma.putExtra("cumple", birthdate);
+        desc = edescription.getText().toString();
+        idioma.putExtra("descripcio", desc);
+        if (sexo.getSelectedItemPosition() == -1) sexo.setSelection(0);
+        seex = diferentesSexosGenerico[sexo.getSelectedItemPosition()];
+        idioma.putExtra("sexe", seex);
+        idioma.putExtra("foto", encoded);
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
         canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
+
+        Intent i = getIntent();
+
+        if (i.hasExtra("nombrecompleto")) {
+            Log.i("23s", "af");
+            Log.i("23s", i.getStringExtra("nombrecompleto"));
+            enombre.setText(i.getStringExtra("nombrecompleto"));
+        }
+        else if (i.hasExtra("codipostal")) {
+            ecp.setText(i.getStringExtra("codipostal"));
+        }
+        else if (i.hasExtra("cumple")) {
+            efechanacimiento.setText(i.getStringExtra("cumple"));
+        }
+        else if (i.hasExtra("descripcio")) {
+            edescription.setText(i.getStringExtra("descripcio"));
+        }
+        else if (i.hasExtra("sexe")) {
+            String sexeConcret = i.getStringExtra("sexof");
+            switch (sexeConcret) {
+                case "I":
+                    selection = 3;
+                    break;
+                case "F":
+                    selection = 2;
+                    break;
+                case "M":
+                    selection = 1;
+                    break;
+            }
+        }
+        else if (i.hasExtra("foto")) {
+
+        }
 
         profileimage.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -179,6 +233,7 @@ public class FillProfileActivity extends AppCompatActivity {
 
         spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_categories_layout);
         sexo.setAdapter(spinnerArrayAdapter);
+        sexo.setSelection(selection);
 
         efechanacimiento.setOnClickListener(new View.OnClickListener(){
             @Override

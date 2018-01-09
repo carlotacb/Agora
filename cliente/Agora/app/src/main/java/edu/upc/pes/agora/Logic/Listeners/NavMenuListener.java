@@ -109,6 +109,7 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
                         else {
                             Constants.SH_PREF_NAME = "";
                             Intent myIntent = new Intent(context, LoginActivity.class);
+                            myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(myIntent);
                         }
                     } catch (JSONException ignored) {

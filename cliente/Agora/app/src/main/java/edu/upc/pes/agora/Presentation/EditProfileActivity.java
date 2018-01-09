@@ -99,9 +99,14 @@ public class EditProfileActivity extends AppCompatActivity {
         Nombre = (EditText) findViewById(R.id.nameprofile);
         CP = (EditText) findViewById(R.id.codipostal);
         Descripcion = (EditText) findViewById(R.id.descript);
+        Fecha = (TextView) findViewById(R.id.fecha);
+
+        Nombre.getBackground().clearColorFilter();
+        CP.getBackground().clearColorFilter();
+        Descripcion.getBackground().clearColorFilter();
+        Fecha.getBackground().clearColorFilter();
 
         Barrio = (TextView) findViewById(R.id.barrio);
-        Fecha = (TextView) findViewById(R.id.fecha);
         Username = (TextView) findViewById(R.id.usernameprofile);
         button = (TextView) findViewById(R.id.buttonImage);
         Change = (TextView) findViewById(R.id.changePassword);
