@@ -30,6 +30,7 @@ public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     SharedPreferences prefs;
 
 
+    String newAchievement="";
 
 
     public GetTokenAsyncTask(String url2, Context coming_context) {
@@ -39,6 +40,9 @@ public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
         } catch (MalformedURLException e) {
             Log.i("asdGetTokenAsyncTask", "", e);
         }
+    }
+    public String getNewAchievement(){
+        return newAchievement;
     }
 
     protected JSONObject doInBackground(final JSONObject... params) {
@@ -53,6 +57,9 @@ public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             client.setRequestMethod("GET");
             client.setRequestProperty("Authorization", Constants.SH_PREF_NAME);
             client.connect();
+
+            newAchievement = client.getHeaderField("X-New-Achievements");
+
             JSONObject aux;
             String response = Helpers.iStreamToString(client.getInputStream());
 

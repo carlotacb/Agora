@@ -145,5 +145,13 @@
     <string name="pendientes">Èxits Pendents</string>
     <string name="conseguido">" (aconseguit)"</string>
     <string name="pendiente">" (pendent)"</string>
+    <string name="nuevo">NOU ASSOLIMENT</string>
+    <string name="COM1">Comentar 1 proposta</string>
+    <string name="COM5">Comentar 5 propostes</string>
+    <string name="COM25">Comentar 25 propostes</string>
+    <string name="COM100">Comentar 100 propostes</string>
+    <string name="GCOM1">Tindre 1 comentari en 1 proposta</string>
+    <string name="GCOM10">Tindre 10 comentaris en 1 proposta</string>
+    <string name="GCOM100">Tindre 100 comentaris en 1 proposta</string>
 
 </resources>

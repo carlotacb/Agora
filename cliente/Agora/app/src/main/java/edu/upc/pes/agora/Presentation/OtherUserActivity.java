@@ -170,6 +170,8 @@ public class OtherUserActivity extends AppCompatActivity {
                         }
                     }
 
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
