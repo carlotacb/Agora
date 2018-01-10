@@ -6,13 +6,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
@@ -43,27 +43,24 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.upc.pes.agora.Logic.Adapters.CommentAdapter;
 import edu.upc.pes.agora.Logic.Adapters.ImatgesAdapter;
 import edu.upc.pes.agora.Logic.Adapters.ImatgesEditAdapter;
-import edu.upc.pes.agora.Logic.Adapters.RecyclerAdapter;
-import edu.upc.pes.agora.Logic.Models.Comment;
+import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
+import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.Models.ImatgeItem;
 import edu.upc.pes.agora.Logic.ServerConection.GetTokenAsyncTask;
 import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
 import edu.upc.pes.agora.Logic.ServerConection.PutAsyncTask;
+import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.R;
 
-import static edu.upc.pes.agora.Logic.Utils.Constants.SH_PREF_NAME;
 
 public class EditProposalActivity extends AppCompatActivity {
 
     EditText editTitle;
     EditText editDescription;
-    Button editButton;
     Button saveButton;
     Button cancelButton;
-    Button editPosButton;
     Spinner categories;
     LinearLayout locallayout;
     TextView esborrarlocalitzacio;
@@ -71,24 +68,24 @@ public class EditProposalActivity extends AppCompatActivity {
 
     String newTitle;
     String newDescription;
+    String newCategories;
 
     Double latitud, longitud;
     Integer proposalID;
 
     private ListView limatges;
-    private String encoded;
     private ProgressBar prog;
     private final int SELECT_PICTURE=200;
 
     private JSONArray ArrayImages = new JSONArray();
     private ArrayList<ImatgeItem> mImatgeItems = new ArrayList<> ();
-    private String[] categoriasGenericas = {"X", "C", "D", "O","M", "E", "T","Q", "S", "A"};
 
     private Integer idprop;
     private int numimatges = 0;
-    private FloatingActionButton addImage, addLocation, menuFloating;
+    private FloatingActionButton menuFloating;
     private LinearLayout linearImage, linearLocation;
     private JSONObject Jason = new JSONObject();
+    private String[] categoriasGenericas = {"X", "C", "D", "O","M", "E", "T","Q", "S", "A"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,24 +102,52 @@ public class EditProposalActivity extends AppCompatActivity {
         cancelButton = (Button) findViewById(R.id.cancelButton);
         prog = (ProgressBar) findViewById(R.id.saveprogressbar);
 
-        addImage = (FloatingActionButton) findViewById(R.id.fabimages);
-        addLocation = (FloatingActionButton) findViewById(R.id.fablocalization);
+        FloatingActionButton addImage = (FloatingActionButton) findViewById(R.id.fabimages);
+        FloatingActionButton addLocation = (FloatingActionButton) findViewById(R.id.fablocalization);
         menuFloating = (FloatingActionButton) findViewById(R.id.faboptions);
 
         linearLocation = (LinearLayout) findViewById(R.id.localizationLayout);
         linearImage = (LinearLayout) findViewById(R.id.imagesLayout);
 
-        //editButton = (Button) findViewById(R.id.editButton);
-        //editPosButton = (Button) findViewById(R.id.editPosButton);
+        limatges = (ListView) findViewById(R.id.llistaimatges);
+        ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
+        ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
+
+        final Resources res = this.getResources();
 
         final Animation showButton = AnimationUtils.loadAnimation(EditProposalActivity.this, R.anim.show_button);
         final Animation hideButton = AnimationUtils.loadAnimation(EditProposalActivity.this, R.anim.hide_button);
         final Animation showLayout = AnimationUtils.loadAnimation(EditProposalActivity.this, R.anim.show_layout);
         final Animation hideLayout = AnimationUtils.loadAnimation(EditProposalActivity.this, R.anim.hide_layout);
 
-        limatges = (ListView) findViewById(R.id.llistaimatges);
+
+        switch (Constants.Idioma) {
+            case "ca":
+                canviidioma.setImageResource(R.drawable.rep);
+                break;
+            case "es":
+                canviidioma.setImageResource(R.drawable.spa);
+                break;
+            case "en":
+                canviidioma.setImageResource(R.drawable.ing);
+                break;
+        }
 
         Intent i = getIntent();
+
+        Intent idioma = new Intent(EditProposalActivity.this, EditProposalActivity.class);
+        idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        idioma.putExtra("Title", i.getStringExtra("Title"));
+        idioma.putExtra("Description", i.getStringExtra("Description"));
+        idioma.putExtra("id", i.getIntExtra("id",0));
+        if (i.hasExtra("Categoria")) idioma.putExtra("Categoria", i.getStringExtra("Categoria"));
+        if (i.hasExtra("Category")) idioma.putExtra("Category", i.getIntExtra("Category", 0));
+        canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
+
+        Intent back = new Intent(EditProposalActivity.this, MyProposalsActivity.class);
+        back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        enrerre.setOnClickListener(new BackOnClickListener(back, getApplicationContext()));
+
 
         idprop = i.getIntExtra("id", 0);
 
@@ -136,16 +161,44 @@ public class EditProposalActivity extends AppCompatActivity {
         if(i.hasExtra("Categoria")) {
             String categoriaProposta = i.getStringExtra("Categoria");
 
-            if (categoriaProposta.equals("X")) selection = 0;
-            else if (categoriaProposta.equals("C")) selection = 1;
-            else if (categoriaProposta.equals("D")) selection = 2;
-            else if (categoriaProposta.equals("O")) selection = 3;
-            else if (categoriaProposta.equals("M")) selection = 4;
-            else if (categoriaProposta.equals("E")) selection = 5;
-            else if (categoriaProposta.equals("T")) selection = 6;
-            else if (categoriaProposta.equals("Q")) selection = 7;
-            else if (categoriaProposta.equals("S")) selection = 8;
+            Log.i("asdaasd", categoriaProposta);
 
+            switch (categoriaProposta) {
+                case "X":
+                    selection = 0;
+                    break;
+                case "C":
+                    selection = 1;
+                    break;
+                case "D":
+                    selection = 2;
+                    break;
+                case "O":
+                    selection = 3;
+                    break;
+                case "M":
+                    selection = 4;
+                    break;
+                case "E":
+                    selection = 5;
+                    break;
+                case "T":
+                    selection = 6;
+                    break;
+                case "Q":
+                    selection = 7;
+                    break;
+                case "S":
+                    selection = 8;
+                    break;
+            }
+
+            Log.i("asdaasd", selection.toString());
+        }
+
+        if (i.hasExtra("Category")) {
+            Log.i("asdaasd", "entraaqui");
+            selection = i.getIntExtra("Category", 0);
         }
 
         if (i.hasExtra("lat") && i.hasExtra("lng")) {
@@ -165,8 +218,6 @@ public class EditProposalActivity extends AppCompatActivity {
         final int id = i.getIntExtra("id",0);
         proposalID = id;
 
-        final Resources res = this.getResources();
-
         // Lista de Categorias con los nombres buenos (cambia con el idioma).
         final String[] categorias = new String[]{
                 getString(R.string.spinnerhint),
@@ -183,17 +234,11 @@ public class EditProposalActivity extends AppCompatActivity {
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_categories_layout, categoriesList){
             @Override
             public boolean isEnabled(int position){
-                if(position == 0) {
-                    // Disable the first item from Spinner. The first item will be use for hint
-                    return false;
-                }
-                else {
-                    return true;
-                }
+                return position != 0;
             }
 
             @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
                 if (categorias[position].equals(getString(R.string.spinnerhint))){
@@ -273,7 +318,7 @@ public class EditProposalActivity extends AppCompatActivity {
                         if(options[selection]=="Galería") {
                             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             intent.setType("image/*");
-                            startActivityForResult(intent.createChooser(intent, "Selecciona app de imagen"), SELECT_PICTURE);
+                            startActivityForResult(Intent.createChooser(intent, "Selecciona app de imagen"), SELECT_PICTURE);
                         }
                         else if(options[selection]=="Cancelar"){
                             dialog.dismiss();
@@ -298,14 +343,14 @@ public class EditProposalActivity extends AppCompatActivity {
                 Intent i = new Intent(getApplicationContext(), AddLocationActivity.class);
                 i.putExtra("Title", editTitle.getText().toString());
                 i.putExtra("Description", editDescription.getText().toString());
-                i.putExtra("CallingActivity", "Edit");
                 i.putExtra("Category",categories.getSelectedItemPosition());
+                i.putExtra("CallingActivity", "Edit");
                 i.putExtra("id",id);
                 if (getIntent().hasExtra("lat") && getIntent().getDoubleExtra("lat",0) != 0){
                     i.putExtra("lat", getIntent().getDoubleExtra("lat",0));
                     i.putExtra("lng", getIntent().getDoubleExtra("lng",0));
                 }
-                startActivityForResult(i,1);;
+                startActivityForResult(i,1);
             }
         });
 
@@ -334,9 +379,11 @@ public class EditProposalActivity extends AppCompatActivity {
                     try {
                         newTitle = editTitle.getText().toString();
                         newDescription = editDescription.getText().toString();
+                        newCategories = categoriasGenericas[categories.getSelectedItemPosition()];
                         values.put("id",id);
                         values.put("title", newTitle);
                         values.put("content", newDescription);
+                        values.put("categoria", newCategories);
                         location.put("lat", getIntent().getDoubleExtra("lat",0));
                         location.put("long", getIntent().getDoubleExtra("lng",0));
                         values.put("location", location);
@@ -345,7 +392,7 @@ public class EditProposalActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    String editUrl = "https://agora-pes.herokuapp.com/api/proposal/"+id;
+                    String editUrl = "https://agora-pes.herokuapp.com/api/proposal/" + id;
                     Log.i("Link",editUrl);
 
                     // nou server : agora-pes.herokuapp.com/api/proposal
@@ -360,7 +407,6 @@ public class EditProposalActivity extends AppCompatActivity {
                                     result = resObject.getBoolean("success");
                                 }
                                 if (!result && resObject.has("errorMessage")) {
-                                    error = resObject.getString("errorMessage");
                                     Log.i("asdCreacion", error);
                                     if(resObject.getString("errorMessage").equals("Selected location outside of allowed zone.")){
                                         Toast.makeText(getApplicationContext(), res.getString(R.string.errorPosition), Toast.LENGTH_LONG).show();
@@ -482,7 +528,7 @@ public class EditProposalActivity extends AppCompatActivity {
                         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
                     }
                     byte[] byteArray = byteArrayOutputStream .toByteArray();
-                    encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                    String encoded = Base64.encodeToString(byteArray, Base64.DEFAULT);
 
                     ArrayImages.put(encoded);
 

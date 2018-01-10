@@ -19,12 +19,14 @@ import android.support.v7.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +56,7 @@ public class MyProposalsActivity extends AppCompatActivity {
     private RecyclerView myrecycler;
     private RecyclerView.Adapter adapter;
     private RecyclerAdapter radapter;
+    private LinearLayout cargando;
 
     private List<Proposal> listProposals;
     private JSONObject Jason = new JSONObject();
@@ -68,9 +71,54 @@ public class MyProposalsActivity extends AppCompatActivity {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
 
         TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
+        // CARLOTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!!!!!!!!!!!!!!!!!!!
+
+        cargando = (LinearLayout) findViewById(R.id.linearlayoutinfo);
         headerUserName.setText(Constants.Username);
-        ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
-        foto.setImageBitmap(Constants.fotoperfil);
+        final ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
+
+        if (Constants.fotoperfil == null) {
+            JSONObject Jason = new JSONObject();
+            new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
+
+                @Override
+                protected void onPostExecute(JSONObject jsonObject) {
+                    try {
+                        if (jsonObject.has("error")) {
+                            String error = jsonObject.get("error").toString();
+                            Log.i("asdProfile", "Error");
+
+                            Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+
+                        else {
+
+                            Log.i("asdProfile", (jsonObject.toString()));
+
+                            if (jsonObject.has("image")) {
+                                String imageJ = jsonObject.getString("image");
+
+                                if (!imageJ.equals("null")) {
+                                    byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+                                    Constants.fotoperfil = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                                    foto.setImageBitmap(Constants.fotoperfil);
+                                }
+
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }.execute(Jason);
+        }
+
+        else {
+            foto.setImageBitmap(Constants.fotoperfil);
+        }
 
         navigationView.getMenu().getItem(NavMenuListener.myproposals).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
@@ -94,6 +142,9 @@ public class MyProposalsActivity extends AppCompatActivity {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
+
+                myrecycler.setVisibility(View.GONE);
+                cargando.setVisibility(View.VISIBLE);
                 try {
                     if (jsonObject.has("error")) {
                         String error = jsonObject.get("error").toString();
@@ -161,6 +212,8 @@ public class MyProposalsActivity extends AppCompatActivity {
                 } catch (JSONException | ParseException e) {
                     e.printStackTrace();
                 }
+                myrecycler.setVisibility(View.VISIBLE);
+                cargando.setVisibility(View.GONE);
             }
         }.execute(Jason);
     }
@@ -196,7 +249,7 @@ public class MyProposalsActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        Intent refresh = new Intent(this, MainActivity.class);
+        Intent refresh = new Intent(this, MyProposalsActivity.class);
         refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Boolean change = false;
 

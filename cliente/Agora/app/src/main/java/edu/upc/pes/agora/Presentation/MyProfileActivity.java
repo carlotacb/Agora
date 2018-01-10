@@ -16,8 +16,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,17 +41,18 @@ import edu.upc.pes.agora.R;
 public class MyProfileActivity extends AppCompatActivity {
 
     private Configuration config = new Configuration();
-    private Locale locale;
     private JSONObject Jason = new JSONObject();
-    private ImageButton editar;
+    private Button editar;
 
-    private TextView username, name, CP, Born, neigh, sex;
+    private TextView username, name, CP, Born, neigh, sex, descripcion;
     private ImageView image;
     private Profile p = new Profile();
 
-    private String usernameJ, neighJ, nameJ, BornJ, sexJ;
+    private String neighJ, nameJ, BornJ, sexJ, descriptionJ;
     private String imageJ;
     private Integer CPJ;
+
+    private LinearLayout loading, pagina;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -65,8 +68,50 @@ public class MyProfileActivity extends AppCompatActivity {
 
         TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
         headerUserName.setText(Constants.Username);
-        ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
-        foto.setImageBitmap(Constants.fotoperfil);
+        final ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
+
+        if (Constants.fotoperfil == null) {
+            JSONObject Jason = new JSONObject();
+            new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
+
+                @Override
+                protected void onPostExecute(JSONObject jsonObject) {
+                    try {
+                        if (jsonObject.has("error")) {
+                            String error = jsonObject.get("error").toString();
+                            Log.i("asdProfile", "Error");
+
+                            Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+
+                        else {
+
+                            Log.i("asdProfile", (jsonObject.toString()));
+
+                            if (jsonObject.has("image")) {
+                                String imageJ = jsonObject.getString("image");
+
+                                if (!imageJ.equals("null")) {
+                                    byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+                                    Constants.fotoperfil = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                                    foto.setImageBitmap(Constants.fotoperfil);
+                                }
+
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }.execute(Jason);
+        }
+
+        else {
+            foto.setImageBitmap(Constants.fotoperfil);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_profile);
@@ -77,23 +122,34 @@ public class MyProfileActivity extends AppCompatActivity {
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        editar = (ImageButton) findViewById(R.id.editarperfil);
-
         username = (TextView) findViewById(R.id.user);
         name = (TextView) findViewById(R.id.nameprofile);
         neigh = (TextView) findViewById(R.id.barrio);
         CP = (TextView) findViewById(R.id.codipostal);
         Born = (TextView) findViewById(R.id.born);
         sex = (TextView) findViewById(R.id.sexo);
-        image = (ImageView) findViewById(R.id.setImage);
 
-        @SuppressLint("SimpleDateFormat") final SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        final String dateInString = "07/06/2013";
+        // CARLOTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+        descripcion = (TextView) findViewById(R.id.textView);
+        image = (ImageView) findViewById(R.id.setImage);
+        editar = (Button) findViewById(R.id.editarperfil);
+
+
+        // CARLOTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+        pagina = (LinearLayout) findViewById(R.id.linearlayoutinfo);
+        loading = (LinearLayout) findViewById(R.id.pantallacargando);
+
 
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
+
+                pagina.setVisibility(View.INVISIBLE);
+                loading.setVisibility(View.VISIBLE);
+
                 try {
                     if (jsonObject.has("error")) {
                         String error = jsonObject.get("error").toString();
@@ -107,9 +163,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
                         Log.i("asdProfile", (jsonObject.toString()));
 
-                        usernameJ = jsonObject.getString("username");
-                        username.setText(usernameJ);
-//                        p.setUsername(usernameJ);
+                        username.setText(Constants.Username);
 
                         if(jsonObject.has("realname")) {
                             nameJ = jsonObject.getString("realname");
@@ -131,7 +185,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
                         if(jsonObject.has("cpCode")) {
                             CPJ = jsonObject.getInt("cpCode");
-                            CP.setText(CPJ.toString());
+                            CP.setText(String.valueOf(CPJ));
                             p.setCP(CPJ);
                         }
                         else {
@@ -149,11 +203,20 @@ public class MyProfileActivity extends AppCompatActivity {
 
                         if(jsonObject.has("sex")) {
                             sexJ = jsonObject.getString("sex");
-                            if (sexJ.equals("I")) sex.setText(R.string.I);
-                            else if (sexJ.equals("M")) sex.setText(R.string.M);
-                            else if (sexJ.equals("F")) sex.setText(R.string.F);
-
+                            switch (sexJ) {
+                                case "I":
+                                    sex.setText(R.string.I);
+                                    break;
+                                case "M":
+                                    sex.setText(R.string.M);
+                                    break;
+                                case "F":
+                                    sex.setText(R.string.F);
+                                    break;
+                            }
                             p.setSex(sexJ);
+                            Log.i("asd123", sexJ);
+
                         }
                         else {
                             sex.setText("");
@@ -162,16 +225,34 @@ public class MyProfileActivity extends AppCompatActivity {
                         if (jsonObject.has("image")) {
                             imageJ = jsonObject.getString("image");
 
-                            byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                            if (!imageJ.equals("null")) {
+                                byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
 
-                            image.setImageBitmap(bitmap);
+                                image.setImageBitmap(bitmap);
+                                p.setImatge(bitmap);
+                            }
+                        }
+
+                        if (jsonObject.has("description")) {
+                            descriptionJ = jsonObject.getString("description");
+                            if (!descriptionJ.equals("null")) {
+                                descripcion.setText(descriptionJ);
+                                p.setDescription(descriptionJ);
+                            }
+                            else {
+                                descripcion.setText("");
+                            }
                         }
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                pagina.setVisibility(View.VISIBLE);
+                loading.setVisibility(View.GONE);
+
             }
         }.execute(Jason);
 
@@ -183,7 +264,9 @@ public class MyProfileActivity extends AppCompatActivity {
                 myIntent.putExtra("barrio", p.getNeighborhood());
                 myIntent.putExtra("nombre", p.getName());
                 myIntent.putExtra("fecha", p.getBorn());
-                myIntent.putExtra("sex", p.getSex());
+                myIntent.putExtra("sexof", p.getSex());
+                myIntent.putExtra("descripcion", p.getDescription());
+                myIntent.putExtra("image", p.getImatge());
 
                 startActivity(myIntent);
             }
@@ -200,43 +283,52 @@ public class MyProfileActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        MenuItem bandera = menu.findItem(R.id.bandera);
+        switch (Constants.Idioma) {
+            case "es":
+                bandera.setIcon(R.drawable.spa);
+                break;
+            case "en":
+                bandera.setIcon(R.drawable.ing);
+                break;
+            case "ca":
+                bandera.setIcon(R.drawable.rep);
+                break;
+        }
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        //TODO: posar-ho al MenuListener
-
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         Intent refresh = new Intent(this, MyProfileActivity.class);
         refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Boolean change = false;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.men_castella) {
-            locale = new Locale("es");
-            config.locale = locale;
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
+        if (id == R.id.men_castella){
+            Constants.Idioma = "es";
+            change = true;
         }
 
         else if (id == R.id.men_catala){
-            locale = new Locale("ca");
-            config.locale = locale;
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-
+            Constants.Idioma = "ca";
+            change = true;
         }
 
-        else if (id == R.id.men_angles){
-            locale = new Locale("en");
-            config.locale = locale;
+        else if (id == R.id.men_angles) {
+            Constants.Idioma = "en";
+            change = true;
+        }
+
+        if (change) {
+            config.locale = new Locale(Constants.Idioma);
             getResources().updateConfiguration(config, null);
             startActivity(refresh);
             finish();
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -244,11 +336,10 @@ public class MyProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            // TODO: el boto Back ha d'obrir el navigation drawer.
             drawer.openDrawer(GravityCompat.START);
         }
     }

@@ -8,11 +8,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +26,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,10 +37,10 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
-import edu.upc.pes.agora.Logic.Adapters.RecyclerAdapter;
+import edu.upc.pes.agora.Logic.Adapters.FavoriteAdapter;
+import edu.upc.pes.agora.Logic.Adapters.ProposalAdapter;
 import edu.upc.pes.agora.Logic.Listeners.DrawerToggleAdvanced;
 import edu.upc.pes.agora.Logic.Listeners.NavMenuListener;
 import edu.upc.pes.agora.Logic.Models.Proposal;
@@ -51,28 +52,66 @@ import edu.upc.pes.agora.R;
 public class MyFavoritesActivity extends AppCompatActivity {
 
     private Configuration config = new Configuration();
-    private Locale locale;
 
-    private RecyclerView myrecycler;
-    private RecyclerView.Adapter adapter;
-    private RecyclerAdapter radapter;
-
-    private List<Proposal> listProposals;
+    private ListView llistapropostes;
+    private ArrayList<Proposal> propostes;
     private JSONObject Jason = new JSONObject();
+    private LinearLayout cargando;
 
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_proposals);
+        setContentView(R.layout.activity_my_favorites);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.navMenu);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
 
         TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
         headerUserName.setText(Constants.Username);
-        ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
-        foto.setImageBitmap(Constants.fotoperfil);
+        final ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
+
+        if (Constants.fotoperfil == null) {
+            JSONObject Jason = new JSONObject();
+            new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
+
+                @Override
+                protected void onPostExecute(JSONObject jsonObject) {
+                    try {
+                        if (jsonObject.has("error")) {
+                            String error = jsonObject.get("error").toString();
+                            Log.i("asdProfile", "Error");
+
+                            Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+
+                        else {
+
+                            Log.i("asdProfile", (jsonObject.toString()));
+
+                            if (jsonObject.has("image")) {
+                                String imageJ = jsonObject.getString("image");
+
+                                if (!imageJ.equals("null")) {
+                                    byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+                                    Constants.fotoperfil = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                                    foto.setImageBitmap(Constants.fotoperfil);
+                                }
+
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.execute(Jason);
+        }
+
+        else {
+            foto.setImageBitmap(Constants.fotoperfil);
+        }
 
         navigationView.getMenu().getItem(NavMenuListener.favorite).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
@@ -83,20 +122,19 @@ public class MyFavoritesActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         DrawerToggleAdvanced toggle = new DrawerToggleAdvanced(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        myrecycler = (RecyclerView) findViewById(R.id.recyclerView);
-        myrecycler.setHasFixedSize(true); // cada item del RecyclerView te un Size en concret.
-        myrecycler.setLayoutManager(new LinearLayoutManager(this));
-
-
-        listProposals = new ArrayList<>();
+        llistapropostes = (ListView) findViewById(R.id.llistacomentaris);
+        cargando = (LinearLayout) findViewById(R.id.pantallacargandofav);
 
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal?favorite=true", this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
+
+                llistapropostes.setVisibility(View.GONE);
+                cargando.setVisibility(View.VISIBLE);
+
                 try {
                     if (jsonObject.has("error")) {
                         String error = jsonObject.get("error").toString();
@@ -108,45 +146,63 @@ public class MyFavoritesActivity extends AppCompatActivity {
 
                     else if (jsonObject != null){
                         JSONArray ArrayProp = jsonObject.getJSONArray("arrayResponse");
-                        ArrayList<Proposal> propostes = new ArrayList<>();
+                        propostes = new ArrayList<>();
 
                         if (ArrayProp != null) {
                             for (int i=0; i < ArrayProp.length(); i++){
 
+                                Proposal aux;
+
                                 Log.i("asd123", (ArrayProp.get(i).toString()));
 
                                 JSONObject jas = ArrayProp.getJSONObject(i);
+                                JSONArray comentaris = jas.getJSONArray("comments");
                                 String title = jas.getString("title");
                                 String owner = jas.getString("owner");
                                 String description = jas.getString("content");
                                 Integer id = jas.getInt("id");
-                                String creada = jas.getString("createdDateTime");
                                 String ca = jas.getString("categoria");
                                 String createDate = Helpers.showDate(jas.getString("createdDateTime"));
                                 String updateDate = Helpers.showDate(jas.getString("updatedDateTime"));
+                                Integer nvotes = jas.getInt("numberUpvotes");
+                                Integer nunvotes = jas.getInt("numberDownvotes");
+                                Integer vote = jas.getInt("userVoted");
+                                Boolean fav = jas.getBoolean("favorited");
+                                Integer numcoments = comentaris.length();
 
-                                Log.i("asdCreate", creada);
+                                if(jas.has("location") && jas.getJSONObject("location").has("lat") && jas.getJSONObject("location").get("lat") != JSONObject.NULL ) {
+                                    Double lat = jas.getJSONObject("location").getDouble("lat");
+                                    Double lng = jas.getJSONObject("location").getDouble("long");
+                                    aux = new Proposal(id, title, description, owner, ca, lat, lng, createDate, updateDate);
+                                } else {
+                                    aux = new Proposal(id, title, description, owner, ca, createDate, updateDate);
+                                }
 
-                                Proposal aux = new Proposal(id, title, description, owner,ca, createDate, updateDate);
+                                aux.setNumerocomentarios(numcoments);
+                                aux.setFavorite(fav);
+                                aux.setNumerounvotes(nunvotes);
+                                aux.setNumerovotes(nvotes);
+                                aux.setVotacion(vote);
 
                                 propostes.add(aux);
                             }
                         }
 
-                        radapter = new RecyclerAdapter(propostes, getApplicationContext());
-                        myrecycler.setAdapter(radapter);
+                        llistapropostes.setAdapter(new FavoriteAdapter(propostes, getApplicationContext()));
                     }
+                } catch (JSONException | ParseException e) {
+                    e.printStackTrace();
+                }
+
 
                     String achievement = this.getNewAchievement();
-
 
                     if (achievement != null && !achievement.equals("")) {
                         sendNot(achievement);
                     }
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                llistapropostes.setVisibility(View.VISIBLE);
+                cargando.setVisibility(View.GONE);
             }
         }.execute(Jason);
 
@@ -161,41 +217,52 @@ public class MyFavoritesActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        MenuItem bandera = menu.findItem(R.id.bandera);
+        switch (Constants.Idioma) {
+            case "es":
+                bandera.setIcon(R.drawable.spa);
+                break;
+            case "en":
+                bandera.setIcon(R.drawable.ing);
+                break;
+            case "ca":
+                bandera.setIcon(R.drawable.rep);
+                break;
+        }
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        Intent refresh = new Intent(this, MyProposalsActivity.class);
+        Intent refresh = new Intent(this, MyFavoritesActivity.class);
         refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Boolean change = false;
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.men_castella) {
-            locale = new Locale("es");
-            config.locale = locale;
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
+        if (id == R.id.men_castella){
+            Constants.Idioma = "es";
+            change = true;
         }
 
         else if (id == R.id.men_catala){
-            locale = new Locale("ca");
-            config.locale = locale;
-            getResources().updateConfiguration(config, null);
-            startActivity(refresh);
-            finish();
-
+            Constants.Idioma = "ca";
+            change = true;
         }
 
-        else if (id == R.id.men_angles){
-            locale = new Locale("en");
-            config.locale = locale;
+        else if (id == R.id.men_angles) {
+            Constants.Idioma = "en";
+            change = true;
+        }
+
+        if (change) {
+            config.locale = new Locale(Constants.Idioma);
             getResources().updateConfiguration(config, null);
             startActivity(refresh);
             finish();
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -203,11 +270,10 @@ public class MyFavoritesActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            // TODO: el boto Back ha d'obrir el navigation drawer.
             drawer.openDrawer(GravityCompat.START);
         }
     }

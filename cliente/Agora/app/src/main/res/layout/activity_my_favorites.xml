@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawerLayout"
-    android:background="#f2f1ef"
+    android:background="@color/fondo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -27,7 +27,56 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <include layout="@layout/content_my_favorites" />
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:background="@color/fondo"
+            android:fillViewport="false"
+            tools:context=".Presentation.MyFavoritesActivity">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:id="@+id/pantallacargandofav"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/cargandoprop"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp"
+                    android:textColor="@color/colorPrimaryDark"/>
+
+                <ProgressBar
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"/>
+
+            </LinearLayout>
+
+            <ListView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/llistacomentaris"
+                android:visibility="gone"
+                android:divider="@null"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:listSelector="@android:color/transparent"
+                tools:context="edu.upc.pes.agora.Presentation.MyFavoritesActivity"/>
+
+        </RelativeLayout>
     </LinearLayout>
 
     <include layout="@layout/navigation_view"/>

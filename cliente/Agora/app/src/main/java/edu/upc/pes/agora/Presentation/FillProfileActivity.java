@@ -11,6 +11,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -49,27 +50,32 @@ import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
 import edu.upc.pes.agora.Logic.ServerConection.PutAsyncTask;
 import edu.upc.pes.agora.Logic.Utils.Constants;
+import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.R;
 
 public class FillProfileActivity extends AppCompatActivity {
 
     private TextInputLayout nombre, cp, fechanacimiento;
-    private EditText enombre, ecp, efechanacimiento;
+    private EditText enombre, ecp, efechanacimiento, edescription;
     private TextView username, zona;
-    private String name, codipost, fech;
     private ImageView profileimage;
     private Spinner sexo;
     private Button okey;
     private ProgressBar progbar;
+    private String barrio;
 
     private String encoded;
 
-    private final int SELECT_PICTURE=200;
+    private Integer selection = 0;
+
+    private final int SELECT_PICTURE = 200;
 
     private DatePickerDialog.OnDateSetListener mDateSetListener;
 
     String[] diferentesSexos; //{getString(R.string.M), getString(R.string.F), getString(R.string.I)};
-    String[] diferentesSexosGenerico = {"I", "F", "M"};
+    String[] diferentesSexosGenerico = {"X", "M", "F", "I"};
+
+    String nom, pocode, birthdate, desc, seex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +88,8 @@ public class FillProfileActivity extends AppCompatActivity {
         username = (TextView) findViewById(R.id.usernameprofile);
         username.setText(Constants.Username);
         zona = (TextView) findViewById(R.id.barrio);
-        zona.setText(Integer.toString(Constants.zone));
+        zona.setText(Helpers.getBarrio(Constants.zone));
+        barrio = Helpers.getBarrio(Constants.zone);
 
         nombre = (TextInputLayout) findViewById(R.id.nombre_up);
         cp = (TextInputLayout) findViewById(R.id.codipostal_up);
@@ -91,6 +98,12 @@ public class FillProfileActivity extends AppCompatActivity {
         enombre = (EditText) findViewById(R.id.nombrecompleto);
         ecp = (EditText) findViewById(R.id.cpostal);
         efechanacimiento = (EditText) findViewById(R.id.fecha);
+        edescription = (EditText) findViewById(R.id.descriptionc);
+
+        efechanacimiento.getBackground().clearColorFilter();
+        enombre.getBackground().clearColorFilter();
+        ecp.getBackground().clearColorFilter();
+        edescription.getBackground().clearColorFilter();
 
         sexo = (Spinner) findViewById(R.id.sexo);
 
@@ -100,7 +113,6 @@ public class FillProfileActivity extends AppCompatActivity {
         profileimage = (ImageView) findViewById(R.id.profileimage);
 
         ImageView canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
-        ImageView enrerre = (ImageView) findViewById(R.id.backbutton);
 
         final Resources res = getResources();
 
@@ -117,13 +129,54 @@ public class FillProfileActivity extends AppCompatActivity {
         }
 
         Intent idioma = new Intent(FillProfileActivity.this, FillProfileActivity.class);
-        Intent back = new Intent(FillProfileActivity.this, RegisterActivity.class);
+        nom = enombre.getText().toString();
+        idioma.putExtra("nombrecompleto", enombre.getText().toString());
+        pocode = ecp.getText().toString();
+        idioma.putExtra("codipostal", pocode);
+        birthdate = efechanacimiento.getText().toString();
+        idioma.putExtra("cumple", birthdate);
+        desc = edescription.getText().toString();
+        idioma.putExtra("descripcio", desc);
+        if (sexo.getSelectedItemPosition() == -1) sexo.setSelection(0);
+        seex = diferentesSexosGenerico[sexo.getSelectedItemPosition()];
+        idioma.putExtra("sexe", seex);
+        idioma.putExtra("foto", encoded);
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
         canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
 
-        enrerre.setOnClickListener(new BackOnClickListener(back, getApplicationContext()));
+        Intent i = getIntent();
+
+        if (i.hasExtra("nombrecompleto")) {
+            Log.i("23s", "af");
+            Log.i("23s", i.getStringExtra("nombrecompleto"));
+            enombre.setText(i.getStringExtra("nombrecompleto"));
+        }
+        else if (i.hasExtra("codipostal")) {
+            ecp.setText(i.getStringExtra("codipostal"));
+        }
+        else if (i.hasExtra("cumple")) {
+            efechanacimiento.setText(i.getStringExtra("cumple"));
+        }
+        else if (i.hasExtra("descripcio")) {
+            edescription.setText(i.getStringExtra("descripcio"));
+        }
+        else if (i.hasExtra("sexe")) {
+            String sexeConcret = i.getStringExtra("sexof");
+            switch (sexeConcret) {
+                case "I":
+                    selection = 3;
+                    break;
+                case "F":
+                    selection = 2;
+                    break;
+                case "M":
+                    selection = 1;
+                    break;
+            }
+        }
+        else if (i.hasExtra("foto")) {
+
+        }
 
         profileimage.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -148,17 +201,17 @@ public class FillProfileActivity extends AppCompatActivity {
             }
         });
 
-        final String[] categorias = new String[]{
-                "Selecciona un Sexo",
-                "Hombre",
-                "Mujer",
-                "Indefinido"};
+        final String[] sexos = new String[]{
+                getString(R.string.spinnerhintsexo),
+                getString(R.string.hombre),
+                getString(R.string.mujer),
+                getString(R.string.indefinido)};
 
-        final List<String> categoriesList = new ArrayList<>(Arrays.asList(categorias));
-        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_categories_layout, categoriesList){
+        final List<String> sexosList = new ArrayList<>(Arrays.asList(sexos));
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_categories_layout, sexosList){
             @Override
             public boolean isEnabled(int position){
-                if(position == 0) {
+                if(sexos[position].equals(getString(R.string.spinnerhintsexo))) {
                     // Disable the first item from Spinner. The first item will be use for hint
                     return false;
                 }
@@ -171,7 +224,7 @@ public class FillProfileActivity extends AppCompatActivity {
             public View getDropDownView(int position, View convertView, ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                if (categorias[position].equals(getString(R.string.spinnerhint))){
+                if (sexos[position].equals(getString(R.string.spinnerhintsexo))){
                     // Set the hint text color gray
                     tv.setTextColor(Color.GRAY);
                 }
@@ -184,6 +237,7 @@ public class FillProfileActivity extends AppCompatActivity {
 
         spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_categories_layout);
         sexo.setAdapter(spinnerArrayAdapter);
+        sexo.setSelection(selection);
 
         efechanacimiento.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -218,77 +272,142 @@ public class FillProfileActivity extends AppCompatActivity {
             @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View view) {
-                // implementar cambios de los atributos del usuario en el servidor
-                // Toast.makeText(getApplicationContext(),"aqui cambiaremos los valores al server", Toast.LENGTH_LONG).show();
 
-                okey.setVisibility(View.GONE);
-                progbar.setVisibility(View.VISIBLE);
+                String nameS = enombre.getText().toString();
+                String CPcodeS = ecp.getText().toString();
+                String fechaS = efechanacimiento.getText().toString();
+                String sexS = diferentesSexosGenerico[sexo.getSelectedItemPosition()];
+                String descripcioS = edescription.getText().toString();
+                String username = Constants.Username;
 
-                JSONObject values = new JSONObject();
-                try {
-                    //  strTitulo = Titulo.getText().toString();
-                    //  strDescripcion = Descripcion.getText().toString();
+                String camponecesario = res.getString(R.string.fieldnecesary);
 
-                    String nombre = enombre.getText().toString();
-                    String CPcode = ecp.getText().toString();
-                    String fecha = efechanacimiento.getText().toString();
-                    String sex = diferentesSexosGenerico[sexo.getSelectedItemPosition()];
-                    String username = Constants.Username;
-
-                    values.put("username", username);
-                    values.put("bdate", fecha);
-                    values.put("cpCode", CPcode);
-                    values.put("sex", sex);
-                    values.put("realname", nombre);
-                    values.put("image", encoded);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                // nou server : agora-pes.herokuapp.com/api/proposal
-                new PostAsyncTask("https://agora-pes.herokuapp.com/api/profile", FillProfileActivity.this) {
-                    @Override
-                    protected void onPostExecute(JSONObject resObject) {
-                        Boolean result = false;
-
-                        try {
-
-                            if (resObject.has("success")) {
-                                result = resObject.getBoolean("success");
-                            }
-
-                            if (!result && resObject.has("errorMessage")) {
-                                String error = res.getString(R.string.errorCreacion);
-                                Log.i("asdCreacion", error);
-                                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
-                            }
-                            //Toast.makeText(getApplicationContext(), "Result : " + result , Toast.LENGTH_LONG).show();
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        //Log.i("asdBool", result.toString());
-
-
-                        String achievement = this.getNewAchievement();
-
-                        if (result && achievement != null && !achievement.equals("")) {
-                            sendNot(achievement);
-                        }
-
-                        if (result) {
-                            //Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
-                            //     Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(FillProfileActivity.this, MainActivity.class));
-                        } else {
-                            Log.i("asdCreacion", "reset");
-                            okey.setVisibility(View.VISIBLE);
-                            progbar.setVisibility(View.GONE);
-                        }
-
+                if (nameS.length() == 0) {
+                    nombre.setErrorEnabled(true);
+                    nombre.setError(camponecesario);
+                    enombre.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                    if (CPcodeS.length() != 0) {
+                        cp.setErrorEnabled(false);
+                        ecp.getBackground().clearColorFilter();
                     }
-                }.execute(values);
+                    if (fechaS.length() != 0) {
+                        fechanacimiento.setErrorEnabled(false);
+                        efechanacimiento.getBackground().clearColorFilter();
+                    }
+                }
+
+                if (CPcodeS.length() == 0) {
+                    cp.setErrorEnabled(true);
+                    cp.setError(camponecesario);
+                    ecp.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                    if (nameS.length() != 0) {
+                        nombre.setErrorEnabled(false);
+                        enombre.getBackground().clearColorFilter();
+                    }
+                    if (fechaS.length() != 0) {
+                        fechanacimiento.setErrorEnabled(false);
+                        efechanacimiento.getBackground().clearColorFilter();
+                    }
+                }
+
+                if (fechaS.length() == 0) {
+                    fechanacimiento.setErrorEnabled(true);
+                    fechanacimiento.setError(camponecesario);
+                    efechanacimiento.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                    if (nameS.length() != 0) {
+                        nombre.setErrorEnabled(false);
+                        enombre.getBackground().clearColorFilter();
+                    }
+                    if (CPcodeS.length() != 0) {
+                        cp.setErrorEnabled(false);
+                        ecp.getBackground().clearColorFilter();
+                    }
+                }
+
+                if (sexS.equals("X")) {
+                    TextView errorText = (TextView)sexo.getSelectedView();
+                    errorText.setTextColor(Color.RED);//just to highlight that this is an error
+
+                    if (nameS.length() != 0) {
+                        nombre.setErrorEnabled(false);
+                        enombre.getBackground().clearColorFilter();
+                    }
+                    if (CPcodeS.length() != 0) {
+                        cp.setErrorEnabled(false);
+                        ecp.getBackground().clearColorFilter();
+                    }
+                    if (fechaS.length() != 0) {
+                        fechanacimiento.setErrorEnabled(false);
+                        efechanacimiento.getBackground().clearColorFilter();
+                    }
+                }
+
+                else {
+                    okey.setVisibility(View.GONE);
+                    progbar.setVisibility(View.VISIBLE);
+
+                    JSONObject values = new JSONObject();
+                    try {
+                        values.put("username", username);
+                        values.put("bdate", fechaS);
+                        values.put("cpCode", CPcodeS);
+                        values.put("sex", sexS);
+                        values.put("realname", nameS);
+                        values.put("description", descripcioS);
+                        values.put("neighborhood", barrio);
+                        values.put("image", encoded);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    new PostAsyncTask("https://agora-pes.herokuapp.com/api/profile", FillProfileActivity.this) {
+                        @Override
+                        protected void onPostExecute(JSONObject resObject) {
+                            Boolean result = false;
+
+                            try {
+
+                                if (resObject.has("success")) {
+                                    result = resObject.getBoolean("success");
+                                }
+
+                                if (!result && resObject.has("errorMessage")) {
+                                    String error = res.getString(R.string.errorCreacion);
+                                    Log.i("asdCreacion", error);
+                                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                                }
+                                //Toast.makeText(getApplicationContext(), "Result : " + result , Toast.LENGTH_LONG).show();
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            //Log.i("asdBool", result.toString());
+
+
+                            String achievement = this.getNewAchievement();
+
+                            if (result && achievement != null && !achievement.equals("")) {
+                                sendNot(achievement);
+                            }
+                            if (result) {
+                                //Toast.makeText(getApplicationContext(), "Titulo : " + strTitulo + " Descripcion : " + strDescripcion, Toast.LENGTH_LONG).show();
+                                //     Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
+                                startActivity(new Intent(FillProfileActivity.this, MainActivity.class));
+                            } else {
+                                Log.i("asdCreacion", "reset");
+                                okey.setVisibility(View.VISIBLE);
+                                progbar.setVisibility(View.GONE);
+                            }
+                        }
+
+                    }.execute(values);
+                }
+
+
+
             }
         });
 
@@ -462,5 +581,11 @@ private String codificaLogro(String codigoLogro) {
     //  }
     return Logro;
 }
+    @Override
+    public void onBackPressed()
+    {
+
+        // super.onBackPressed(); // Comment this super call to avoid calling finish() or fragmentmanager's backstack pop operation.
+    }
 
 }
