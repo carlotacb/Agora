@@ -16,6 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
+import android.text.InputFilter;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -94,6 +95,7 @@ public class EditProposalActivity extends AppCompatActivity {
 
         editTitle = (EditText) findViewById(R.id.editTitle);
         editDescription = (EditText) findViewById(R.id.editDescription);
+        editDescription.setFilters(new InputFilter[]{new InputFilter.LengthFilter(140)});
         categories = (Spinner) findViewById(R.id.editcategoria);
         locallayout = (LinearLayout) findViewById(R.id.layoutlocalization);
         esborrarlocalitzacio = (TextView) findViewById(R.id.deleteposition);

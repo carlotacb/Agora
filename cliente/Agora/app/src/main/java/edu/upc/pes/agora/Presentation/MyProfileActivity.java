@@ -128,17 +128,10 @@ public class MyProfileActivity extends AppCompatActivity {
         CP = (TextView) findViewById(R.id.codipostal);
         Born = (TextView) findViewById(R.id.born);
         sex = (TextView) findViewById(R.id.sexo);
-
-        // CARLOTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
-        descripcion = (TextView) findViewById(R.id.textView);
+        descripcion = (TextView) findViewById(R.id.description);
         image = (ImageView) findViewById(R.id.setImage);
         editar = (Button) findViewById(R.id.editarperfil);
-
-
-        // CARLOTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-
-        pagina = (LinearLayout) findViewById(R.id.linearlayoutinfo);
+        pagina = (LinearLayout) findViewById(R.id.pantallaperfil);
         loading = (LinearLayout) findViewById(R.id.pantallacargando);
 
 

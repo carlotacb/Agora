@@ -189,7 +189,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             numdislikes = (TextView) itemView.findViewById(R.id.numerounvote);
             more = (ImageView) itemView.findViewById(R.id.more);
 
-
         }
     }
 }

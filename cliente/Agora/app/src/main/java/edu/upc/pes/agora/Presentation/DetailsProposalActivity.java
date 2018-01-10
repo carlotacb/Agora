@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,13 +56,16 @@ public class DetailsProposalActivity extends AppCompatActivity {
     private TextView descripcio;
     private TextView owner;
     private TextView categoria;
-    private Button showPos;
+
+    private ImageView moreoptions;
+    private ImageView favorite;
+    private ImageView loca;
+    private LinearLayout Limatges;
 
     private TextView date;
 
-
     private ListView llista_comentaris;
-    private ListView llista_imatges;
+    //private ListView llista_imatges;
     private String newComent;
     private ImageView canviidioma, enrerre, compartir;
 
@@ -85,28 +89,39 @@ public class DetailsProposalActivity extends AppCompatActivity {
         owner = (TextView) findViewById(R.id.ownerproposal);
         date = (TextView) findViewById(R.id.date);
 
-        date.setText(getIntent().getStringExtra("Creation"));
+        moreoptions = (ImageView) findViewById(R.id.more);
+        //favorite = (ImageView) findViewById(R.id.jilkhjkf);
 
-        showPos = (Button) findViewById(R.id.showPositionButton);
-        if(getIntent().getDoubleExtra("lat",0) != 0){
-            showPos.setVisibility(View.VISIBLE);
-        }else{
-            showPos.setVisibility(View.INVISIBLE);
-        }
-
-        llista_comentaris = (ListView) findViewById(R.id.listcommentaris);
-
-        llista_imatges = (ListView) findViewById(R.id.listimatges);
-
-        addcoment = (FloatingActionButton) findViewById(R.id.fabcoment);
+        TextView numerocomentarios = (TextView) findViewById(R.id.numerocomentaris);
+        ImageView likeuser = (ImageView) findViewById(R.id.likeuser);
+        ImageView dislikeuser = (ImageView) findViewById(R.id.dislikeuser);
+        final TextView numerolikes = (TextView) findViewById(R.id.numerovote);
+        final TextView numerodislikes = (TextView) findViewById(R.id.numerounvote);
+        final ImageView likeimagen = (ImageView) findViewById(R.id.like);
+        final ImageView dislikeimagen = (ImageView) findViewById(R.id.dislike);
 
         canviidioma = (ImageView) findViewById(R.id.multiidiomareg);
         enrerre = (ImageView) findViewById(R.id.backbutton);
         compartir = (ImageView) findViewById(R.id.compartir);
+        Limatges = (LinearLayout) findViewById(R.id.imagesLayout);
+        //loca = (ImageView) findViewById(R.id.);
+
+        if(getIntent().getDoubleExtra("lat",0) != 0){
+            Limatges.setVisibility(View.VISIBLE);
+        }else{
+            Limatges.setVisibility(View.INVISIBLE);
+        }
+
+        //llista_imatges = (ListView) findViewById(R.id.listimatges);
+
+        llista_comentaris = (ListView) findViewById(R.id.listcommentaris);
+
+        addcoment = (FloatingActionButton) findViewById(R.id.fabcoment);
 
         final Resources res = this.getResources();
 
         Intent i = getIntent();
+        date.setText(getIntent().getStringExtra("Creation"));
 
         if (i.hasExtra("Title")) {
             titol.setText(i.getStringExtra("Title"));
@@ -125,6 +140,40 @@ public class DetailsProposalActivity extends AppCompatActivity {
         }
 
         idprop = i.getIntExtra("id", 0);
+
+        if (Constants.Username.equals(mowner)) {
+            likeuser.setVisibility(View.VISIBLE);
+            dislikeuser.setVisibility(View.VISIBLE);
+            likeimagen.setVisibility(View.GONE);
+            dislikeimagen.setVisibility(View.GONE);
+            //favorite.setVisibility(View.GONE);
+            moreoptions.setVisibility(View.VISIBLE);
+
+            owner.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(DetailsProposalActivity.this, MyProfileActivity.class);
+                    v.getContext().startActivity(i);
+                }
+            });
+        }
+        else {
+            likeuser.setVisibility(View.GONE);
+            dislikeuser.setVisibility(View.GONE);
+            likeimagen.setVisibility(View.VISIBLE);
+            dislikeimagen.setVisibility(View.VISIBLE);
+            //favorite.setVisibility(View.VISIBLE);
+            moreoptions.setVisibility(View.GONE);
+
+            owner.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(DetailsProposalActivity.this, OtherUserActivity.class);
+                    i.putExtra("username", mowner);
+                    v.getContext().startActivity(i);
+                }
+            });
+        }
 
         switch (c) {
             case "C":
@@ -331,35 +380,6 @@ public class DetailsProposalActivity extends AppCompatActivity {
                                     input.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
                                 }
 
-                        //        String achievement = this.getNewAchievement();
-                         //       achievement="hola";
-                               /* if (achievement!=null && !achievement.equals("")){
-                                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(DetailsProposalActivity.this);
-                                    View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
-
-                                    TextView textView = (TextView)mView.findViewById(R.id.textView);
-                                    Button mAccept = (Button) mView.findViewById(R.id.etAccept);
-
-                                    ImageView imageView = (ImageView) mView.findViewById(R.id.image);
-                                    imageView.setImageResource(R.drawable.ic_trofeo_logro2);
-
-
-
-                                    mBuilder.setView(mView);
-
-                                    final AlertDialog dialog = mBuilder.create();
-                                    dialog.show();
-                                    mAccept.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-                                            dialog.dismiss();
-                                        }
-                                    });
-                                }*/
-
-
-
-
                             }
                         }.execute(values);
                     }
@@ -411,7 +431,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
             }
         });
 
-        showPos.setOnClickListener(new View.OnClickListener() {
+        /*showPos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), ShowLocationActivity.class);
@@ -421,7 +441,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                     startActivity(i);
                 }
             }
-        });
+        });*/
     }
 
     @Override
@@ -503,7 +523,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                                 imatges.add(aux);
                             }
                         }
-                        llista_imatges.setAdapter(new ImatgesAdapter(getApplicationContext(), imatges));
+                        //llista_imatges.setAdapter(new ImatgesAdapter(getApplicationContext(), imatges));
 
                     }
 

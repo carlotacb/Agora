@@ -578,8 +578,8 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException | ParseException e ) {
                     e.printStackTrace();
                 }
-                //cargando.setVisibility(View.GONE);
-                //swipeRefreshLayout.setVisibility(View.VISIBLE);
+                cargando.setVisibility(View.GONE);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
             }
         }.execute(Jason);
     }

@@ -71,9 +71,7 @@ public class MyProposalsActivity extends AppCompatActivity {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
 
         TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
-        // CARLOTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!!!!!!!!!!!!!!!!!!!
-
-        cargando = (LinearLayout) findViewById(R.id.linearlayoutinfo);
+        cargando = (LinearLayout) findViewById(R.id.pantallacargandomp);
         headerUserName.setText(Constants.Username);
         final ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
 

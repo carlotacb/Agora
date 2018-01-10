@@ -18,6 +18,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
+import android.text.InputFilter;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -95,6 +96,7 @@ public class CreateProposalActivity extends AppCompatActivity {
 
         Titulo = (TextView) findViewById(R.id.titulo);
         Descripcion = (TextView) findViewById(R.id.descripcion);
+        Descripcion.setFilters(new InputFilter[]{new InputFilter.LengthFilter(140)});
         txtPosAttached = (TextView) findViewById(R.id.positionatached);
         deletePosition = (TextView) findViewById(R.id.deleteposition);
         //showPosition = (TextView) findViewById(R.id.seeposition);

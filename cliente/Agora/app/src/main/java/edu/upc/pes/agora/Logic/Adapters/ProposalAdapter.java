@@ -103,7 +103,6 @@ public class ProposalAdapter extends BaseAdapter {
                     v.getContext().startActivity(i);
                 }
             });
-
         }
 
 
