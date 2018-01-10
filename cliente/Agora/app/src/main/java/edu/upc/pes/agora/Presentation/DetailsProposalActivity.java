@@ -90,7 +90,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
         date = (TextView) findViewById(R.id.date);
 
         moreoptions = (ImageView) findViewById(R.id.more);
-        //favorite = (ImageView) findViewById(R.id.jilkhjkf);
+        favorite = (ImageView) findViewById(R.id.jilkhjkf);
 
         TextView numerocomentarios = (TextView) findViewById(R.id.numerocomentaris);
         ImageView likeuser = (ImageView) findViewById(R.id.likeuser);
