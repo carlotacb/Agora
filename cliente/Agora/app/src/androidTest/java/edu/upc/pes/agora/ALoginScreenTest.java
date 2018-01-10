@@ -16,7 +16,6 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.scrollTo;
 import static android.support.test.espresso.action.ViewActions.typeText;
-import static android.support.test.espresso.action.ViewActions.typeTextIntoFocusedView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -24,7 +23,7 @@ import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 
 /**
- * Created by Oriol on 30/12/2017.
+ * Created by Jaume on 10/1/2018.
  */
 
 @RunWith(AndroidJUnit4.class)
@@ -49,8 +48,8 @@ public class ALoginScreenTest {
     @Test
     public void clickLoginButton_loginsUser() throws Exception {
         Intents.init();
-        onView(withId(R.id.username)).perform(typeText("O"));
-        onView(withId(R.id.password)).perform(typeText("o"));
+        onView(withId(R.id.username)).perform(typeText("Test"));
+        onView(withId(R.id.password)).perform(typeText("test"));
         onView(withId(R.id.btnLogin)).perform(closeSoftKeyboard(), click());
         onView(withId(R.id.btnLogin)).perform(closeSoftKeyboard(), click());
         intended(hasComponent(MainActivity.class.getName()));

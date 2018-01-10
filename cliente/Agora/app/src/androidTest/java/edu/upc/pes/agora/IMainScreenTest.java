@@ -13,27 +13,27 @@ import org.junit.runner.RunWith;
 
 import edu.upc.pes.agora.Presentation.CreateProposalActivity;
 import edu.upc.pes.agora.Presentation.LoginActivity;
+import edu.upc.pes.agora.Presentation.LogrosActivity;
 import edu.upc.pes.agora.Presentation.MainActivity;
+import edu.upc.pes.agora.Presentation.MyFavoritesActivity;
 import edu.upc.pes.agora.Presentation.MyProfileActivity;
 import edu.upc.pes.agora.Presentation.MyProposalsActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.contrib.DrawerMatchers.isClosed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
-import static android.support.test.espresso.contrib.NavigationViewActions.navigateTo;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 
 /**
- * Created by Oriol on 30/12/2017.
+ * Created by Jaume on 10/1/2018.
  */
 
 @RunWith(AndroidJUnit4.class)
-public class BMainActivity {
+public class IMainScreenTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mMainActivityTestRule =
@@ -80,6 +80,22 @@ public class BMainActivity {
     }
 
     @Test
+    public void clickOnFavoritesItem_ShowsMyFavoritesActivity() {
+        Intents.init();
+        // Open Drawer to click on navigation.
+        onView(withId(R.id.drawer_layout))
+                .check(matches(isClosed(Gravity.LEFT))) // Left Drawer should be closed.
+                .perform(DrawerActions.open()); // Open Drawer
+
+        // Start the screen of your activity.
+        onView(withId(R.id.nav_view))
+                .perform(NavigationViewActions.navigateTo(R.id.nav_favorites));
+
+        intended(hasComponent(MyFavoritesActivity.class.getName()));
+        Intents.release();
+    }
+
+    @Test
     public void clickOnMyProfileItem_ShowsMyProfileActivity() {
         Intents.init();
         // Open Drawer to click on navigation.
@@ -92,6 +108,38 @@ public class BMainActivity {
                 .perform(NavigationViewActions.navigateTo(R.id.nav_perfilprinc));
 
         intended(hasComponent(MyProfileActivity.class.getName()));
+        Intents.release();
+    }
+
+    @Test
+    public void clickOnLogrosItem_ShowsMyLogrosActivity() {
+        Intents.init();
+        // Open Drawer to click on navigation.
+        onView(withId(R.id.drawer_layout))
+                .check(matches(isClosed(Gravity.LEFT))) // Left Drawer should be closed.
+                .perform(DrawerActions.open()); // Open Drawer
+
+        // Start the screen of your activity.
+        onView(withId(R.id.nav_view))
+                .perform(NavigationViewActions.navigateTo(R.id.nav_logros));
+
+        intended(hasComponent(LogrosActivity.class.getName()));
+        Intents.release();
+    }
+
+    @Test
+    public void clickOnLogoutItem_ShowsLoginActivity() {
+        Intents.init();
+        // Open Drawer to click on navigation.
+        onView(withId(R.id.drawer_layout))
+                .check(matches(isClosed(Gravity.LEFT))) // Left Drawer should be closed.
+                .perform(DrawerActions.open()); // Open Drawer
+
+        // Start the screen of your activity.
+        onView(withId(R.id.nav_view))
+                .perform(NavigationViewActions.navigateTo(R.id.nav_logout));
+
+        intended(hasComponent(LoginActivity.class.getName()));
         Intents.release();
     }
 
