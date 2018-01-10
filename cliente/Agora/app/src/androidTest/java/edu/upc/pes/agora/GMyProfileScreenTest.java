@@ -19,7 +19,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
- * Created by Jaume on 10/1/2018.
+ * Created by Oriol on 10/1/2018.
  */
 
 @RunWith(AndroidJUnit4.class)

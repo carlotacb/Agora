@@ -29,7 +29,7 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 
 /**
- * Created by Jaume on 10/1/2018.
+ * Created by Oriol on 10/1/2018.
  */
 
 @RunWith(AndroidJUnit4.class)

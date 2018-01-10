@@ -28,7 +28,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.allOf;
 
 /**
- * Created by Jaume on 10/1/2018.
+ * Created by Oriol on 10/1/2018.
  */
 
 @RunWith(AndroidJUnit4.class)
