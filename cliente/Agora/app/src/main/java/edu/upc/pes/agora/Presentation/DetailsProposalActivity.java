@@ -237,6 +237,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                 input.setLayoutParams(params);
                 input.getBackground().clearColorFilter();
                 input.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+                //input.setLines(3);
                 input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(200)});
                 container.addView(input);
                 dialogoaddcoment.setTitle(getString(R.string.nou));
