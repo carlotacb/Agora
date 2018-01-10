@@ -2,10 +2,14 @@ package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.provider.MediaStore;
@@ -13,6 +17,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -343,10 +348,15 @@ public class CreateProposalActivity extends AppCompatActivity {
                             String achievement = this.getNewAchievement();
 
 
+
+
+
+
                             if (result && achievement != null && !achievement.equals("")) {
-                                crear(achievement);
+                                sendNot(achievement);
+                          //      crear(achievement);
                             }
-                            else if (result) {
+                            if (result) {
                                 if (numimatges > 0) {
                                     afegirimatges();
                                 } else {
@@ -521,6 +531,13 @@ public class CreateProposalActivity extends AppCompatActivity {
 
                 String creacionok = String.format(res.getString(R.string.done), strTitulo);
 
+                String achievement = this.getNewAchievement();
+
+                if (result && achievement != null && !achievement.equals("")) {
+                    sendNot(achievement);
+                  //  crear(achievement);
+                }
+
                 if (result) {
                     Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
 
@@ -577,6 +594,37 @@ public class CreateProposalActivity extends AppCompatActivity {
         limatges.setAdapter(new ImatgesAdapter(getApplicationContext(), mImatgeItems));
     }
 
+    public void sendNot(String achievement){
+
+        Intent i=new Intent(CreateProposalActivity.this, LogrosActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(CreateProposalActivity.this, 0, i, 0);
+
+        String[] parts = achievement.split(",");
+        int count = parts.length;
+        for ( int j = 0; j < count; j++ ){
+            String decoded = codificaLogro(parts[j]);
+            Bitmap icon = BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.logo);
+
+            NotificationCompat.Builder mBuilder;
+            NotificationManager mNotifyMgr =(NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+            mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(getApplicationContext())
+                    .setContentIntent(pendingIntent)
+                    .setSmallIcon(R.drawable.trophy)
+                    .setContentTitle(getString(R.string.nuevo))
+                    .setLargeIcon(icon)
+                    .setContentText(decoded)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(decoded))
+                    .setVibrate(new long[] {100, 250, 100, 500})
+                    .setAutoCancel(true);
+
+            mNotifyMgr.notify(j+1, mBuilder.build());
+        }
+
+
+
+    }
+
+/*
     public void crear(String achievement) {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(CreateProposalActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
@@ -607,11 +655,15 @@ public class CreateProposalActivity extends AppCompatActivity {
 
             }
         });
-    }
+    }*/
 
     private String codificaLogro(String codigoLogro) {
 
-        String Logro ="";
+     /*   String[] parts = codigoLogro.split(",");
+        int count = parts.length;
+        String[] Logros = new String[count];*/
+       // for (int i = 0; i < count; i++){
+        String Logro = "";
         switch(codigoLogro) {
             case "PROP1": Logro = getApplicationContext().getString(R.string.PROP1);
                 break;
@@ -663,15 +715,25 @@ public class CreateProposalActivity extends AppCompatActivity {
                 break;
             case "PLIKE100": Logro = getApplicationContext().getString(R.string.PLIKE100);
                 break;
-
-
-
-
-            case "COM10": Logro = "Comenta 10 veces en una propuesta";
+            case "COM1": Logro = getApplicationContext().getString(R.string.COM1);
+                break;
+            case "COM5": Logro = getApplicationContext().getString(R.string.COM5);
+                break;
+            case "COM25": Logro = getApplicationContext().getString(R.string.COM25);
+                break;
+            case "COM100": Logro = getApplicationContext().getString(R.string.COM100);
+                break;
+            case "GCOM1": Logro = getApplicationContext().getString(R.string.GCOM1);
+                break;
+            case "GCOM10": Logro = getApplicationContext().getString(R.string.GCOM10);
+                break;
+            case "GCOM100": Logro = getApplicationContext().getString(R.string.GCOM100);
                 break;
             default: Logro = "Something went wrong";
                 break;
         }
+     //   Logros[i]=Logro;
+      //  }
         return Logro;
     }
 

@@ -173,6 +173,10 @@
     <string name="diferente">El nuevo Password tiene que ser diferente</string>
 
     <!-- Strings Logros -->
+
+    <string name="nuevo">NUEVO LOGRO</string>
+
+
     <string name="conseguidos">Logros Conseguidos</string>
     <string name="pendientes">Logros Pendientes</string>
 
@@ -206,6 +210,15 @@
     <string name="PLIKE1">Dar like a 1 propuesta</string>
     <string name="PLIKE10">Dar like a 10 propuestas</string>
     <string name="PLIKE100">Dar like a 100 propuestas</string>
+
+    <string name="COM1">Comentar 1 propuesta</string>
+    <string name="COM5">Comentar 5 propuestas</string>
+    <string name="COM25">Comentar 25 propuestas</string>
+    <string name="COM100">Comentar 100 propuestas</string>
+    <string name="GCOM1">Tener 1 comentario en 1 propuesta</string>
+    <string name="GCOM10">Tener 10 comentario en 1 propuesta</string>
+    <string name="GCOM100">Tener 100 comentario en 1 propuesta</string>
+
 
 
 

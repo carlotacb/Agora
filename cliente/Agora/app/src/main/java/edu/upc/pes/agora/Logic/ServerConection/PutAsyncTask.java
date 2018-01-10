@@ -24,6 +24,7 @@ public class PutAsyncTask extends AsyncTask<JSONObject, Void, JSONObject>{
     private URL url;
     private Context context;
     SharedPreferences prefs;
+    String newAchievement="";
 
     public PutAsyncTask(String url2, Context coming_context) {
         try {
@@ -32,6 +33,9 @@ public class PutAsyncTask extends AsyncTask<JSONObject, Void, JSONObject>{
         } catch (MalformedURLException e) {
             Log.v("asd123", "entra1", e);
         }
+    }
+    public String getNewAchievement(){
+        return newAchievement;
     }
 
     protected JSONObject doInBackground(JSONObject... params) {
@@ -60,6 +64,9 @@ public class PutAsyncTask extends AsyncTask<JSONObject, Void, JSONObject>{
 
             con.getOutputStream().close();
             con.connect();
+            newAchievement = con.getHeaderField("X-New-Achievements");
+
+
             JSONObject response = new JSONObject();
 
             try {

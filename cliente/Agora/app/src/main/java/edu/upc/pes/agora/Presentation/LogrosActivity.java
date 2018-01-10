@@ -1,24 +1,18 @@
 package edu.upc.pes.agora.Presentation;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -181,20 +175,49 @@ public class LogrosActivity extends AppCompatActivity {
              //   Toast.makeText(getApplicationContext(), "Estado del boolean de la lista " + list.get(i), Toast.LENGTH_LONG).show();
            //     list.set(i,true);
            //     Toast.makeText(getApplicationContext(), "Estado del boolean de la lista version 2" + list.get(i), Toast.LENGTH_SHORT).show();
-
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(LogrosActivity.this);
+                int vale = 0;
+                String s = listView.getItemAtPosition(i).toString();
+                if(s.equals(getString(R.string.TWIT1))){
+                    vale = 1;
+                }
+                else if (s.equals(getString(R.string.PROP5))){
+                    vale = 2;
+                }
+                else if (s.equals(getString(R.string.COM5))){
+                    vale = 3;
+                }
+                else {
+                    vale = 0;
+                }
                 View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
+
                 String estado = "";
 
-                if (i >= size) estado = getApplicationContext().getString(R.string.pendiente);
+                if (i >= size){
+                    estado = getApplicationContext().getString(R.string.pendiente);
+                    mView.setBackgroundColor(Color.LTGRAY);
+                }
                 else estado = getApplicationContext().getString(R.string.conseguido);
+
 
                 TextView textView = (TextView)mView.findViewById(R.id.textView);
                 textView.setText(listView.getItemAtPosition(i).toString()+estado);
                 Button mAccept = (Button) mView.findViewById(R.id.etAccept);
 
                 ImageView imageView = (ImageView) mView.findViewById(R.id.image);
-                imageView.setImageResource(R.drawable.ic_trofeo_logro2);
+                if (vale == 1 & i < size){
+                    imageView.setImageResource(R.drawable.imagecafe);
+                }
+                else if ( vale == 2 & i < size){
+                    imageView.setImageResource(R.drawable.imageropa);
+                }
+                else if ( vale == 3 & i < size){
+                    imageView.setImageResource(R.drawable.imagedonut);
+                }
+                else {
+                    imageView.setImageResource(R.drawable.ic_trofeo_logro2);
+                }
 
 
 
@@ -215,7 +238,11 @@ public class LogrosActivity extends AppCompatActivity {
 
     private String codificaLogro(String codigoLogro) {
 
-        String Logro ="";
+     /*   String[] parts = codigoLogro.split(",");
+        int count = parts.length;
+        String[] Logros = new String[count];*/
+        // for (int i = 0; i < count; i++){
+        String Logro = "";
         switch(codigoLogro) {
             case "PROP1": Logro = getApplicationContext().getString(R.string.PROP1);
                 break;
@@ -267,15 +294,25 @@ public class LogrosActivity extends AppCompatActivity {
                 break;
             case "PLIKE100": Logro = getApplicationContext().getString(R.string.PLIKE100);
                 break;
-
-
-
-
-            case "COM10": Logro = "Comenta 10 veces en una propuesta";
-                    break;
+            case "COM1": Logro = getApplicationContext().getString(R.string.COM1);
+                break;
+            case "COM5": Logro = getApplicationContext().getString(R.string.COM5);
+                break;
+            case "COM25": Logro = getApplicationContext().getString(R.string.COM25);
+                break;
+            case "COM100": Logro = getApplicationContext().getString(R.string.COM100);
+                break;
+            case "GCOM1": Logro = getApplicationContext().getString(R.string.GCOM1);
+                break;
+            case "GCOM10": Logro = getApplicationContext().getString(R.string.GCOM10);
+                break;
+            case "GCOM100": Logro = getApplicationContext().getString(R.string.GCOM100);
+                break;
             default: Logro = "Something went wrong";
-                    break;
+                break;
         }
+        //   Logros[i]=Logro;
+        //  }
         return Logro;
     }
 

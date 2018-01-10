@@ -143,6 +143,15 @@
     <string name="pendientes">Logros Pendientes</string>
     <string name="conseguido">" (conseguido)"</string>
     <string name="pendiente">" (pendiente)"</string>
+    <string name="nuevo">NUEVO LOGRO</string>
+    <string name="COM1">Comentar 1 propuesta</string>
+    <string name="COM5">Comentar 5 propuestas</string>
+    <string name="COM25">Comentar 25 propuestas</string>
+    <string name="COM100">Comentar 100 propuestas</string>
+    <string name="GCOM1">Tener 1 comentario en 1 propuesta</string>
+    <string name="GCOM10">Tener 10 comentarios en 1 propuesta</string>
+    <string name="GCOM100">Tener 10 comentarios en 1 propuesta</string>
+
     <string name="posAttached">Posición añadida</string>
     <string name="editPosition">Editar posición</string>
     <string name="descripcion2">Descripción:</string>

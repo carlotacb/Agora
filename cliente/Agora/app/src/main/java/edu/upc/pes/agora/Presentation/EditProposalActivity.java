@@ -2,16 +2,20 @@ package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -415,6 +419,14 @@ public class EditProposalActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
 
+                            String achievement = this.getNewAchievement();
+
+
+                            if (result && achievement != null && !achievement.equals("")) {
+                                sendNot(achievement);
+                            }
+
+
                             if (result) {
 
                                 if (numimatges > 0) {
@@ -477,6 +489,13 @@ public class EditProposalActivity extends AppCompatActivity {
                         String error = res.getString(R.string.errorCreacion);
                         Log.i("asdCreacion", error);
                         Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                    }
+
+
+                    String achievement = this.getNewAchievement();
+
+                    if (result && achievement != null && !achievement.equals("")) {
+                        sendNot(achievement);
                     }
 
                 } catch (JSONException e) {
@@ -578,4 +597,146 @@ public class EditProposalActivity extends AppCompatActivity {
         }.execute(Jason);
     }
 
+
+    public void sendNot(String achievement){
+
+        Intent i=new Intent(EditProposalActivity.this, LogrosActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(EditProposalActivity.this, 0, i, 0);
+
+        String[] parts = achievement.split(",");
+        int count = parts.length;
+        for ( int j = 0; j < count; j++ ){
+            String decoded = codificaLogro(parts[j]);
+            Bitmap icon = BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.logo);
+
+            NotificationCompat.Builder mBuilder;
+            NotificationManager mNotifyMgr =(NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+            mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(getApplicationContext())
+                    .setContentIntent(pendingIntent)
+                    .setSmallIcon(R.drawable.ic_trofeo_logro)
+                    .setContentTitle(getString(R.string.nuevo))
+                    .setLargeIcon(icon)
+                    .setContentText(decoded)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(decoded))
+                    .setVibrate(new long[] {100, 250, 100, 500})
+                    .setAutoCancel(true);
+
+            mNotifyMgr.notify(j+1, mBuilder.build());
+        }
+
+
+
+    }
+
+/*
+    public void crear(String achievement) {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(CreateProposalActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
+        TextView textView = (TextView)mView.findViewById(R.id.textView);
+        textView.setText(codificaLogro(achievement));
+        Button mAccept = (Button) mView.findViewById(R.id.etAccept);
+        ImageView imageView = (ImageView) mView.findViewById(R.id.image);
+        imageView.setImageResource(R.drawable.ic_trofeo_logro2);
+        mBuilder.setView(mView);
+        //  mBuilder.setCancelable(false);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
+            }
+        });
+        dialog.show();
+
+        mAccept.setOnClickListener(new View.OnClickListener() {
+
+
+
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                //    startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
+
+            }
+        });
+    }*/
+private String codificaLogro(String codigoLogro) {
+
+     /*   String[] parts = codigoLogro.split(",");
+        int count = parts.length;
+        String[] Logros = new String[count];*/
+    // for (int i = 0; i < count; i++){
+    String Logro = "";
+    switch(codigoLogro) {
+        case "PROP1": Logro = getApplicationContext().getString(R.string.PROP1);
+            break;
+        case "PROP5": Logro = getApplicationContext().getString(R.string.PROP5);
+            break;
+        case "PROP10": Logro = getApplicationContext().getString(R.string.PROP10);
+            break;
+        case "PROP50": Logro = getApplicationContext().getString(R.string.PROP50);
+            break;
+        case "PROP100": Logro = getApplicationContext().getString(R.string.PROP100);
+            break;
+        case "FAV1": Logro = getApplicationContext().getString(R.string.FAV1);
+            break;
+        case "FAV10": Logro = getApplicationContext().getString(R.string.FAV10);
+            break;
+        case "UBI1": Logro = getApplicationContext().getString(R.string.UBI1);
+            break;
+        case "UBI10": Logro = getApplicationContext().getString(R.string.UBI10);
+            break;
+        case "PROPC": Logro = getApplicationContext().getString(R.string.PROPC);
+            break;
+        case "PROPD": Logro = getApplicationContext().getString(R.string.PROPD);
+            break;
+        case "PROPO": Logro = getApplicationContext().getString(R.string.PROPO);
+            break;
+        case "PROPM": Logro = getApplicationContext().getString(R.string.PROPM);
+            break;
+        case "PROPE": Logro = getApplicationContext().getString(R.string.PROPE);
+            break;
+        case "PROPT": Logro = getApplicationContext().getString(R.string.PROPT);
+            break;
+        case "PROPQ": Logro = getApplicationContext().getString(R.string.PROPQ);
+            break;
+        case "PROPS": Logro = getApplicationContext().getString(R.string.PROPS);
+            break;
+        case "TWIT1": Logro = getApplicationContext().getString(R.string.TWIT1);
+            break;
+        case "TWIT100": Logro = getApplicationContext().getString(R.string.TWIT100);
+            break;
+        case "GLIKE1": Logro = getApplicationContext().getString(R.string.GLIKE1);
+            break;
+        case "GLIKE10": Logro = getApplicationContext().getString(R.string.GLIKE10);
+            break;
+        case "GLIKE100": Logro = getApplicationContext().getString(R.string.GLIKE100);
+            break;
+        case "PLIKE1": Logro = getApplicationContext().getString(R.string.PLIKE1);
+            break;
+        case "PLIKE10": Logro = getApplicationContext().getString(R.string.PLIKE10);
+            break;
+        case "PLIKE100": Logro = getApplicationContext().getString(R.string.PLIKE100);
+            break;
+        case "COM1": Logro = getApplicationContext().getString(R.string.COM1);
+            break;
+        case "COM5": Logro = getApplicationContext().getString(R.string.COM5);
+            break;
+        case "COM25": Logro = getApplicationContext().getString(R.string.COM25);
+            break;
+        case "COM100": Logro = getApplicationContext().getString(R.string.COM100);
+            break;
+        case "GCOM1": Logro = getApplicationContext().getString(R.string.GCOM1);
+            break;
+        case "GCOM10": Logro = getApplicationContext().getString(R.string.GCOM10);
+            break;
+        case "GCOM100": Logro = getApplicationContext().getString(R.string.GCOM100);
+            break;
+        default: Logro = "Something went wrong";
+            break;
+    }
+    //   Logros[i]=Logro;
+    //  }
+    return Logro;
+}
 }

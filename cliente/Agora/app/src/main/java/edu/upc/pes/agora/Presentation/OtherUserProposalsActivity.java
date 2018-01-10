@@ -52,7 +52,9 @@ public class OtherUserProposalsActivity extends AppCompatActivity {
 
         propList = (ListView) findViewById(R.id.propList);
         tot = (LinearLayout) findViewById(R.id.layouttot);
-        progres = (LinearLayout) findViewById(R.id.pantallacargandoop);
+        // CARLOTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!!!!!!!!!!!!!!!!!!!
+
+        progres = (LinearLayout) findViewById(R.id.linearlayoutinfo);
         titol = (TextView) findViewById(R.id.propcreadaper);
         String user = getIntent().getStringExtra("username");
 
