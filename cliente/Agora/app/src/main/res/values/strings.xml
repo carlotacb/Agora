@@ -127,6 +127,10 @@
     <string name="mensajeditar">Realiza los cambios pertinentes en el comentario</string>
     <string name="elimiarcomentario">Eliminar Comentario</string>
     <string name="editarcomentario">Editar Comentario</string>
+    <string name="categoriadetails">Categoria:</string>
+    <string name="Ownerdetails">Owner:</string>
+    <string name="createddetails">Creada el:</string>
+    <string name="descriptiondetails">Descripcio:</string>
 
     <!-- Strings related to edit profile -->
     <string name="M">Hombre</string>
@@ -172,6 +176,11 @@
         los dos siguientes
     </string>
     <string name="diferente">El nuevo Password tiene que ser diferente</string>
+
+
+    <string name="Galeria">Galeria</string>
+    <string name="escojeropcion">Escoge una opción</string>
+    <string name="appdeimagen">Selecciona app de imagen</string>
 
     <!-- Strings Logros -->
 

@@ -105,7 +105,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
         moreoptions = (ImageView) findViewById(R.id.more);
         favorite = (ImageView) findViewById(R.id.prefee);
 
-        TextView numerocomentarios = (TextView) findViewById(R.id.numerocomentaris);
+        final TextView numerocomentarios = (TextView) findViewById(R.id.numerocomentaris);
         ImageView likeuser = (ImageView) findViewById(R.id.likeuser);
         ImageView dislikeuser = (ImageView) findViewById(R.id.dislikeuser);
         final TextView numerolikes = (TextView) findViewById(R.id.numerovote);
@@ -442,19 +442,12 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
                                 if (result) {
                                     input.getBackground().clearColorFilter();
-                                    Intent myIntent = new Intent(getApplicationContext(), DetailsProposalActivity.class);
-                                    myIntent.putExtra("Title", mtit);
-                                    myIntent.putExtra("Description", mdesc);
-                                    myIntent.putExtra("id", idprop);
-                                    myIntent.putExtra("Owner", mowner);
-                                    myIntent.putExtra("Categoria", c);
-                                    myIntent.putExtra("Creation", proposal.getCreation());
-                                    myIntent.putExtra("ncomentarios", proposal.getNumerocomentarios());
-                                    myIntent.putExtra("nvotes", proposal.getNumerovotes());
-                                    myIntent.putExtra("nunvotes", proposal.getNumerounvotes());
-                                    myIntent.putExtra("favorit", proposal.getFavorite());
-                                    myIntent.putExtra("votacion", proposal.getVotacion());
-                                    startActivity(myIntent);
+                                    Integer ncom = proposal.getNumerocomentarios();
+                                    proposal.setNumerocomentarios(ncom+1);
+                                    numerocomentarios.setText(String.valueOf(ncom+1));
+                                    llistarcomentaris();
+
+
                                 }
 
                                 else {

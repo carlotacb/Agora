@@ -181,18 +181,18 @@ public class FillProfileActivity extends AppCompatActivity {
         profileimage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                final CharSequence[] options = {"Galería", "Cancelar"};
+                final CharSequence[] options = {res.getString(R.string.Galeria), res.getString(R.string.cancelButton)};
                 final AlertDialog.Builder builder = new AlertDialog.Builder(FillProfileActivity.this);
-                builder.setTitle("Escoge una opción");
+                builder.setTitle(res.getString(R.string.escojeropcion));
                 builder.setItems(options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int selection) {
-                        if(options[selection]=="Galería") {
+                        if(options[selection] == res.getString(R.string.Galeria)) {
                             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             intent.setType("image/*");
-                            startActivityForResult(intent.createChooser(intent, "Selecciona app de imagen"), SELECT_PICTURE);
+                            startActivityForResult(intent.createChooser(intent, res.getString(R.string.appdeimagen)), SELECT_PICTURE);
                         }
-                        else if(options[selection]=="Cancelar"){
+                        else if(options[selection] == res.getString(R.string.cancelButton)){
                             dialog.dismiss();
                         }
                     }
@@ -380,15 +380,10 @@ public class FillProfileActivity extends AppCompatActivity {
                                     Log.i("asdCreacion", error);
                                     Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                                 }
-                                //Toast.makeText(getApplicationContext(), "Result : " + result , Toast.LENGTH_LONG).show();
-
 
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-                            //Log.i("asdBool", result.toString());
-
 
                             String achievement = this.getNewAchievement();
 
@@ -469,42 +464,8 @@ public class FillProfileActivity extends AppCompatActivity {
             mNotifyMgr.notify(j+1, mBuilder.build());
         }
 
-
-
     }
 
-/*
-    public void crear(String achievement) {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(CreateProposalActivity.this);
-        View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
-        TextView textView = (TextView)mView.findViewById(R.id.textView);
-        textView.setText(codificaLogro(achievement));
-        Button mAccept = (Button) mView.findViewById(R.id.etAccept);
-        ImageView imageView = (ImageView) mView.findViewById(R.id.image);
-        imageView.setImageResource(R.drawable.ic_trofeo_logro2);
-        mBuilder.setView(mView);
-        //  mBuilder.setCancelable(false);
-        final AlertDialog dialog = mBuilder.create();
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
-            }
-        });
-        dialog.show();
-
-        mAccept.setOnClickListener(new View.OnClickListener() {
-
-
-
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-                //    startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
-
-            }
-        });
-    }*/
 private String codificaLogro(String codigoLogro) {
 
      /*   String[] parts = codigoLogro.split(",");

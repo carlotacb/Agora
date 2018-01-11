@@ -127,6 +127,7 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
                         }
                         else {
                             Constants.SH_PREF_NAME = "";
+                            Constants.fotoperfil = null;
                             Intent myIntent = new Intent(context, LoginActivity.class);
                             myIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             context.startActivity(myIntent);

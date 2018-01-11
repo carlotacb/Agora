@@ -175,7 +175,7 @@ public class HelpActivity extends AppCompatActivity {
 
         int id = item.getItemId();
 
-        Intent refresh = new Intent(this, MyFavoritesActivity.class);
+        Intent refresh = new Intent(this, HelpActivity.class);
         refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Boolean change = false;
 

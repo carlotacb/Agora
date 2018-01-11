@@ -175,4 +175,8 @@
     <string name="diferente">The new password must be different</string>
     <string name="about_version">Version 1.0</string>
     <string name="about_assignatura">Software Engineering Project - FIB</string>
+    <string name="categoriadetails">Category:</string>
+    <string name="Ownerdetails">Owner:</string>
+    <string name="createddetails">Created at:</string>
+    <string name="descriptiondetails">Description:</string>
 </resources>

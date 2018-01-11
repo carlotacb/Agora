@@ -335,7 +335,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 layout.addView(input2);
                 layout.addView(input3);
                 dialogochange.setTitle(getString(R.string.cps));
-                dialogochange.setMessage(getString(R.string.cambio_password));
                 dialogochange.setIcon(R.drawable.logo);
 
                 dialogochange.setCancelable(false);

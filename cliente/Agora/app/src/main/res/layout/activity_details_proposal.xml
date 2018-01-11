@@ -96,7 +96,7 @@
                         android:textStyle="bold"
                         android:textSize="18dp"
                         android:layout_marginBottom="2dp"
-                        android:text="Categoria:"/>
+                        android:text="@string/categoriadetails"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -123,7 +123,7 @@
                         android:textStyle="bold"
                         android:textSize="18dp"
                         android:layout_marginBottom="2dp"
-                        android:text="Owner:"/>
+                        android:text="@string/Ownerdetails"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -151,7 +151,7 @@
                         android:textStyle="bold"
                         android:textSize="18dp"
                         android:layout_marginBottom="2dp"
-                        android:text="Creada el:"/>
+                        android:text="@string/createddetails"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -175,7 +175,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginBottom="2dp"
-                    android:text="@string/descripcion2"/>
+                    android:text="@string/descriptiondetails"/>
 
                 <TextView
                     android:layout_width="match_parent"

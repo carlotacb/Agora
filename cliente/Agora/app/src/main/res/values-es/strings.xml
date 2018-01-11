@@ -174,4 +174,8 @@
     <string name="diferente">El nuevo password tiene que ser diferente</string>
     <string name="about_assignatura">Proyecto de Ingeniería del Software - FIB</string>
     <string name="about_version">Versión 1.0</string>
+    <string name="categoriadetails">Categoría:</string>
+    <string name="Ownerdetails">Creador:</string>
+    <string name="createddetails">Creada el:</string>
+    <string name="descriptiondetails">Descripción:</string>
 </resources>

@@ -2,16 +2,21 @@ package edu.upc.pes.agora.Presentation;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -28,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import edu.upc.pes.agora.Logic.Adapters.ArrayAdapterPersonalizado;
 import edu.upc.pes.agora.Logic.Listeners.DrawerToggleAdvanced;
@@ -40,6 +46,7 @@ public class LogrosActivity extends AppCompatActivity {
 
     private List<String> logros = new ArrayList<>();
     private JSONObject Jason = new JSONObject();
+    private Configuration config = new Configuration();
 
     private String[] logros2;
     private String  itemLogro = "logro";
@@ -313,6 +320,76 @@ public class LogrosActivity extends AppCompatActivity {
                 break;
         }
         return Logro;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        MenuItem bandera = menu.findItem(R.id.bandera);
+        switch (Constants.Idioma) {
+            case "es":
+                bandera.setIcon(R.drawable.spa);
+                break;
+            case "en":
+                bandera.setIcon(R.drawable.ing);
+                break;
+            case "ca":
+                bandera.setIcon(R.drawable.rep);
+                break;
+        }
+        super.onPrepareOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        Intent refresh = new Intent(this, LogrosActivity.class);
+        refresh.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Boolean change = false;
+
+        if (id == R.id.men_castella){
+            Constants.Idioma = "es";
+            change = true;
+        }
+
+        else if (id == R.id.men_catala){
+            Constants.Idioma = "ca";
+            change = true;
+        }
+
+        else if (id == R.id.men_angles) {
+            Constants.Idioma = "en";
+            change = true;
+        }
+
+        if (change) {
+            config.locale = new Locale(Constants.Idioma);
+            getResources().updateConfiguration(config, null);
+            startActivity(refresh);
+            finish();
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerLayout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            drawer.openDrawer(GravityCompat.START);
+        }
     }
 
 }

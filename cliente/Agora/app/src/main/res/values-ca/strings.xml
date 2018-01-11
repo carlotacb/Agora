@@ -175,4 +175,8 @@
     <string name="diferente">El nou password ha de ser diferent</string>
     <string name="about_version">Versió 1.0</string>
     <string name="about_assignatura">Projecte d\'Engenyieria del Software - FIB</string>
+    <string name="categoriadetails">Categoria:</string>
+    <string name="Ownerdetails">Creador:</string>
+    <string name="createddetails">Creada el:</string>
+    <string name="descriptiondetails">Descripció:</string>
 </resources>
