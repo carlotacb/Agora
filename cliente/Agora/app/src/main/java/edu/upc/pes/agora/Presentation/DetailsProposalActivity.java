@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -50,6 +51,7 @@ import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
 import edu.upc.pes.agora.Logic.Models.Comment;
 import edu.upc.pes.agora.Logic.Adapters.CommentAdapter;
 import edu.upc.pes.agora.Logic.Models.ImatgeItem;
+import edu.upc.pes.agora.Logic.Models.Imatgev2;
 import edu.upc.pes.agora.Logic.Models.Proposal;
 import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
 import edu.upc.pes.agora.Logic.Utils.Constants;
@@ -85,7 +87,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
     private Proposal proposal;
 
     private JSONObject Jason = new JSONObject();
-    private ArrayList<ImatgeItem> imatges = new ArrayList<>();
+    private ArrayList<Imatgev2> imatges = new ArrayList<>();
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -386,7 +388,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                 input.getBackground().clearColorFilter();
                 input.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
                 //input.setLines(3);
-                input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(200)});
+                input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(70)});
                 container.addView(input);
                 dialogoaddcoment.setTitle(getString(R.string.nou));
                 String mensajeparaañadir = String.format(res.getString(R.string.mensajenc), mtit);
@@ -445,6 +447,12 @@ public class DetailsProposalActivity extends AppCompatActivity {
                                     myIntent.putExtra("id", idprop);
                                     myIntent.putExtra("Owner", mowner);
                                     myIntent.putExtra("Categoria", c);
+                                    myIntent.putExtra("Creation", proposal.getCreation());
+                                    myIntent.putExtra("ncomentarios", proposal.getNumerocomentarios());
+                                    myIntent.putExtra("nvotes", proposal.getNumerovotes());
+                                    myIntent.putExtra("nunvotes", proposal.getNumerounvotes());
+                                    myIntent.putExtra("favorit", proposal.getFavorite());
+                                    myIntent.putExtra("votacion", proposal.getVotacion());
                                     startActivity(myIntent);
                                 }
 
@@ -662,6 +670,13 @@ public class DetailsProposalActivity extends AppCompatActivity {
             }
         });
 
+        if (imatges.size() == 0) {
+            Limatges.setVisibility(View.GONE);
+        }
+        else {
+            Limatges.setVisibility(View.VISIBLE);
+        }
+
         Limatges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -670,10 +685,32 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
                 View mView = getLayoutInflater().inflate(R.layout.dialog_images, null);
 
+                Button mAccept = (Button) mView.findViewById(R.id.aceptar);
+                GridView gridview = (GridView) mView.findViewById(R.id.gv);
+                ImageAdapter gridAdapter = new ImageAdapter(DetailsProposalActivity.this, R.layout.grid_item, imatges);
+                gridview.setAdapter(gridAdapter);
+
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
+                dialog.show();
+                mAccept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+                /*AlertDialog.Builder mBuilder = new AlertDialog.Builder(DetailsProposalActivity.this);
+
+                View mView = getLayoutInflater().inflate(R.layout.dialog_images, null);
+
                 Button mAccept = (Button) mView.findViewById(R.id.etAccept);
 
-                GridView gridview = (GridView) findViewById(R.id.gv);
-                gridview.setAdapter(new ImageAdapter(DetailsProposalActivity.this, imatges));
+
+                //GridView gridview = (GridView) findViewById(R.id.gv);
+                //ImageAdapter gridAdapter = new ImageAdapter(DetailsProposalActivity.this, R.layout.grid_item, imatges);
+                //gridview.setAdapter(gridAdapter);
 
                 mBuilder.setView(mView);
 
@@ -684,7 +721,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         dialog.dismiss();
                     }
-                });
+                });*/
 
             }
         });
@@ -703,7 +740,8 @@ public class DetailsProposalActivity extends AppCompatActivity {
                                 myIntent.putExtra("Title", proposal.getTitle());
                                 myIntent.putExtra("Description", proposal.getDescription());
                                 myIntent.putExtra("id", proposal.getId());
-                                myIntent.putExtra("Categoria", proposal.getCategoria());
+                                myIntent.putExtra("Categoria", c);
+                                Log.i("asd123", proposal.getCategoria());
                                 myIntent.putExtra("lat", proposal.getLat());
                                 myIntent.putExtra("lng", proposal.getLng());
                                 myIntent.putExtra("ChangeActivity", "Detalls");
@@ -853,9 +891,9 @@ public class DetailsProposalActivity extends AppCompatActivity {
                                 String id = jas.getString("id");
                                 String contentimage = jas.getString("image");
 
-                                ImatgeItem aux = new ImatgeItem();
-                                aux.setNumero(Integer.parseInt(id));
-                                aux.setImatge(contentimage);
+                                Imatgev2 aux = new Imatgev2(contentimage);
+                                /*aux.setNumero(Integer.parseInt(id));
+                                aux.setImatge(contentimage);*/
 
                                 imatges.add(aux);
                             }
@@ -872,7 +910,6 @@ public class DetailsProposalActivity extends AppCompatActivity {
             }
         }.execute(Jason);
     }
-
 
     public void sendNot(String achievement){
 

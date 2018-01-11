@@ -177,6 +177,10 @@ public class LogrosActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+
+                /*Toast toast = Toast.makeText(getApplicationContext(), "posicion " +i +"   size " +size, Toast.LENGTH_SHORT);
+                toast.show();*/
+
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(LogrosActivity.this);
                 int vale = 0;
                 String s = listView.getItemAtPosition(i).toString();

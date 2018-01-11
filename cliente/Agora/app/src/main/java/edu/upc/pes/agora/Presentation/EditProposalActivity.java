@@ -139,6 +139,9 @@ public class EditProposalActivity extends AppCompatActivity {
 
         Intent i = getIntent();
 
+        final int id = i.getIntExtra("id",0);
+        proposalID = id;
+
         Intent idioma = new Intent(EditProposalActivity.this, EditProposalActivity.class);
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         idioma.putExtra("Title", i.getStringExtra("Title"));
@@ -148,7 +151,31 @@ public class EditProposalActivity extends AppCompatActivity {
         if (i.hasExtra("Category")) idioma.putExtra("Category", i.getIntExtra("Category", 0));
         canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
 
-        Intent back = new Intent(EditProposalActivity.this, MyProposalsActivity.class);
+        Intent back;
+
+        if (getIntent().hasExtra("ChangeActivity")) {
+            back = new Intent(EditProposalActivity.this, DetailsProposalActivity.class);
+            back.putExtra("Title", getIntent().getStringExtra("Title"));
+            back.putExtra("Description", getIntent().getStringExtra("Description"));
+            back.putExtra("id", id);
+            back.putExtra("Owner", getIntent().getStringExtra("Owner"));
+            back.putExtra("Categoria", getIntent().getStringExtra("Categoria"));
+            back.putExtra("lat", getIntent().getDoubleExtra("lat",0));
+            back.putExtra("lng", getIntent().getDoubleExtra("lng",0));
+            back.putExtra("Creation", getIntent().getStringExtra("Creation"));
+            back.putExtra("Update", getIntent().getStringExtra("Update"));
+            back.putExtra("ncomentarios", getIntent().getIntExtra("ncomentarios", 0));
+            back.putExtra("nvotes", getIntent().getIntExtra("nvotes", 0));
+            back.putExtra("nunvotes", getIntent().getIntExtra("nunvotes", 0));
+            back.putExtra("favorit", getIntent().getBooleanExtra("favorit", false));
+            back.putExtra("votacion", getIntent().getIntExtra("votacion", 0));
+            if (getIntent().hasExtra("otherUser")) back.putExtra("otherUser", "ve d'altre usuari");
+            if (getIntent().hasExtra("deFavorites")) back.putExtra("deFavorites", "ve d'altre usuari");
+            if (getIntent().hasExtra("deMyProposals")) back.putExtra("deMyProposals", "ve d'altre usuari");
+        }
+        else {
+            back = new Intent(EditProposalActivity.this, MyProposalsActivity.class);
+        }
         back.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         enrerre.setOnClickListener(new BackOnClickListener(back, getApplicationContext()));
 
@@ -218,9 +245,6 @@ public class EditProposalActivity extends AppCompatActivity {
             }
 
         }
-
-        final int id = i.getIntExtra("id",0);
-        proposalID = id;
 
         // Lista de Categorias con los nombres buenos (cambia con el idioma).
         final String[] categorias = new String[]{

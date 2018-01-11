@@ -25,8 +25,8 @@ module.exports = app => {
             return res.sendStatus(403)
         }
 
-        const {content, title, location} = req.body
-        const newProposal = await proposalsModule.update({id: proposalId, content, title, location})
+        const {content, title, location, categoria} = req.body
+        const newProposal = await proposalsModule.update({id: proposalId, content, title, location, categoria})
         res.send(await mapProposalForUsername(newProposal, req.username))
     }))
 

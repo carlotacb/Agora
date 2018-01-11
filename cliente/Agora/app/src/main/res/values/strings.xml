@@ -260,12 +260,15 @@
     <string name="about_quadrimestre">- 2017/2018 -</string>
 
     <!-- Help -->
-    <string name="helpparte1">Àgora es una aplicación dedicada a mejorar tu barrio, realiza propuestas, votalas y podrás hacer un barrio mejor. Nuestro sistema ofrece muchas funcionalidades, en esta pantalla podàs consultar las funcionalidades por cada pantalla que encontaras en el menú lateral. \n \nEstas son las siguientes:</string>
+    <string name="helpparte1">Àgora es una aplicación dedicada a mejorar tu barrio, realiza propuestas, votalas y podrás hacer un barrio mejor. Nuestro sistema ofrece muchas funcionalidades, en esta pantalla podàs consultar las funcionalidades por cada pantalla que encontaras en el menú lateral:</string>
     <string name="iconohome">- Pagina principal</string>
     <string name="iconomyproposals">- See all my proposals</string>
     <string name="iconomyfavorites">- See all my favorites</string>
     <string name="iconomyprofile">- Cosultar perfil</string>
     <string name="iconologros">- Consultar mis logros</string>
-    <string name="helpparte2">En las pestañas de la parte superior de la pantalla, puedes encontrar la ayuda de las pantallas, identificadas por su icono.\n \nAdemás toda la apilcación ofrece un sistema multiidioma, clicando la bandera en la parte superior de cada pantalla se puede cambiar el idiomas</string>
+    <string name="helpparte2">En las pestañas de la parte superior de la pantalla, puedes encontrar una guia de ayuda para cada una de las pantallas, identificadas por su icono.\n \nAdemás toda la apilcación ofrece un sistema multiidioma, clicando la bandera en la parte superior de cada pantalla puedes seleccionar el idioma que quieras, entre los disponibles (Catalan, Castellano e Ingles)</string>
+
+
+
 
 </resources>
