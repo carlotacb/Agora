@@ -254,7 +254,7 @@
 
     <!-- Strings About -->
     <string name="about_version">Version 1.0</string>
-    <string name="about_names">Pau Alós, Carlota Catot, Gerard Esteve</string>
+    <string name="about_names">Pau Alós, Carlota Catot, Gerard Esteve,</string>
     <string name="about_names2">Dragos Fotescu, Oriol Saborido i Kerstin Winter</string>
     <string name="about_assignatura">Projecte d\'Engenyieria del Software - FIB</string>
     <string name="about_quadrimestre">- 2017/2018 -</string>
