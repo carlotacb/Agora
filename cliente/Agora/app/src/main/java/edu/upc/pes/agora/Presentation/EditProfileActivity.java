@@ -48,6 +48,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
 import edu.upc.pes.agora.Logic.Listeners.LanguageOnClickListener;
 import edu.upc.pes.agora.Logic.ServerConection.PostAsyncTask;
@@ -66,7 +67,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private Spinner spin;
     private TextView Username;
 
-    private ImageView image;
+    private CircleImageView image;
     private TextView button;
     private String encoded;
 
@@ -98,7 +99,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         diferentesSexos = new String[]{getString(R.string.I), getString(R.string.F), getString(R.string.M)};
 
-        image = (ImageView) findViewById(R.id.setImage);
+        image = (CircleImageView) findViewById(R.id.profileimage);
 
         Nombre = (EditText) findViewById(R.id.nameprofile);
         CP = (EditText) findViewById(R.id.codipostal);
@@ -197,7 +198,8 @@ public class EditProfileActivity extends AppCompatActivity {
             Fecha.setText(i.getStringExtra("fecha"));
         }
         if (i.hasExtra("image")) {
-            //image.setImageBitmap(i.getStringExtra("image"));
+
+            image.setImageBitmap(Constants.fotoperfil);
         }
         Integer selection = 0;
         if (i.hasExtra("sexof")) {
@@ -571,6 +573,10 @@ public class EditProfileActivity extends AppCompatActivity {
                             sendNot(achievement);
                         }
                         if (result) {
+                            byte[] imageAsBytes = Base64.decode(encoded.getBytes(), Base64.DEFAULT);
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+
+                            Constants.fotoperfil = bitmap;
                             startActivity(new Intent(EditProfileActivity.this, MyProfileActivity.class));
                         } else {
                             Log.i("asdCreacion", "reset");

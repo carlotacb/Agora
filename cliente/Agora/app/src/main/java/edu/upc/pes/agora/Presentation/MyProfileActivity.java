@@ -223,7 +223,7 @@ public class MyProfileActivity extends AppCompatActivity {
                                 Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
 
                                 image.setImageBitmap(bitmap);
-                                p.setImatge(bitmap);
+                                p.setImatge(imageJ);
                             }
                         }
 
@@ -259,7 +259,7 @@ public class MyProfileActivity extends AppCompatActivity {
                 myIntent.putExtra("fecha", p.getBorn());
                 myIntent.putExtra("sexof", p.getSex());
                 myIntent.putExtra("descripcion", p.getDescription());
-                myIntent.putExtra("image", p.getImatge());
+                myIntent.putExtra("image", "te imatge");
 
                 startActivity(myIntent);
             }

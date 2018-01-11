@@ -74,7 +74,7 @@ public class ProposalAdapter extends BaseAdapter {
         final Proposal proposal = listProposals.get(position);
         final Resources res = context.getResources();
 
-        if (Constants.Username.equals(proposal.getOwner())) {
+        if (Constants.Username.equals(proposal.getOwner().toLowerCase())) {
             likeuser.setVisibility(View.VISIBLE);
             dislikeuser.setVisibility(View.VISIBLE);
             likeimagen.setVisibility(View.GONE);

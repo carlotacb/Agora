@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (Constants.fotoperfil == null) {
             JSONObject Jason = new JSONObject();
-            new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
+            new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", MainActivity.this) {
 
                 @Override
                 protected void onPostExecute(JSONObject jsonObject) {

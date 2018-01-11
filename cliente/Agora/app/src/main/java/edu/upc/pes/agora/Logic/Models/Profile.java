@@ -14,13 +14,13 @@ public class Profile {
     private String born;
     private String description;
     private String sex;
-    private Bitmap imatge;
+    private String imatge;
 
-    public Bitmap getImatge() {
+    public String getImatge() {
         return imatge;
     }
 
-    public void setImatge(Bitmap imatge) {
+    public void setImatge(String imatge) {
         this.imatge = imatge;
     }
 

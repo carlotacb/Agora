@@ -69,7 +69,7 @@ public class Helpers {
                 barrio = "Eixample";
                 break;
             case 2:
-                barrio = "Sants-Motjuic";
+                barrio = "Sants-Montjuic";
                 break;
             case 3:
                 barrio = "Les Corts";
