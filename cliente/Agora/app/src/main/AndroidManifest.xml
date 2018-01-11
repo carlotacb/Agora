@@ -27,8 +27,10 @@
         android:launchMode="singleTop"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".Presentation.LoginActivity"
+            android:screenOrientation="portrait"
             android:label="Agora">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -36,30 +38,48 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Presentation.RegisterActivity"/>
-        <activity android:name=".Presentation.CreateProposalActivity"/>
+
+        <activity
+            android:name=".Presentation.RegisterActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".Presentation.CreateProposalActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".Presentation.MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme"/>
+
         <activity
             android:name=".Presentation.MyProposalsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_my_propuestas"
             android:theme="@style/AppTheme"/>
+
         <activity
             android:name=".Presentation.MyProfileActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme"/>
+
         <activity
             android:name=".Presentation.EditProfileActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_edit_profile"
             android:theme="@style/AppTheme"/>
+
         <activity
             android:name=".Presentation.EditProposalActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_edit_proposal"
             android:theme="@style/AppTheme"/>
+
         <activity
             android:name=".Presentation.DetailsProposalActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_details_proposal"
             android:theme="@style/AppTheme"/>
 
@@ -73,6 +93,7 @@
         -->
         <activity
             android:name=".Presentation.AddLocationActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_add_location"/>
 
         <meta-data
@@ -81,36 +102,49 @@
 
         <activity
             android:name=".Presentation.ShowLocationActivity"
-            android:label="@string/title_activity_show_location">
-        </activity>
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_show_location"/>
+
         <activity
             android:name=".Presentation.OtherUserActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_other_user"
             android:theme="@style/AppTheme"/>
-        <activity android:name=".Presentation.OtherUserProposalsActivity"/>
+
+        <activity
+            android:name=".Presentation.OtherUserProposalsActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name=".Presentation.FillProfileActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_fill_profile"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"/>
+
         <activity
             android:name=".Presentation.MyFavoritesActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_my_favorites"
             android:theme="@style/AppTheme"/>
+
         <activity
             android:name=".Presentation.LogrosActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_logros"
             android:theme="@style/AppTheme"/>
+
         <activity
             android:name=".Presentation.HelpActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_help"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"/>
+
         <activity
             android:name=".Presentation.AboutActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_about"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"/>
+
     </application>
 
 </manifest>
