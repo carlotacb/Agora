@@ -177,6 +177,11 @@ public class LogrosActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+
+                Toast toast = Toast.makeText(getApplicationContext(), "posicion " +i +"   size " +size, Toast.LENGTH_SHORT);
+                toast.show();
+
+
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(LogrosActivity.this);
                 int vale = 0;
                 String s = listView.getItemAtPosition(i).toString();
@@ -196,11 +201,14 @@ public class LogrosActivity extends AppCompatActivity {
 
                 String estado = "";
 
-                if (i >= size){
+                if (i >= size-1){
                     estado = getApplicationContext().getString(R.string.pendiente);
                     mView.setBackgroundColor(Color.LTGRAY);
                 }
-                else estado = getApplicationContext().getString(R.string.conseguido);
+                else{
+                    estado = getApplicationContext().getString(R.string.conseguido);
+                    mView.setBackgroundColor(Color.WHITE);
+                }
 
 
                 TextView textView = (TextView)mView.findViewById(R.id.textView);
