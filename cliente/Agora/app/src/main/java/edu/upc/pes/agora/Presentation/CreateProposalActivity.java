@@ -605,21 +605,23 @@ public class CreateProposalActivity extends AppCompatActivity {
         int count = parts.length;
         for ( int j = 0; j < count; j++ ){
             String decoded = codificaLogro(parts[j]);
-            Bitmap icon = BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.logo);
+            if(!decoded.equals("Something went wrong")) {
+                Bitmap icon = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.logo);
 
-            NotificationCompat.Builder mBuilder;
-            NotificationManager mNotifyMgr =(NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
-            mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(getApplicationContext())
-                    .setContentIntent(pendingIntent)
-                    .setSmallIcon(R.drawable.trophy)
-                    .setContentTitle(getString(R.string.nuevo))
-                    .setLargeIcon(icon)
-                    .setContentText(decoded)
-                    .setStyle(new NotificationCompat.BigTextStyle().bigText(decoded))
-                    .setVibrate(new long[] {100, 250, 100, 500})
-                    .setAutoCancel(true);
+                NotificationCompat.Builder mBuilder;
+                NotificationManager mNotifyMgr = (NotificationManager) getApplicationContext().getSystemService(NOTIFICATION_SERVICE);
+                mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(getApplicationContext())
+                        .setContentIntent(pendingIntent)
+                        .setSmallIcon(R.drawable.trophy)
+                        .setContentTitle(getString(R.string.nuevo))
+                        .setLargeIcon(icon)
+                        .setContentText(decoded)
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(decoded))
+                        .setVibrate(new long[]{100, 250, 100, 500})
+                        .setAutoCancel(true);
 
-            mNotifyMgr.notify(j+1, mBuilder.build());
+                mNotifyMgr.notify(j + 1, mBuilder.build());
+            }
         }
 
 
