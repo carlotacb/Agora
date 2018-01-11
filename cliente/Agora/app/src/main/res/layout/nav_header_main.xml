@@ -24,16 +24,6 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_user_male" />
 
-
-
-    <!-- <ImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_gravity="center"
-        android:scaleType="centerCrop"
-        android:id="@+id/fotoperfil"
-        android:src="@drawable/ic_user_male"/> -->
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,18 +34,8 @@
         android:textColor="@color/white"
         android:textSize="30dp"
         android:textStyle="bold"
+        android:layout_marginBottom="20dp"
         android:fontFamily="serif"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
-
-    <TextView
-        android:id="@+id/head_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="4sp"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        android:paddingTop="5dp"
-        android:text="XX/XX Logros conseguidos"/>
 
 </LinearLayout>

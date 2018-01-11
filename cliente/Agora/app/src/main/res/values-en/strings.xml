@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Agora</string>
     <string name="SignIn">Register</string>
     <string name="action_Registration">Sign Up</string>
     <string name="bienvenida">WELCOME TO ÀGORA</string>

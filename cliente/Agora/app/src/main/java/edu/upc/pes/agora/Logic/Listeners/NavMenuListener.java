@@ -14,6 +14,8 @@ import org.json.JSONObject;
 import edu.upc.pes.agora.Logic.Utils.Constants;
 import edu.upc.pes.agora.Logic.Utils.Helpers;
 import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
+import edu.upc.pes.agora.Presentation.AboutActivity;
+import edu.upc.pes.agora.Presentation.HelpActivity;
 import edu.upc.pes.agora.Presentation.LoginActivity;
 import edu.upc.pes.agora.Presentation.LogrosActivity;
 import edu.upc.pes.agora.Presentation.MainActivity;
@@ -32,7 +34,8 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
     public static final int favorite = 2;
     public static final int profile = 3;
     public static final int logros = 4;
-
+    public static final int help = 5;
+    public static final int about = 6;
 
     public NavMenuListener(Context context, DrawerLayout navDrawer) {
         this.context = context;
@@ -90,6 +93,22 @@ public class NavMenuListener implements NavigationView.OnNavigationItemSelectedL
             // Va a la Pagina principal del perfil
             if (!context.getClass().equals(LogrosActivity.class)) {
                 Intent myIntent = new Intent(context, LogrosActivity.class);
+                context.startActivity(myIntent);
+            }
+            navDrawer.closeDrawers();
+
+        } else if (id == R.id.nav_help) {
+
+            if (!context.getClass().equals(HelpActivity.class)) {
+                Intent myIntent = new Intent(context, HelpActivity.class);
+                context.startActivity(myIntent);
+            }
+            navDrawer.closeDrawers();
+
+        } else if (id == R.id.nav_about) {
+
+            if (!context.getClass().equals(AboutActivity.class)) {
+                Intent myIntent = new Intent(context, AboutActivity.class);
                 context.startActivity(myIntent);
             }
             navDrawer.closeDrawers();

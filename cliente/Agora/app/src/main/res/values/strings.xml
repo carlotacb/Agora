@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Agora</string>
+    <string name="app_name" translatable="false">ÀGORA</string>
     <string name="title_activity_login" translatable="false">Sign in</string>
 
     <!-- Strings related to login -->
@@ -115,7 +115,7 @@
     <string name="verpropuestas">Ver propuestas</string>
     <string name="creadoel">Creada el %1$s</string>
     <string name="propcreadapor">Propuestas de: %1$s</string>
-    <string name="dia"> el: %1$s</string>
+    <string name="dia">el: %1$s</string>
 
     <!-- Strings per Detalls de la proposta -->
     <string name="determinant">el</string>
@@ -159,7 +159,6 @@
     <!-- Strings para compartir -->
     <string name="mensajecompartir">Mira que propuesta he encontrado en Agora!</string>
 
-
     <string name="cargandoprop">CARGANDO PROPUESTAS...</string>
     <string name="cargandoperfil">CARGANDO PERFIL...</string>
     <string name="start">Empezar</string>
@@ -169,7 +168,9 @@
     <string name="hombre">Hombre</string>
     <string name="mujer">Mujer</string>
     <string name="indefinido">Indefinido</string>
-    <string name="cambio_password">Introduce tu password antiguo en el primer campo y el nuevo en los dos siguientes</string>
+    <string name="cambio_password">Introduce tu password antiguo en el primer campo y el nuevo en
+        los dos siguientes
+    </string>
     <string name="diferente">El nuevo Password tiene que ser diferente</string>
 
     <!-- Strings Logros -->
@@ -220,11 +221,6 @@
     <string name="GCOM100">Tener 100 comentario en 1 propuesta</string>
 
 
-
-
-
-
-
     <string name="str_en" translatable="false">English</string>
     <string name="str_es" translatable="false">Spanish</string>
     <string name="str_ca" translatable="false">Catalan</string>
@@ -251,5 +247,16 @@
     <string name="title_activity_show_location">Map</string>
     <string name="title_activity_other_user">OtherUserActivity</string>
     <string name="title_activity_fill_profile">FillProfileActivity</string>
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+
+
+
+    <!-- Strings About -->
+    <string name="about_version">Version 1.0</string>
+    <string name="about_names">Pau Alós, Carlota Catot, Gerard Esteve</string>
+    <string name="about_names2">Dragos Fotescu, Oriol Saborido i Kerstin Winter</string>
+    <string name="about_assignatura">Projecte d\'Engenyieria del Software - FIB</string>
+    <string name="about_quadrimestre">- 2017/2018 -</string>
 
 </resources>

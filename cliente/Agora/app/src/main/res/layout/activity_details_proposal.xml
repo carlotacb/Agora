@@ -61,25 +61,16 @@
                         android:clickable="true"
                         android:focusable="true"/>
 
-                   <!-- <ImageView
+                    <ImageView
                         android:layout_width="30dp"
                         android:layout_height="50dp"
-                        android:id="@+id/jilkhjkf"
+                        android:id="@+id/prefee"
                         android:src="@drawable/ic_favorite"
                         android:clickable="true"
-                        android:focusable="true"/> -->
+                        android:focusable="true"/>
 
 
                 </RelativeLayout>
-
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/jilkhjkf"
-                    android:src="@drawable/ic_favorite"
-                    android:clickable="true"
-                    android:focusable="true"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -139,8 +130,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:id="@+id/ownerproposal"
+                        android:textStyle="bold"
                         android:textSize="16dp"
-                        android:textColor="#424242"
+                        android:textColor="@color/colorPrimary"
                         android:text="random"/>
 
                 </LinearLayout>
@@ -299,19 +291,10 @@
                                       android:id="@+id/imagesLayout"
                                       android:layout_height="wrap_content">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:id="@+id/numeroimatges"
-                                android:text="0"
-                                android:layout_gravity="center"
-                                android:textColor="#000"
-                                android:layout_marginStart="15dp"
-                                android:layout_marginEnd="5dp"
-                                android:layout_height="wrap_content"/>
-
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="30dp"
                                 android:src="@drawable/ic_imatges"/>
 
                         </LinearLayout>

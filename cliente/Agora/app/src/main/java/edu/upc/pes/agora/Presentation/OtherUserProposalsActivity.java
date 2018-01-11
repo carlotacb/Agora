@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import edu.upc.pes.agora.Logic.Adapters.OtherProposalAdapter;
@@ -95,6 +96,7 @@ public class OtherUserProposalsActivity extends AppCompatActivity {
 
                         if (ArrayProp != null) {
                             for (int i=0; i < ArrayProp.length(); i++){
+                                Proposal aux;
 
                                 Log.i("asd123", (ArrayProp.get(i).toString()));
 
@@ -112,7 +114,14 @@ public class OtherUserProposalsActivity extends AppCompatActivity {
                                 Integer vote = jas.getInt("userVoted");
                                 Boolean fav = jas.getBoolean("favorited");
                                 Integer numcoments = comentaris.length();
-                                Proposal aux = new Proposal(id, title, description, owner, ca, createDate, updateDate);
+
+                                if(jas.has("location") && jas.getJSONObject("location").has("lat") && jas.getJSONObject("location").get("lat") != JSONObject.NULL ) {
+                                    Double lat = jas.getJSONObject("location").getDouble("lat");
+                                    Double lng = jas.getJSONObject("location").getDouble("long");
+                                    aux = new Proposal(id, title, description, owner, ca, lat, lng, createDate, updateDate);
+                                } else {
+                                    aux = new Proposal(id, title, description, owner, ca, createDate, updateDate);
+                                }
 
                                 aux.setNumerocomentarios(numcoments);
                                 aux.setFavorite(fav);
@@ -125,7 +134,7 @@ public class OtherUserProposalsActivity extends AppCompatActivity {
                         }
                         propList.setAdapter(new OtherProposalAdapter(propostes, getApplicationContext()));
                     }
-                } catch (JSONException e ) {
+                } catch (JSONException | ParseException e ) {
                     e.printStackTrace();
                 }
 

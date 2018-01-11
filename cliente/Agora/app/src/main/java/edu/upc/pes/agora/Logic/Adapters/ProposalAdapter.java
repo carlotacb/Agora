@@ -178,8 +178,15 @@ public class ProposalAdapter extends BaseAdapter {
                 myIntent.putExtra("Categoria", proposal.getCategoria());
                 myIntent.putExtra("lat", proposal.getLat());
                 myIntent.putExtra("lng", proposal.getLng());
+                Log.i("asd123", String.valueOf(proposal.getLat()));
+                Log.i("asd123", String.valueOf(proposal.getLng()));
                 myIntent.putExtra("Creation", proposal.getCreation());
                 myIntent.putExtra("Update", proposal.getUpdate());
+                myIntent.putExtra("ncomentarios", proposal.getNumerocomentarios());
+                myIntent.putExtra("nvotes", proposal.getNumerovotes());
+                myIntent.putExtra("nunvotes", proposal.getNumerounvotes());
+                myIntent.putExtra("favorit", proposal.getFavorite());
+                myIntent.putExtra("votacion", proposal.getVotacion());
 
                 v.getContext().startActivity(myIntent);
 
@@ -210,6 +217,7 @@ public class ProposalAdapter extends BaseAdapter {
 
                 Integer numvote = proposal.getNumerovotes();
                 Integer numunvote = proposal.getNumerounvotes();
+                Log.i("asd123", String.valueOf(proposal.getNumerovotes()));
 
                 if (voted) {
                     if (proposal.getVotacion() == 0) {

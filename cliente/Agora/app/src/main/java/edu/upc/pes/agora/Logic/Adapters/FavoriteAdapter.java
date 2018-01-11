@@ -182,6 +182,12 @@ public class FavoriteAdapter extends BaseAdapter {
                 myIntent.putExtra("lng", proposal.getLng());
                 myIntent.putExtra("Creation", proposal.getCreation());
                 myIntent.putExtra("Update", proposal.getUpdate());
+                myIntent.putExtra("ncomentarios", proposal.getNumerocomentarios());
+                myIntent.putExtra("nvotes", proposal.getNumerovotes());
+                myIntent.putExtra("nunvotes", proposal.getNumerounvotes());
+                myIntent.putExtra("favorit", proposal.getFavorite());
+                myIntent.putExtra("votacion", proposal.getVotacion());
+                myIntent.putExtra("deFavorites", "ve desde favorites");
 
                 v.getContext().startActivity(myIntent);
 

@@ -121,7 +121,17 @@ public class OtherProposalAdapter extends BaseAdapter {
                 myIntent.putExtra("id", proposal.getId());
                 myIntent.putExtra("Owner", proposal.getOwner());
                 myIntent.putExtra("Categoria", proposal.getCategoria());
-                myIntent.putExtra("otherUser",true);
+                myIntent.putExtra("lat", proposal.getLat());
+                myIntent.putExtra("lng", proposal.getLng());
+                myIntent.putExtra("Creation", proposal.getCreation());
+                myIntent.putExtra("Update", proposal.getUpdate());
+                myIntent.putExtra("ncomentarios", proposal.getNumerocomentarios());
+                myIntent.putExtra("nvotes", proposal.getNumerovotes());
+                myIntent.putExtra("nunvotes", proposal.getNumerounvotes());
+                myIntent.putExtra("favorit", proposal.getFavorite());
+                myIntent.putExtra("votacion", proposal.getVotacion());
+                myIntent.putExtra("otherUser", "ve desde favorites");
+
                 v.getContext().startActivity(myIntent);
 
                 Log.i("asd", "clica");

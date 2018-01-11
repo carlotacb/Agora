@@ -95,6 +95,8 @@ public class EditProposalActivity extends AppCompatActivity {
 
         editTitle = (EditText) findViewById(R.id.editTitle);
         editDescription = (EditText) findViewById(R.id.editDescription);
+        editDescription.getBackground().clearColorFilter();
+        editTitle.getBackground().clearColorFilter();
         editDescription.setFilters(new InputFilter[]{new InputFilter.LengthFilter(140)});
         categories = (Spinner) findViewById(R.id.editcategoria);
         locallayout = (LinearLayout) findViewById(R.id.layoutlocalization);
@@ -382,7 +384,7 @@ public class EditProposalActivity extends AppCompatActivity {
                         newTitle = editTitle.getText().toString();
                         newDescription = editDescription.getText().toString();
                         newCategories = categoriasGenericas[categories.getSelectedItemPosition()];
-                        values.put("id",id);
+                        values.put("id", id);
                         values.put("title", newTitle);
                         values.put("content", newDescription);
                         values.put("categoria", newCategories);
@@ -395,7 +397,7 @@ public class EditProposalActivity extends AppCompatActivity {
                     }
 
                     String editUrl = "https://agora-pes.herokuapp.com/api/proposal/" + id;
-                    Log.i("Link",editUrl);
+                    Log.i("Link", editUrl);
 
                     // nou server : agora-pes.herokuapp.com/api/proposal
                     new PutAsyncTask(editUrl, EditProposalActivity.this){
@@ -434,6 +436,33 @@ public class EditProposalActivity extends AppCompatActivity {
                                 if (numimatges > 0) {
                                     afegirimatges();
                                 }
+
+                                Intent myIntent;
+
+                                if (getIntent().hasExtra("ChangeActivity")) {
+                                    myIntent = new Intent(getApplicationContext(), DetailsProposalActivity.class);
+                                    myIntent.putExtra("Title", newTitle);
+                                    myIntent.putExtra("Description", newDescription);
+                                    myIntent.putExtra("id", id);
+                                    myIntent.putExtra("Owner", getIntent().getStringExtra("Owner"));
+                                    myIntent.putExtra("Categoria", newCategories);
+                                    myIntent.putExtra("lat", getIntent().getDoubleExtra("lat",0));
+                                    myIntent.putExtra("lng", getIntent().getDoubleExtra("lng",0));
+                                    myIntent.putExtra("Creation", getIntent().getStringExtra("Creation"));
+                                    myIntent.putExtra("Update", getIntent().getStringExtra("Update"));
+                                    myIntent.putExtra("ncomentarios", getIntent().getIntExtra("ncomentarios", 0));
+                                    myIntent.putExtra("nvotes", getIntent().getIntExtra("nvotes", 0));
+                                    myIntent.putExtra("nunvotes", getIntent().getIntExtra("nunvotes", 0));
+                                    myIntent.putExtra("favorit", getIntent().getBooleanExtra("favorit", false));
+                                    myIntent.putExtra("votacion", getIntent().getIntExtra("votacion", 0));
+                                    if (getIntent().hasExtra("otherUser")) myIntent.putExtra("otherUser", "ve d'altre usuari");
+                                    if (getIntent().hasExtra("deFavorites")) myIntent.putExtra("deFavorites", "ve d'altre usuari");
+                                    if (getIntent().hasExtra("deMyProposals")) myIntent.putExtra("deMyProposals", "ve d'altre usuari");
+                                }
+                                else {
+                                    myIntent = new Intent(getApplicationContext(), MyProposalsActivity.class);
+                                }
+                                startActivity(myIntent);
                             }
 
                             else {
@@ -441,13 +470,8 @@ public class EditProposalActivity extends AppCompatActivity {
                                 saveButton.setVisibility(View.VISIBLE);
                                 prog.setVisibility(View.GONE);
                             }
-
                         }
                     }.execute(values);
-
-                    Intent myIntent = new Intent(getApplicationContext(), MyProposalsActivity.class);
-                    startActivity(myIntent);
-
                 }
             }
         });

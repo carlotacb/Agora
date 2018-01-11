@@ -47,8 +47,8 @@ public class GetTokenAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
 
     protected JSONObject doInBackground(final JSONObject... params) {
 
-        prefs = MainActivity.getContextOfApplication().getSharedPreferences(SH_PREF_NAME, Context.MODE_PRIVATE);
-        String tokenToSend = prefs.getString("token","");
+        //prefs = MainActivity.getContextOfApplication().getSharedPreferences(SH_PREF_NAME, Context.MODE_PRIVATE);
+        //String tokenToSend = prefs.getString("token","");
 
         Log.i("asdGetTokenAsyncTask", "123");
 
