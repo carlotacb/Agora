@@ -170,4 +170,8 @@
     <string name="indefinido">Indefinido</string>
     <string name="mujer">Mujer</string>
     <string name="deletePosition">Borrar posición</string>
+    <string name="logros">Logros</string>
+    <string name="diferente">El nuevo password tiene que ser diferente</string>
+    <string name="about_assignatura">Proyecto de Ingeniería del Software - FIB</string>
+    <string name="about_version">Versión 1.0</string>
 </resources>

@@ -171,4 +171,8 @@
     <string name="hombre">Home</string>
     <string name="mujer">Dona</string>
     <string name="indefinido">Indefinit</string>
+    <string name="logros">Assoliments</string>
+    <string name="diferente">El nou password ha de ser diferent</string>
+    <string name="about_version">Versió 1.0</string>
+    <string name="about_assignatura">Projecte d\'Engenyieria del Software - FIB</string>
 </resources>

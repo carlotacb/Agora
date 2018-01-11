@@ -214,6 +214,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:alpha="0.9"
+                                android:layout_marginTop="2dp"
                                 android:background="@android:color/black" />
 
                             <LinearLayout
@@ -231,6 +232,15 @@
 
                             </LinearLayout>
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/createprop"
+                                android:textStyle="bold"
+                                android:textSize="18dp"
+                                android:textColor="#000"
+                                android:paddingTop="8dp"/>
+
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
@@ -238,11 +248,32 @@
                                 android:background="@android:color/black" />
 
                             <TextView
+                                android:paddingTop="16dp"
+                                android:layout_gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/createpropdet"/>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:alpha="0.9"
+                                android:layout_marginTop="2dp"
+                                android:background="@android:color/black" />
+
+                            <TextView
                                 android:paddingTop="8dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@string/funcionscard1"
-                                android:paddingBottom="8dp"/>
+                                android:text="@string/funcionscard1"/>
+
+                            <ImageView
+                                android:layout_marginLeft="16dp"
+                                android:layout_marginRight="16dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/cardprincipal"
+                                android:alpha="0.8"/>
 
 
                            <LinearLayout
@@ -251,47 +282,12 @@
                             android:orientation="horizontal"
                             android:paddingTop="8dp">
 
-                            <TextView
-                                android:layout_gravity="center"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Swipe right to open the Navigation Drawer and choose one from the many options you have available."/>
                         </LinearLayout>
 
                           <TextView
                              android:layout_width="match_parent"
                              android:layout_height="wrap_content"
-                             android:text="Advanced Search"
-                             android:textStyle="bold"
-                             android:textSize="18dp"
-                             android:textColor="#000"
-                             android:paddingTop="8dp"/>
-
-                         <View
-                             android:layout_width="match_parent"
-                             android:layout_height="1dp"
-                             android:alpha="0.9"
-                             android:background="@android:color/black" />
-
-                        <!-- <ImageView
-                             android:paddingTop="8dp"
-                             android:layout_marginLeft="16dp"
-                             android:layout_marginRight="16dp"
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:src="@drawable/searchbar_screenshot"
-                             android:alpha="0.8"/> -->
-                         <TextView
-                             android:paddingTop="16dp"
-                             android:layout_gravity="center"
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:text="Use the search box on top of the Advanced View to search for any film you want! You can use the two dropdown lists on top of it to select the type of search (by Title, by Protagonist...) and to order the results the way you prefer!"/>
-
-                         <TextView
-                             android:layout_width="match_parent"
-                             android:layout_height="wrap_content"
-                             android:text="Add a new film"
+                             android:text="@string/voteunvotetit"
                              android:textStyle="bold"
                              android:textSize="18dp"
                              android:textColor="#000"
@@ -308,11 +304,12 @@
                              android:layout_gravity="center"
                              android:layout_width="match_parent"
                              android:layout_height="wrap_content"
-                             android:text="After you select 'Add Film' on the App Menu, you'll be able to add a new film to the database. You must input all the information about it and use the spinners to select both the country and the year. Also, you'll have to provide a rating for that film."/>
+                             android:text="@string/votardescripcion"/>
+
                          <TextView
                              android:layout_width="match_parent"
                              android:layout_height="wrap_content"
-                             android:text="Modify rating and delete films"
+                             android:text="@string/favoritetit"
                              android:textStyle="bold"
                              android:textSize="18dp"
                              android:textColor="#000"
@@ -324,56 +321,93 @@
                              android:alpha="0.9"
                              android:background="@android:color/black" />
 
-                         <!-- <ImageView
-                             android:paddingTop="8dp"
-                             android:layout_marginLeft="16dp"
-                             android:layout_marginRight="16dp"
+                         <TextView
+                             android:paddingTop="16dp"
+                             android:layout_gravity="center"
                              android:layout_width="match_parent"
                              android:layout_height="wrap_content"
-                             android:src="@drawable/popupmenu2"
-                             android:alpha="0.8"/> -->
+                             android:text="@string/favoritedesc"/>
+
+                         <TextView
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:text="@string/semoreinfo"
+                             android:textStyle="bold"
+                             android:textSize="18dp"
+                             android:textColor="#000"
+                             android:paddingTop="8dp"/>
+
+                         <View
+                             android:layout_width="match_parent"
+                             android:layout_height="1dp"
+                             android:alpha="0.9"
+                             android:background="@android:color/black" />
 
                          <TextView
                              android:paddingTop="16dp"
                              android:layout_gravity="center"
                              android:layout_width="match_parent"
                              android:layout_height="wrap_content"
-                             android:text="Tap on the icon on the top right corner of each film in the Advanced View to open a popup menu, where you can select to either modify the rating of said film, or delete it."/>
+                             android:text="@string/semoreinfodetails"/>
+
+                         <TextView
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:text="@string/otherstit"
+                             android:textStyle="bold"
+                             android:textSize="18dp"
+                             android:textColor="#000"
+                             android:paddingTop="8dp"/>
+
+                         <View
+                             android:layout_width="match_parent"
+                             android:layout_height="1dp"
+                             android:alpha="0.9"
+                             android:background="@android:color/black" />
+
+                         <TextView
+                             android:paddingTop="16dp"
+                             android:layout_gravity="center"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:text="@string/othersdesc"/>
+
+
                      </LinearLayout>
                  </ScrollView>
 
 
-                                 </LinearLayout>
+             </LinearLayout>
 
-                                 <LinearLayout android:id="@+id/tab3"
-                                               android:layout_width="match_parent"
-                                               android:layout_height="match_parent"
-                                               android:background="@color/fondo"
-                                               android:orientation="vertical">
+             <LinearLayout android:id="@+id/tab3"
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:background="@color/fondo"
+                           android:orientation="vertical">
 
-                                     <ScrollView android:layout_width="wrap_content"
-                                                 android:layout_height="wrap_content">
+                 <ScrollView android:layout_width="wrap_content"
+                             android:layout_height="wrap_content">
 
-                                         <LinearLayout android:layout_width="wrap_content"
-                                                       android:layout_height="wrap_content"
-                                                       android:orientation="vertical">
+                     <LinearLayout android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:orientation="vertical">
 
-                                             <TextView android:id="@+id/textView3"
-                                                       android:layout_width="wrap_content"
-                                                       android:layout_height="wrap_content"
-                                                       android:layout_marginBottom="10dp"
-                                                       android:layout_marginLeft="15dp"
-                                                       android:layout_marginRight="15dp"
-                                                       android:layout_marginTop="10dp"
-                                                       android:text="To add a new book, just fill every field (Title, Author, Year, Publisher, Category and Personal evaluation) and touch ADD NEW BOOK.\n\nAll fields must be filled.\n\nAfter adding the book, the fields will be emptied to allow you to input more books."
-                                                       android:textColor="#000"
-                                                       android:textSize="16dp"/>
+                         <TextView android:id="@+id/textView3"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:layout_marginBottom="10dp"
+                                   android:layout_marginLeft="15dp"
+                                   android:layout_marginRight="15dp"
+                                   android:layout_marginTop="10dp"
+                                   android:text="To add a new book, just fill every field (Title, Author, Year, Publisher, Category and Personal evaluation) and touch ADD NEW BOOK.\n\nAll fields must be filled.\n\nAfter adding the book, the fields will be emptied to allow you to input more books."
+                                   android:textColor="#000"
+                                   android:textSize="16dp"/>
 
-                                             <!-- <ImageView android:layout_width="400dp"
-                                                        android:layout_height="400dp"
-                                                        android:layout_gravity="center"
-                                                        android:src="@drawable/afegir"
-                                                        android:layout_marginTop="10dp"/> -->
+                         <!-- <ImageView android:layout_width="400dp"
+                                    android:layout_height="400dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/afegir"
+                                    android:layout_marginTop="10dp"/> -->
 
 
                         </LinearLayout>
