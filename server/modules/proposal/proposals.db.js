@@ -81,7 +81,7 @@ async function getProposalById({id, zone}) {
     return collection().findOne(query, {_id: 0})
 }
 
-async function update({id, content, title, location}) {
+async function update({id, content, title, location, categoria}) {
     const query = {
         id: parseInt(id)
     }
@@ -110,6 +110,10 @@ async function update({id, content, title, location}) {
             lat: location.lat,
             long: location.long
         }
+    }
+
+    if (categoria) {
+        update.$set.categoria = categoria
     }
 
     return collection().findOneAndUpdate(query, update, options)
