@@ -16,6 +16,7 @@ app.use(mung.headersAsync(async function (req, res) {
             const headerKey = 'X-New-Achievements'
             const newAchievements = await achievementModule.getNewAchievements(req.username)
             if (newAchievements && Array.isArray(newAchievements) && newAchievements.length > 0) {
+                console.log(`Sending new achievements to ${req.username} in header: ${newAchievements.join(',')}`);
                 res.setHeader(headerKey, newAchievements.join(','))
             }
         }
