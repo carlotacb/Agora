@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -50,6 +51,7 @@ import edu.upc.pes.agora.Logic.Listeners.BackOnClickListener;
 import edu.upc.pes.agora.Logic.Models.Comment;
 import edu.upc.pes.agora.Logic.Adapters.CommentAdapter;
 import edu.upc.pes.agora.Logic.Models.ImatgeItem;
+import edu.upc.pes.agora.Logic.Models.Imatgev2;
 import edu.upc.pes.agora.Logic.Models.Proposal;
 import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
 import edu.upc.pes.agora.Logic.Utils.Constants;
@@ -85,7 +87,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
     private Proposal proposal;
 
     private JSONObject Jason = new JSONObject();
-    private ArrayList<ImatgeItem> imatges = new ArrayList<>();
+    private ArrayList<Imatgev2> imatges = new ArrayList<>();
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -683,10 +685,32 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
                 View mView = getLayoutInflater().inflate(R.layout.dialog_images, null);
 
+                Button mAccept = (Button) mView.findViewById(R.id.aceptar);
+                GridView gridview = (GridView) mView.findViewById(R.id.gv);
+                ImageAdapter gridAdapter = new ImageAdapter(DetailsProposalActivity.this, R.layout.grid_item, imatges);
+                gridview.setAdapter(gridAdapter);
+
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
+                dialog.show();
+                mAccept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+
+                /*AlertDialog.Builder mBuilder = new AlertDialog.Builder(DetailsProposalActivity.this);
+
+                View mView = getLayoutInflater().inflate(R.layout.dialog_images, null);
+
                 Button mAccept = (Button) mView.findViewById(R.id.etAccept);
 
-                GridView gridview = (GridView) findViewById(R.id.gv);
-                gridview.setAdapter(new ImageAdapter(DetailsProposalActivity.this, imatges));
+
+                //GridView gridview = (GridView) findViewById(R.id.gv);
+                //ImageAdapter gridAdapter = new ImageAdapter(DetailsProposalActivity.this, R.layout.grid_item, imatges);
+                //gridview.setAdapter(gridAdapter);
 
                 mBuilder.setView(mView);
 
@@ -697,7 +721,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         dialog.dismiss();
                     }
-                });
+                });*/
 
             }
         });
@@ -867,9 +891,9 @@ public class DetailsProposalActivity extends AppCompatActivity {
                                 String id = jas.getString("id");
                                 String contentimage = jas.getString("image");
 
-                                ImatgeItem aux = new ImatgeItem();
-                                aux.setNumero(Integer.parseInt(id));
-                                aux.setImatge(contentimage);
+                                Imatgev2 aux = new Imatgev2(contentimage);
+                                /*aux.setNumero(Integer.parseInt(id));
+                                aux.setImatge(contentimage);*/
 
                                 imatges.add(aux);
                             }
@@ -886,7 +910,6 @@ public class DetailsProposalActivity extends AppCompatActivity {
             }
         }.execute(Jason);
     }
-
 
     public void sendNot(String achievement){
 
