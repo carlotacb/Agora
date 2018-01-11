@@ -61,12 +61,11 @@ async function calculateUserAchievements(user) {
 
 async function getCalculatedAchievements(username) {
     const user = await userModule.get({username})
-    const achievements = await db.getAchievements(user.username)
 
     const proposalsAchievements = await calculateProposalsAchievements(user)
     const userAchievements = await calculateUserAchievements(user)
 
-    return [...proposalsAchievements, ...userAchievements, ...calculateAchievementsFromTypeAndNumber(achievementTypes.achievements, achievements.length)]
+    return [...proposalsAchievements, ...userAchievements]
 }
 
 async function getNewAchievements(username) {
