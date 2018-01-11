@@ -445,6 +445,12 @@ public class DetailsProposalActivity extends AppCompatActivity {
                                     myIntent.putExtra("id", idprop);
                                     myIntent.putExtra("Owner", mowner);
                                     myIntent.putExtra("Categoria", c);
+                                    myIntent.putExtra("Creation", proposal.getCreation());
+                                    myIntent.putExtra("ncomentarios", proposal.getNumerocomentarios());
+                                    myIntent.putExtra("nvotes", proposal.getNumerovotes());
+                                    myIntent.putExtra("nunvotes", proposal.getNumerounvotes());
+                                    myIntent.putExtra("favorit", proposal.getFavorite());
+                                    myIntent.putExtra("votacion", proposal.getVotacion());
                                     startActivity(myIntent);
                                 }
 
@@ -703,7 +709,8 @@ public class DetailsProposalActivity extends AppCompatActivity {
                                 myIntent.putExtra("Title", proposal.getTitle());
                                 myIntent.putExtra("Description", proposal.getDescription());
                                 myIntent.putExtra("id", proposal.getId());
-                                myIntent.putExtra("Categoria", proposal.getCategoria());
+                                myIntent.putExtra("Categoria", c);
+                                Log.i("asd123", proposal.getCategoria());
                                 myIntent.putExtra("lat", proposal.getLat());
                                 myIntent.putExtra("lng", proposal.getLng());
                                 myIntent.putExtra("ChangeActivity", "Detalls");

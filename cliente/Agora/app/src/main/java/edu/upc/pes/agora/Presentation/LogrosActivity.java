@@ -178,8 +178,8 @@ public class LogrosActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
 
-                Toast toast = Toast.makeText(getApplicationContext(), "posicion " +i +"   size " +size, Toast.LENGTH_SHORT);
-                toast.show();
+                /*Toast toast = Toast.makeText(getApplicationContext(), "posicion " +i +"   size " +size, Toast.LENGTH_SHORT);
+                toast.show();*/
 
 
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(LogrosActivity.this);

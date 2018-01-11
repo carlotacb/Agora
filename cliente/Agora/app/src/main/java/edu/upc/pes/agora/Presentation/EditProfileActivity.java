@@ -370,9 +370,19 @@ public class EditProfileActivity extends AppCompatActivity {
                                 } else {
                                     //implementar el cambio de password del usuario
                                     Log.i("asdentra", "entraaa");
-                                    cambiarPassword(input, input2, input3, res);
-                                    Toast.makeText(getApplicationContext(), "Password actualizado correctamente", Toast.LENGTH_LONG).show();
-                                    dialog.dismiss();
+                                    Boolean b = cambiarPassword(input, input2, input3, res);
+
+                                    if (b) {
+                                        Toast.makeText(getApplicationContext(), "Password actualizado correctamente", Toast.LENGTH_LONG).show();
+                                        dialog.dismiss();
+                                    }
+                                    else {
+                                        input.setText("");
+                                        input2.setText("");
+                                        input3.setText("");
+                                        input.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
+                                        Toast.makeText(getApplicationContext(), "Password Incorrecta", Toast.LENGTH_LONG).show();
+                                    }
                                 }
                             }
                         });
@@ -573,7 +583,9 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     @SuppressLint("StaticFieldLeak")
-    private void cambiarPassword(EditText mOldPass, EditText mNewPass1, EditText mNewPass2, final Resources res) {
+    private boolean cambiarPassword(EditText mOldPass, EditText mNewPass1, EditText mNewPass2, final Resources res) {
+
+        final Boolean[] canviat = {false};
 
         final JSONObject values = new JSONObject();
         try {
@@ -600,7 +612,6 @@ public class EditProfileActivity extends AppCompatActivity {
                         //Toast.makeText(getApplicationContext(), error , Toast.LENGTH_LONG).show();
                     }
 
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -609,23 +620,21 @@ public class EditProfileActivity extends AppCompatActivity {
 
                 if (result && achievement != null && !achievement.equals("")) {
                     sendNot(achievement);
-
-
                 }
 
-
                 if (result) {
-
-                    Toast.makeText(getApplicationContext(), "Password Cambiado correctamente", Toast.LENGTH_LONG).show();
-
+                    canviat[0] = true;
+                    //Toast.makeText(getApplicationContext(), "Password Cambiado correctamente", Toast.LENGTH_LONG).show();
                 } else {
-                    Log.i("asdCreacion", "reset");
+                    canviat[0] = false;
+                    //Log.i("asdCreacion", "reset");
 
                 }
 
             }
         }.execute(values);
 
+        return canviat[0];
     }
 
 
@@ -687,38 +696,6 @@ public class EditProfileActivity extends AppCompatActivity {
 
     }
 
-/*
-    public void crear(String achievement) {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(CreateProposalActivity.this);
-        View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
-        TextView textView = (TextView)mView.findViewById(R.id.textView);
-        textView.setText(codificaLogro(achievement));
-        Button mAccept = (Button) mView.findViewById(R.id.etAccept);
-        ImageView imageView = (ImageView) mView.findViewById(R.id.image);
-        imageView.setImageResource(R.drawable.ic_trofeo_logro2);
-        mBuilder.setView(mView);
-        //  mBuilder.setCancelable(false);
-        final AlertDialog dialog = mBuilder.create();
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
-            }
-        });
-        dialog.show();
-
-        mAccept.setOnClickListener(new View.OnClickListener() {
-
-
-
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-                //    startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
-
-            }
-        });
-    }*/
 private String codificaLogro(String codigoLogro) {
 
      /*   String[] parts = codigoLogro.split(",");
