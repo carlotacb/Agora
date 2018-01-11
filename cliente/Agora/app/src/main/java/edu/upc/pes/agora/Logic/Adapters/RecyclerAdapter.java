@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +22,7 @@ import org.json.JSONObject;
 
 import edu.upc.pes.agora.Logic.Models.Proposal;
 import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
+import edu.upc.pes.agora.Presentation.DetailsProposalActivity;
 import edu.upc.pes.agora.Presentation.EditProposalActivity;
 import edu.upc.pes.agora.R;
 
@@ -159,6 +161,34 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             }
         });
 
+        holder.vermas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent myIntent = new Intent(v.getContext(), DetailsProposalActivity.class);
+                myIntent.putExtra("Title", proposal.getTitle());
+                myIntent.putExtra("Description", proposal.getDescription());
+                myIntent.putExtra("id", proposal.getId());
+                myIntent.putExtra("Owner", proposal.getOwner());
+                myIntent.putExtra("Categoria", proposal.getCategoria());
+                myIntent.putExtra("lat", proposal.getLat());
+                myIntent.putExtra("lng", proposal.getLng());
+                Log.i("asd123", String.valueOf(proposal.getLat()));
+                Log.i("asd123", String.valueOf(proposal.getLng()));
+                myIntent.putExtra("Creation", proposal.getCreation());
+                myIntent.putExtra("Update", proposal.getUpdate());
+                myIntent.putExtra("ncomentarios", proposal.getNumerocomentarios());
+                myIntent.putExtra("nvotes", proposal.getNumerovotes());
+                myIntent.putExtra("nunvotes", proposal.getNumerounvotes());
+                myIntent.putExtra("favorit", proposal.getFavorite());
+                myIntent.putExtra("votacion", proposal.getVotacion());
+                myIntent.putExtra("deMyProposals", "vedeproposasls");
+
+                v.getContext().startActivity(myIntent);
+
+            }
+        });
+
     }
 
     @Override
@@ -175,6 +205,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
         private TextView numcomentaris;
         private TextView numlikes;
         private TextView numdislikes;
+        private TextView vermas;
         private ImageView more;
 
         public RecyclerHolder(View itemView) {
@@ -188,7 +219,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
             numlikes = (TextView) itemView.findViewById(R.id.numerovote);
             numdislikes = (TextView) itemView.findViewById(R.id.numerounvote);
             more = (ImageView) itemView.findViewById(R.id.more);
-
+            vermas = (TextView) itemView.findViewById(R.id.btnLernMore);
 
         }
     }

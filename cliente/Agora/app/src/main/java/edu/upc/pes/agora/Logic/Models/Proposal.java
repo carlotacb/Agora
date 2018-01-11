@@ -59,6 +59,17 @@ public class Proposal {
         update = updated;
     }
 
+    public Proposal (int id, String tit, String des, String ow, String ca, String created) {
+        this.id = id;
+        title = tit;
+        description = des;
+        owner = ow;
+        categoria = ca;
+        this.lat = 0.0;
+        this.lng = 0.0;
+        creation = created;
+    }
+
     protected Proposal(Parcel in) {
         id = in.readInt();
         title = in.readString();

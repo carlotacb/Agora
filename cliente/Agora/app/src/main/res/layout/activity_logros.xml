@@ -27,19 +27,33 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <!--TextView
-            android:id="@+id/conseguidos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" /-->
+        <RelativeLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:background="@color/fondo"
+            android:fillViewport="false"
+            tools:context=".Presentation.MyFavoritesActivity">
 
-        <include layout="@layout/content_logros" />
+            <ListView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/lista"
+                android:divider="@null"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:listSelector="@android:color/transparent"
+                tools:context="edu.upc.pes.agora.Presentation.LogrosActivity"/>
+
+        </RelativeLayout>
 
 
     </LinearLayout>
-
-
-
-
 
 
     <include layout="@layout/navigation_view"/>

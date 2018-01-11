@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Agora</string>
     <string name="SignIn">Register</string>
     <string name="action_Registration">Sign Up</string>
     <string name="bienvenida">WELCOME TO ÀGORA</string>
@@ -144,6 +143,15 @@
     <string name="pendientes">Pendant Achievements</string>
     <string name="conseguido">" (achieved)"</string>
     <string name="pendiente">" (pendant)"</string>
+    <string name="nuevo">NEW ACHIEVEMENT</string>
+    <string name="COM1">Comment 1 proposal</string>
+    <string name="COM5">Comment 5 proposals</string>
+    <string name="COM25">Comment 25 proposals</string>
+    <string name="COM100">Comment 100 proposals</string>
+    <string name="GCOM1">Have 1 comment in 1 proposal</string>
+    <string name="GCOM10">Have 10 comments in 1 proposal</string>
+    <string name="GCOM100">Have 100 comments in 1 proposal</string>
+
     <string name="posAttached">Position attached</string>
     <string name="editPosition">Edit position</string>
     <string name="descripcion2">Description:</string>

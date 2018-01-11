@@ -27,6 +27,7 @@ public class DeleteAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     private Context context;
 
     SharedPreferences prefs;
+    String newAchievement="";
 
     public DeleteAsyncTask(String url2, Context coming_context) {
         try {
@@ -36,6 +37,9 @@ public class DeleteAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             Log.v("DeleteAsyncTask", "", e);
         }
         context = coming_context;
+    }
+    public String getNewAchievement(){
+        return newAchievement;
     }
 
     protected JSONObject doInBackground(final JSONObject... params) {

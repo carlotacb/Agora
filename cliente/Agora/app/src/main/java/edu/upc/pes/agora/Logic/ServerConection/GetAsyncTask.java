@@ -21,6 +21,7 @@ public class GetAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     private URL url;
     @SuppressLint("StaticFieldLeak")
     private Context context;
+    String newAchievement="";
 
     public GetAsyncTask(String url2, Context coming_context) {
         try {
@@ -29,6 +30,9 @@ public class GetAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
         } catch (MalformedURLException e) {
             Log.i("asdGetAsyncTask", "", e);
         }
+    }
+    public String getNewAchievement(){
+        return newAchievement;
     }
 
     protected JSONObject doInBackground(final JSONObject... params) {
@@ -40,6 +44,8 @@ public class GetAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
             client.setRequestMethod("GET");
             //client.setInstanceFollowRedirects(true);
             client.connect();
+            newAchievement = client.getHeaderField("X-New-Achievements");
+
 
             JSONObject aux;
             String response = Helpers.iStreamToString(client.getInputStream());

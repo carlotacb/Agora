@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Agora</string>
+    <string name="app_name" translatable="false">ÀGORA</string>
     <string name="title_activity_login" translatable="false">Sign in</string>
 
     <!-- Strings related to login -->
@@ -115,7 +115,7 @@
     <string name="verpropuestas">Ver propuestas</string>
     <string name="creadoel">Creada el %1$s</string>
     <string name="propcreadapor">Propuestas de: %1$s</string>
-    <string name="dia"> el: %1$s</string>
+    <string name="dia">el: %1$s</string>
 
     <!-- Strings per Detalls de la proposta -->
     <string name="determinant">el</string>
@@ -159,7 +159,6 @@
     <!-- Strings para compartir -->
     <string name="mensajecompartir">Mira que propuesta he encontrado en Agora!</string>
 
-
     <string name="cargandoprop">CARGANDO PROPUESTAS...</string>
     <string name="cargandoperfil">CARGANDO PERFIL...</string>
     <string name="start">Empezar</string>
@@ -169,10 +168,16 @@
     <string name="hombre">Hombre</string>
     <string name="mujer">Mujer</string>
     <string name="indefinido">Indefinido</string>
-    <string name="cambio_password">Introduce tu password antiguo en el primer campo y el nuevo en los dos siguientes</string>
+    <string name="cambio_password">Introduce tu password antiguo en el primer campo y el nuevo en
+        los dos siguientes
+    </string>
     <string name="diferente">El nuevo Password tiene que ser diferente</string>
 
     <!-- Strings Logros -->
+
+    <string name="nuevo">NUEVO LOGRO</string>
+
+
     <string name="conseguidos">Logros Conseguidos</string>
     <string name="pendientes">Logros Pendientes</string>
 
@@ -207,9 +212,13 @@
     <string name="PLIKE10">Dar like a 10 propuestas</string>
     <string name="PLIKE100">Dar like a 100 propuestas</string>
 
-
-
-
+    <string name="COM1">Comentar 1 propuesta</string>
+    <string name="COM5">Comentar 5 propuestas</string>
+    <string name="COM25">Comentar 25 propuestas</string>
+    <string name="COM100">Comentar 100 propuestas</string>
+    <string name="GCOM1">Tener 1 comentario en 1 propuesta</string>
+    <string name="GCOM10">Tener 10 comentario en 1 propuesta</string>
+    <string name="GCOM100">Tener 100 comentario en 1 propuesta</string>
 
 
     <string name="str_en" translatable="false">English</string>
@@ -238,5 +247,25 @@
     <string name="title_activity_show_location">Map</string>
     <string name="title_activity_other_user">OtherUserActivity</string>
     <string name="title_activity_fill_profile">FillProfileActivity</string>
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+
+
+
+    <!-- Strings About -->
+    <string name="about_version">Version 1.0</string>
+    <string name="about_names">Pau Alós, Carlota Catot, Gerard Esteve</string>
+    <string name="about_names2">Dragos Fotescu, Oriol Saborido i Kerstin Winter</string>
+    <string name="about_assignatura">Projecte d\'Engenyieria del Software - FIB</string>
+    <string name="about_quadrimestre">- 2017/2018 -</string>
+
+    <!-- Help -->
+    <string name="helpparte1">Àgora es una aplicación dedicada a mejorar tu barrio, realiza propuestas, votalas y podrás hacer un barrio mejor. Nuestro sistema ofrece muchas funcionalidades, en esta pantalla podàs consultar las funcionalidades por cada pantalla que encontaras en el menú lateral. \n \nEstas son las siguientes:</string>
+    <string name="iconohome">- Pagina principal</string>
+    <string name="iconomyproposals">- See all my proposals</string>
+    <string name="iconomyfavorites">- See all my favorites</string>
+    <string name="iconomyprofile">- Cosultar perfil</string>
+    <string name="iconologros">- Consultar mis logros</string>
+    <string name="helpparte2">En las pestañas de la parte superior de la pantalla, puedes encontrar la ayuda de las pantallas, identificadas por su icono.\n \nAdemás toda la apilcación ofrece un sistema multiidioma, clicando la bandera en la parte superior de cada pantalla se puede cambiar el idiomas</string>
 
 </resources>

@@ -20,6 +20,7 @@ import java.net.URL;
 public class PostSesionAsyncTask extends AsyncTask<JSONObject, Void, JSONObject> {
     private URL url;
     private Context context;
+    String newAchievement="";
 
     public PostSesionAsyncTask(String url2, Context coming_context) {
         try {
@@ -28,6 +29,9 @@ public class PostSesionAsyncTask extends AsyncTask<JSONObject, Void, JSONObject>
         } catch (MalformedURLException e) {
             Log.v("TagMatchGetAsyncTask", "", e);
         }
+    }
+    public String getNewAchievement(){
+        return newAchievement;
     }
 
     protected JSONObject doInBackground(final JSONObject... params) {
@@ -50,6 +54,9 @@ public class PostSesionAsyncTask extends AsyncTask<JSONObject, Void, JSONObject>
 
             client.getOutputStream().close();
             client.connect();
+            newAchievement = client.getHeaderField("X-New-Achievements");
+
+
             Log.i("asdPostAsyncTask", "hola2");
             JSONObject response = new JSONObject();
 

@@ -1,24 +1,22 @@
 package edu.upc.pes.agora.Presentation;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +46,7 @@ public class LogrosActivity extends AppCompatActivity {
 
     private Integer size = 0;
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,23 +57,61 @@ public class LogrosActivity extends AppCompatActivity {
 
         TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
         headerUserName.setText(Constants.Username);
+        final ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
 
-       // TextView conseguidos = (TextView) findViewById(R.id.conseguidos);
-      //  conseguidos.setText(R.string.conseguidos); //R.string.conseguidos
+        final Resources res = this.getResources();
 
-     //   TextView pendientes = (TextView) findViewById(R.id.pendientes);
-     //   pendientes.setText(R.string.pendientes); //R.string.conseguidos
+        if (Constants.fotoperfil == null) {
+            JSONObject Jason = new JSONObject();
+            new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile", this) {
 
+                @Override
+                protected void onPostExecute(JSONObject jsonObject) {
+                    try {
+                        if (jsonObject.has("error")) {
+                            String error = jsonObject.get("error").toString();
+                            Log.i("asdProfile", "Error");
+
+                            Toast toast = Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+
+                        else {
+
+                            Log.i("asdProfile", (jsonObject.toString()));
+
+                            if (jsonObject.has("image")) {
+                                String imageJ = jsonObject.getString("image");
+
+                                if (!imageJ.equals("null")) {
+                                    byte[] imageAsBytes = Base64.decode(imageJ.getBytes(), Base64.DEFAULT);
+                                    Constants.fotoperfil = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                                    foto.setImageBitmap(Constants.fotoperfil);
+                                }
+
+                            }
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.execute(Jason);
+        }
+
+        else {
+            foto.setImageBitmap(Constants.fotoperfil);
+        }
 
         navigationView.getMenu().getItem(NavMenuListener.logros).setChecked(true);
         navigationView.setNavigationItemSelectedListener(new NavMenuListener(this, drawer));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.logros);
+        toolbar.setLogo(R.drawable.trophyw_24);
         setSupportActionBar(toolbar);
 
         DrawerToggleAdvanced toggle = new DrawerToggleAdvanced(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
         toggle.syncState();
 
 
@@ -82,7 +119,6 @@ public class LogrosActivity extends AppCompatActivity {
         final ListView listView = (ListView) findViewById(R.id.lista);
 
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/profile/achievements", this) {
-
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
@@ -98,20 +134,14 @@ public class LogrosActivity extends AppCompatActivity {
                         if(jsonObject.has("achievements")){
 
                             JSONArray arrJson = jsonObject.getJSONArray("achievements");
-                         //   logros2 = new String[arrJson.length()];
                             for(int i = 0; i < arrJson.length(); i++) {
                                JSONObject j = arrJson.getJSONObject(i);
                                String item = j.getString("code");
                                 itemLogro = codificaLogro(item);
-                     //           logros.add(itemLogro);
                                 if(itemLogro!="Something went wrong" && itemLogro!=""){
-                                 /*   if (i ==0)logros.set(i,itemLogro);
-                                    else*/ logros.add(itemLogro);
-
+                                    logros.add(itemLogro);
                                 }
-
                             }
-
                             size = arrJson.length();
                         }
 
@@ -124,25 +154,13 @@ public class LogrosActivity extends AppCompatActivity {
 
                                 if(itemLogro!="Something went wrong" && itemLogro!=""){
                                     logros.add(itemLogro);
-                                    // la lista no tiene q ser logros. tiene q ser una lista diferente
                                 }
                             }
-
                         }
-
-
                     }
 
-
-               //     ArrayAdapter<String> adaptador = new ArrayAdapter<String>(LogrosActivity.this, android.R.layout.simple_list_item_1, logros);
-                    //   ArrayAdapterPersonalizado adaptador = new ArrayAdapter<String>(LogrosActivity.this, android.R.layout.simple_list_item_1, logros);
                     ArrayAdapterPersonalizado cv = new ArrayAdapterPersonalizado(getApplicationContext(), logros,size);
                     listView.setAdapter(cv);
-
-                 /*  int max = listView.getAdapter().getCount();
-                   for ( int i = 0; i < max ; i++){
-                       listView.get
-                   }*/
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -150,53 +168,66 @@ public class LogrosActivity extends AppCompatActivity {
             }
         }.execute(Jason);
 
-       /* try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-*/
-
-       /* logros.add("Crear 1 propuestaaaaaaaaaaa");
-        logros.add("Crear 5 propuestasssssssssssssssss");
-        logros.add("Crear 10 propuestasssssssssssssssssss");
-        logros.add("Compartir 1 propuesta en Twitterrrrrrrrrrrrrrrrrrrrrrrrrrr");
-        logros.add("Compartir 5 propuestas en Twitterrrrrrrrrrrrrrrrrrrr");
-        logros.add("Compartir 10 propuestas en Twitterrrrrrrrrrrrrrrrrrrrrrrr");*/
-        //logros.add(itemLogro);
-      //  logros.add("Logros conseguidos por el usuario");
-      //  logros.set(0,"cambiado");
-        listView.setBackgroundColor(Color.WHITE);
+        //listView.setBackgroundColor(Color.WHITE);
 
         final List<Boolean> list = new ArrayList<Boolean>(Arrays.asList(new Boolean[10]));
         Collections.fill(list, Boolean.FALSE);
 
-
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-             //   view.setBackgroundColor(Color.CYAN);
-            //    Toast.makeText(getApplicationContext(), "Ha pulsado el item en posicion " + i, Toast.LENGTH_LONG).show();
-             //   Toast.makeText(getApplicationContext(), "Estado del boolean de la lista " + list.get(i), Toast.LENGTH_LONG).show();
-           //     list.set(i,true);
-           //     Toast.makeText(getApplicationContext(), "Estado del boolean de la lista version 2" + list.get(i), Toast.LENGTH_SHORT).show();
+
+
+                Toast toast = Toast.makeText(getApplicationContext(), "posicion " +i +"   size " +size, Toast.LENGTH_SHORT);
+                toast.show();
+
 
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(LogrosActivity.this);
+                int vale = 0;
+                String s = listView.getItemAtPosition(i).toString();
+                if(s.equals(getString(R.string.TWIT1))){
+                    vale = 1;
+                }
+                else if (s.equals(getString(R.string.PROP5))){
+                    vale = 2;
+                }
+                else if (s.equals(getString(R.string.COM5))){
+                    vale = 3;
+                }
+                else {
+                    vale = 0;
+                }
                 View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
+
                 String estado = "";
 
-                if (i >= size) estado = getApplicationContext().getString(R.string.pendiente);
-                else estado = getApplicationContext().getString(R.string.conseguido);
+                if (i >= size-1){
+                    estado = getApplicationContext().getString(R.string.pendiente);
+                    mView.setBackgroundColor(Color.LTGRAY);
+                }
+                else{
+                    estado = getApplicationContext().getString(R.string.conseguido);
+                    mView.setBackgroundColor(Color.WHITE);
+                }
+
 
                 TextView textView = (TextView)mView.findViewById(R.id.textView);
                 textView.setText(listView.getItemAtPosition(i).toString()+estado);
                 Button mAccept = (Button) mView.findViewById(R.id.etAccept);
 
                 ImageView imageView = (ImageView) mView.findViewById(R.id.image);
-                imageView.setImageResource(R.drawable.ic_trofeo_logro2);
-
-
+                if (vale == 1 & i < size){
+                    imageView.setImageResource(R.drawable.imagecafe);
+                }
+                else if ( vale == 2 & i < size){
+                    imageView.setImageResource(R.drawable.imageropa);
+                }
+                else if ( vale == 3 & i < size){
+                    imageView.setImageResource(R.drawable.imagedonut);
+                }
+                else {
+                    imageView.setImageResource(R.drawable.ic_trofeo_logro2);
+                }
 
                 mBuilder.setView(mView);
 
@@ -208,14 +239,13 @@ public class LogrosActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-
             }
         });
     }
 
     private String codificaLogro(String codigoLogro) {
 
-        String Logro ="";
+        String Logro = "";
         switch(codigoLogro) {
             case "PROP1": Logro = getApplicationContext().getString(R.string.PROP1);
                 break;
@@ -267,14 +297,22 @@ public class LogrosActivity extends AppCompatActivity {
                 break;
             case "PLIKE100": Logro = getApplicationContext().getString(R.string.PLIKE100);
                 break;
-
-
-
-
-            case "COM10": Logro = "Comenta 10 veces en una propuesta";
-                    break;
+            case "COM1": Logro = getApplicationContext().getString(R.string.COM1);
+                break;
+            case "COM5": Logro = getApplicationContext().getString(R.string.COM5);
+                break;
+            case "COM25": Logro = getApplicationContext().getString(R.string.COM25);
+                break;
+            case "COM100": Logro = getApplicationContext().getString(R.string.COM100);
+                break;
+            case "GCOM1": Logro = getApplicationContext().getString(R.string.GCOM1);
+                break;
+            case "GCOM10": Logro = getApplicationContext().getString(R.string.GCOM10);
+                break;
+            case "GCOM100": Logro = getApplicationContext().getString(R.string.GCOM100);
+                break;
             default: Logro = "Something went wrong";
-                    break;
+                break;
         }
         return Logro;
     }

@@ -20,21 +20,20 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
 
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:launchMode="singleTop"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".Presentation.LoginActivity"
             android:label="Agora">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER" />
 
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity android:name=".Presentation.RegisterActivity"/>
@@ -42,7 +41,6 @@
         <activity
             android:name=".Presentation.MainActivity"
             android:label="@string/title_activity_main2"
-
             android:theme="@style/AppTheme"/>
         <activity
             android:name=".Presentation.MyProposalsActivity"
@@ -60,8 +58,6 @@
             android:name=".Presentation.EditProposalActivity"
             android:label="@string/title_activity_edit_proposal"
             android:theme="@style/AppTheme"/>
-
-
         <activity
             android:name=".Presentation.DetailsProposalActivity"
             android:label="@string/title_activity_details_proposal"
@@ -77,20 +73,16 @@
         -->
         <activity
             android:name=".Presentation.AddLocationActivity"
-
             android:label="@string/title_activity_add_location"/>
-
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC95I96hwPsV83M-y2Dp9OZgqjGuGkD0-Y" />
+            android:value="AIzaSyC95I96hwPsV83M-y2Dp9OZgqjGuGkD0-Y"/>
 
         <activity
             android:name=".Presentation.ShowLocationActivity"
             android:label="@string/title_activity_show_location">
-
         </activity>
-
         <activity
             android:name=".Presentation.OtherUserActivity"
             android:label="@string/title_activity_other_user"
@@ -100,18 +92,25 @@
             android:name=".Presentation.FillProfileActivity"
             android:label="@string/title_activity_fill_profile"
             android:theme="@style/AppTheme">
-
         </activity>
-
         <activity
             android:name=".Presentation.MyFavoritesActivity"
             android:label="@string/title_activity_my_favorites"
             android:theme="@style/AppTheme"/>
-
         <activity
             android:name=".Presentation.LogrosActivity"
             android:label="@string/title_activity_logros"
             android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".Presentation.HelpActivity"
+            android:label="@string/title_activity_help"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name=".Presentation.AboutActivity"
+            android:label="@string/title_activity_about"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

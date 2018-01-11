@@ -13,14 +13,14 @@ async function createUser({username, password, signupCode}) {
 
     const existingUser = await db.get({username})
     if (existingUser) {
-        throw new Error(`Username already used`)
+        throw new Error('Username already used')
     }
 
     const isWhitelistedCode = config.constants.whitelistedSignupCodes.includes(signupCode)
 
     if (!isWhitelistedCode) {
         const code = await signupCodes.getSignupCode(signupCode)
-        if (!code) throw new Error(`Code used or not valid`)
+        if (!code) throw new Error('Code used or not valid')
     }
 
     const encryptedPassword = encryptPassword(password)
@@ -29,7 +29,7 @@ async function createUser({username, password, signupCode}) {
     const user = await db.create({username: username, password: encryptedPassword, zone: zone.id})
 
     if (!user) {
-        throw new Error(`Could not create the user`)
+        throw new Error('Could not create the user')
     }
 
     if (!isWhitelistedCode) {
@@ -56,11 +56,11 @@ async function login({username, password}) {
 function encryptPassword(password) {
     return crypto.createHmac('sha256', config.secretKey)
         .update(password)
-        .digest('hex');
+        .digest('hex')
 }
 
 async function updatePassword({username, oldpassword, password, confirmpassword}){
-    const user = await db.get({username});
+    const user = await db.get({username})
     if (!user) {
         throw new Error(`Username "${username}" not found`)
     }
@@ -69,10 +69,10 @@ async function updatePassword({username, oldpassword, password, confirmpassword}
         throw new Error(`Incorrect password for username "${username}"`)
     }
     if (password !== confirmpassword) {
-        throw new Error(`Passwords are not the same one`)
+        throw new Error('Passwords are not the same one')
     }
     const newencryptedPassword = encryptPassword(password)
-    return db.updatePassword({username, newencryptedPassword});
+    return db.updatePassword({username, newencryptedPassword})
 }
 
 module.exports = {
