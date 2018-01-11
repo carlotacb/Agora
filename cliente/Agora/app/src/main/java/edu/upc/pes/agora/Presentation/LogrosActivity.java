@@ -108,7 +108,7 @@ public class LogrosActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.logros);
-        toolbar.setLogo(R.drawable.trophy_24);
+        toolbar.setLogo(R.drawable.trophyw_24);
         setSupportActionBar(toolbar);
 
         DrawerToggleAdvanced toggle = new DrawerToggleAdvanced(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

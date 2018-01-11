@@ -3,6 +3,7 @@ package edu.upc.pes.agora.Presentation;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,6 +102,46 @@ public class HelpActivity extends AppCompatActivity {
 
         DrawerToggleAdvanced toggle = new DrawerToggleAdvanced(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
+
+
+        Resources res = getResources();
+
+        TabHost tabs=(TabHost) findViewById(android.R.id.tabhost);
+        tabs.setup();
+
+        TabHost.TabSpec spec = tabs.newTabSpec("mitab1");
+        spec.setContent(R.id.tab1);
+        spec.setIndicator("", res.getDrawable(R.drawable.information_variant));
+        tabs.addTab(spec);
+
+        spec=tabs.newTabSpec("mitab2");
+        spec.setContent(R.id.tab2);
+        spec.setIndicator("", res.getDrawable(R.mipmap.ic_home));
+        tabs.addTab(spec);
+
+        spec=tabs.newTabSpec("mitab3");
+        spec.setContent(R.id.tab3);
+        spec.setIndicator("", res.getDrawable(R.mipmap.ic_account));
+        tabs.addTab(spec);
+
+        spec=tabs.newTabSpec("mitab4");
+        spec.setContent(R.id.tab4);
+        spec.setIndicator("", res.getDrawable(R.mipmap.ic_favorite));
+        tabs.addTab(spec);
+
+        spec=tabs.newTabSpec("mitab5");
+        spec.setContent(R.id.tab5);
+        spec.setIndicator("", res.getDrawable(R.mipmap.ic_person));
+        tabs.addTab(spec);
+
+        spec=tabs.newTabSpec("mitab6");
+        spec.setContent(R.id.tab6);
+        spec.setIndicator("", res.getDrawable(R.drawable.trophy_24));
+        tabs.addTab(spec);
+
+        tabs.setCurrentTab(0);
+
+
 
     }
     @Override

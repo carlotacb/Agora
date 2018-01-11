@@ -11,24 +11,79 @@
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:apiKey="AIzaSyC95I96hwPsV83M-y2Dp9OZgqjGuGkD0-Y"
-        android:layout_weight="10"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        tools:context="edu.upc.pes.agora.Presentation.AddLocationActivity"
-        />
+        android:layout_weight="20"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        tools:context="edu.upc.pes.agora.Presentation.AddLocationActivity"/>
 
-    <Button
-        android:layout_width="fill_parent"
-        android:id="@+id/btnSavePos"
-        android:text="@string/savePosition"
-        android:layout_height="fill_parent"
-        android:layout_weight="45"/>
+    <TextView android:layout_width="wrap_content"
+              android:text="Selecciona una ubicacion dentro de tu barrio, las fronteras estan marcadas en rojo"
+              android:textColor="#000"
+              android:textSize="16dp"
+              android:layout_marginLeft="10dp"
+              android:layout_marginRight="10dp"
+              android:layout_height="wrap_content"/>
 
-    <Button
-        android:layout_width="fill_parent"
-        android:id="@+id/btnCancelPos"
-        android:text="@string/cancelButton"
-        android:layout_height="fill_parent"
-        android:layout_weight="45"/>
+
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_gravity="center"
+                  android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
+
+            <Button
+                android:id="@+id/btnSavePos"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="@string/savePosition"
+                android:background="@drawable/botonlogin"
+                android:fontFamily="sans-serif-medium"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textSize="14sp"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp">
+
+            <Button
+                android:id="@+id/btnCancelPos"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="@string/cancelButton"
+                android:background="@drawable/botoncancel"
+                android:fontFamily="sans-serif-medium"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:textColor="#000"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

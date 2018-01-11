@@ -6,7 +6,360 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="edu.upc.pes.agora.Presentation.HelpActivity"
-    tools:showIn="@layout/activity_help">
+    tools:context="edu.upc.pes.agora.Presentation.HelpActivity">
+
+    <TabHost android:id="@android:id/tabhost"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TabWidget android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:id="@android:id/tabs" />
+
+            <FrameLayout android:layout_width="match_parent"
+                         android:layout_height="match_parent"
+                         android:id="@android:id/tabcontent" >
+
+                <ScrollView android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                    <LinearLayout android:id="@+id/tab1"
+                                  android:orientation="vertical"
+                                  android:background="@color/fondo"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="match_parent"
+                                  android:weightSum="1">
+
+                        <TextView android:id="@+id/textView1"
+                                  android:text="@string/helpparte1"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:textColor="#000"
+                                  android:textSize="16dp"
+                                  android:layout_marginTop="30dp"
+                                  android:layout_marginBottom="10dp"
+                                  android:layout_marginLeft="15dp"
+                                  android:layout_marginRight="15dp" android:layout_weight="0.09"/>
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:layout_marginStart="60dp"
+                                      android:orientation="horizontal">
+
+                            <ImageView android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginEnd="10dp"
+                                       android:src="@mipmap/ic_home"/>
+
+                            <TextView android:id="@+id/textView1.1"
+                                      android:text="@string/iconohome"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:layout_gravity="center"
+                                      android:textColor="#000"
+                                      android:textSize="16dp"/>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:layout_marginLeft="60dp"
+                                      android:layout_marginTop="5dp"
+                                      android:orientation="horizontal">
+
+                            <ImageView android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginRight="10dp"
+                                       android:src="@mipmap/ic_account"/>
+
+                            <TextView android:id="@+id/textView1.2"
+                                      android:text="@string/iconomyproposals"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:layout_gravity="center"
+                                      android:textColor="#000"
+                                      android:textSize="16dp"/>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:layout_marginLeft="60dp"
+                                      android:layout_marginTop="5dp"
+                                      android:orientation="horizontal">
+
+                            <ImageView android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginRight="10dp"
+                                       android:src="@mipmap/ic_favorite"/>
+
+                            <TextView android:id="@+id/textView1.3"
+                                      android:text="@string/iconomyfavorites"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:layout_gravity="center"
+                                      android:textColor="#000"
+                                      android:textSize="16dp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:layout_marginLeft="60dp"
+                                      android:layout_marginTop="5dp"
+                                      android:orientation="horizontal">
+
+                            <ImageView android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginRight="10dp"
+                                       android:src="@mipmap/ic_person"/>
+
+                            <TextView android:id="@+id/textView1.4"
+                                      android:text="@string/iconomyprofile"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:layout_gravity="center"
+                                      android:textColor="#000"
+                                      android:layout_marginRight="22dp"
+                                      android:textSize="16dp"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:layout_marginLeft="60dp"
+                                      android:layout_marginTop="5dp"
+                                      android:orientation="horizontal">
+
+                            <ImageView android:layout_width="wrap_content"
+                                       android:layout_height="wrap_content"
+                                       android:layout_marginRight="10dp"
+                                       android:src="@drawable/trophy_24"/>
+
+                            <TextView android:id="@+id/textView1.6"
+                                      android:text="@string/iconologros"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:layout_gravity="center"
+                                      android:textColor="#000"
+                                      android:layout_marginRight="59dp"
+                                      android:textSize="16dp"/>
+
+                        </LinearLayout>
+
+                        <TextView android:id="@+id/textView1.5"
+                                  android:text="@string/helpparte2"
+                                  android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:textColor="#000"
+                                  android:textSize="16dp"
+                                  android:layout_marginTop="30dp"
+                                  android:layout_marginBottom="10dp"
+                                  android:layout_marginLeft="15dp"
+                                  android:layout_marginRight="15dp"/>
+
+                    </LinearLayout>
+
+                </ScrollView>
+
+
+
+                <LinearLayout android:id="@+id/tab2"
+                              android:background="@color/fondo"
+                              android:orientation="vertical"
+                              android:layout_width="match_parent"
+                              android:layout_height="match_parent" >
+
+                    <ScrollView android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:orientation="vertical">
+
+                            <TextView android:id="@+id/textView2"
+                                      android:text="In this screen you'll find a list with the titles of the books in the database.\n \nThe personal evaluation of each of them can be changed by touching them and selecting the new valoration in the visible spinner.\n\nTouch MODIFY to confirm the change, or the drop-up icon if you decide against it."
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:textColor="#000"
+                                      android:textSize="16dp"
+                                      android:layout_marginTop="10dp"
+                                      android:layout_marginBottom="10dp"
+                                      android:layout_marginLeft="15dp"
+                                      android:layout_marginRight="15dp" />
+
+                            <!-- <ImageView android:layout_width="400dp"
+                                       android:layout_height="400dp"
+                                       android:layout_gravity="center"
+                                       android:src="@drawable/principal"
+                                       android:layout_marginTop="10dp"/> -->
+
+
+                        </LinearLayout>
+
+                    </ScrollView>
+
+
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/tab3"
+                              android:orientation="vertical"
+                              android:layout_width="match_parent"
+                              android:background="@color/fondo"
+                              android:layout_height="match_parent" >
+
+                    <ScrollView android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:orientation="vertical">
+
+                            <TextView android:id="@+id/textView3"
+                                      android:text="To add a new book, just fill every field (Title, Author, Year, Publisher, Category and Personal evaluation) and touch ADD NEW BOOK.\n\nAll fields must be filled.\n\nAfter adding the book, the fields will be emptied to allow you to input more books."
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:textColor="#000"
+                                      android:textSize="16dp"
+                                      android:layout_marginTop="10dp"
+                                      android:layout_marginBottom="10dp"
+                                      android:layout_marginLeft="15dp"
+                                      android:layout_marginRight="15dp"  />
+
+                            <!-- <ImageView android:layout_width="400dp"
+                                       android:layout_height="400dp"
+                                       android:layout_gravity="center"
+                                       android:src="@drawable/afegir"
+                                       android:layout_marginTop="10dp"/> -->
+
+
+                        </LinearLayout>
+
+                    </ScrollView>
+
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/tab4"
+                              android:orientation="vertical"
+                              android:background="@color/fondo"
+                              android:layout_width="match_parent"
+                              android:layout_height="match_parent" >
+
+                    <ScrollView android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:orientation="vertical">
+
+                            <TextView android:id="@+id/textView4"
+                                      android:text="In this screen you'll find the full data of all the books you have added.\n\nBYou can also search for books by its title touching the search icon, or delete a book from the database touching its trash bin icon."
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:textColor="#000"
+                                      android:textSize="16dp"
+                                      android:layout_marginTop="10dp"
+                                      android:layout_marginBottom="10dp"
+                                      android:layout_marginLeft="15dp"
+                                      android:layout_marginRight="15dp" />
+
+                            <!-- <ImageView android:layout_width="400dp"
+                                       android:layout_height="400dp"
+                                       android:layout_gravity="center"
+                                       android:src="@drawable/all"
+                                       android:layout_marginTop="10dp"/> -->
+
+                        </LinearLayout>
+
+                    </ScrollView>
+
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/tab5"
+                              android:orientation="vertical"
+                              android:background="@color/fondo"
+                              android:layout_width="match_parent"
+                              android:layout_height="match_parent" >
+
+                    <ScrollView android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:orientation="vertical">
+
+                            <TextView android:id="@+id/textView5"
+                                      android:text="In this screen books can be found by author, either by writing the author's name or by touching VIEW ALL AUTHORS and selecting the desired author.\n\nIn the image, the VIEW ALL AUTHORS button has been pressed."
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:textColor="#000"
+                                      android:textSize="16dp"
+                                      android:layout_marginTop="10dp"
+                                      android:layout_marginBottom="10dp"
+                                      android:layout_marginLeft="15dp"
+                                      android:layout_marginRight="15dp" />
+
+                            <!-- <ImageView android:layout_width="400dp"
+                                       android:layout_height="400dp"
+                                       android:layout_gravity="center"
+                                       android:src="@drawable/cerca"
+                                       android:layout_marginTop="10dp"/> -->
+
+                        </LinearLayout>
+
+                    </ScrollView>
+
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/tab6"
+                              android:orientation="vertical"
+                              android:background="@color/fondo"
+                              android:layout_width="match_parent"
+                              android:layout_height="match_parent" >
+
+                    <ScrollView android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                        <LinearLayout android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:orientation="vertical">
+
+                            <TextView android:id="@+id/textView5"
+                                      android:text="In this screen books can be found by author, either by writing the author's name or by touching VIEW ALL AUTHORS and selecting the desired author.\n\nIn the image, the VIEW ALL AUTHORS button has been pressed."
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="wrap_content"
+                                      android:textColor="#000"
+                                      android:textSize="16dp"
+                                      android:layout_marginTop="10dp"
+                                      android:layout_marginBottom="10dp"
+                                      android:layout_marginLeft="15dp"
+                                      android:layout_marginRight="15dp" />
+
+                            <!-- <ImageView android:layout_width="400dp"
+                                       android:layout_height="400dp"
+                                       android:layout_gravity="center"
+                                       android:src="@drawable/cerca"
+                                       android:layout_marginTop="10dp"/> -->
+
+                        </LinearLayout>
+
+                    </ScrollView>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </TabHost>
+
+
 
 </android.support.constraint.ConstraintLayout>
