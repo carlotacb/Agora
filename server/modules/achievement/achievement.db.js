@@ -1,4 +1,4 @@
-const {getCollection, collectionNames, generateNextId} = require('../db')
+const {getCollection, collectionNames} = require('../db')
 const collection = () => getCollection(collectionNames.achievements)
 
 

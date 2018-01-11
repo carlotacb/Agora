@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,7 +69,10 @@ public class ArrayAdapterPersonalizado extends BaseAdapter {
 
         TextView tv = (TextView) convertView.findViewById(R.id.textHead);
         CardView c2 = (CardView) convertView.findViewById(R.id.cardview2);
-        if (limite <= position) c2.setBackgroundColor(Color.LTGRAY);
+        Toast toast = Toast.makeText(context, "posicion " +position +"   size " +limite, Toast.LENGTH_SHORT);
+        toast.show();
+        if (limite-1 <= position) c2.setBackgroundColor(Color.LTGRAY);
+        else c2.setBackgroundColor(Color.WHITE);
         tv.setText(item_value);
         tv.setTextColor(Color.BLACK);
 

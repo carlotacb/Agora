@@ -5,7 +5,7 @@ const zoneModule = require('../zone')
 async function createProposal({username, title, content, location, categoria}) {
     const existingUser = await userModule.get({username})
     if (!existingUser) {
-        throw new Error(`User does not exists`)
+        throw new Error('User does not exists')
     }
 
     const zone = existingUser.zone

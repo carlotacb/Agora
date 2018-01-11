@@ -1,7 +1,5 @@
 const zoneModules = require('../modules/zone')
-const userModule = require('../modules/user')
 const bodyParser = require('body-parser')
-const {isAuthenticated} = require('./middleware')
 
 module.exports = app => {
 
