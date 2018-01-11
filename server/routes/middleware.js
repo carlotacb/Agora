@@ -10,7 +10,7 @@ function logRequest(req) {
         username: req.username,
         url: req.url,
         body: req.body,
-    }, null, 4)}`);
+    }, null, 4)}`)
 }
 
 async function isAuthenticated(req, res, next) {

@@ -55,7 +55,7 @@ async function updatePassword({username, newencryptedPassword}) {
         }
     }
 
-    return collection().updateOne(query, update);
+    return collection().updateOne(query, update)
 }
 
 async function create({username, password, zone}) {
