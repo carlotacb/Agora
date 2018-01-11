@@ -1,6 +1,5 @@
 const userModule = require('../../modules/user')
 const sessionModule = require('../../modules/session')
-const config = require('../../config')
 const f = require('../util').wrapAsyncRouterFunction
 const errors = require('../../modules/error')
 
@@ -29,10 +28,10 @@ module.exports = app => {
         const {signupCode, password, confirmPassword} = req.body
         const username = req.body.username.toLowerCase()
         if (!signupCode || !username || !password || !confirmPassword) {
-            throw new Error(`There is an invalid field`)
+            throw new Error('There is an invalid field')
         }
 
-        if (password !== confirmPassword) throw new Error(`Passwords are different`)
+        if (password !== confirmPassword) throw new Error('Passwords are different')
 
         const user = await userModule.createUser({username, password, signupCode})
 

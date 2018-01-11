@@ -80,7 +80,7 @@ async function throwIfInvalidLocationForZone({zoneId, location}) {
     const pointIsInsideZone = inside(point, zone.polygon)
 
     if (!pointIsInsideZone) {
-        console.error(`Point ${JSON.stringify(location)} is not in zone ${zone.name}`);
+        console.error(`Point ${JSON.stringify(location)} is not in zone ${zone.name}`)
         throw new error.locationOutsideAllowedZone()
     }
 }

@@ -24,9 +24,9 @@ const getCollection = collection => {
     return dbConnection.collection(collection)
 }
 
-const generateNextId = collectionName => {
+async function generateNextId(collectionName) {
     if (!dbConnection) {
-        reject('Not connected to DB')
+        throw new Error('Not connected to DB')
     }
     const collection = getCollection(collectionNames.idSequence)
 

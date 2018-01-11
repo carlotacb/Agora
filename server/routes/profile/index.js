@@ -54,7 +54,7 @@ module.exports = app => {
             missingAchievements,
         }
 
-        console.log(`Sending response ${JSON.stringify(response)} from GET /api/profile/achievements to ${req.username} `);
+        console.log(`Sending response ${JSON.stringify(response)} from GET /api/profile/achievements to ${req.username} `)
 
         res.json(response)
     }))
