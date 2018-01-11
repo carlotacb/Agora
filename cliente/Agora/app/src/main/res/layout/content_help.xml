@@ -331,7 +331,7 @@
                                       android:layout_height="wrap_content"
                                       android:orientation="vertical">
 
-                            <TextView android:id="@+id/textView5"
+                            <TextView android:id="@+id/textView6"
                                       android:text="In this screen books can be found by author, either by writing the author's name or by touching VIEW ALL AUTHORS and selecting the desired author.\n\nIn the image, the VIEW ALL AUTHORS button has been pressed."
                                       android:layout_width="wrap_content"
                                       android:layout_height="wrap_content"
