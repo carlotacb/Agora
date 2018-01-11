@@ -199,7 +199,7 @@ public class LogrosActivity extends AppCompatActivity {
 
                 String estado = "";
 
-                if (i >= size-1){
+                if (i >= size){
                     estado = getApplicationContext().getString(R.string.pendiente);
                     mView.setBackgroundColor(Color.LTGRAY);
                 }
