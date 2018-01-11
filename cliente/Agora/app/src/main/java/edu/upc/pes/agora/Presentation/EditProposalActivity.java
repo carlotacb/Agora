@@ -66,6 +66,7 @@ public class EditProposalActivity extends AppCompatActivity {
     LinearLayout locallayout;
     TextView esborrarlocalitzacio;
     TextView veurelocalitzacio;
+    TextView positionatached;
 
     String newTitle;
     String newDescription;
@@ -101,6 +102,7 @@ public class EditProposalActivity extends AppCompatActivity {
         categories = (Spinner) findViewById(R.id.editcategoria);
         locallayout = (LinearLayout) findViewById(R.id.layoutlocalization);
         esborrarlocalitzacio = (TextView) findViewById(R.id.deleteposition);
+        positionatached = (TextView) findViewById(R.id.positionatached);
         veurelocalitzacio = (TextView) findViewById(R.id.seeposition);
         saveButton = (Button) findViewById(R.id.saveButton);
         cancelButton = (Button) findViewById(R.id.cancelButton);
@@ -290,9 +292,9 @@ public class EditProposalActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), ShowLocationActivity.class);
-                if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng")) {
-                    i.putExtra("lat", getIntent().getDoubleExtra("lat",0));
-                    i.putExtra("lng", getIntent().getDoubleExtra("lng",0));
+                if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng") && latitud != 0 && longitud != 0) {
+                    i.putExtra("lat", latitud);
+                    i.putExtra("lng", longitud);
                     startActivity(i);
                 }
             }
@@ -303,6 +305,9 @@ public class EditProposalActivity extends AppCompatActivity {
             public void onClick(View v) {
                 latitud = 0.0;
                 longitud = 0.0;
+                veurelocalitzacio.setVisibility(View.INVISIBLE);
+                esborrarlocalitzacio.setVisibility(View.INVISIBLE);
+                positionatached.setVisibility(View.INVISIBLE);
 
             }
         });
@@ -374,7 +379,7 @@ public class EditProposalActivity extends AppCompatActivity {
                 i.putExtra("Category",categories.getSelectedItemPosition());
                 i.putExtra("CallingActivity", "Edit");
                 i.putExtra("id",id);
-                if (getIntent().hasExtra("lat") && getIntent().getDoubleExtra("lat",0) != 0){
+                if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng") && latitud != 0 && longitud != 0) {
                     i.putExtra("lat", getIntent().getDoubleExtra("lat",0));
                     i.putExtra("lng", getIntent().getDoubleExtra("lng",0));
                 }
