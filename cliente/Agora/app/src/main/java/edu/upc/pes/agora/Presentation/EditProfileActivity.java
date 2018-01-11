@@ -573,10 +573,12 @@ public class EditProfileActivity extends AppCompatActivity {
                             sendNot(achievement);
                         }
                         if (result) {
-                            byte[] imageAsBytes = Base64.decode(encoded.getBytes(), Base64.DEFAULT);
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+                            if (encoded != null && !encoded.isEmpty()) {
+                                byte[] imageAsBytes = Base64.decode(encoded.getBytes(), Base64.DEFAULT);
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
 
-                            Constants.fotoperfil = bitmap;
+                                Constants.fotoperfil = bitmap;
+                            }
                             startActivity(new Intent(EditProfileActivity.this, MyProfileActivity.class));
                         } else {
                             Log.i("asdCreacion", "reset");
