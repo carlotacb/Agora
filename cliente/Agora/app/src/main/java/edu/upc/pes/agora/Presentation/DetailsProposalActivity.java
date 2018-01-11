@@ -35,6 +35,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -677,9 +678,14 @@ public class DetailsProposalActivity extends AppCompatActivity {
             Limatges.setVisibility(View.VISIBLE);
         }
 
+        final ProgressBar Limatgespro = (ProgressBar) findViewById(R.id.proli);
+
         Limatges.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Limatges.setVisibility(View.GONE);
+                Limatgespro.setVisibility(View.VISIBLE);
 
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(DetailsProposalActivity.this);
 
@@ -697,32 +703,10 @@ public class DetailsProposalActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
+                        Limatges.setVisibility(View.VISIBLE);
+                        Limatgespro.setVisibility(View.GONE);
                     }
                 });
-
-
-                /*AlertDialog.Builder mBuilder = new AlertDialog.Builder(DetailsProposalActivity.this);
-
-                View mView = getLayoutInflater().inflate(R.layout.dialog_images, null);
-
-                Button mAccept = (Button) mView.findViewById(R.id.etAccept);
-
-
-                //GridView gridview = (GridView) findViewById(R.id.gv);
-                //ImageAdapter gridAdapter = new ImageAdapter(DetailsProposalActivity.this, R.layout.grid_item, imatges);
-                //gridview.setAdapter(gridAdapter);
-
-                mBuilder.setView(mView);
-
-                final AlertDialog dialog = mBuilder.create();
-                dialog.show();
-                mAccept.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });*/
-
             }
         });
 

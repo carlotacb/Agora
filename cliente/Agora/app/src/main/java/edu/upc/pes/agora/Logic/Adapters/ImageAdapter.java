@@ -64,52 +64,5 @@ public class ImageAdapter extends ArrayAdapter {
         TextView imageTitle;
         ImageView image;
     }
-    /*private Context mContext;
-    List<ImatgeItem> imatges;
-
-    public ImageAdapter(Context c, List<ImatgeItem> imatges) {
-        mContext = c;
-        this.imatges = imatges;
-    }
-
-    @Override
-    public int getCount() {
-        return imatges.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return imatges.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return imatges.indexOf(getItem(position));
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
-
-        if (convertView == null) {
-            // if it's not recycled, initialize some attributes
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
-        } else {
-            imageView = (ImageView) convertView;
-        }
-
-        final ImatgeItem imatgeitem = imatges.get(position);
-
-        byte[] imageAsBytes = Base64.decode(imatgeitem.getImatge().getBytes(), Base64.DEFAULT);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
-
-        imageView.setImageBitmap(bitmap);
-
-        return imageView;
-    }*/
-
 }
 
