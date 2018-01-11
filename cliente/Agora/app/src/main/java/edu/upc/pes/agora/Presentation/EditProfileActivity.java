@@ -142,6 +142,13 @@ public class EditProfileActivity extends AppCompatActivity {
         }
 
         Intent idioma = new Intent(EditProfileActivity.this, EditProfileActivity.class);
+        idioma.putExtra("cp", getIntent().getIntExtra("cp", 0));
+        idioma.putExtra("barrio", getIntent().getStringExtra("barrio"));
+        idioma.putExtra("nombre", getIntent().getStringExtra("nombre"));
+        idioma.putExtra("fecha", getIntent().getStringExtra("fecha"));
+        idioma.putExtra("sexof", getIntent().getStringExtra("sexof"));
+        idioma.putExtra("descripcion", getIntent().getStringExtra("descripcion"));
+        idioma.putExtra("image", getIntent().getStringExtra("image"));
         idioma.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         canviidioma.setOnClickListener(new LanguageOnClickListener(idioma, canviidioma, res, getApplicationContext()));
 

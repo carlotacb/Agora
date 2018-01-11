@@ -386,7 +386,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
                 input.getBackground().clearColorFilter();
                 input.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
                 //input.setLines(3);
-                input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(200)});
+                input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(70)});
                 container.addView(input);
                 dialogoaddcoment.setTitle(getString(R.string.nou));
                 String mensajeparaañadir = String.format(res.getString(R.string.mensajenc), mtit);
@@ -667,6 +667,13 @@ public class DetailsProposalActivity extends AppCompatActivity {
                 }
             }
         });
+
+        if (imatges.size() == 0) {
+            Limatges.setVisibility(View.GONE);
+        }
+        else {
+            Limatges.setVisibility(View.VISIBLE);
+        }
 
         Limatges.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -32,6 +32,7 @@ import edu.upc.pes.agora.Logic.Models.Comment;
 import edu.upc.pes.agora.Logic.ServerConection.DeleteAsyncTask;
 import edu.upc.pes.agora.Logic.ServerConection.PutAsyncTask;
 import edu.upc.pes.agora.Logic.Utils.Helpers;
+import edu.upc.pes.agora.Presentation.DetailsProposalActivity;
 import edu.upc.pes.agora.R;
 
 public class CommentAdapter extends ArrayAdapter<Comment> {
@@ -92,25 +93,26 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 
                                 AlertDialog.Builder dialogoeditar = new AlertDialog.Builder(v.getRootView().getContext());
 
+                                final EditText input = new EditText(v.getRootView().getContext());
+                                //input.setSingleLine();
+                                FrameLayout container = new FrameLayout(v.getRootView().getContext());
+                                FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                params.leftMargin = v.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                                params.rightMargin = v.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+                                input.setLayoutParams(params);
+                                input.setText(comentaris.getComentario());
+                                input.getBackground().clearColorFilter();
+                                input.setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+                                //input.setLines(3);
+                                input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(70)});
+                                container.addView(input);
+
                                 dialogoeditar.setTitle(res.getString(R.string.editarcomentario));
                                 dialogoeditar.setMessage(res.getString(R.string.mensajeditar));
                                 dialogoeditar.setCancelable(false);
                                 dialogoeditar.setIcon(R.drawable.logo);
                                 dialogoeditar.setCancelable(false);
-
-                                final TextInputLayout textInputLayout = new TextInputLayout(v.getRootView().getContext());
-                                final EditText input = new EditText(v.getRootView().getContext());
-                                input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(10)});
-                                input.setSingleLine();
-                                FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                params.leftMargin = v.getRootView().getContext().getResources().getDimensionPixelSize(R.dimen.dialog_margin);
-                                input.setLayoutParams(params);
-
-                                //input.setPadding(10,5,5,10);
-                                input.setText(comentaris.getComentario());
-
-                                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                                dialogoeditar.setView(input);
+                                dialogoeditar.setView(container);
 
                                 dialogoeditar.setPositiveButton("Acceptar", new DialogInterface.OnClickListener() {
                                     @SuppressLint("StaticFieldLeak")
