@@ -463,7 +463,7 @@ public class CreateProposalActivity extends AppCompatActivity {
                 i.putExtra("Description", Descripcion.getText().toString());
                 i.putExtra("Category",spin.getSelectedItemPosition());
                 i.putExtra("CallingActivity", "Create");
-                if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng")){
+                if (getIntent().hasExtra("lat") && getIntent().hasExtra("lng") && lat != 0 && lng != 0){
                     Log.i("Putting Position","check");
                     i.putExtra("lat", getIntent().getDoubleExtra("lat",0));
                     i.putExtra("lng", getIntent().getDoubleExtra("lng",0));
@@ -480,6 +480,8 @@ public class CreateProposalActivity extends AppCompatActivity {
                 txtPosAttached.setVisibility(View.INVISIBLE);
                 deletePosition.setVisibility(View.INVISIBLE);
                 //showPosition.setVisibility(View.INVISIBLE);
+                lat = 0;
+                lng = 0;
             }
         });
 
