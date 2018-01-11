@@ -266,6 +266,9 @@ public class EditProfileActivity extends AppCompatActivity {
                         mDateSetListener,
                         year, month, day);
 
+                
+                long value=calendar.getTimeInMillis();
+                dialog.getDatePicker().setMaxDate(System.currentTimeMillis() - 31556926000L);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }

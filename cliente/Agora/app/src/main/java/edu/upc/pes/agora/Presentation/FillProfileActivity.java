@@ -253,6 +253,9 @@ public class FillProfileActivity extends AppCompatActivity {
                         mDateSetListener,
                         year, month, day);
 
+                calendar.set(year-18,month,day);
+                long value=calendar.getTimeInMillis();
+                dialog.getDatePicker().setMaxDate(value);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
