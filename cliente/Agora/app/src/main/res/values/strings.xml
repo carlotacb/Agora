@@ -268,6 +268,11 @@
     <string name="iconologros">- Consultar mis logros</string>
     <string name="helpparte2">En las pestañas de la parte superior de la pantalla, puedes encontrar una guia de ayuda para cada una de las pantallas, identificadas por su icono.\n \nAdemás toda la apilcación ofrece un sistema multiidioma, clicando la bandera en la parte superior de cada pantalla puedes seleccionar el idioma que quieras, entre los disponibles (Catalan, Castellano e Ingles)</string>
 
+    <string name="intropp">La página principal ofrece las siguientes funcionalidades</string>
+    <string name="busquedaporfiltro">Busqueda por filtro</string>
+    <string name="contigutbusqueda">A través del desplegable se puede seleccionar 3 tipos de filtraje:\n \n1."Todo": Aparen todas las propuestas\n2."Categoria": al seleccionar esta opción aparece otro desplegable con las categorias disponibles\n3."Usuario": al seleccionar esta opción aparece un campo editable donde introducir el nombre de usuario deseado</string>
+    <string name="funcionscard1">En cada tarjeta, se pueden realizar las siguientes acciones:</string>
+
 
 
 
