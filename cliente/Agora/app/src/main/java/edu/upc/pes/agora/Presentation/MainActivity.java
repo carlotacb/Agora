@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_main);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setLogo(R.mipmap.ic_homew);
         setSupportActionBar(toolbar);
 

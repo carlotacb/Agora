@@ -118,6 +118,7 @@ public class MyFavoritesActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.favorites);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setLogo(R.mipmap.ic_favoritew);
         setSupportActionBar(toolbar);
 

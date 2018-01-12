@@ -123,6 +123,7 @@ public class MyProposalsActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.title_activity_my_propuestas);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setLogo(R.mipmap.ic_accountw);
         setSupportActionBar(toolbar);
 

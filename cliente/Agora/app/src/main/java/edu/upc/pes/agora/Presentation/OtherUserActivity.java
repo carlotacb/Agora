@@ -210,4 +210,16 @@ public class OtherUserActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Intent back;
+        if (getIntent().hasExtra("favorite") && getIntent().getBooleanExtra("favorite", false)) {
+            back = new Intent(OtherUserActivity.this, MyFavoritesActivity.class);
+        } else {
+            back = new Intent(OtherUserActivity.this, MainActivity.class);
+        }
+        startActivity(back);
+    }
+
 }

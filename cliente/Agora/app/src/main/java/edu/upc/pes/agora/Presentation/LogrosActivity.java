@@ -115,6 +115,7 @@ public class LogrosActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.logros);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
         toolbar.setLogo(R.drawable.trophyw_24);
         setSupportActionBar(toolbar);
 

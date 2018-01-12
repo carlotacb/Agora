@@ -707,87 +707,92 @@ public class EditProfileActivity extends AppCompatActivity {
             mNotifyMgr.notify(j+1, mBuilder.build());
         }
 
-
-
     }
 
-private String codificaLogro(String codigoLogro) {
+    @Override
+    public void onBackPressed()
+    {
 
-     /*   String[] parts = codigoLogro.split(",");
-        int count = parts.length;
-        String[] Logros = new String[count];*/
-    // for (int i = 0; i < count; i++){
-    String Logro = "";
-    switch(codigoLogro) {
-        case "PROP1": Logro = getApplicationContext().getString(R.string.PROP1);
-            break;
-        case "PROP5": Logro = getApplicationContext().getString(R.string.PROP5);
-            break;
-        case "PROP10": Logro = getApplicationContext().getString(R.string.PROP10);
-            break;
-        case "PROP50": Logro = getApplicationContext().getString(R.string.PROP50);
-            break;
-        case "PROP100": Logro = getApplicationContext().getString(R.string.PROP100);
-            break;
-        case "FAV1": Logro = getApplicationContext().getString(R.string.FAV1);
-            break;
-        case "FAV10": Logro = getApplicationContext().getString(R.string.FAV10);
-            break;
-        case "UBI1": Logro = getApplicationContext().getString(R.string.UBI1);
-            break;
-        case "UBI10": Logro = getApplicationContext().getString(R.string.UBI10);
-            break;
-        case "PROPC": Logro = getApplicationContext().getString(R.string.PROPC);
-            break;
-        case "PROPD": Logro = getApplicationContext().getString(R.string.PROPD);
-            break;
-        case "PROPO": Logro = getApplicationContext().getString(R.string.PROPO);
-            break;
-        case "PROPM": Logro = getApplicationContext().getString(R.string.PROPM);
-            break;
-        case "PROPE": Logro = getApplicationContext().getString(R.string.PROPE);
-            break;
-        case "PROPT": Logro = getApplicationContext().getString(R.string.PROPT);
-            break;
-        case "PROPQ": Logro = getApplicationContext().getString(R.string.PROPQ);
-            break;
-        case "PROPS": Logro = getApplicationContext().getString(R.string.PROPS);
-            break;
-        case "TWIT1": Logro = getApplicationContext().getString(R.string.TWIT1);
-            break;
-        case "TWIT100": Logro = getApplicationContext().getString(R.string.TWIT100);
-            break;
-        case "GLIKE1": Logro = getApplicationContext().getString(R.string.GLIKE1);
-            break;
-        case "GLIKE10": Logro = getApplicationContext().getString(R.string.GLIKE10);
-            break;
-        case "GLIKE100": Logro = getApplicationContext().getString(R.string.GLIKE100);
-            break;
-        case "PLIKE1": Logro = getApplicationContext().getString(R.string.PLIKE1);
-            break;
-        case "PLIKE10": Logro = getApplicationContext().getString(R.string.PLIKE10);
-            break;
-        case "PLIKE100": Logro = getApplicationContext().getString(R.string.PLIKE100);
-            break;
-        case "COM1": Logro = getApplicationContext().getString(R.string.COM1);
-            break;
-        case "COM5": Logro = getApplicationContext().getString(R.string.COM5);
-            break;
-        case "COM25": Logro = getApplicationContext().getString(R.string.COM25);
-            break;
-        case "COM100": Logro = getApplicationContext().getString(R.string.COM100);
-            break;
-        case "GCOM1": Logro = getApplicationContext().getString(R.string.GCOM1);
-            break;
-        case "GCOM10": Logro = getApplicationContext().getString(R.string.GCOM10);
-            break;
-        case "GCOM100": Logro = getApplicationContext().getString(R.string.GCOM100);
-            break;
-        default: Logro = "Something went wrong";
-            break;
+        // super.onBackPressed(); // Comment this super call to avoid calling finish() or fragmentmanager's backstack pop operation.
     }
-    //   Logros[i]=Logro;
-    //  }
-    return Logro;
-}
+
+    private String codificaLogro(String codigoLogro) {
+
+         /*   String[] parts = codigoLogro.split(",");
+            int count = parts.length;
+            String[] Logros = new String[count];*/
+        // for (int i = 0; i < count; i++){
+        String Logro = "";
+        switch(codigoLogro) {
+            case "PROP1": Logro = getApplicationContext().getString(R.string.PROP1);
+                break;
+            case "PROP5": Logro = getApplicationContext().getString(R.string.PROP5);
+                break;
+            case "PROP10": Logro = getApplicationContext().getString(R.string.PROP10);
+                break;
+            case "PROP50": Logro = getApplicationContext().getString(R.string.PROP50);
+                break;
+            case "PROP100": Logro = getApplicationContext().getString(R.string.PROP100);
+                break;
+            case "FAV1": Logro = getApplicationContext().getString(R.string.FAV1);
+                break;
+            case "FAV10": Logro = getApplicationContext().getString(R.string.FAV10);
+                break;
+            case "UBI1": Logro = getApplicationContext().getString(R.string.UBI1);
+                break;
+            case "UBI10": Logro = getApplicationContext().getString(R.string.UBI10);
+                break;
+            case "PROPC": Logro = getApplicationContext().getString(R.string.PROPC);
+                break;
+            case "PROPD": Logro = getApplicationContext().getString(R.string.PROPD);
+                break;
+            case "PROPO": Logro = getApplicationContext().getString(R.string.PROPO);
+                break;
+            case "PROPM": Logro = getApplicationContext().getString(R.string.PROPM);
+                break;
+            case "PROPE": Logro = getApplicationContext().getString(R.string.PROPE);
+                break;
+            case "PROPT": Logro = getApplicationContext().getString(R.string.PROPT);
+                break;
+            case "PROPQ": Logro = getApplicationContext().getString(R.string.PROPQ);
+                break;
+            case "PROPS": Logro = getApplicationContext().getString(R.string.PROPS);
+                break;
+            case "TWIT1": Logro = getApplicationContext().getString(R.string.TWIT1);
+                break;
+            case "TWIT100": Logro = getApplicationContext().getString(R.string.TWIT100);
+                break;
+            case "GLIKE1": Logro = getApplicationContext().getString(R.string.GLIKE1);
+                break;
+            case "GLIKE10": Logro = getApplicationContext().getString(R.string.GLIKE10);
+                break;
+            case "GLIKE100": Logro = getApplicationContext().getString(R.string.GLIKE100);
+                break;
+            case "PLIKE1": Logro = getApplicationContext().getString(R.string.PLIKE1);
+                break;
+            case "PLIKE10": Logro = getApplicationContext().getString(R.string.PLIKE10);
+                break;
+            case "PLIKE100": Logro = getApplicationContext().getString(R.string.PLIKE100);
+                break;
+            case "COM1": Logro = getApplicationContext().getString(R.string.COM1);
+                break;
+            case "COM5": Logro = getApplicationContext().getString(R.string.COM5);
+                break;
+            case "COM25": Logro = getApplicationContext().getString(R.string.COM25);
+                break;
+            case "COM100": Logro = getApplicationContext().getString(R.string.COM100);
+                break;
+            case "GCOM1": Logro = getApplicationContext().getString(R.string.GCOM1);
+                break;
+            case "GCOM10": Logro = getApplicationContext().getString(R.string.GCOM10);
+                break;
+            case "GCOM100": Logro = getApplicationContext().getString(R.string.GCOM100);
+                break;
+            default: Logro = "Something went wrong";
+                break;
+        }
+        //   Logros[i]=Logro;
+        //  }
+        return Logro;
+    }
 }

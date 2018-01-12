@@ -396,6 +396,12 @@ public class AddLocationActivity extends FragmentActivity implements OnMapReadyC
     public void onProviderDisabled(String s) {
 
     }
+    @Override
+    public void onBackPressed()
+    {
+
+        // super.onBackPressed(); // Comment this super call to avoid calling finish() or fragmentmanager's backstack pop operation.
+    }
 
     public double getLat() {
         return lat;

@@ -804,14 +804,24 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent refresh;
-        if (getIntent().hasExtra("otherUser") && getIntent().getBooleanExtra("otherUser", false)){
-            refresh = new Intent(this, OtherUserProposalsActivity.class);
-            refresh.putExtra("username", getIntent().getStringExtra("Owner"));
-        } else {
-            refresh = new Intent(this, MainActivity.class);
+        Intent back;
+        if (getIntent().hasExtra("otherUser")) {
+            back = new Intent(DetailsProposalActivity.this, OtherUserProposalsActivity.class);
+            back.putExtra("username", getIntent().getStringExtra("Owner"));
         }
-        startActivity(refresh);
+
+        else if (getIntent().hasExtra("deFavorites")){
+            back = new Intent(DetailsProposalActivity.this, MyFavoritesActivity.class);
+        }
+
+        else if (getIntent().hasExtra("deMyProposals")){
+            back = new Intent(DetailsProposalActivity.this, MyProposalsActivity.class);
+        }
+
+        else {
+            back = new Intent(DetailsProposalActivity.this, MainActivity.class);
+        }
+        startActivity(back);
     }
 
     @SuppressLint("StaticFieldLeak")

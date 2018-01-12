@@ -683,38 +683,13 @@ public class EditProposalActivity extends AppCompatActivity {
 
     }
 
-/*
-    public void crear(String achievement) {
-        AlertDialog.Builder mBuilder = new AlertDialog.Builder(CreateProposalActivity.this);
-        View mView = getLayoutInflater().inflate(R.layout.dialog_trophy, null);
-        TextView textView = (TextView)mView.findViewById(R.id.textView);
-        textView.setText(codificaLogro(achievement));
-        Button mAccept = (Button) mView.findViewById(R.id.etAccept);
-        ImageView imageView = (ImageView) mView.findViewById(R.id.image);
-        imageView.setImageResource(R.drawable.ic_trofeo_logro2);
-        mBuilder.setView(mView);
-        //  mBuilder.setCancelable(false);
-        final AlertDialog dialog = mBuilder.create();
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
-            }
-        });
-        dialog.show();
+    @Override
+    public void onBackPressed()
+    {
 
-        mAccept.setOnClickListener(new View.OnClickListener() {
+        // super.onBackPressed(); // Comment this super call to avoid calling finish() or fragmentmanager's backstack pop operation.
+    }
 
-
-
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-                //    startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
-
-            }
-        });
-    }*/
 private String codificaLogro(String codigoLogro) {
 
      /*   String[] parts = codigoLogro.split(",");
