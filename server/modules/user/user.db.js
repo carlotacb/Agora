@@ -20,7 +20,6 @@ async function getByZone({user}) {
         createdDateTime: 0,
         updatedDateTime: 0,
         zone : 0,
-        favorites: []
     }
     return await collection().find(query, options).toArray()
 }
@@ -67,6 +66,7 @@ async function create({username, password, zone}) {
         createdDateTime: new Date(),
         updatedDateTime: null,
         zone: parseInt(zone),
+        favorites: [],
     }
 
     const insertResult = await collection().insertOne(object)
