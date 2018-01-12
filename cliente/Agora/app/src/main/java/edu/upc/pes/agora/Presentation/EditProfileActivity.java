@@ -71,6 +71,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private TextView button;
     private String encoded;
 
+    private Bitmap fotooo;
+
     private final int SELECT_PICTURE = 200;
 
     private ProgressBar prog;
@@ -593,6 +595,7 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(EditProfileActivity.this, MyProfileActivity.class));
+
             }
         });
     }
@@ -669,7 +672,6 @@ public class EditProfileActivity extends AppCompatActivity {
                         }
                     }
                     image.setImageBitmap(bitmap);
-                    Constants.fotoperfil = bitmap;
 
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);

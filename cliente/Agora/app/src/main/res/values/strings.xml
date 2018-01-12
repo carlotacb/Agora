@@ -293,7 +293,30 @@
     <string name="othersdesc">Al seleccionar el nombre del creador de la propuesta se puede consultar el perfil de este:\n \nEn caso de clicar en tu nombre de usuario, se redirige a la pantalla de mi perfil\n \nEn caso de seleccionar otro usuario, puedes consultar su información y clicando al botón de ver las propuestas, se pueden consultar las propuestas de este.</string>
 
 
-    <string name="intropmp">La página de mis propuestas ofrece las siguientes funcionalidades</string>
+    <string name="intropmp">La página de mis propuestas, donde puedes ver las propuestas hechas por ti, ofrece las siguientes funcionalidades dentro de cada tarjeta</string>
+    <string name="botomas">Opciones: (Editar o Borrar)</string>
+    <string name="botomasdesc">Clicando al botón de los tres puntos, aparece un menu de opciones con dos opciones:\n \nEditar: Al clicar esta opción se te redirige a una pantalla donde se puede editar el título, la descripción i la categoria de la propuesta, asi como tambien añadir o eliminar imágenes o la localización\n \nBorrar: Al seleccionar esta opción aparece un mensaje donde se pregunta si estas seguro, en caso afirmativo se borra la propuesta.</string>
+    <string name="semoreinfomp">Consultar los detalles de la propuesta</string>
+    <string name="semoreinfodetailsmp">Al pulsar el botón de VER MÁS, se redirige a una pantalla donde el usuario podrá consultar mejor la información de la propuesta. Hay la posibilidad de mirar imágenes añadidas y la localización, si la propuesta tiene estos anexos. Como la propuesta esta creada por el usuario, se podrà editar o borrar.\n \nTambien desde esta pantalla, se podrán comentar las diferentes propuestas, en el caso de que el comentario lo hayas realizado tu, lo podras editar o borrar</string>
+
+    <string name="intropmf">La página de mis favoritos, donde puedes ver las propuestas marcadas como favoritas, ofrece las siguientes funcionalidades dentro de cada tarjeta (bastante parecido a la página principal)</string>
+    <string name="votardescripcionf">Mediante los botones de like o dislike podemos votar la propuesta</string>
+    <string name="favoritedescf">Mediante el botón en forma de corazón en la parte superior de la tarjeta, puedes marcar una propuesta como favorita para poder consultarla luego</string>
+    <string name="semoreinfodetailsf">Al pulsar el botón de VER MÁS, se redirige a una pantalla donde el usuario podrá consultar mejor la información de la propuesta. Hay la posibilidad de mirar imágenes añadidas y la localización, si la propuesta tiene estos anexos. Al ser propuestas no creadas por el usuario, se puede votar i marcar la propuesta como favorita.\n \nTambien desde esta pantalla, se podrán comentar las diferentes propuestas, en el caso de que el comentario lo hayas realizado tu, lo podras editar o borrar</string>
+    <string name="othersdescf">Al seleccionar el nombre del creador de la propuesta se puede consultar el perfil de este, una vez en la pantalla de información puedes consultar su información y clicando al botón de ver las propuestas, se pueden consultar sus propuestas.</string>
+
+    <string name="introperfil">La página de mis perfil, donde puedes consultar tu perfil, ofrece las siguientes funcionalidades:</string>
+    <string name="editartitulo">Editar Perfil</string>
+    <string name="editardesc">Mediante el botón de Editar, se te redirige a una pantalla donde puedes completar los datos de tu perfil, cambiar la imagen o cambiar el password.</string>
+
+    <string name="intrologros">La página de mis perfil, donde puedes consultar tu perfil, ofrece las siguientes funcionalidades:</string>
+    <string name="pantallalogros">Pantalla de logros</string>
+    <string name="pantallalogrosdesc">En esta pantalla el usuario puede ver los logros que ha conseguido anteriormente y también los logros que tiene pendientes de conseguir, al hacer click en el logro el usuario recibe una pequeña descripción sobre el logro y, en el caso de algunos logros en concreto, recibe un descuento para utilizar en las tiendas del barrio que tengan un acuerdo con Agora.</string>
+    <string name="sistemalogros">Sistema de logros</string>
+    <string name="sistemalogrosdesc">Agora dispone de un sistema de logros que, al realizar ciertas acciones, proporciona un logro al usuario. Algunas de las acciones que pueden proporcionar un logro serian comentar una propuesta o crear una nueva propuesta.</string>
+    <string name="sistemanotis">Sistema de notificaciones</string>
+    <string name="sistemanotisdesc">Agora dispone de un sistema de notificaciones para comunicar al usuario cuando ha recibido un logro, el sistema mandará una notificación del tipo push para que el usuario pueda ver en la barra de estado de su telefono el logro que ha recibido, al hacer click en esta notificación se redirigirá al usuario a la pantalla de los logros, para así observar el cambio en la lista de logros.</string>
+
 
 
 
