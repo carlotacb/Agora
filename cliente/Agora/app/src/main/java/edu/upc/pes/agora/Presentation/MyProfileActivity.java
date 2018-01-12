@@ -68,6 +68,7 @@ public class MyProfileActivity extends AppCompatActivity {
 
         TextView headerUserName = (TextView) navigationView.findViewById(R.id.head_username);
         headerUserName.setText(Constants.Username);
+        headerUserName.setTextColor(getResources().getColor(R.color.white));
         final ImageView foto = (ImageView) navigationView.findViewById(R.id.navigationPic);
 
         if (Constants.fotoperfil == null) {

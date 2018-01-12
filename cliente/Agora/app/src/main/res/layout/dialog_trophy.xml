@@ -22,19 +22,26 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
-        android:id="@+id/image"
-        />
+        android:id="@+id/image"/>
 
-            <Button
-                android:id="@+id/etAccept"
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:background="@drawable/botonok"
-                android:textColor="#FFF"
-                android:textStyle="bold"
-                android:textSize="17dp"
-                android:text="@string/Aceptar"
-                android:layout_gravity="center"/>
+
+    <Button
+        android:id="@+id/etAccept"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:text="@string/Aceptar"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:background="@drawable/botonlogin"
+        android:fontFamily="sans-serif-medium"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:textSize="14sp"
+        android:visibility="visible"/>
 
 
 

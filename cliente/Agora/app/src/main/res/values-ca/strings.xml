@@ -10,9 +10,6 @@
     <string name="prompt_repeatPassword">Repeteix Contrasenya</string>
     <string name="registration">Registre de l\'Usuari</string>
     <string name="tria_idioma">Canviar idioma...</string>
-    <string name="Castella">Castellà</string>
-    <string name="Catalan">Català</string>
-    <string name="Ingles">Angles</string>
     <string name="error">Usuari o password incorrectes</string>
     <string name="error2">"Plena tots els camps "</string>
     <string name="errorreg">Codi no vàlid o username ja existent</string>
@@ -179,4 +176,10 @@
     <string name="Ownerdetails">Creador:</string>
     <string name="createddetails">Creada el:</string>
     <string name="descriptiondetails">Descripció:</string>
+    <string name="Galeria">Galería</string>
+    <string name="escojeropcion">Escull una opció</string>
+    <string name="appdeimagen">Selecciona la app de imagen</string>
+    <string name="nuevapasswordmal">Nova password incorrecta</string>
+    <string name="passwordokk">Password actualitzada correctament</string>
+    <string name="cargandocomentarios">CARREGANT COMENTARIS...</string>
 </resources>

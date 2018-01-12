@@ -72,6 +72,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
     private ImageView favorite;
     private LinearLayout loca;
     private LinearLayout Limatges;
+    private LinearLayout carregant;
 
     private TextView date;
 
@@ -128,6 +129,7 @@ public class DetailsProposalActivity extends AppCompatActivity {
         //llista_imatges = (ListView) findViewById(R.id.listimatges);
 
         llista_comentaris = (ListView) findViewById(R.id.listcommentaris);
+        carregant = (LinearLayout) findViewById(R.id.pantallacargando);
 
         addcoment = (FloatingActionButton) findViewById(R.id.fabcoment);
 
@@ -814,10 +816,15 @@ public class DetailsProposalActivity extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     private void llistarcomentaris() {
+
+        llista_comentaris.setVisibility(View.GONE);
+        carregant.setVisibility(View.VISIBLE);
+
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal/" + idprop, this) {
 
             @Override
             protected void onPostExecute(JSONObject jsonObject) {
+
                 try {
                     if (jsonObject.has("error")) {
                         String error = jsonObject.get("error").toString();
@@ -869,8 +876,6 @@ public class DetailsProposalActivity extends AppCompatActivity {
                                 String contentimage = jas.getString("image");
 
                                 Imatgev2 aux = new Imatgev2(contentimage);
-                                /*aux.setNumero(Integer.parseInt(id));
-                                aux.setImatge(contentimage);*/
 
                                 imatges.add(aux);
                             }
@@ -884,6 +889,9 @@ public class DetailsProposalActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                llista_comentaris.setVisibility(View.VISIBLE);
+                carregant.setVisibility(View.GONE);
             }
         }.execute(Jason);
     }

@@ -230,7 +230,7 @@
 
             <ListView
                 android:id="@+id/llistaimatges"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:listSelector="@android:color/transparent"
                 tools:context="edu.upc.pes.agora.Presentation.DetailsProposalActivity"

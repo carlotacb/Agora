@@ -75,7 +75,7 @@ public class ImatgesEditAdapter extends BaseAdapter {
 
         String num = String.valueOf(imatgeitem.getNumero());
 
-        numero.setText(num);
+        //numero.setText(num);
 
         errase.setOnClickListener(new View.OnClickListener() {
             @Override

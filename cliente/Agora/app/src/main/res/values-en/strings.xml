@@ -10,9 +10,6 @@
     <string name="prompt_repeatPassword">Repeat Password</string>
     <string name="registration">User Register</string>
     <string name="tria_idioma">Change language...</string>
-    <string name="Castella">Spanish</string>
-    <string name="Catalan">Catalan</string>
-    <string name="Ingles">English</string>
     <string name="error">Incorrect password or username</string>
     <string name="error2">Fill all the fields</string>
     <string name="errorreg">Code not valid or username already taken</string>
@@ -179,4 +176,10 @@
     <string name="Ownerdetails">Owner:</string>
     <string name="createddetails">Created at:</string>
     <string name="descriptiondetails">Description:</string>
+    <string name="Galeria">Gallery</string>
+    <string name="escojeropcion">Choose an option</string>
+    <string name="appdeimagen">Select the image app</string>
+    <string name="nuevapasswordmal">New password incorrect</string>
+    <string name="passwordokk">Password changed correctly</string>
+    <string name="cargandocomentarios">CARGANDO COMENTARIOS...</string>
 </resources>

@@ -342,6 +342,35 @@
                     android:layout_marginTop="5dp"
                     android:layout_height="match_parent">
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:id="@+id/pantallacargando"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:text="@string/cargandocomentarios"
+                            android:textSize="30sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:padding="10dp"
+                            android:textColor="@color/colorPrimaryDark"/>
+
+                        <ProgressBar
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"/>
+
+                    </LinearLayout>
+
                     <ListView
                         android:id="@+id/listcommentaris"
                         android:layout_width="wrap_content"
@@ -349,6 +378,8 @@
                         android:listSelector="@android:color/transparent"
                         tools:context="edu.upc.pes.agora.Presentation.DetailsProposalActivity"
                         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+                    </RelativeLayout>
 
                 </FrameLayout>
 

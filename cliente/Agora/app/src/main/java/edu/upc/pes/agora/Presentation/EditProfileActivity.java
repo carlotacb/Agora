@@ -160,17 +160,17 @@ public class EditProfileActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final CharSequence[] options = {"Galería", "Cancelar"};
+                final CharSequence[] options = {res.getString(R.string.Galeria), res.getString(R.string.cancelButton)};
                 final AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
-                builder.setTitle("Escoge una opción");
+                builder.setTitle(res.getString(R.string.escojeropcion));
                 builder.setItems(options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int selection) {
-                        if (options[selection] == "Galería") {
+                        if (options[selection] == res.getString(R.string.Galeria)) {
                             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             intent.setType("image/*");
-                            startActivityForResult(intent.createChooser(intent, "Selecciona app de imagen"), SELECT_PICTURE);
-                        } else if (options[selection] == "Cancelar") {
+                            startActivityForResult(intent.createChooser(intent, res.getString(R.string.appdeimagen)), SELECT_PICTURE);
+                        } else if (options[selection] == res.getString(R.string.cancelButton)) {
                             dialog.dismiss();
                         }
                     }
@@ -197,10 +197,7 @@ public class EditProfileActivity extends AppCompatActivity {
         if (i.hasExtra("fecha")) {
             Fecha.setText(i.getStringExtra("fecha"));
         }
-        if (i.hasExtra("image")) {
-
-            image.setImageBitmap(Constants.fotoperfil);
-        }
+        if (Constants.fotoperfil != null) image.setImageBitmap(Constants.fotoperfil);
         Integer selection = 0;
         if (i.hasExtra("sexof")) {
             String sexeConcret = i.getStringExtra("sexof");
@@ -357,6 +354,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     @Override
                     public void onShow(final DialogInterface dialog) {
                         final Button acceptar = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                        acceptar.setEnabled(false);
 
                         Log.i("asdentra", "entraaa4");
 
@@ -377,14 +375,14 @@ public class EditProfileActivity extends AppCompatActivity {
                                     input3.setText("");
                                     input2.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
                                     input3.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
-                                    Toast.makeText(getApplicationContext(), "Nueva Password incorrecta", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(getApplicationContext(), res.getString(R.string.nuevapasswordmal), Toast.LENGTH_LONG).show();
                                 } else {
                                     //implementar el cambio de password del usuario
                                     Log.i("asdentra", "entraaa");
                                     Boolean b = cambiarPassword(input, input2, input3, res);
 
                                     if (b) {
-                                        Toast.makeText(getApplicationContext(), "Password actualizado correctamente", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), res.getString(R.string.passwordokk), Toast.LENGTH_LONG).show();
                                         dialog.dismiss();
                                     }
                                     else {

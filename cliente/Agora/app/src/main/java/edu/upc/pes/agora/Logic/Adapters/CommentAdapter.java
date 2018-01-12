@@ -114,7 +114,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
                                 dialogoeditar.setCancelable(false);
                                 dialogoeditar.setView(container);
 
-                                dialogoeditar.setPositiveButton("Acceptar", new DialogInterface.OnClickListener() {
+                                dialogoeditar.setPositiveButton(res.getString(R.string.Aceptar), new DialogInterface.OnClickListener() {
                                     @SuppressLint("StaticFieldLeak")
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {

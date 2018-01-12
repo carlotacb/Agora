@@ -342,18 +342,18 @@ public class EditProposalActivity extends AppCompatActivity {
                 linearLocation.startAnimation(hideLayout);
                 linearImage.startAnimation(hideLayout);
                 menuFloating.startAnimation(hideButton);
-                final CharSequence[] options = {"Galería", "Cancelar"};
+                final CharSequence[] options = {res.getString(R.string.Galeria), res.getString(R.string.cancelButton)};
                 final AlertDialog.Builder builder = new AlertDialog.Builder(EditProposalActivity.this);
-                builder.setTitle("Escoge una opción");
+                builder.setTitle(res.getString(R.string.escojeropcion));
                 builder.setItems(options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int selection) {
-                        if(options[selection]=="Galería") {
+                        if(options[selection] == res.getString(R.string.Galeria)) {
                             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             intent.setType("image/*");
-                            startActivityForResult(Intent.createChooser(intent, "Selecciona app de imagen"), SELECT_PICTURE);
+                            startActivityForResult(Intent.createChooser(intent, res.getString(R.string.appdeimagen)), SELECT_PICTURE);
                         }
-                        else if(options[selection]=="Cancelar"){
+                        else if(options[selection] == res.getString(R.string.cancelButton)){
                             dialog.dismiss();
                         }
                     }
