@@ -26,12 +26,12 @@
                              android:layout_height="match_parent">
 
                     <ScrollView android:layout_width="wrap_content"
+                                android:background="@color/fondo"
                                 android:layout_height="wrap_content">
 
                         <LinearLayout android:id="@+id/tab1"
                                       android:layout_width="match_parent"
                                       android:layout_height="match_parent"
-                                      android:background="@color/fondo"
                                       android:orientation="vertical"
                                       android:weightSum="1">
 

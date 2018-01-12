@@ -83,6 +83,7 @@
                             android:visibility="visible"
                             android:layout_width="match_parent"
                             android:alpha="0.9"
+                            android:textColor="@color/white"
                             android:textSize="14dp"
                             android:maxLines="1"
                             android:singleLine="true"
