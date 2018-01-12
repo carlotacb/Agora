@@ -33,6 +33,7 @@
         android:id="@+id/head_username"
         android:textColor="@color/white"
         android:textSize="30dp"
+        android:textAllCaps="true"
         android:textStyle="bold"
         android:layout_marginBottom="20dp"
         android:fontFamily="serif"

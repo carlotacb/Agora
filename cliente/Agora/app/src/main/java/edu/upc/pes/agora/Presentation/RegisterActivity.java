@@ -230,7 +230,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     //access app
                                     //Toast.makeText(RegisterActivity.this, registreok, Toast.LENGTH_SHORT).show();
 
-                                    Constants.Username = user;
+                                    Constants.Username = user.toLowerCase();
                                     try {
                                         if (resObject.has("token")) {
                                             String t = resObject.getString("token");

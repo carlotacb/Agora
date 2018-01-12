@@ -140,8 +140,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Recycl
                                             }
                                         }.execute();
 
-                                        String borratok = String.format(res.getString(R.string.Borrado), tit);
-                                        Toast.makeText(context, borratok, Toast.LENGTH_SHORT).show();
+                                        //String borratok = String.format(res.getString(R.string.Borrado), tit);
+                                        //Toast.makeText(context, borratok, Toast.LENGTH_SHORT).show();
                                     }
                                 });
                                 dialogo1.setNegativeButton(res.getString(R.string.Cancelar), new DialogInterface.OnClickListener() {

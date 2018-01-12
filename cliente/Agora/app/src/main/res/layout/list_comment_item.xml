@@ -5,13 +5,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-    <ImageView
+    <!-- <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:padding="10dp"
         android:id="@+id/image"
-        android:src="@drawable/ic_user_male32"/>
+        android:src="@drawable/ic_user_male32"/> -->
 
     <TextView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,7 +23,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="5dp"
         android:text="NomAutor"
-        android:layout_marginStart="40sp"
         android:textAllCaps="true"
         android:textSize="17sp"
         android:textColor="@color/colorPrimary"
@@ -51,7 +50,6 @@
         android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
         android:paddingStart="?android:attr/listPreferredItemPaddingStart"
         android:layout_below="@+id/autorcomentari"
-        android:layout_marginStart="45sp"
         android:layout_marginBottom="5dp"
         android:text="comentari"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"

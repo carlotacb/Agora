@@ -182,4 +182,5 @@
     <string name="nuevapasswordmal">Nova password incorrecta</string>
     <string name="passwordokk">Password actualitzada correctament</string>
     <string name="cargandocomentarios">CARREGANT COMENTARIS...</string>
+    <string name="incorrecta">Password incorrecta</string>
 </resources>

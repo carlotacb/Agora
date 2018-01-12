@@ -359,8 +359,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String user = searchUsers.getText().toString();
-                Toast toast = Toast.makeText(getApplicationContext(), user, Toast.LENGTH_SHORT);
-                toast.show();
+                //Toast toast = Toast.makeText(getApplicationContext(), user, Toast.LENGTH_SHORT);
+                //toast.show();
                 ferGetAsyncTask("https://agora-pes.herokuapp.com/api/proposal?username=" + user);
             }
         });
@@ -374,8 +374,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String user = searchUsers.getText().toString();
-                Toast toast = Toast.makeText(getApplicationContext(), user, Toast.LENGTH_SHORT);
-                toast.show();
+                //Toast toast = Toast.makeText(getApplicationContext(), user, Toast.LENGTH_SHORT);
+                //toast.show();
                 ferGetAsyncTask("https://agora-pes.herokuapp.com/api/proposal?username=" + user);
             }
 

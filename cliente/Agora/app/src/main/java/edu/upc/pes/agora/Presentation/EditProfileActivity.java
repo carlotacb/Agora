@@ -392,7 +392,7 @@ public class EditProfileActivity extends AppCompatActivity {
                                         input2.setText("");
                                         input3.setText("");
                                         input.getBackground().setColorFilter(getResources().getColor(R.color.red_500_primary), PorterDuff.Mode.SRC_ATOP);
-                                        Toast.makeText(getApplicationContext(), "Password Incorrecta", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.incorrecta), Toast.LENGTH_LONG).show();
                                     }
                                 }
                             }

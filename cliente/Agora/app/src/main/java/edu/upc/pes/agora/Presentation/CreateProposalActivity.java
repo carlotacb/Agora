@@ -362,7 +362,7 @@ public class CreateProposalActivity extends AppCompatActivity {
                                 if (numimatges > 0) {
                                     afegirimatges();
                                 } else {
-                                    Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getApplicationContext(), creacionok, Toast.LENGTH_LONG).show();
                                     startActivity(new Intent(CreateProposalActivity.this, MainActivity.class));
                                 }
                             }

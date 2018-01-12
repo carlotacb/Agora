@@ -176,6 +176,7 @@
     <string name="nuevapasswordmal">Nueva Password incorrecta</string>
     <string name="passwordokk">Password actualizado correctamente</string>
     <string name="diferente">El nuevo Password tiene que ser diferente</string>
+    <string name="incorrecta">Password Incorrecta</string>
 
 
     <string name="Galeria">Galeria</string>

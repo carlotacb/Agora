@@ -154,7 +154,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
 
                                         CommentAdapter.this.notifyDataSetChanged();
 
-                                        Toast.makeText(getContext(), "Comentario Editado", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(getContext(), "Comentario Editado", Toast.LENGTH_SHORT).show();
                                     }
                                 });
 
@@ -201,7 +201,7 @@ public class CommentAdapter extends ArrayAdapter<Comment> {
                                             }
                                         }.execute();
 
-                                        Toast.makeText(getContext(), "Comentario Borrado", Toast.LENGTH_SHORT).show();
+                                       // Toast.makeText(getContext(), "Comentario Borrado", Toast.LENGTH_SHORT).show();
                                     }
                                 });
 

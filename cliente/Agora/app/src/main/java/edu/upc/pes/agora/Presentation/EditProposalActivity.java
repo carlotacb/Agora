@@ -371,7 +371,7 @@ public class EditProposalActivity extends AppCompatActivity {
                 linearImage.startAnimation(hideLayout);
                 menuFloating.startAnimation(hideButton);
                 if (numimatges > 0) {
-                    Toast.makeText(v.getContext(), "Perdras les imatges afegides", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(v.getContext(), "Perdras les imatges afegides", Toast.LENGTH_SHORT).show();
                 }
                 Intent i = new Intent(getApplicationContext(), AddLocationActivity.class);
                 i.putExtra("Title", editTitle.getText().toString());
