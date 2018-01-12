@@ -66,6 +66,7 @@ async function create({username, password, zone}) {
         createdDateTime: new Date(),
         updatedDateTime: null,
         zone: parseInt(zone),
+        favorites: [],
     }
 
     const insertResult = await collection().insertOne(object)
