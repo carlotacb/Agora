@@ -20,6 +20,7 @@ async function getByZone({user}) {
         createdDateTime: 0,
         updatedDateTime: 0,
         zone : 0,
+        favorites: []
     }
     return await collection().find(query, options).toArray()
 }
