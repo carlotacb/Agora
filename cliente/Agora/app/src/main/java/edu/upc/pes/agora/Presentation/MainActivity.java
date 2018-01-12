@@ -364,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
                 ferGetAsyncTask("https://agora-pes.herokuapp.com/api/proposal?username=" + user);
             }
         });
-
+        
         searchUsers.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -384,8 +384,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-
 
     }
 
