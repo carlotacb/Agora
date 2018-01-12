@@ -125,7 +125,7 @@ public class MyFavoritesActivity extends AppCompatActivity {
         DrawerToggleAdvanced toggle = new DrawerToggleAdvanced(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         toggle.syncState();
 
-        llistapropostes = (ListView) findViewById(R.id.llistacomentaris);
+        llistapropostes = (ListView) findViewById(R.id.llistacomentarisfab);
         cargando = (LinearLayout) findViewById(R.id.pantallacargandofav);
 
         new GetTokenAsyncTask("https://agora-pes.herokuapp.com/api/proposal?favorite=true", this) {
