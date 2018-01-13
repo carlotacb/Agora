@@ -183,4 +183,107 @@
     <string name="passwordokk">Password changed correctly</string>
     <string name="cargandocomentarios">CARGANDO COMENTARIOS...</string>
     <string name="incorrecta">Incorrect password</string>
+    <string name="helpparte1">Ágora is an application dedicated to improving your neighborhood, make
+        proposals, vote them and you can make a better neighborhood. Our system offers many
+        features, on this screen you can check the functionalities for each screen that you will
+        find in the side menu:
+    </string>
+    <string name="iconohome">- Main Page</string>
+    <string name="iconomyproposals">- See my proposals</string>
+    <string name="iconomyfavorites">- See my favorites</string>
+    <string name="iconomyprofile">- View my profile</string>
+    <string name="iconologros">- See my achivements</string>
+    <string name="helpparte2">In the tabs at the top of the screen, you can find a help guide for
+        each of the screens, identified by its icon. In addition all the apilcation offers a
+        multi-language system, by clicking on the flag at the top of each screen you can select the
+        language you want, among the available ones (Catalan, Spanish and English)
+    </string>
+    <string name="intropp">The main page, where you can see all the proposals made in your neighborhood, offers the following features</string>
+    <string name="busquedaporfiltro">"Search by filter"</string>
+    <string name="contigutbusqueda">"Through the drop-down you can select 3 types of filtering:\n \n1.All: All proposals appear\n \n2.Category: when selecting this option, another dropdown appears with the available categories\n \n3.User: when selecting this option, an editable field appears where you can enter the desired username"</string>
+    <string name="funcionscard1">On each card, the following actions can be taken:</string>
+    <string name="voteunvotetit">Vote</string>
+    <string name="votardescripcion">Through the like or dislike buttons we can vote the proposal, in
+        the case that the proposal has been made by you, these buttons will appear disabled
+    </string>
+    <string name="favoritetit">Mark a proposal as a favorite</string>
+    <string name="favoritedesc">Using the heart-shaped button on the top of the card, you can mark a
+        proposal as a favorite to be able to consult it later, in the case that the proposal was
+        created by you, this option is not available
+    </string>
+    <string name="semoreinfo">See the details of the proposal</string>
+    <string name="semoreinfodetails">By clicking on the SEE MORE button, you will be redirected to a
+        screen where the user can consult better the information of the proposal. There is the
+        possibility of looking to added images and location, if the proposal has these annexes. In
+        case of being a proposal not created by the user, he may vote and make it a favorite,
+        otherwise, the proposal may be edited or deleted. Also from this screen, you can comment on
+        the different proposals, and in the case that the comment you have made, you can edit or
+        delete
+    </string>
+    <string name="createprop">Create a new proposal</string>
+    <string name="otherstit">See the profile from creator user</string>
+    <string name="createpropdet">By clicking on the create button located at the bottom of the
+        screen, you are redirected to the creation screen where you define the name, description and
+        category of the proposal, additionally, by pressing the bottom button of the screen, the
+        option to add images or location to it.
+    </string>
+    <string name="othersdesc">By selecting the name of the creator of the proposal you can check the profile of this:\n \nIf you click on your username, you will be redirected to my profile screen.\n \nIf you select another user, you can consult their information and click on the button to see the proposals, you can check the proposals of this.</string>
+    <string name="intropmp">" The page of my proposals, where you can see the proposals made by you, offers the following features within each card "
+    </string>
+    <string name="botomas">Options: (Edit or Errase)</string>
+    <string name="botomasdesc">Clicking on the three points button, an options menu appears with two options:\n \nEdit: When you click this option you will be redirected to a screen where you can edit the title, the description and the category of the proposal, as well as add or delete images or location\n \nDelete: When selecting this option, a message appears asking if you are sure, if so, the proposal is deleted.</string>
+    <string name="semoreinfomp">See the details of the proposal</string>
+    <string name="semoreinfodetailsmp">By clicking on the SEE MORE button, you will be redirected to
+        a screen where the user can better consult the information of the proposal. There is the
+        possibility of looking at added images and location, if the proposal has these annexes.
+        Since the proposal is created by the user, it can be edited or deleted. Also from this
+        screen, you can comment on the different proposals, in the case that the comment you have
+        made, you can edit or delete
+    </string>
+    <string name="intropmf">The page of my favorites, where you can see the proposals marked as
+        favorites, offers the following features within each card (quite similar to the main page)
+    </string>
+    <string name="votardescripcionf">Through the like or dislike buttons we can vote on the
+        proposal
+    </string>
+    <string name="favoritedescf">Using the heart-shaped button on the top of the card, you can mark
+        a proposal as a favorite to be able to consult it later
+    </string>
+    <string name="semoreinfodetailsf">By clicking on the SEE MORE button, you will be redirected to
+        a screen where the user can better consult the information of the proposal. There is the
+        possibility of looking at added images and location, if the proposal has these annexes.
+        Being proposals not created by the user, you can vote and mark the proposal as a favorite.
+        Also from this screen, you can comment on the different proposals, in the case that the
+        comment you have made, you can edit or delete
+    </string>
+    <string name="othersdescf">When selecting the name of the creator of the proposal you can check
+        the profile of this, once in the information screen you can check your information and
+        clicking on the button to see the proposals, you can check their proposals.
+    </string>
+    <string name="introperfil">My profile page, where you can check your profile, offers the
+        following features:
+    </string>
+    <string name="editartitulo">Edit Profile</string>
+    <string name="editardesc">Through the Edit button, you are redirected to a screen where you can
+        complete your profile data, change the image or change the password.
+    </string>
+    <string name="intrologros">The achievements page, where you can check achievements, offers the
+        following features:
+    </string>
+    <string name="pantallalogros">Achivements Page</string>
+    <string name="sistemalogros">Achivements system</string>
+    <string name="sistemanotis">Nofications system</string>
+    <string name="pantallalogrosdesc">In this screen the user can see the achievements that he has
+        achieved previously and also the achievements that he has pending to achieve, when clicking
+        on the achievement the user receives a small description about the achievement and, in the
+        case of some specific achievements, receives a discount to use in neighborhood stores that
+        have an agreement with Agora.
+    </string>
+    <string name="sistemalogrosdesc">" Agora has a system of achievements that, when performing certain actions, provides an achievement to the user. Some of the actions that can provide an achievement would be to comment on a proposal or create a new proposal."</string>
+    <string name="sistemanotisdesc">Agora has a system of notifications to communicate to the user
+        when it has received an achievement, the system will send a notification of the push type so
+        that the user can see in the status bar of his phone the achievement he has received, by
+        clicking on this notification will redirect the user to the achievements screen, to observe
+        the change in the list of achievements.
+    </string>
 </resources>

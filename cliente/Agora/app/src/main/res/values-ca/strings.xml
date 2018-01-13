@@ -183,4 +183,106 @@
     <string name="passwordokk">Password actualitzada correctament</string>
     <string name="cargandocomentarios">CARREGANT COMENTARIS...</string>
     <string name="incorrecta">Password incorrecta</string>
+    <string name="helpparte1">Àgora és una aplicació dedicada a millorar el teu barri, realitza
+        propostes, vota-les i podràs fer un barri millor. El nostre sistema ofereix moltes
+        funcionalitats, en aquesta pantalla podràs consultar les funcionalitats per cada pantalla
+        que trobaràs en el menú lateral:
+    </string>
+    <string name="iconohome">- Pàgina principal</string>
+    <string name="iconomyproposals">- Veure les meves propostes</string>
+    <string name="iconomyfavorites">- Veure els meus preferits</string>
+    <string name="iconomyprofile">- Cosultar perfil</string>
+    <string name="iconologros">- Consultar els meus assoliments</string>
+    <string name="helpparte2">A les pestanyes de la part superior de la pantalla, pots trobar una
+        guia d\'ajuda per a cadascuna de les pantalles, identificades per la seva icona. A més tota
+        la apilcación ofereix un sistema multiidioma, clicant la bandera a la part superior de cada
+        pantalla pots seleccionar l\'idioma que vulguis, entre els disponibles (Català, Castellà i
+        Anglès)
+    </string>
+    <string name="intropp">La pàgina principal, on pots veure totes les propostes fetes al teu
+        barri, ofereix les següents funcionalitats
+    </string>
+    <string name="busquedaporfiltro">Cerca per filtre</string>
+    <string name="contigutbusqueda">Mitjançant el desplegable es pot seleccionar 3 tipus de
+        filtratge:\n \n1. Tot: aparent totes les propostes\n \n2.Categoria: en seleccionar aquesta opció
+        apareix un altre desplegable amb les categories disponibles\n \n3.Usuario: en seleccionar
+        aquesta opció apareix un camp editable on introduir el nom d\'usuari desitjat
+    </string>
+    <string name="funcionscard1">" A cada targeta, es poden realitzar les següents accions:"
+    </string>
+    <string name="voteunvotetit">Votar</string>
+    <string name="votardescripcion">" Mitjançant els botons de like o dislike podem votar la proposta, en el cas que la proposta hagi estat realitzada per tu, aquests botons apareixeran deshabilitats"</string>
+    <string name="favoritetit">Marcar una proposta com preferida</string>
+    <string name="favoritedesc">Mitjançant el botó en forma de cor a la part superior de la targeta,
+        pots marcar una proposta als preferits per a poder consultar-la després, en el cas que la
+        proposat l\'hagis creat tu, aquesta opció no està disponible
+    </string>
+    <string name="semoreinfo">Consultar els detalls de la proposta</string>
+    <string name="semoreinfodetails">En prémer el botó de VEURE MÉS, es redirigeix ​​a una pantalla
+        on l\'usuari podrà consultar millor la informació de la proposta. Hi ha la possibilitat de
+        mirar imatges afegides i la localització, si la proposta té aquests annexos. En cas de ser
+        una proposta no creada per l\'usuari, aquest podrà votar i fer-la favorita, en cas contrari,
+        es podrà editar o esborrar la proposta. També des d\'aquesta pantalla, es podran comentar
+        les diferents propostes, i en el cas que el comentari l\'hagis realitzat la teva, el podràs
+        editar o esborrar
+    </string>
+    <string name="createprop">Crear una nova proposta</string>
+    <string name="otherstit">Consultar el prefil del usuari creador</string>
+    <string name="createpropdet">" En prémer el botó de crear situat a la part inferior de la pantalla, es redirigeix ​​a la pantalla de creació on es defineix el nom, la descripció i la categoria de la proposta, addicionalment, prement el botó inferior de la pantalla, apareix la opció d'afegir imatges o localització a la mateixa."</string>
+    <string name="othersdesc">" En seleccionar el nom del creador de la proposta es pot consultar el perfil d'aquest:\n \nEn cas de clicar en el teu nom d'usuari, es redirigeix ​​a la pantalla del meu perfil\n\nEn cas de seleccionar un altre usuari, pots consultar la seva informació i clicant al botó de veure les propostes, es poden consultar les propostes d'aquest."</string>
+    <string name="intropmp">" La pàgina de les meves propostes, on pots veure les propostes fetes per tu, ofereix les següents funcionalitats dins de cada targeta"
+    </string>
+    <string name="botomas">Opcions: (Editar o Esborrar)</string>
+    <string name="botomasdesc">Clicant al botó dels tres punts, apareix un menú d\'opcions amb dues opcions:\n \nEdita: En clicar aquesta opció se\'t redirigeix ​​a una pantalla on es pot editar el títol, la descripció i la categoria de la proposta, així com també afegir o eliminar imatges o la localització\n \nEsborrar: en seleccionar aquesta opció apareix un missatge on es pregunta si aquestes segur, en cas afirmatiu s\'esborra la proposta.</string>
+    <string name="semoreinfomp">Consultar els detalls de la proposta</string>
+    <string name="semoreinfodetailsmp">En prémer el botó de VEURE MÉS, es redirigeix ​​a una
+        pantalla on l\'usuari podrà consultar millor la informació de la proposta. Hi ha la
+        possibilitat de mirar imatges afegides i la localització, si la proposta té aquests annexos.
+        Com la proposta aquesta creada per l\'usuari, es podrà editar o esborrar. També des
+        d\'aquesta pantalla, es podran comentar les diferents propostes, en el cas que el comentari
+        l\'hagis realitzat la teva, el podràs editar o esborrar
+    </string>
+    <string name="intropmf">La pàgina dels meus preferits, on pots veure les propostes marcades com
+        a preferides, ofereix les següents funcionalitats dins de cada targeta (força semblant a la
+        pàgina principal)
+    </string>
+    <string name="votardescripcionf">Mitjançant els botons de like o dislike podem votar la
+        proposta
+    </string>
+    <string name="favoritedescf">Mitjançant el botó en forma de cor a la part superior de la
+        targeta, pots marcar una proposta als preferits per a poder consultar-la després
+    </string>
+    <string name="semoreinfodetailsf">En prémer el botó de VEURE MÉS, es redirigeix ​​a una pantalla
+        on l\'usuari podrà consultar millor la informació de la proposta. Hi ha la possibilitat de
+        mirar imatges afegides i la localització, si la proposta té aquests annexos. En ser
+        propostes no creades per l\'usuari, es pot votar i marcar la proposta com a favorita. També
+        des d\'aquesta pantalla, es podran comentar les diferents propostes, en el cas que el
+        comentari l\'hagis realitzat la teva, el podràs editar o esborrar
+    </string>
+    <string name="othersdescf">En seleccionar el nom del creador de la proposta es pot consultar el
+        perfil d\'aquest, un cop a la pantalla d\'informació pots consultar la seva informació i
+        clicant al botó de veure les propostes, es poden consultar les seves propostes.
+    </string>
+    <string name="introperfil">La pàgina del meu perfil, on pots consultar el teu perfil, ofereix
+        les següents funcionalitats:
+    </string>
+    <string name="editartitulo">Editar Perfil</string>
+    <string name="editardesc">Mitjançant el botó de Edita, se\'t redirigeix ​​a una pantalla on pots
+        completar les dades del teu perfil, canviar la imatge o canviar la contrasenya.
+    </string>
+    <string name="intrologros">La pàgina d\'èxits, on pots consultar els èxits, ofereix les següents funcionalitats:</string>
+    <string name="pantallalogros">Pantalla d\'assoliments</string>
+    <string name="sistemalogros">Sistema d\'éxits</string>
+    <string name="sistemanotis">Sistema de notificacions</string>
+    <string name="pantallalogrosdesc">En aquesta pantalla l\'usuari pot veure els èxits que ha
+        aconseguit anteriorment i també els èxits que té pendents d\'aconseguir, en fer clic en
+        l\'assoliment l\'usuari rep una petita descripció sobre l\'assoliment i, en el cas d\'alguns
+        èxits en concret, rep un descompte per utilitzar en les botigues del barri que tinguin un
+        acord amb Agora.
+    </string>
+    <string name="sistemalogrosdesc">Agora disposa d\'un sistema d\'èxits que, en realitzar certes
+        accions, proporciona una fita a l\'usuari. Algunes de les accions que poden proporcionar una
+        fita serien comentar una proposta o crear una nova proposta
+    </string>
+    <string name="sistemanotisdesc">"Agora disposa d'un sistema de notificacions per a comunicar a l'usuari quan ha rebut una fita, el sistema enviarà una notificació del tipus push perquè l'usuari pugui veure a la barra d'estat del seu telèfon l'assoliment que ha rebut, en fer clic en aquesta notificació es redirigirà l'usuari a la pantalla dels èxits, per així observar el canvi en la llista d'èxits."</string>
 </resources>
