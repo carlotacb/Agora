@@ -19,11 +19,11 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasCom
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
 /**
- * Created by Oriol on 26/11/2017.
+ * Created by Oriol on 10/1/2018.
  */
 
 @RunWith(AndroidJUnit4.class)
-public class ProfileScreenTest {
+public class GMyProfileScreenTest {
 
     @Rule
     public ActivityTestRule<MyProfileActivity> mProfileActivityTestRule =
