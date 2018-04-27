@@ -1,14 +1,14 @@
-# Àgora 
+# Àgora     ![](https://github.com/carlotacb/Agora/blob/master/logo-agora.png)
 
 This is a project implemented using software pattern design and Scrum methodology using [Taiga](https://tree.taiga.io/project/carlotacatot-pes-/) during Software Engineering Project (PES) subject of the Bachelor's Degree in Computer Science of the [Universitat Politècnica de Catalunya](https://www.upc.edu/ca) - [Facultat d'informàtica de Barcelona](https://www.fib.upc.edu/).
 
-![]()
+![](https://github.com/carlotacb/Agora/blob/master/StartPage.jpeg)
 *Screenshot of the starting screen where you need to log in or register*
 
-![]()
+![](https://github.com/carlotacb/Agora/blob/master/MainPage.jpeg)
 *Screenshot of the main page while you are logged in*
 
-![]()
+![](https://github.com/carlotacb/Agora/blob/master/NavDrawer.jpeg)
 *Screenshot of the navigation drawer with all the options that the app offers*
 
 
@@ -47,4 +47,4 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 ## Acknowledgments
 
 Thanks to:
-- The lecturers of the Software Engineering Project subject of UPC [Maria Jose Casañ]() and [](), for helping us to develop this fantastic project.
+- The lecturers of the Software Engineering Project subject of UPC Maria Jose Casañ Guerrero and Xavier Franch Gutiérrez for helping us to develop this fantastic project.
