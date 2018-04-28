@@ -2,6 +2,8 @@
 
 This is a project implemented using software pattern design and Scrum methodology using [Taiga](https://tree.taiga.io/project/carlotacatot-pes-/) during Software Engineering Project (PES) subject of the Bachelor's Degree in Computer Science of the [Universitat Politècnica de Catalunya](https://www.upc.edu/ca) - [Facultat d'informàtica de Barcelona](https://www.fib.upc.edu/).
 
+The main theme for the application was to make an app to improve the neiboughood in the different aspects. Our applications consists in a different way to help to improve the neighborhood. There is only one user for person in the neighborhood that is more than 18 years old, you need a unique registry code for get registered in the app. When you are in, you have to fill your profile with your basic information and basicaly the app consists on a exchange of proposals, you can only see the proposals for your neighbourhood, in each proposal you can vote, coment, make favourite and also create all the proposals you want, this will help to improve the neighbourhood because the most popular proposals will go to the neighbourhood assambly to make it possible! 
+
 ![](https://github.com/carlotacb/Agora/blob/master/StartPage.jpeg)
 *Screenshot of the starting screen where you need to log in or register*
 
@@ -13,6 +15,14 @@ This is a project implemented using software pattern design and Scrum methodolog
 
 
 ## Features & funcionalities
+
+* **Multi language**: This app has been developed in 3 languages (Catalan, Spanish and English)
+* **Coments**: The user can comment the diferent proposals and it will appear in real time to the other users, it is a kind on chat but involving all the users registred for that neighbourhood.
+* **Like and dislike**: The users can also like or dislike the proposals... but be carefull, you can only choose one option.
+* **Make favourite**: The user can make favourite the proposals that he or she likes, to follow if this have any news.
+* **Create proposal**: Obviuosly you can create your proposal, in this proposal, the user creator can not do like, or make favourite.
+
+This and more features like the profiles, the search by user... you will find it in Agora.
 
 
 ## Prerequisites
@@ -29,8 +39,20 @@ To install the app you only have tu run the apk in an Android Phone or if you do
 ## Built With
 
 * [Android Studio](https://www.opengl.org/) - Used in all the Front-End part, this is implemented with Java (domain layer) and XML (presentation layer)
-* 
 
+* [MongoDB](https://www.mongodb.com/) - Used for the management of the data of our aplication.
+
+* [WebStorm](https://www.jetbrains.com/webstorm/download/) - Used in all Back-End part, this implements Data Bases and Server.
+    
+## Tools used for Back-End development
+
+* [Node.js](https://nodejs.org/en/download/) - JavaScript execution environment that we used for execute the code of our server.
+
+* [Heroku](https://www.heroku.com/) - Used to deploy our app, in there is where our code is "in production" on the server.
+
+* [Robo 3T](https://robomongo.org/) - Used to visualize the state of the data in the data base for doing the modifications when it's necessary.
+
+* [Postman](https://www.getpostman.com/) - Used for check the good performance of the different requests to the server.
 
 ## Authors
 
