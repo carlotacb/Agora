@@ -38,7 +38,7 @@ To install the app you only have tu run the apk in an Android Phone or if you do
 
 ## Built With
 
-* [Android Studio](https://www.opengl.org/) - Used in all the Front-End part, this is implemented with Java (domain layer) and XML (presentation layer)
+* [Android Studio](https://developer.android.com/studio/) - Used in all the Front-End part, this is implemented with Java (domain layer) and XML (presentation layer)
 
 * [MongoDB](https://www.mongodb.com/) - Used for the management of the data of our aplication.
 
@@ -65,7 +65,7 @@ To install the app you only have tu run the apk in an Android Phone or if you do
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/carlotacb/Lemmings/blob/master/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/carlotacb/Agora/blob/master/LICENSE) file for details.
 
 ## Acknowledgments
 
