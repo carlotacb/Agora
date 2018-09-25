@@ -1,6 +1,6 @@
 # Àgora     ![](https://github.com/carlotacb/Agora/blob/master/logo-agora.png)
 
-This is a project implemented using software pattern design and Scrum methodology using [Taiga](https://tree.taiga.io/project/carlotacatot-pes-/) during Software Engineering Project (PES) subject of the Bachelor's Degree in Computer Science of the [Universitat Politècnica de Catalunya](https://www.upc.edu/ca) - [Facultat d'informàtica de Barcelona](https://www.fib.upc.edu/).
+This is a project implemented using software pattern design and Scrum methodology using [Taiga](https://tree.taiga.io/project/carlotacatot-pes-/) during Software Engineering Project (PES) subject of the Bachelor's Degree in Computer Science of the [Universitat Politècnica de Catalunya](https://www.upc.edu/ca) - [Facultat d'informàtica de Barcelona](https://www.fib.upc.edu/). 
 
 The main theme for the application was to make an app to improve the neiboughood in the different aspects. Our applications consists in a different way to help to improve the neighborhood. There is only one user for person in the neighborhood that is more than 18 years old, you need a unique registry code for get registered in the app. When you are in, you have to fill your profile with your basic information and basicaly the app consists on a exchange of proposals, you can only see the proposals for your neighbourhood, in each proposal you can vote, coment, make favourite and also create all the proposals you want, this will help to improve the neighbourhood because the most popular proposals will go to the neighbourhood assambly to make it possible! 
 
@@ -61,6 +61,7 @@ To install the app you only have tu run the apk in an Android Phone or if you do
 * **Gerard Esteve Villuendas** – _Front-End developer_ - [gerardEsteve](https://github.com/gerardEsteve)
 * **Dragos Fotescu** – _Back-End developer_ - [Drag0s](https://github.com/Drag0s)
 * **Kerstin Winter** – _Front-End developer_ - [winterke](https://github.com/winterke)
+* **Oriol Saborido** - _Tester_
 
 ## License
 
@@ -70,3 +71,7 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
 
 Thanks to:
 - The lecturers of the Software Engineering Project subject of UPC Maria Jose Casañ Guerrero and Xavier Franch Gutiérrez for helping us to develop this fantastic project.
+
+## Final Mark
+
+Group Mark: 9.5 
