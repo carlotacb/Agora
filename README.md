@@ -60,7 +60,6 @@ To install the app you only have tu run the apk in an Android Phone or if you do
 * **Carlota Catot Bragós** – _Front-End developer and Scrum Master_ - [carlotacb](https://github.com/carlotacb)
 * **Gerard Esteve Villuendas** – _Front-End developer_ - [gerardEsteve](https://github.com/gerardEsteve)
 * **Dragos Fotescu** – _Back-End developer_ - [Drag0s](https://github.com/Drag0s)
-* **Oriol Saborido** - _Tester_
 * **Kerstin Winter** – _Front-End developer_ - [winterke](https://github.com/winterke)
 
 ## License
